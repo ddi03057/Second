@@ -28,8 +28,8 @@ import Footer from './Footer';
  */
 function Progress(props) {
   
-  const stepNum = 2;//props.step;
-  const status = 2;//props.status;
+  const stepNum = 1;//props.step;
+  const status = 0;//props.status;
 
   const stepTitle = [
     {title: '사전심사'}, 
