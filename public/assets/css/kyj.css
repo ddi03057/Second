@@ -1,0 +1,204 @@
+@charset "UTF-8";
+/* Base Color */
+/* Mono Tone Color */
+/* Layout */
+/* Header */
+/* Aside */
+/* A Link */
+/* Component */
+/* Font Color */
+/* Status */
+/* Font Size */
+/* Content Size */
+/* 김윤정 */
+/* 임시 */
+.inner-w {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.txt-wrap .txt {
+    display: block;
+    position: relative;
+    font-size: 18px;
+    line-height: 30px;
+}
+.txt-wrap .txt.b-txt {
+    font-size: 23px;
+    line-height: 38px;
+}
+.txt-wrap .txt.b-txt + .txt {
+    margin-top: 20px;
+}
+.txt-wrap .txt.s-txt {
+    font-size: 16px;
+    line-height: 28px;
+    color: #666666;
+}
+.txt-wrap .txt.xs-txt {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.txt-wrap b {
+    font-weight: bold;
+}
+.txt-wrap .red {
+    color: #f4516c;
+}
+
+.sele-list * {
+    display: block;
+    position: relative;
+}
+.sele-list.type01 {
+    display: flex;
+    border: 1px solid #d8d6de;
+}
+.sele-list.type01 > .item {
+    flex: 1;
+    min-height: 100px;
+}
+.sele-list.type01 > .item .item-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+}
+.sele-list.type01 > .item .item-cont > img {
+    width: 100%;
+    max-width: 200px;
+}
+.sele-list.type01 > .item + .item {
+    border-left: 1px solid #d8d6de;
+}
+.sele-list.type02 {
+    background-color: #fff;
+}
+.sele-list.type02 a:-webkit-any-link {
+    color: #333;
+}
+.sele-list.type02 > .item {
+    border: 1px solid #d8d6de;
+    border-radius: 4px;
+}
+.sele-list.type02 > .item + .item {
+    margin-top: 20px;
+}
+.sele-list.type02 > .item > .item-cont {
+    width: 100%;
+    height: 100%;
+}
+.sele-list.type02 > .item .tit-wrap {
+    min-height: 50px;
+    padding: 14px 20px 9px 58px;
+    font-size: 18px;
+    line-height: 30px;
+    word-break: break-all;
+}
+.sele-list.type02 > .item .tit-wrap::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    width: 28px;
+    height: 26px;
+    background-image: url("../img/ico/ico_document.png");
+    background-size: cover;
+}
+.sele-list.type02 > .item .tit-wrap .name {
+    font-weight: bold;
+}
+.sele-list.type02 > .item .info-list {
+    border-top: 1px solid #f4f4f4;
+    padding: 10px 20px;
+}
+.sele-list.type02 > .item .info-list > .item {
+    display: flex;
+    margin-bottom: 5px;
+}
+.sele-list.type02 > .item .info-list .txt {
+    font-size: 16px;
+    line-height: 28px;
+    min-width: 50px;
+    word-break: break-all;
+}
+.sele-list.type02 > .item .info-list .txt.tit {
+    color: #666;
+    margin-right: 14px;
+}
+.sele-list.type02 > .item .item-cont-wrap-btn {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+* + .sele-list-wrap {
+    padding-top: 30px;
+}
+
+.sele-list-wrap > h2 {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+.sele-list-wrap + .link-btn-wrap, .sele-list-wrap .link-btn {
+    margin-top: 20px;
+}
+
+.content-body.certified01 .content-mid {
+    padding-top: 10px;
+}
+.content-body.certified02 .link-btn-wrap {
+    display: flex;
+    justify-content: flex-end;
+}
+.content-body.certified02 .content-top {
+    padding-bottom: 30px;
+}
+.content-body.certified02 .content-mid {
+    padding-top: 30px;
+}
+
+.link-btn.type01 {
+    display: block;
+    position: relative;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #3982d8;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: bold;
+    color: #3982d8;
+}
+
+[class*=ico-] {
+    position: relative;
+}
+[class*=ico-].right {
+    padding-right: 24px;
+}
+[class*=ico-].right::after {
+    right: 0;
+}
+[class*=ico-].left {
+    padding-left: 24px;
+}
+[class*=ico-].left::after {
+    left: 0;
+}
+[class*=ico-].ico-blue-arrow::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-image: url("../img/ico/ico_blue_arrow.png");
+}

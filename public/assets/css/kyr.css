@@ -1,0 +1,187 @@
+@charset "UTF-8";
+/* Base Color */
+/* Mono Tone Color */
+/* Layout */
+/* Header */
+/* Aside */
+/* A Link */
+/* Component */
+/* Font Color */
+/* Status */
+/* Font Size */
+/* Content Size */
+/* 김유림 */
+.btn-back {
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    left: 15px;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+}
+.btn-back::before {
+    content: "";
+    background: url(../../assets/img/ico/ico_header_back.png) no-repeat;
+    background-size: 32px;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.btn-close {
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+}
+.btn-close::before {
+    content: "";
+    background: url(../../assets/img/ico/ico_header_close.png) no-repeat;
+    background-size: 32px;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.content-body {
+    position: relative;
+    padding: 20px 0 80px 0;
+}
+
+.content-footer {
+    background-color: var(--white-color);
+}
+
+.btn-lg {
+    position: relative;
+    width: 100%;
+    padding: 13px 0;
+}
+.btn-lg .txt {
+    display: inline-block;
+    color: var(--white-color);
+    font-size: 23px;
+    line-height: 34px;
+    text-align: center;
+}
+
+.default-bg {
+    background-color: #3982d8;
+}
+
+.content-top {
+    padding-bottom: 20px;
+    padding: 10px 25px 20px 25px;
+}
+
+.top-tit {
+    font-size: 23px;
+    line-height: 38px;
+}
+.top-tit + .top-txt {
+    margin-top: 13px;
+}
+
+.mid-tit {
+    padding: 30px 25px 20px 25px;
+    font-weight: 500;
+}
+.mid-tit h3 {
+    font-size: 23px;
+}
+
+.top-txt {
+    font-size: 16px;
+    line-height: 28px;
+}
+
+.fc-r {
+    color: var(--disabled-color);
+}
+
+.content-mid {
+    padding: 20px 25px;
+}
+
+.bor-tf4 {
+    border-top: 2px solid #f4f4f4;
+}
+
+.bor-bf4 {
+    border-bottom: 2px solid #f4f4f4;
+}
+
+.box_chk {
+    position: relative;
+    font-size: 18px;
+    line-height: 30px;
+}
+.box_chk + .box_chk {
+    margin-top: 10px;
+}
+.box_chk.flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.agree-form {
+    position: relative;
+}
+
+.no-pad {
+    padding: 0;
+}
+
+.check_label {
+    display: inline-block;
+    position: relative;
+    padding: 0 0 0 30px;
+    width: calc(100% - 30px);
+}
+.check_label.fc-3 {
+    color: #333;
+}
+.check_label.fc-6 {
+    color: #666;
+}
+
+.check_input + .check_label::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: url(../../assets/img/ico/ico_checkbox_off.png) no-repeat 50% 50%;
+    background-size: 20px 20px;
+}
+
+.check_input:checked + .check_label::before {
+    background: url(../../assets/img/ico/ico_checkbox_on.png) no-repeat 50% 50%;
+    background-size: 20px 20px;
+}
+
+.btn_pop_arrow {
+    display: inline-block;
+    position: absolute;
+    top: calc(50% - 10px);
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: url(../../assets/img/ico/ico_pop_btn.png) no-repeat 50% 50%;
+    background-size: 20px 20px;
+}
+
+.point-tit {
+    display: inline-block;
+    margin-bottom: 30px;
+}

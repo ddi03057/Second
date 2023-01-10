@@ -1,0 +1,227 @@
+@charset "UTF-8";
+/*------------------------------------------------------------------------------------------------------------------------------------------
+	File : base.css(Front)
+	Company : The Webstyle co.,ltd
+
+ 	1. CSS 적용순서 : 아이디 > 태그와 클래스(필요한경우만 사용할것) > 클래스 > 태그
+	2. CSS 선택자 선언순서 : Type Selector, ID Selector, Class Selector
+	3. CSS 속성 선언순서 : 표시(display), 넘침(overflow), 흐름(float/clear), position(위치), width/height(크기), 간격(margin/padding),
+                          테두리(border), 배경(background), 폰트(font-weight > font-size > line-height > font-family > color/tex-indent/text-decoration),
+                          정렬(align), animation
+    4. 따옴표 사용 : 기본적으로 작은따옴표를 사용한다.
+                     @charset의 경우만 큰따옴표를 사용한다.(작은 따옴표 허용안됨)
+                     background속성의 url값에는 따옴표를 사용하지 않는다.
+    5. 속상값이 한줄로 표현가능한 경우 가로기술, 그 외에는 세로기술한다.
+    6. 속성 및 단위 : 속성과 값사이에 한칸의 여백을 두며 가능한 속성을 줄여쓰며 또한 필요한 경우가 아니라면 '0'값뒤에 단위를 붙이지 않는다.
+    7. vendor prefix 적용대상 : border-radius, box-shadow, border-image, animation, flex, transform, transition
+--------------------------------------------------------------------------------------------------------------------------------------------*/
+/* Base Color */
+/* Mono Tone Color */
+/* Layout */
+/* Header */
+/* Aside */
+/* A Link */
+/* Component */
+/* Font Color */
+/* Status */
+/* Font Size */
+/* Content Size */
+/* Font */
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 100;
+    src: url(../fonts/NotoSans-Thin.eot), local(※), url(../fonts/NotoSans/NotoSans-Thin.woff2) format("woff2"), url(../fonts/NotoSans/NotoSans-Thin.woff) format("woff"), url(../fonts/NotoSans/NotoSans-Thin.otf) format("opentype");
+}
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 300;
+    src: url(../fonts/NotoSans-Light.eot), local(※), url(../fonts/NotoSans/NotoSans-Light.woff2) format("woff2"), url(../fonts/NotoSans/NotoSans-Light.woff) format("woff"), url(../fonts/NotoSans/NotoSans-Light.otf) format("opentype");
+}
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 350;
+    src: url(../fonts/NotoSans-DemiLight.eot), local(※), url(../fonts/NotoSans/NotoSans-DemiLight.woff2) format("woff2"), url(../fonts/NotoSans/NotoSans-DemiLight.woff) format("woff"), url(../fonts/NotoSans/NotoSans-DemiLight.otf) format("opentype");
+}
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/NotoSans-Regular.eot), local(※), url(../fonts/NotoSans/NotoSans-Regular.woff2) format("woff2"), url(../fonts/NotoSans/NotoSans-Regular.woff) format("woff"), url(../fonts/NotoSans/NotoSans-Regular.otf) format("opentype");
+}
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 500;
+    src: url(../fonts/NotoSans-Medium.eot), local(※), url(../fonts/NotoSans/NotoSans-Medium.woff2) format("woff2"), url(../fonts/NotoSans/NotoSans-Medium.woff) format("woff"), url(../fonts/NotoSans/NotoSans-Medium.otf) format("opentype");
+}
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;
+    src: url(../fonts/NotoSans-Bold.eot), local(※), url(../fonts/NotoSans/NotoSans-Bold.woff2) format("woff2"), url(../fonts/NotoSans/NotoSans-Bold.woff) format("woff"), url(../fonts/NotoSans/NotoSans-Bold.otf) format("opentype");
+}
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%;
+    line-height: 1;
+    font-size: 10px;
+    color: var(--font-base-color);
+    font-family: "Noto Sans KR", "Malgun Gothic", "Helvetica Neue", "Helvetica", "Arial", "sans-serif", "serif";
+    -webkit-text-size-adjust: antialiased;
+    -webkit-font-smoothing: antialiased;
+}
+
+frameset {
+    border: 0;
+}
+
+iframe {
+    width: 100%;
+    border: 0;
+}
+
+address, article, aside, canvas, details, figure, figcaption, header, hgroup, menu, nav, section {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+hr {
+    display: none;
+}
+
+caption {
+    overflow: hidden;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    color: var(--font-heading-color);
+}
+
+h1 {
+    font-size: var(--font-h1-size);
+}
+
+h2 {
+    font-size: var(--font-h2-size);
+}
+
+h3 {
+    font-size: var(--font-h3-size);
+}
+
+h4 {
+    font-size: var(--font-h4-size);
+}
+
+h5 {
+    font-size: var(--font-h5-size);
+}
+
+h6 {
+    font-size: var(--font-h6-size);
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+}
+
+ol, ul, li, dl, dt, dd {
+    list-style: none;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th, td {
+    border: 0;
+    word-break: break-all;
+}
+
+th {
+    font-weight: 400;
+    font-size: var(--font-md-size);
+}
+
+td {
+    font-weight: 400;
+    font-size: var(--font-md-size);
+}
+
+fieldset {
+    width: 100%;
+    border: 0;
+}
+
+legend {
+    display: none;
+}
+
+em, address {
+    font-style: normal;
+}
+
+button, input, select, textarea {
+    font-weight: 400;
+    font-size: var(--font-md-size);
+    font-family: "Noto Sans KR";
+    color: var(--font-base-color);
+    vertical-align: middle;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+button {
+    overflow: visible;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+}
+
+textarea {
+    resize: none;
+}
+
+sub, sup {
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}

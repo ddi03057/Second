@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* Base Color */
+/* Mono Tone Color */
+/* Layout */
+/* Header */
+/* Aside */
+/* A Link */
+/* Component */
+/* Font Color */
+/* Status */
+/* Font Size */
+/* Content Size */
+/* 조경애 */
+.fc-p {
+    color: var(--primary-color);
+}
+
+.prescreening .result-y {
+    padding-bottom: 110px;
+    background: #fff url(../img/ico/ico_compatibility.png) no-repeat calc(100% - 40px) bottom/80px auto;
+}
+
+.certificate-empty .content-top {
+    margin-bottom: 30px;
+    padding-bottom: 110px;
+    background: #fff url(../img/ico/ico_certification.png) no-repeat calc(100% - 40px) bottom/80px auto;
+}
+.certificate-empty .content-mid {
+    font-size: 18px;
+    line-height: 30px;
+}

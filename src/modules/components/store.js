@@ -1,6 +1,20 @@
-import { atom, useAtom } from "jotai";
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+//[99,99,99,99,99,99,99,99,99,99,99,99]
+let answerStep1 = createSlice({
+  name : 'answerStep1',
+  initialState : [99,99,99,99,99,99,99,99,99,99,99,99],
+  reducers : {
+    changeAnswer(state, props){
+      state[props.payload.idx] = props.payload
+      return state;
+    }
+  }
+});
 
-function store() {
-  const alertAtom = atom({ open: false, title: "", message: "", isHeader: false, confirmBtn: [], callback: () =>{ }, curRef: "!@#" });
-}
-export default store;
+export let { changeAnswer } = answerStep1.actions;
+
+export default configureStore({
+  reducer: {
+    answerStep1 : answerStep1.reducer
+  }
+}) 
