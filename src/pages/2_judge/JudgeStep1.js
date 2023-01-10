@@ -29,7 +29,7 @@ function JudgeStep1Data() {
   }, [answer]);
 
   const jsonItemList = judgeData;
-  const [popup, setPopup] = useState({ open: false, title: "", message: "", isHeader: false, confirmBtn: [], callback: function () { } });
+  const [popup, setPopup] = useState({ open: false, title: "", message: "", isHeader: false, confirmBtn: [], callback: () =>{ }, curRef: "!@#" });
   const itemRef = useRef([]);
 
   function cbAlertModal(props) {
