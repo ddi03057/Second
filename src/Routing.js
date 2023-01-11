@@ -7,6 +7,7 @@ import Detail from './pages/guide/Detail.js';
 import { Suspense } from 'react';
 import OslHeader from './modules/components/OslHeader.js';
 import Progress from './pages/common/Progress.js';
+import CustAgree from './pages/judge/prejudge/CustAgree.js';
 
 
 //라우터 목록 정의
@@ -21,7 +22,7 @@ function Routing() {
         <Route path={PathConstants.PROGRESS} element={<Progress headerNm={PathConstants.PROGRESS_NM} />} />
         <Route path={PathConstants.GUIDE_DETAIL} element={<Detail />} />
         <Route path={PathConstants.GUIDE_READY} element={<></>} />
-        <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<></>} />
+        <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<CustAgree headerNm={PathConstants.PREJUDGE_CUSTAGREE}/>} />
         <Route path={PathConstants.PREJUDGE_SUITTEST} element={<></>} />
         <Route path={PathConstants.PREJUDGE_SUITRESULT} element={<></>} />
         <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<></>} />
