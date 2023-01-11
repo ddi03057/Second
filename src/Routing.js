@@ -1,4 +1,4 @@
-import Progress from './pages/common/Progress.js';
+
 
 import PathConstants from './modules/constants/PathConstants.js';
 
@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 import Detail from './pages/guide/Detail.js';
 import { Suspense } from 'react';
 import OslHeader from './modules/components/OslHeader.js';
+import Progress from './pages/common/Progress.js';
 
 
 //라우터 목록 정의
