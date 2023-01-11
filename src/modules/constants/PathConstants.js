@@ -62,7 +62,30 @@ const PathConstants = {
   LONEXECUTE_SUCCRESULT: '/lonexecute/result',  //대출실행결과
 
   POSTMANAGEMENT_REPAY: '/postmanagement/repay',  //대출상환
-  POSTMANAGEMENT_REVOKREPAY: '/postmanagement/revokrepay' //계약철회 후 상환
+  POSTMANAGEMENT_REVOKREPAY: '/postmanagement/revokrepay', //계약철회 후 상환
+
+
+  PROGRESS_NM: '진행현황', //진행상태
+  GUIDE_DETAIL_NM: '상품안내',  //상품안내
+  GUIDE_READY_NM: '대출신청 전 사전준비안내',  //대출신청 전 사전준비안내
+
+  PREJUDGE_CUSTAGREE_NM: '고객동의',  //고객동의
+  PREJUDGE_SUITTEST_NM: '적합성적정성검사',  //적합성적정성검사
+  PREJUDGE_SUITRESULT_NM: '적합성적정성결과',  //적합성적정성결과
+  PREJUDGE_SELFCHECK_NM: '자가진단',  //자가진단
+  PREJUDGE_GRTINFOINPUT_NM: '사전심사자료작성',  //사전심사자료작성
+  PREJUDGE_DOCSTATUS_NM: '서류제출상태',  //서류제출상태
+  
+  GRTJUDGE_APPRINFO_NM: '보증승인내역 확인',  //보증승인내역 확인
+  GRTJUDGE_ACCOPEN_NM: '계좌개설',  //개좌개설
+
+  LONEXECUTE_APPLYINFOINPUT_NM: '대출신청서작성 및 실행요청',  //대출신청서작성 및 실행요청
+  LONEXECUTE_AGRMINPUT_NM: '여신거래약정서 작성',  //여신거래약정서 작성
+  LONEXECUTE_UNTACTAGRM_NM: '비대면 약정',  //비대면 약정
+  LONEXECUTE_SUCCRESULT_NM: '대출실행결과',  //대출실행결과
+
+  POSTMANAGEMENT_REPAY_NM: '대출상환',  //대출상환
+  POSTMANAGEMENT_REVOKREPAY_NM: '계약철회 후 상환' //계약철회 후 상환
 
 }
 

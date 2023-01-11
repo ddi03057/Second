@@ -1,20 +1,20 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
-//[99,99,99,99,99,99,99,99,99,99,99,99]
-let answerStep1 = createSlice({
-  name : 'answerStep1',
-  initialState : [99,99,99,99,99,99,99,99,99,99,99,99],
-  reducers : {
-    changeAnswer(state, props){
-      state[props.payload.idx] = props.payload
-      return state;
-    }
-  }
-});
+import { atom } from "jotai";
 
-export let { changeAnswer } = answerStep1.actions;
 
-export default configureStore({
-  reducer: {
-    answerStep1 : answerStep1.reducer
-  }
-}) 
+// function getStore(props) {
+//   switch(props) {
+//       case 'loanTerm'     : return loanTermList;
+//       case 'crdBru'       : return crdBruList;
+//       case 'email'        : return emailList;
+//       case 'judgeStepNm'  : return arrJudgeStepNm;
+//       case 'loanStepNm'   : return arrLoanStepNm
+//       case 'page'         : return pageList;
+//       //case 'valid1' : return validList1;
+//       //case 'valid2' : return validlist2;
+//   }
+//   return null;
+// }
+
+// export default getStore;
+
+export const headerAtom = atom('헤더');

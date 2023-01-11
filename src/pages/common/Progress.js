@@ -1,6 +1,7 @@
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
-import { Card } from 'react-bootstrap';
-import Footer from './Footer';
+//import { Card } from 'react-bootstrap';
+
+import OslHeader from '../../modules/components/OslHeader';
 
 /**
  * 화면당 3 step 사전심사, 보증신청, 대출실행
@@ -30,6 +31,7 @@ function Progress(props) {
   
   const stepNum = 1;//props.step;
   const status = 0;//props.status;
+  const headerNm = props.headerNm;
 
   const stepTitle = [
     {title: '사전심사'}, 
@@ -63,13 +65,12 @@ function Progress(props) {
       return null;
     }
   }
-  function cbFooter() {
 
-  }
   const getJosa = (word) => checkBatchimEnding(word)?"이":"가";
   return (
     <>
-      <Card>
+      <OslHeader headerNm={headerNm}/>
+      {/* <Card>
         <Card.Header style={{backgroundColor: "#FFFFFF", borderBottom: "0"}}>
           <Stepper 
             circleFontSize      ={ 0 }
@@ -100,14 +101,7 @@ function Progress(props) {
             {(status===0)&& <>거절사유</>}
           </Card.Text>
           {(status===2 && stepNum!=2)&&
-          <Footer
-            obj={{
-              type: "button",
-              disabled: false,
-              text: [btnTxt()],
-              link: "",
-              callbackId: cbFooter
-            }} ></Footer>
+           <>버튼</> 
           }
         </Card.Body>
         <Card.Footer style={{backgroundColor: "#FFFFFF", borderTop: "0"}}>
@@ -116,7 +110,7 @@ function Progress(props) {
           {(status===2 && stepNum===1)&& <>*보증승인일로부터 30일 이내에 대출실행을 완료해주시기 바랍니다. 경과 시 보증승인은 자동 취소됩니다.</>}
           {}
         </Card.Footer>
-      </Card>
+      </Card> */}
     </>
     
 
