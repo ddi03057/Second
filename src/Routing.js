@@ -9,6 +9,7 @@ import OslHeader from './modules/components/OslHeader.js';
 //import Progress from './pages/common/Progress.js';
 import CustAgree from './pages/judge/prejudge/CustAgree.js';
 import Loading from './modules/components/Loading.js';
+import SelfCheck from './pages/judge/prejudge/SelfCheck.js';
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 
@@ -27,7 +28,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<CustAgree headerNm={PathConstants.PREJUDGE_CUSTAGREE_NM} />} />
         <Route path={PathConstants.PREJUDGE_SUITTEST} element={<></>} />
         <Route path={PathConstants.PREJUDGE_SUITRESULT} element={<></>} />
-        <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<></>} />
+        <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck/>} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<></>} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<></>} />
         {/* <EsgRouting path={`/common/login`} /> */}
