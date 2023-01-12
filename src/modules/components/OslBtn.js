@@ -40,10 +40,31 @@ function OslBtn(props) {
   let [link, setLink] = useState(obj.link);
   const navigate = useNavigate();
 
-  return(
-    <>
-    </>
+  return (
+    <div className="content-footer">
+      <button 
+        type="button" 
+        className="btn btn-lg default-bg"
+        disabled={obj.disabled}
+        onClick={()=> {
+          setCallback(obj.callbackId, navigate, link)
+        }} 
+      >
+        <span className="txt">제출</span>
+      </button>
+    </div>
   )
+}
+
+function setCallback(callbackId, arg0, arg1) {
+
+  if(typeof callbackId == 'function') {
+    callbackId(arg0, arg1);
+  }else {
+    console.log("콜백함수가 없습니다.");
+    return;
+  }
+  
 }
 
 export default OslBtn;

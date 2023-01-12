@@ -12,6 +12,7 @@ import Loading from './modules/components/Loading.js';
 import SelfCheck from './pages/judge/prejudge/SelfCheck.js';
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
+const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 
 //라우터 목록 정의
 function Routing() {
@@ -26,7 +27,7 @@ function Routing() {
         <Route path={PathConstants.GUIDE_DETAIL} element={<Detail />} />
         <Route path={PathConstants.GUIDE_READY} element={<></>} />
         <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<CustAgree headerNm={PathConstants.PREJUDGE_CUSTAGREE_NM} />} />
-        <Route path={PathConstants.PREJUDGE_SUITTEST} element={<></>} />
+        <Route path={PathConstants.PREJUDGE_SUITTEST} element={<SuitTest headerNm={PathConstants.PREJUDGE_SUITTEST_NM} />} />
         <Route path={PathConstants.PREJUDGE_SUITRESULT} element={<></>} />
         <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck/>} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<></>} />
