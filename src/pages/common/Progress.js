@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
 //import { Card } from 'react-bootstrap';
 
@@ -28,7 +29,7 @@ import OslHeader from '../../modules/components/OslHeader';
  * @returns 
  */
 function Progress(props) {
-  
+
   const stepNum = 1;//props.step;
   const status = 0;//props.status;
   const headerNm = props.headerNm;
@@ -65,11 +66,33 @@ function Progress(props) {
       return null;
     }
   }
-
   const getJosa = (word) => checkBatchimEnding(word)?"이":"가";
+
+  const ajaxTest1 = () => axios.get("/api3/fup/customer/form/2017110617593821483973066352935.pdf").then((response)=>{
+    console.log(response);
+  })
+  .catch(()=>{
+    console.log("fail");
+  })
+  const ajaxTest2 = () => axios.get('/api1/search?q=title:"Drosophila"%20and%20body:"RNA"&fl=id&start=1&rows=100').then((response)=>{
+    console.log(response.data.response.docs);
+  })
+  .catch(()=>{
+    console.log("fail");
+  })
+
   return (
     <>
       <OslHeader headerNm={headerNm}/>
+      <br/>
+      <br/>
+      <br/>
+      <br/><br/>
+      <br/>
+      <br/>
+      <br/>
+      <input type="button" value="axios테스트1" onClick={()=>{ajaxTest1();}}/>
+      <input type="button" value="axios테스트2" onClick={()=>{ajaxTest2();}}/>
       {/* <Card>
         <Card.Header style={{backgroundColor: "#FFFFFF", borderBottom: "0"}}>
           <Stepper 

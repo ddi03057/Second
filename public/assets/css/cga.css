@@ -15,17 +15,32 @@
     color: var(--primary-color);
 }
 
+.line-innerTxt {
+    font-size: 18px;
+    line-height: 30px;
+}
+
 .prescreening .result-y {
     padding-bottom: 110px;
     background: #fff url(../img/ico/ico_compatibility.png) no-repeat calc(100% - 40px) bottom/80px auto;
 }
 
 .certificate-empty .content-top {
-    margin-bottom: 30px;
-    padding-bottom: 110px;
-    background: #fff url(../img/ico/ico_certification.png) no-repeat calc(100% - 40px) bottom/80px auto;
+    padding-bottom: 140px;
+    background: #fff url(../img/ico/ico_certification.png) no-repeat calc(100% - 40px) calc(100% - 30px)/80px auto;
 }
-.certificate-empty .content-mid {
-    font-size: 18px;
-    line-height: 30px;
+
+.approval-empty .content-top {
+    padding-bottom: 160px;
+    background: #fff url(../img/ico/img_no_guarantee.png) no-repeat calc(100% - 40px) bottom/120px auto;
+}
+
+.error .content-top {
+    padding-bottom: 175px;
+    background: #fff url(../img/ico/ico_service_fail.png) no-repeat calc(100% - 50px) calc(100% - 30px)/110px auto;
+}
+
+.system-check .content-top {
+    padding-bottom: 175px;
+    background: #fff url(../img/ico/ico_system_check.png) no-repeat calc(100% - 50px) calc(100% - 30px)/85px auto;
 }

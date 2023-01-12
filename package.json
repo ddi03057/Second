@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
+    "http-proxy-middleware": "^2.0.6",
     "jotai": "^1.12.1",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
@@ -15,7 +16,6 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
-    "react-spinners-css": "^2.0.1",
     "react-stepper-enhanced": "^1.0.0",
     "web-vitals": "^2.1.4"
   },
@@ -42,6 +42,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://www.ibk.co.kr"
+  }
+
 }

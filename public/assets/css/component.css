@@ -30,8 +30,8 @@ input[type=search],
 input[type=date],
 input[type=time],
 input[type=color] {
-    height: 36px;
-    padding: 4px 12px;
+    height: 60px;
+    padding: 17px 15px;
     background-color: #fff;
     font-weight: 400;
 }
