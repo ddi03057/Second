@@ -14,15 +14,12 @@
 .content .content-body .content-top {
     position: relative;
 }
-.content .content-body .content-top.line-be4 {
-    border-bottom: 2px solid #e4e8eb;
-}
 .content .content-body .content-top .top-txt {
     display: inline-block;
     margin-top: 10px;
     font-size: 16px;
 }
-.content .content-body .content-top .top-num {
+.content .content-body .content-top .phone-num {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -32,6 +29,16 @@
             justify-content: center;
     font-size: 35px;
     line-height: 28px;
+}
+.content .content-body .content-top .auth-num {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 40px 0;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    font-size: 80px;
 }
 .content .content-body .content-top .payment-img {
     display: -webkit-box;
@@ -44,10 +51,14 @@
 .content .content-body .content-top .payment-img img {
     width: 24vw;
 }
-.content .content-body .section .info-wrap {
+.content .content-body .content-top.line-be4 {
+    border-bottom: 2px solid #e4e8eb;
+}
+
+.info-wrap {
     padding: 10px 0;
 }
-.content .content-body .section .info-wrap .info-box {
+.info-wrap .info-box {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -60,75 +71,159 @@
     font-size: 18px;
     line-height: 28px;
 }
-.content .content-body .section .info-wrap .info-box + .info-box {
+.info-wrap .info-box + .info-box {
     margin-top: 10px;
 }
-.content .content-body .section .info-wrap .info-box .info-label {
+.info-wrap .info-box .info-label {
     display: inline-block;
     position: relative;
     width: calc(100% - 30px);
     word-break: keep-all;
 }
-.content .content-body .section .info-wrap .info-box:last-child {
+.info-wrap .info-box.ai-c {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.info-wrap .info-box:last-child {
     margin-bottom: 0;
 }
-.content .content-body .section .step-list .step-item {
+
+.step-list .step-item {
     font-size: 16px;
     line-height: 28px;
 }
-.content .content-body .section .step-list .step-item + .step-item {
+.step-list .step-item + .step-item {
     margin-top: 20px;
 }
-.content .content-body .section .step-list .step-item .step-tit {
+.step-list .step-item .step-tit {
     margin-bottom: 5px;
 }
-.line-bf4 {
-    border-bottom: 2px solid #f4f4f4;
-}
 
-.content .content-body .section .noti-list {
+.noti-wrap {
     font-size: 16px;
 }
-.content .content-body .section .noti-list.pad-15 {
-    padding: 15px;
-}
-.content .content-body .section .noti-list.bg-f8 {
-    background-color: #f8f8f8;
-}
-.content .content-body .section .noti-list .noti-tit {
+.noti-wrap .noti-tit {
     margin-bottom: 15px;
     font-size: 16px;
 }
-.content .content-body .section .noti-list .noti-item .noti-txt {
+.noti-wrap .noti-list .noti-item {
     margin-bottom: 10px;
     padding-left: 5px;
     line-height: 28px;
 }
-.content .content-body .section .noti-list .noti-item .noti-txt.list-st1 {
+.list-st1 li {
     list-style-type: "·";
 }
-.content .content-body .section .noti-list .noti-item .noti-txt.list-st2 {
+
+.list-st2 li {
     list-style-type: "*";
 }
-.content .content-body .section .chk-txt {
+
+.noti-wrap .chk-txt {
     margin-top: 30px;
     font-size: 18px;
 }
-
-.ai-c {
-    -webkit-box-align: center !important;
-        -ms-flex-align: center !important;
-            align-items: center !important;
+.noti-wrap.type01 {
+    padding: 15px 15px 15px 20px;
+    background-color: #f8f8f8;
+}
+.noti-wrap.type02 {
+    margin-left: 10px;
 }
 
-.fc-3 {
+.descr-wrap .descr-cont + .descr-cont {
+    margin-top: 30px;
+}
+.descr-wrap .descr-cont .descr-tit {
+    margin-bottom: 20px;
+}
+.descr-wrap .descr-cont .descr-txt {
+    margin-bottom: 10px;
+    font-size: 18px;
+    line-height: 28px;
+}
+.descr-wrap .descr-add .descr-add-cont {
+    margin-left: 10px;
+}
+.descr-wrap .descr-add .descr-add-cont > .txt {
+    padding-left: 5px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.descr-wrap .descr-add .descr-add-cont > .txt + .txt {
+    margin-top: 10px;
+}
+
+.auth-wrap .auth-txt {
+    padding: 10px 0;
+    font-size: 18px;
+    line-height: 28px;
+}
+.auth-wrap .auth-btn {
+    margin-top: 50px;
+}
+.btn-line02 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3982d8;
+    font-size: 18px;
+}
+
+.commitment .commit-wrap {
+    border: 1px solid #d8d6de;
+    border-radius: 4px;
+}
+.commitment .commit-wrap .commit-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    position: relative;
+}
+.commitment .commit-wrap .commit-header .ico-form-folding::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: url(/views/assets/img/ico/ico_form_follding.png) no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+}
+.commitment .commit-wrap .commit-cont > .txt {
+    font-size: 14px;
+    line-height: 22px;
+}
+.commitment .commit-wrap [class*=commit-] {
+    padding: 15px;
+}
+.commitment .commit-wrap + .commit-wrap {
+    margin-top: 20px;
+}
+.commitment .commit-wrap:last-child {
+    margin-bottom: 10px;
+}
+
+.line-bf4 {
+    border-bottom: 2px solid #f4f4f4;
+}
+
+.fc-dark {
     color: #333333;
 }
 
-.fc-6 {
+.fc-gray {
     color: #666666;
 }
 
-.fc-9 {
+.fc-lightGray {
     color: #999999;
 }

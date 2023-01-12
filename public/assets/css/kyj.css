@@ -11,10 +11,23 @@
 /* Font Size */
 /* Content Size */
 /* 김윤정 */
-/* 임시 */
-.inner-w {
-    padding-left: 25px !important;
-    padding-right: 25px !important;
+/* 공통 */
+* + .inp-wrap {
+    margin-top: 10px;
+}
+* + .terms-wrap {
+    margin-top: 30px;
+}
+* + .sele-list-wrap {
+    padding-top: 30px;
+}
+
+.red-16c {
+    color: #f4516c;
+}
+
+.u-b-line { /* border-bottom underline */
+    border-bottom: 1px solid;
 }
 
 .txt-wrap .txt {
@@ -51,11 +64,8 @@
 .txt-wrap b {
     font-weight: bold;
 }
-.txt-wrap .red {
-    color: #f4516c;
-}
 
-.sele-list * {
+.sele-list *:not(em) {
     display: block;
     position: relative;
 }
@@ -81,6 +91,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    width: 100%;
     height: 100%;
     padding: 17px 15px;
     font-size: 18px;
@@ -186,10 +197,6 @@
     margin-top: 20px;
 }
 
-* + .sele-list-wrap {
-    padding-top: 30px;
-}
-
 .sele-list-wrap > h2 {
     font-size: 18px;
     line-height: 30px;
@@ -200,24 +207,12 @@
     margin-top: 20px;
 }
 
-.content-body.certified01 .section {
-    padding-top: 10px;
-}
-.content-body.certified02 .link-btn-wrap, .content-body.certified03 .link-btn-wrap {
+.content-body.certified .link-btn-wrap {
     display: flex;
     justify-content: flex-end;
 }
-.content-body.certified02 .content-top, .content-body.certified03 .content-top {
-    padding-bottom: 30px;
-}
-.content-body.certified02 .section, .content-body.certified03 .section {
-    padding-top: 30px;
-}
-.content-body.certified03 .terms-wrap {
-    margin-top: 30px;
-}
 
-.link-btn-wrap .link-btn.type01 {
+.link-btn.type01 {
     display: block;
     position: relative;
     padding-bottom: 4px;
@@ -271,6 +266,9 @@
     display: block;
     position: relative;
 }
+.ui-decide + .ui-decide {
+    margin-top: 10px;
+}
 .ui-decide > input {
     display: block;
     position: relative;
@@ -299,4 +297,19 @@
 
 .terms-wrap .txt-wrap + .ui-cont-wrap {
     margin-top: 20px;
+}
+
+.inp-wrap + .link-btn-wrap {
+    margin-top: 20px;
+}
+
+.inp.type01 {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #d8d6de;
+    border-radius: 4px;
+    font-size: 18px;
+    text-align: left;
+    color: #333;
+    font-weight: 400;
 }
