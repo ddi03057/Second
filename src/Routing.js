@@ -29,7 +29,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<CustAgree headerNm={PathConstants.PREJUDGE_CUSTAGREE_NM} />} />
         <Route path={PathConstants.PREJUDGE_SUITTEST} element={<SuitTest headerNm={PathConstants.PREJUDGE_SUITTEST_NM} />} />
         <Route path={PathConstants.PREJUDGE_SUITRESULT} element={<></>} />
-        <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck/>} />
+        <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck CustAgree headerNm={PathConstants.PREJUDGE_SELFCHECK}/>} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<></>} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<></>} />
         {/* <EsgRouting path={`/common/login`} /> */}
