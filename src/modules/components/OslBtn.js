@@ -45,7 +45,8 @@ function OslBtn(props) {
       {
         obj.text.map((data, idx)=>{
           return (
-            <button 
+            <button
+              key={`btn_${idx}`} 
               type="button" 
               className="btn btn-lg default-bg"
               disabled={obj.disabled}
