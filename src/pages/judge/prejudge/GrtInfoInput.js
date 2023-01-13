@@ -12,9 +12,14 @@
  * @param {*} props
  * props항목별 설명
  */
-import { useState, useTransition } from "react";
+
+
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
+import PathConstants from "../../../modules/constants/PathConstants";
+
 
 const GrtInfoData = [
     {
@@ -36,6 +41,7 @@ const GrtInfoData = [
                 value: "타인"
             },
         ],
+        msg : "배우자, 타인 선택시 진행이 불가합니다."
     },
     {
         id: 1,
@@ -181,11 +187,28 @@ function GrtInfoInput(props) {
 
     const GrtInfoDataLen = GrtInfoData.length;  //데이터길이
     let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
+    let navigate = useNavigate(); //다음화면을 위한 navigate
+    function cbOslBtn() {
 
-    function cbOslBtn () {
- 
+        const msg = validCheckEmpty(userResult);
+        if (!!msg) {
+            alert(msg);
+            //스크롤이동
+        } else {
+
+            //데이터 전송
+            alert("고객님의 소중한 응답에 감사합니다.");
+            //다음페이지 이동
+            navigate(
+                PathConstants.PREJUDGE_SUITRESULT,
+                {
+                    state: {
+                        result: true,
+                        value: userResult
+                    }
+                });
+        }
     }
-
     return (
         <>
             <OslHeader headerNm={props.headerNm} />
@@ -273,7 +296,6 @@ function RadioComponent(props) {
                                     let copy = [...props.userResult]
                                     copy[props.idx] = data.value;
                                     props.setUserResult(copy);
-                                    console.log(props.userResult);
 
                                 }} />
                             <label htmlFor={`sRadio${objRadioData.id}_${data.id}`} className="item-cont">
@@ -302,11 +324,15 @@ function TextComponent(props) {
                         id="text01_01"
                         placeholder="5000000"
                         className="w100p ta-r"
+                        size="9"
                         onChange={(e) => {
+                            if(e.currentTarget.value > 100000000){
+                                alert("대출 희망금액은 최대 1억원까지 입력가능합니다.")
+                            }
                             let copy = [...props.userResult];
                             copy[props.idx] = e.currentTarget.value;
                             props.setUserResult(copy);
-                            console.log(props.userResult);
+                            console.log(props.userResult)
 
                         }}
                     />
@@ -328,7 +354,6 @@ function SelectComponent(props) {
                             let copy = [...props.userResult];
                             copy[props.idx] = e.currentTarget.value;
                             props.setUserResult(copy);
-                            console.log(props.userResult);
                         }}>
                         <option value="">선택하세요</option>
                         <option value="5">5년</option>
@@ -340,5 +365,59 @@ function SelectComponent(props) {
         </div>
     )
 
+}
+
+/**
+* 빈값 밸리데이션 체크
+* 빈값일시 항목별 title, 조사, 동사로 메세지값 완성
+* @param {사용자 체크값} userResult 
+* @param {선택한 신용기관} userCrdBru 
+* @param {입력한 신용점수} userCrdScr 
+* @returns 
+*/
+function validCheckEmpty(userResult) {
+
+    let msg = "";
+    let verb = "하시기 바랍니다.";
+    for (let i = 0; i < userResult.length; i++) {
+        if (!userResult[i] || userResult[i] === 99) {
+            let josa = "";
+            if (checkBatchimEnding(GrtInfoData[GrtInfoData.findIndex((data) => data.id === i)].title)) {
+                josa = "을 ";
+            } else {
+                josa = "를 ";
+            }
+            if (i == 1 || i == 11) {
+                verb = "입력" + verb;
+            } else {
+                verb = "선택" + verb;
+            }
+            if(userResult[8] < 10000000){
+                alert("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
+            }else if(userResult[8] < 1000000){
+                alert("1백만원 단위로 입력 가능합니다.")
+            }
+            msg = GrtInfoData[GrtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
+
+            return msg;
+        } 
+    }
+    return null;
+}
+
+/**
+ * 단어별 맞춤 조사 선택을 위한 함수
+ * @param {*} word 
+ * @returns 
+ */
+function checkBatchimEnding(word) {
+    if (typeof word !== 'string') return null;
+
+    var lastLetter = word[word.length - 1];
+    var uni = lastLetter.charCodeAt(0);
+
+    if (uni < 44032 || uni > 55203) return null;
+
+    return (uni - 44032) % 28 != 0;
 }
 export default GrtInfoInput;
