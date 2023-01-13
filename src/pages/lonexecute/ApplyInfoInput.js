@@ -9,6 +9,7 @@
 
 import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
+import collectData from "../../modules/constants/collectData.js";
 
 /**
  * 화면명
@@ -17,6 +18,7 @@ import OslHeader from "../../modules/components/OslHeader";
  * props항목별 설명
  */
 function ApplyInfoInput(props) {
+  
   function cbOslBtn() {
 
   }
