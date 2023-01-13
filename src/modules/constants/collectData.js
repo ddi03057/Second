@@ -392,8 +392,74 @@ const custAgreeData = [
       type: "text",
       pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
 
-  },
+  }
+];
 
+const applyInfoInputData = [
+  {
+    id: 0,
+    title: "금리종류",
+    type: "text"
+  },
+  {
+    id: 1,
+    title: "자금용도",
+    type: "radio",
+    radioId: 0,
+    radioList : [
+      {
+          id : 0,
+          value : "사업장운영자금" 
+      },
+      {
+          id : 1,
+          value : "원부자재구입" 
+      },
+      {
+          id : 2,
+          value : "기타" 
+      }
+    ],
+  },
+  {
+    id: 2,
+    title: "할부금 및 이자납입일 - 매월",
+    type: "radio",
+    radioId: 1,
+    radioList: [
+      {
+          id : 0,
+          value : "1일" 
+      },
+      {
+          id : 1,
+          value : "10일" 
+      },
+      {
+          id : 2,
+          value : "20일" 
+      },
+      {
+          id : 3,
+          value : "직접입력" 
+      }
+  
+    ]
+  },
+  {
+    id: 3,
+    title: "대출금 입금 및 자동이체 계좌번호",
+    type: "select",
+    selectId: 0,
+    selectList: [
+      {
+        id: 0,
+        bru: "기업",
+        accNum: "123-45678-00-00000",
+        name: "기업 123-45678-00-00000"
+      }
+    ]
+  }
 ];
 
 export default (props)=> {
@@ -404,6 +470,7 @@ export default (props)=> {
     case 'page': return pageList;
     case 'SuitTest': return suitTestData; //적합성적정성검사 데이터
     case 'CustAgree' : return custAgreeData; // 고객동의 데이터
+    case 'ApplyInfoInput': return applyInfoInputData; //대출신청서작성 및 실행요청
     default : return null;
   }
 };
