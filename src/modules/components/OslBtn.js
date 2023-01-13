@@ -39,19 +39,27 @@ function OslBtn(props) {
 
   let [link, setLink] = useState(obj.link);
   const navigate = useNavigate();
-
+  
   return (
     <div className="content-footer">
-      <button 
-        type="button" 
-        className="btn btn-lg default-bg"
-        disabled={obj.disabled}
-        onClick={()=> {
-          setCallback(obj.callbackId, navigate, link)
-        }} 
-      >
-        <span className="txt">제출</span>
-      </button>
+      {
+        obj.text.map((data, idx)=>{
+          return (
+            <button 
+              type="button" 
+              className="btn btn-lg default-bg"
+              disabled={obj.disabled}
+              onClick={()=> {
+                setCallback(obj.callbackId, navigate, link)
+              }} 
+            >
+              <span className="txt">{data}</span>
+            </button>
+          );
+        })
+      }
+
+      
     </div>
   )
 }
