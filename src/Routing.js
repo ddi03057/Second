@@ -10,7 +10,7 @@ import OslHeader from './modules/components/OslHeader.js';
 import CustAgree from './pages/judge/prejudge/CustAgree.js';
 import Loading from './modules/components/Loading.js';
 import SelfCheck from './pages/judge/prejudge/SelfCheck.js';
-
+import GrtInfoInput from './pages/judge/prejudge/GrtInfoInput.js';
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 
@@ -29,8 +29,8 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<CustAgree headerNm={PathConstants.PREJUDGE_CUSTAGREE_NM} />} />
         <Route path={PathConstants.PREJUDGE_SUITTEST} element={<SuitTest headerNm={PathConstants.PREJUDGE_SUITTEST_NM} />} />
         <Route path={PathConstants.PREJUDGE_SUITRESULT} element={<></>} />
-        <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck CustAgree headerNm={PathConstants.PREJUDGE_SELFCHECK}/>} />
-        <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<></>} />
+        <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck headerNm={PathConstants.PREJUDGE_SELFCHECK}/>} />
+        <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT}/>} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<></>} />
         {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />

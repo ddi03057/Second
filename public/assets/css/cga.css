@@ -32,7 +32,7 @@
     display: inline-block;
     width: 24px;
     height: 24px;
-    vertical-align: -3px;
+    vertical-align: -4px;
     background: #fff url(../img/ico/ico_amount.png) no-repeat left top/100% auto;
 }
 
@@ -105,34 +105,31 @@
     padding-bottom: 175px;
     background: #fff url(../img/ico/img_loan_fail.png) no-repeat calc(100% - 40px) bottom/130px auto;
 }
-.reason .txt-why {
+.loan-fail .reason .txt-why {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     font-size: 18px;
     line-height: 30px;
 }
-.reason .txt-why dt {
+.loan-fail .reason .txt-why dt {
     width: 330px;
 }
-.reason .txt-desc {
+.loan-fail .reason .txt-desc {
     padding-top: 20px;
     font-size: 16px;
     line-height: 28px;
     color: #666;
 }
-.reason .txt-desc span {
+.loan-fail .reason .txt-desc span {
     display: block;
     padding-top: 10px;
 }
-.reason .txt-desc a {
+.loan-fail .reason .txt-desc a {
     vertical-align: top;
     color: inherit;
 }
 
-.loan-amount {
-    padding: 43px 0 20px;
-}
 .loan-amount .txt-won {
     font-size: 16px;
     font-weight: bold;
@@ -160,10 +157,6 @@
     vertical-align: -4px;
 }
 
-.product-info .section {
-    padding: 0;
-}
-
 .box-cont {
     font-size: 18px;
 }
@@ -186,13 +179,13 @@
 .box-cont .b-txt dt:first-child {
     padding-top: 0;
 }
-.box-cont .b-txt .list-type01 li {
+.list-type01 li {
     position: relative;
     margin-top: 10px;
     padding-left: 13px;
     line-height: 30px;
 }
-.box-cont .b-txt .list-type01 li::before {
+.list-type01 li::before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -203,23 +196,26 @@
     border: 2px solid var(--primary-color);
     border-radius: 50%;
 }
-.box-cont .b-txt .list-type01 li:first-child {
+.list-type01 li:first-child {
     margin-top: 0;
 }
-.box-cont .b-txt .list-type02 li::before {
+
+.list-type02 li::before {
     content: "∙ ";
 }
-.box-cont .b-txt .list-type03 li::before {
+
+.list-type03 li::before {
     content: "※ ";
 }
-.box-cont .b-txt .list-type04 li {
+
+.list-type04 li {
     position: relative;
     padding: 0 0 10px 18px;
     font-size: 16px;
     line-height: 28px;
     color: #666;
 }
-.box-cont .b-txt .list-type04 li::before {
+.list-type04 li::before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -230,6 +226,11 @@
     border-radius: 50%;
     background-color: #666;
 }
+
+.list-type05 li::before {
+    content: "* ";
+}
+
 .box-cont .b-txt .sTxt1 {
     font-size: 16px;
     color: #666;
@@ -299,7 +300,7 @@
 .process-wrap .process-status li:last-child::before {
     display: none;
 }
-.process-wrap .process-status li.ing, .process-wrap .process-status li.complete {
+.process-wrap .process-status li.ing {
     color: var(--primary-color);
     font-weight: bold;
 }
@@ -310,6 +311,12 @@
 .process-wrap .process-status li.complete::after {
     border-color: var(--primary-color);
     background-color: var(--primary-color);
+}
+.process-wrap .process-status li.complete {
+    color: var(--primary-color);
+}
+.process-wrap .process-status li.complete:last-child {
+    font-weight: bold;
 }
 .process-wrap .txt-result {
     padding: 60px 0;
@@ -325,4 +332,66 @@
 .process-wrap .txt-msg a {
     color: inherit;
     vertical-align: top;
+}
+.process-wrap .info-wrap .info-box .info-label {
+    width: auto;
+}
+
+.process-v {
+    position: relative;
+}
+.process-v::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 9px;
+    top: 5%;
+    width: 1px;
+    height: 90%;
+    background-color: #c8c8c8;
+}
+.process-v li {
+    position: relative;
+    margin-top: 30px;
+    padding-left: 50px;
+    font-size: 18px;
+}
+.process-v li::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 18px;
+    height: 18px;
+    border: 5px solid #c8c8c8;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.process-v li:first-child {
+    margin-top: 0;
+}
+.process-v li .date {
+    color: var(--primary-color);
+}
+.process-v li .pay {
+    position: relative;
+    margin-top: 20px;
+}
+.process-v li .pay::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -41px;
+    top: 9px;
+    width: 20px;
+    height: 1px;
+    background-color: #c8c8c8;
+}
+.process-v li .pay span {
+    display: inline-block;
+    padding-top: 5px;
+    color: #666;
+    font-size: 16px;
+    line-height: 28px;
 }

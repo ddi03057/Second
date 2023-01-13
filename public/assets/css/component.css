@@ -479,7 +479,7 @@ button {
 
 .btn-md {
     min-width: 125px;
-    height: 60px;
+    height: 36px;
     padding: 0 16px;
 }
 .btn-md .txt {
@@ -488,13 +488,13 @@ button {
 }
 
 .btn-sm {
-    display: inline-block;
-    height: 60px;
-    padding: 8px 20px;
+    min-width: 80px;
+    height: 40px;
+    padding: 0 12px;
 }
 .btn-sm .txt {
-    font-size: 16px;
-    line-height: 23px;
+    font-size: 14px;
+    line-height: 30px;
 }
 
 /* form */

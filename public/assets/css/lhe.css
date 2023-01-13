@@ -74,7 +74,7 @@
 .info-wrap .info-box + .info-box {
     margin-top: 10px;
 }
-.info-wrap .info-box .info-label {
+.info-wrap .info-box .tit, .info-wrap .info-box .txt {
     display: inline-block;
     position: relative;
     width: calc(100% - 30px);
@@ -100,17 +100,22 @@
     margin-bottom: 5px;
 }
 
-.noti-wrap {
+.list-wrap .list-tit {
     font-size: 16px;
 }
-.noti-wrap .noti-tit {
-    margin-bottom: 15px;
-    font-size: 16px;
+.list-wrap .list-tit + [class*=bullet-] {
+    margin-top: 15px;
 }
-.noti-wrap .noti-list .noti-item {
-    margin-bottom: 10px;
+.list-wrap .bullet-type01 {
+    display: block;
+}
+.list-wrap .bullet-type01 .txt {
     padding-left: 5px;
+    font-size: 16px;
     line-height: 28px;
+}
+.list-wrap .bullet-type01 .txt + .txt {
+    margin-top: 10px;
 }
 .list-st1 li {
     list-style-type: "·";
@@ -120,15 +125,15 @@
     list-style-type: "*";
 }
 
-.noti-wrap .chk-txt {
+.list-wrap .chk-txt {
     margin-top: 30px;
     font-size: 18px;
 }
-.noti-wrap.type01 {
+.list-wrap.type01 {
     padding: 15px 15px 15px 20px;
     background-color: #f8f8f8;
 }
-.noti-wrap.type02 {
+.list-wrap.type02 {
     margin-left: 10px;
 }
 
@@ -160,16 +165,14 @@
     font-size: 18px;
     line-height: 28px;
 }
-.auth-wrap .auth-btn {
-    margin-top: 50px;
-}
 .btn-line02 {
-    padding-bottom: 10px;
+    padding-bottom: 4px;
     border-bottom: 1px solid #3982d8;
     font-size: 18px;
 }
 
 .commitment .commit-wrap {
+    padding: 17px 15px;
     border: 1px solid #d8d6de;
     border-radius: 4px;
 }
@@ -184,8 +187,23 @@
         -ms-flex-pack: justify;
             justify-content: space-between;
     position: relative;
+    margin-bottom: 2px;
 }
-.commitment .commit-wrap .commit-header .ico-form-folding::before {
+.commitment .commit-wrap .commit-header .commit-open::before {
+    content: "";
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: url(/views/assets/img/ico/ico_form_open.png) no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+}
+.commitment .commit-wrap .commit-header .commit-hide::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -198,12 +216,16 @@
     background-size: contain;
     cursor: pointer;
 }
+.commitment .commit-wrap .commit-cont {
+    display: none;
+    margin-top: 15px;
+}
 .commitment .commit-wrap .commit-cont > .txt {
     font-size: 14px;
     line-height: 22px;
 }
-.commitment .commit-wrap [class*=commit-] {
-    padding: 15px;
+.commitment .commit-wrap .commit-cont.active {
+    display: block;
 }
 .commitment .commit-wrap + .commit-wrap {
     margin-top: 20px;
