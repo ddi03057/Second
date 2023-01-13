@@ -1,15 +1,8 @@
-/** 
- * import 순서
- * react hook, custom hook, 
- * external component(module), 
- * internal component(module), 
- * data, 
- * css
- */
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
+import PathConstants from "../../../modules/constants/PathConstants";
 
 const suitTestData = [
   {
@@ -228,14 +221,16 @@ const suitTestData = [
     selectId : 0,
     selectList : [
       {
-        id : 1,
-        name : "NICE",
-        title : "나이스"
+        id : 0,
+        value : "01",
+        name : "KCB", //01
+        title : "올크레딧"
       },
       {
-        id : 2,
-        name : "KCB",
-        title : "올크레딧"
+        id : 1,
+        value : "02",
+        name : "NICE",
+        title : "나이스" //02
       }
     ]
   },
@@ -277,8 +272,8 @@ const suitTestData = [
   }
 ];
 /**
- * 화면명
- * 설명
+ * 화면명 : 적합성 적정성 검사
+ * 설명   : 
  * @param {*} props
  * props항목별 설명
  */
@@ -311,10 +306,53 @@ function SuitTest(props) {
   });
 
   const suitTestDataLen = suitTestData.length;  //데이터길이
-  let [userResult, setUserResult] = useState([99,99,99,99,99,99,99,99,99,99,99,99]); //결과값 저장 state
+  const [showCrdElYn, setShowCrdElYn] = useState(true); //신용관련 element show/hide
+  let [userResult, setUserResult] = useState(["01",99,"01",99,99,99,99,99,99,99,99,99]); //결과값 저장 state
+  let [userCrdBru, setUserCrdBru] = useState("01"); //신용기관 선택값
+  let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
+  let navigate = useNavigate(); //다음화면을 위한 navigate
+
+  useEffect(()=> {
+    
+    console.log(userResult);
+    if(userResult[9] === "02") {
+      setShowCrdElYn(false);
+    }else {
+      setShowCrdElYn(true);
+    }
+  }, [userResult]);
+
+  useEffect(()=> {
+
+    console.log(userCrdBru);
+  }, [userCrdBru]);
+  useEffect(()=> {
+
+    console.log(userCrdScr);
+  }, [userCrdScr]);
 
   function cbOslBtn() {
-    alert()
+    
+    const msg = validCheckEmpty(userResult, userCrdBru, userCrdScr);
+    if(!!msg) {
+      alert(msg);
+      //스크롤이동
+    }else {
+      
+      //데이터 전송
+      alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
+      //다음페이지 이동
+      navigate(
+        PathConstants.PREJUDGE_SUITRESULT,
+        {
+          state: {
+            result: true,
+            value: userResult
+        }
+      });
+    }
+    
+    
   }
   return (
     <>
@@ -348,20 +386,42 @@ function SuitTest(props) {
             <ol className="sele-list type03">
               {
                 suitTestData.map((data, idx)=> {
-                  console.log(data);
+                  
                   return (
                     <li key={`li_${idx}`} className="item">
-                      <TitleComponent titleData={arrTitleData[idx]} />
+                      <TitleComponent 
+                        titleData={arrTitleData[idx]} 
+                        showCrdElYn={(data.id===9&&data.type!="radio")?showCrdElYn:true} />
                       { 
                         (data.type === "radio") && 
                           <RadioComponent 
                             radioData={arrRadioData[data.radioId]} 
-                            styleFormGroup={(data.radioId!=8)?"form-group":"form-group inline row2"} 
+                            styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
                             fixedId={(data.radioId===0 || data.radioId===1)&&arrRadioData[data.radioId].fixedId}
+                            userResult={userResult}
+                            setUserResult={setUserResult}
+                            dataId={data.id}
                           /> 
                       }
-                      { (data.type === "text")  && <TextComponent textData={arrTextData[data.textId]} /> }
-                      { (data.type === "select")&& <SelectComponent selectData={arrSeleectData[data.selectId]} />}
+                      { 
+                        (data.type === "text")  && 
+                          <TextComponent 
+                            textData={arrTextData[data.textId]} 
+                            userResult={userResult}
+                            setUserResult={setUserResult}
+                            setUserCrdScr={setUserCrdScr}
+                            dataId={data.id}
+                            showCrdElYn={data.id===9?showCrdElYn:true}
+                          /> 
+                      }
+                      { 
+                        (data.type === "select")&& 
+                          <SelectComponent 
+                            selectData={arrSeleectData[data.selectId]}
+                            setUserCrdBru={setUserCrdBru}
+                            showCrdElYn={data.id===9?showCrdElYn:true}
+                          />
+                      }
                     </li>
                   )
                 })
@@ -405,18 +465,32 @@ function SuitTest(props) {
 
 }
 
+/**
+ * 타이틀영역 컴포넌트
+ * @param {} props 
+ * @returns 
+ */
 function TitleComponent(props) {
   const titleData = props.titleData;
-
-  return (
-    <div className="question-wrap txt-wrap">
-      <p className="txt fc-6">
-        {titleData}
-      </p>
-    </div>
-  );
+  if(props.showCrdElYn) {
+    return (
+      <div className="question-wrap txt-wrap">
+        <p className="txt fc-6">
+          {titleData}
+        </p>
+      </div>
+    );
+  }else {
+    return null;
+  }
+  
 }
 
+/**
+ * 라디오박스 컴포넌트
+ * @param {} props 
+ * @returns 
+ */
 function RadioComponent(props) {
   const objRadioData = props.radioData;
   const styleFormGroup = props.styleFormGroup;
@@ -429,7 +503,18 @@ function RadioComponent(props) {
           return (
             <div key={`sRadio${objRadioData.id}_${data.id}`} className={styleFormGroup}>
               <label className="form-radio">
-                <input type="radio" name={`sRadio${objRadioData.id}`} id={`sRadio${objRadioData.id}_${data.id}`} value="" checked={(!fixedId && fixedId===data.id)?true:null}/>
+                <input 
+                  type="radio" 
+                  name={`sRadio${objRadioData.id}`} 
+                  id={`sRadio${objRadioData.id}_${data.id}`} 
+                  value="" 
+                  checked={(!fixedId && fixedId===data.id)?true:null}
+                  onChange={(e)=>{
+                    let copy = [...props.userResult];
+                    copy[props.dataId] = "0" + (data.id+1);
+                    props.setUserResult(copy);
+                  }}
+                />
                   <span className="radio"></span>{data.name}
               </label>
             </div>
@@ -440,45 +525,133 @@ function RadioComponent(props) {
   );
 }
 
+/**
+ * 텍스트박스 컴포넌트
+ * @param {*} props 
+ * @returns 
+ */
 function TextComponent(props) {
   const objTextData = props.textData;
-
-  return (
-    <div className="form-group">
-      <div className="sele-list type01 radius answer-wrap">
-        <div className="item">
-          <input type="text" name="text01" id="text01_01" placeholder={objTextData.placeholder}/>
-        </div>
-        <div className="btn-wrap">
-          <button type="reset" className="btn btn-sm btn-reset"><span className="blind">재작성</span></button>
+  if(props.showCrdElYn) {
+    return (
+      <div className="form-group">
+        <div className="sele-list type01 radius answer-wrap">
+          <div className="item">
+            <input 
+              type="text"
+              name={`sRadio${objTextData.id}`}  
+              id={`text${objTextData.id}`}
+              placeholder={objTextData.placeholder}
+              onChange={(e)=> {
+                if(props.dataId != 9) {
+                  let copy = [...props.userResult];
+                  copy[props.dataId] = e.target.value===""?99:e.target.value;
+                  props.setUserResult(copy);
+                }else {
+                  props.setUserCrdScr(e.target.value);
+                }
+              }}
+            />
+          </div>
+          <div className="btn-wrap">
+            <button type="reset" className="btn btn-sm btn-reset"><span className="blind">재작성</span></button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }else {
+    return null;
+  }
 }
 
+/**
+ * 셀렉트박스 컴포넌트
+ * @param {} props 
+ * @returns 
+ */
 function SelectComponent(props) {
   const objSelectData = props.selectData;
-
-  return (
-    <div className="sele-list type01 radius answer-wrap mar-t10">
-      <div className="item">
-        <label className="ui-select">
-          <select name="sSel" id="sSel1" disabled="">
-            <option value="">선택</option>
-            {
-              objSelectData.selectList.map((data, idx)=>{
-                return (
-                  <option key={idx} value={data.id}>{data.name}</option>
-                )
-              })
-            }
-          </select>
-          <span className="radio"></span>
-        </label>
+  if(props.showCrdElYn) {
+    return (
+      <div className="sele-list type01 radius answer-wrap mar-t10">
+        <div className="item">
+          <label className="ui-select">
+            <select name="sSel" id="sSel1" disabled="" onChange={(e)=> {
+              props.setUserCrdBru(e.target.value);
+            }}>
+              {
+                objSelectData.selectList.map((data, idx)=>{
+                  return (
+                    <option key={idx} value={data.value}>{data.name}</option>
+                  )
+                })
+              }
+            </select>
+            <span className="radio"></span>
+          </label>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }else {
+    return null;
+  }
+}
+
+/**
+ * 빈값 밸리데이션 체크
+ * 빈값일시 항목별 title, 조사, 동사로 메세지값 완성
+ * @param {사용자 체크값} userResult 
+ * @param {선택한 신용기관} userCrdBru 
+ * @param {입력한 신용점수} userCrdScr 
+ * @returns 
+ */
+function validCheckEmpty(userResult, userCrdBru, userCrdScr) {
+
+  let msg = "";
+  let verb = "하시기 바랍니다.";
+  for(let i=0; i<userResult.length; i++) {
+    if(!userResult[i] || userResult[i] === 99) {
+      let josa = "";
+      if (checkBatchimEnding(suitTestData[suitTestData.findIndex((data) => data.id === i)].title)) {
+        josa = "을 ";
+      } else {
+        josa = "를 ";
+      }
+      if (i == 1 || i == 11) {
+        verb = "입력" + verb;
+      } else {
+        verb = "선택" + verb;
+      }
+      msg = suitTestData[suitTestData.findIndex((data) => data.id === i)].title + josa + verb;
+
+      return msg;
+    }else if(i === 9) {
+      if(userResult[i] === '01') {
+        if(!userCrdBru) {
+          return "신용기관을 선택하시기 바랍니다.";
+        }else if(!userCrdScr) {
+          return "신용점수를 입력하시기 바랍니다.";
+        }
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * 단어별 맞춤 조사 선택을 위한 함수
+ * @param {*} word 
+ * @returns 
+ */
+function checkBatchimEnding(word) {
+  if (typeof word !== 'string') return null;
+
+  var lastLetter = word[word.length - 1];
+  var uni = lastLetter.charCodeAt(0);
+
+  if (uni < 44032 || uni > 55203) return null;
+
+  return (uni - 44032) % 28 != 0;
 }
 
 export default SuitTest;

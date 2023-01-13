@@ -13,6 +13,7 @@ import SelfCheck from './pages/judge/prejudge/SelfCheck.js';
 import GrtInfoInput from './pages/judge/prejudge/GrtInfoInput.js';
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
+const ApplyInfoInput = lazy(() => import('./pages/lonexecute/ApplyInfoInput.js'));
 
 //라우터 목록 정의
 function Routing() {
@@ -32,6 +33,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck headerNm={PathConstants.PREJUDGE_SELFCHECK}/>} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT}/>} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<></>} />
+        <Route path={PathConstants.LONEXECUTE_APPLYINFOINPUT} element={<ApplyInfoInput headerNm={PathConstants.LONEXECUTE_APPLYINFOINPUT_NM} />} />
         {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />
       </Routes>
