@@ -1,12 +1,3 @@
-/** 
- * import 순서
- * react hook, custom hook, 
- * external component(module), 
- * internal component(module), 
- * data, 
- * css
- */
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn";
@@ -281,8 +272,8 @@ const suitTestData = [
   }
 ];
 /**
- * 화면명
- * 설명
+ * 화면명 : 적합성 적정성 검사
+ * 설명   : 
  * @param {*} props
  * props항목별 설명
  */
@@ -474,6 +465,11 @@ function SuitTest(props) {
 
 }
 
+/**
+ * 타이틀영역 컴포넌트
+ * @param {} props 
+ * @returns 
+ */
 function TitleComponent(props) {
   const titleData = props.titleData;
   if(props.showCrdElYn) {
@@ -490,6 +486,11 @@ function TitleComponent(props) {
   
 }
 
+/**
+ * 라디오박스 컴포넌트
+ * @param {} props 
+ * @returns 
+ */
 function RadioComponent(props) {
   const objRadioData = props.radioData;
   const styleFormGroup = props.styleFormGroup;
@@ -524,6 +525,11 @@ function RadioComponent(props) {
   );
 }
 
+/**
+ * 텍스트박스 컴포넌트
+ * @param {*} props 
+ * @returns 
+ */
 function TextComponent(props) {
   const objTextData = props.textData;
   if(props.showCrdElYn) {
@@ -558,6 +564,11 @@ function TextComponent(props) {
   }
 }
 
+/**
+ * 셀렉트박스 컴포넌트
+ * @param {} props 
+ * @returns 
+ */
 function SelectComponent(props) {
   const objSelectData = props.selectData;
   if(props.showCrdElYn) {
@@ -586,13 +597,20 @@ function SelectComponent(props) {
   }
 }
 
+/**
+ * 빈값 밸리데이션 체크
+ * 빈값일시 항목별 title, 조사, 동사로 메세지값 완성
+ * @param {사용자 체크값} userResult 
+ * @param {선택한 신용기관} userCrdBru 
+ * @param {입력한 신용점수} userCrdScr 
+ * @returns 
+ */
 function validCheckEmpty(userResult, userCrdBru, userCrdScr) {
 
   let msg = "";
   let verb = "하시기 바랍니다.";
   for(let i=0; i<userResult.length; i++) {
     if(!userResult[i] || userResult[i] === 99) {
-      console.log(suitTestData.findIndex((data) => data.id === i));
       let josa = "";
       if (checkBatchimEnding(suitTestData[suitTestData.findIndex((data) => data.id === i)].title)) {
         josa = "을 ";
