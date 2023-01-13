@@ -8,68 +8,16 @@
  */
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
-
-const data = [
-    {
-        id: 1,
-        title: "(필수) 개인(신용)정보 수집 이용 및 제공관련 고객권리 안내문",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2017110617593821483973066352935.pdf"
-
-    },
-    {
-        id: 2,
-        title: "(필수) 개인(신용)정보 수집 이용 동의, 고유식별번호 수집 이용 동의",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2019031909261764480323824044447.pdf"
-    },
-    {
-        id: 3,
-        title: "(필수) 개인(신용)정보 수집이용 제공 동의(여신금융거래)",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2020262473283826319128117808560.pdf"
-    },
-    {
-        id: 4,
-        title: "(필수) 개인(신용)정보 수집이용 제공 동의(비여신금융거래)",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2022053115131329259593606625324.pdf"
-
-    },
-    {
-        id: 5,
-        title: "(필수) 개인정보 및 기업정보의 수집 · 이용 · 제공 활용 동의서(신용보증기금)",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2022053115164629259806850189960.pdf"
-
-    },
-    {
-        id: 6,
-        title: "(필수) 중소기업지원사업 통합관리 시스템 정보 활용을 위한 동의서(신용보증기금)",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2022021612253920263835375609685.pdf"
-
-    },
-    {
-        id: 7,
-        title: "(필수) 여신금융협회 이용약관 동의",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
-
-    },
-    {
-        id: 8,
-        title: "(필수) 여신금융협회 개인정보 수집 및 이용",
-        type: "text",
-        pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
-
-    },
-
-];
+import PathConstants from "../../../modules/constants/PathConstants";
+import collectData from "../../../modules/constants/collectData.js";
 
 
+
+const custAgreeData = collectData("CustAgree");
 /**
  * 화면명
  * 설명
@@ -77,7 +25,6 @@ const data = [
  * props항목별 설명
  */
 function CustAgree(props) {
-
 
     const [checkItems, setCheckItems] = useState([]);
 
@@ -90,23 +37,7 @@ function CustAgree(props) {
         }
     };
 
-    // 체크박스 전체 선택
-    const handleAllCheck = (checked) => {
-        if (checked) {
-            const idArray = [];
-            data.forEach((el) => idArray.push(el.id));
-            setCheckItems(idArray);
-            setAnswer([true, true, true, true, true, true, true])
-            console.log(answer)
-
-        }
-        else {
-            setCheckItems([]);
-            setAnswer([false, false, false, false, false, false, false]);
-            console.log(answer)
-        }
-    }
-    const [answer, setAnswer] = useState([99, 99, 99, 99, 99, 99, 99, 99]);
+    const [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -116,6 +47,10 @@ function CustAgree(props) {
     const [idxData, setIdxData] = useState(0);
 
     const headerNm = props.headerNm;
+
+    function cbOslBtn() {
+
+    }   
 
     return (
         <>
@@ -135,7 +70,7 @@ function CustAgree(props) {
 
                         <div className="section line-tf4">
                             <div className="agree-form">
-                                {data.map(function (data, idx) {
+                                {custAgreeData.map(function (data, idx) {
                                     return (
                                         <>
                                             <p key={`key-${data.id}`} className="box-chk">
@@ -148,16 +83,17 @@ function CustAgree(props) {
                                                     className="check-input blind"
                                                     onChange={(e) => {
                                                         handleSingleCheck(e.target.checked, data.id)
-                                                        let copy = [...answer];
+                                                        let copy = [...userResult];
                                                         copy[idx] = e.currentTarget.checked;
-                                                        setAnswer(copy);
-                                                        console.log(answer)
+                                                        setUserResult(copy);
+                                                        console.log(checkItems)
                                                     }} />
                                                 <label htmlFor={idx} className="check-label">{data.title}</label>
                                                 <a data-id=""
                                                     className="btn-pop-arrow"
                                                     onClick={() => {
                                                         handleShow(true);
+                                                        //모달창에서 확인 버튼 누를시 전체 동의 로직 만들어야함
                                                     }}
                                                 />
 
@@ -181,20 +117,29 @@ function CustAgree(props) {
                                 </p>
                             </div>
                         </div>
+                        <OslBtn
+                            obj={{
+                                type: "button",
+                                disabled: false,
+                                text: ["모두 동의하고 다음"],
+                                link: "",
+                                callbackId: cbOslBtn
+                            }} />
                     </div>
                 </div>
             </div>
+
         </>
     );
 }
-function validCheck(answer) {
+function validCheck(userResult) {
 
     let msg = [];
     const diffAnswer = [true, true, true, true, true, true, true, true];
-    for (let idx = 0; idx < answer.length; idx++) {
-        if (diffAnswer[idx] != answer[idx]) {
+    for (let idx = 0; idx < userResult.length; idx++) {
+        if (diffAnswer[idx] != userResult[idx]) {
             msg[0] = idx;
-            msg[1] = data[idx].msg;
+            msg[1] = custAgreeData[idx].msg;
             return msg;
             console.log(msg)
         }

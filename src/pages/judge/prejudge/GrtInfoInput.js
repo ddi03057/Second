@@ -393,9 +393,9 @@ function validCheckEmpty(userResult) {
                 verb = "선택" + verb;
             }
             if(userResult[8] < 10000000){
-                alert("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
+               return msg = ("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
             }else if(userResult[8] < 1000000){
-                alert("1백만원 단위로 입력 가능합니다.")
+               return msg = ("1백만원 단위로 입력 가능합니다.")
             }
             msg = GrtInfoData[GrtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
 
