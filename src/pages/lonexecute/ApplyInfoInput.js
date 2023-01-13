@@ -9,7 +9,7 @@
 
 import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
-import collectData from "../../modules/constants/collectData.js";
+import collectData from "../../modules/constants/collectData";
 
 /**
  * 화면명

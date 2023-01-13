@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
-import collectData from "../../../modules/constants/collectData.js";
+import collectData from "../../../modules/constants/collectData";
 
 const suitTestData = collectData("SuitTest");
 /**
