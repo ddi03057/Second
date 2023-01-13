@@ -11,6 +11,9 @@ import CustAgree from './pages/judge/prejudge/CustAgree.js';
 import Loading from './modules/components/Loading.js';
 import SelfCheck from './pages/judge/prejudge/SelfCheck.js';
 import GrtInfoInput from './pages/judge/prejudge/GrtInfoInput.js';
+import UntactAgrm from './pages/lonexecute/UntactAgrm.js';
+
+
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 const ApplyInfoInput = lazy(() => import('./pages/lonexecute/ApplyInfoInput.js'));
@@ -34,6 +37,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT}/>} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<></>} />
         <Route path={PathConstants.LONEXECUTE_APPLYINFOINPUT} element={<ApplyInfoInput headerNm={PathConstants.LONEXECUTE_APPLYINFOINPUT_NM} />} />
+        <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM}/> }/>
         {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />
       </Routes>
