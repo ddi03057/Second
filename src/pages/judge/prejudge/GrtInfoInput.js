@@ -188,6 +188,9 @@ function GrtInfoInput(props) {
     const GrtInfoDataLen = GrtInfoData.length;  //데이터길이
     let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
     let navigate = useNavigate(); //다음화면을 위한 navigate
+    useEffect(()=> {
+        console.log(userResult);
+    }, [userResult])
     function cbOslBtn() {
 
         const msg = validCheckEmpty(userResult);
@@ -294,7 +297,7 @@ function RadioComponent(props) {
                                 value={data}
                                 onChange={(e) => {
                                     let copy = [...props.userResult]
-                                    copy[props.idx] = data.value;
+                                    copy[props.idx] = data.id;
                                     props.setUserResult(copy);
 
                                 }} />
