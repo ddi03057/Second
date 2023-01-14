@@ -581,6 +581,282 @@ const untactAgrmData = [
   },
 ];
 
+const grtInfoData = [
+  {
+      id: 0,
+      title: "주 사업장 소유자",
+      type: "radio",
+      radioId: 0,
+      radiolist: [
+          {
+              id: 0,
+              value: "본인"
+          },
+          {
+              id: 1,
+              value: "배우자"
+          },
+          {
+              id: 2,
+              value: "타인"
+          },
+      ],
+      msg : "배우자, 타인 선택시 진행이 불가합니다."
+  },
+  {
+      id: 1,
+      title: "주 사업장 관리 침해(최근 1년 이내)",
+      type: "radio",
+      radioId: 1,
+      radiolist: [
+          {
+              id: 0,
+              value: "있음"
+          },
+          {
+              id: 1,
+              value: "없음"
+          },
+      ],
+  },
+  {
+      id: 2,
+      title: "주민등록상 주소지와 실제 거주지 주소가 같습니까?",
+      type: "find",
+
+  },
+  {
+      id: 3,
+      title: "주민등록상 주소지 소유자",
+      type: "radio",
+      radioId: 2,
+      radiolist: [
+          {
+              id: 0,
+              value: "본인"
+          },
+          {
+              id: 1,
+              value: "배우자"
+          },
+          {
+              id: 2,
+              value: "타인"
+          },
+      ],
+  },
+  {
+      id: 4,
+      title: "거주 주택 소유자",
+      type: "radio",
+      radioId: 3,
+      radiolist: [
+          {
+              id: 0,
+              value: "본인"
+          },
+          {
+              id: 1,
+              value: "배우자"
+          },
+          {
+              id: 2,
+              value: "타인"
+          },
+      ],
+  },
+  {
+      id: 5,
+      title: "본인 또는 배우자 명의로 소유하고 있는 주택(실거주 불문)이 있습니까?",
+      type: "radio",
+      radioId: 4,
+      radiolist: [
+          {
+              id: 0,
+              value: "예"
+          },
+          {
+              id: 1,
+              value: "아니요"
+          },
+      ],
+  },
+  {
+      id: 6,
+      title: "거주 주택 권리 침해(최근 1년 이내)",
+      type: "radio",
+      radioId: 5,
+      radiolist: [
+          {
+              id: 0,
+              value: "있음"
+          },
+          {
+              id: 1,
+              value: "없음"
+          },
+      ],
+  },
+  {
+      id: 7,
+      title: "대출 희망 금액",
+      type: "text",
+  },
+  {
+      id: 8,
+      title: "대출 기간",
+      type: "select",
+      selectlist: [
+          {
+              id: 0,
+              value: "5"
+          },
+          {
+              id: 1,
+              value: "8"
+          },
+      ],
+  },
+];
+
+const selfCheckData = [
+  {
+    id: 1,
+    title: "영리목적으로 사업을 영위하는 개인기업에 해당하십니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "보증금지/제한 기업 또는 보증제한/취급유의/지역신용보증재단 우선취급업종 영위기업에 해당되십니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "심사항목 저촉사항이 있습니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "신청기업의 실제경영자가 사업자등록증상 대표자입니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "사업자등록상 공동대표자가 있습니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "신청일 현재 신청기업 이외에 다른 기업을 운영 중에 있으며, 해당 기업이 신용보증기금, 기술보증기금, 지역신용보증재단에 보증잔액이 있습니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 7,
+    title: "신청일 현재 신용보증기금 또는 기술보증기금 보증잔액이 있습니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 8,
+    title: "사업자등록증상 개업일로부터 1년이 지났습니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+  {
+    id: 9,
+    title: "최근 1년 이내 대표자(실제경영자)가 변동 된 사실이 있습니까?",
+    type: "select",
+    answer: [
+      {
+        name: "예",
+        value: "y"
+      },
+      {
+        name: "아니요",
+        value: "n"
+      },
+    ],
+  },
+];
+
 export default (props)=> {
   switch (props) {
     case 'email': return emailList;
@@ -591,6 +867,8 @@ export default (props)=> {
     case 'CustAgree' : return custAgreeData; // 고객동의 데이터
     case 'ApplyInfoInput': return applyInfoInputData; //대출신청서작성 및 실행요청
     case 'UntactAgrm' : return untactAgrmData; //비대면 약정
+    case 'GrtInfoInput' : return grtInfoData; //조사자료 자가체크 //사전심사자료작성
+    case 'SelfCheck' : return selfCheckData; //자가진단 체크리스트
     default : return null;
   }
 };

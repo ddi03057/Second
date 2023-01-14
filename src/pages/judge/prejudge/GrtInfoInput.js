@@ -16,176 +16,39 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import OslBtn from "../../../modules/components/OslBtn";
-import OslHeader from "../../../modules/components/OslHeader";
-import PathConstants from "../../../modules/constants/PathConstants";
+import OslBtn from "../../../modules/components/OslBtn.js";
+import OslHeader from "../../../modules/components/OslHeader.js";
+import PathConstants from "../../../modules/constants/PathConstants.js";
+import collectData from "../../../modules/constants/collectData.js";
 
-
-const GrtInfoData = [
-    {
-        id: 0,
-        title: "주 사업장 소유자",
-        type: "radio",
-        radioId: 0,
-        radiolist: [
-            {
-                id: 0,
-                value: "본인"
-            },
-            {
-                id: 1,
-                value: "배우자"
-            },
-            {
-                id: 2,
-                value: "타인"
-            },
-        ],
-        msg : "배우자, 타인 선택시 진행이 불가합니다."
-    },
-    {
-        id: 1,
-        title: "주 사업장 관리 침해(최근 1년 이내)",
-        type: "radio",
-        radioId: 1,
-        radiolist: [
-            {
-                id: 0,
-                value: "있음"
-            },
-            {
-                id: 1,
-                value: "없음"
-            },
-        ],
-    },
-    {
-        id: 2,
-        title: "주민등록상 주소지와 실제 거주지 주소가 같습니까?",
-        type: "find",
-
-    },
-    {
-        id: 3,
-        title: "주민등록상 주소지 소유자",
-        type: "radio",
-        radioId: 2,
-        radiolist: [
-            {
-                id: 0,
-                value: "본인"
-            },
-            {
-                id: 1,
-                value: "배우자"
-            },
-            {
-                id: 2,
-                value: "타인"
-            },
-        ],
-    },
-    {
-        id: 4,
-        title: "거주 주택 소유자",
-        type: "radio",
-        radioId: 3,
-        radiolist: [
-            {
-                id: 0,
-                value: "본인"
-            },
-            {
-                id: 1,
-                value: "배우자"
-            },
-            {
-                id: 2,
-                value: "타인"
-            },
-        ],
-    },
-    {
-        id: 5,
-        title: "본인 또는 배우자 명의로 소유하고 있는 주택(실거주 불문)이 있습니까?",
-        type: "radio",
-        radioId: 4,
-        radiolist: [
-            {
-                id: 0,
-                value: "예"
-            },
-            {
-                id: 1,
-                value: "아니요"
-            },
-        ],
-    },
-    {
-        id: 6,
-        title: "거주 주택 권리 침해(최근 1년 이내)",
-        type: "radio",
-        radioId: 5,
-        radiolist: [
-            {
-                id: 0,
-                value: "있음"
-            },
-            {
-                id: 1,
-                value: "없음"
-            },
-        ],
-    },
-    {
-        id: 7,
-        title: "대출 희망 금액",
-        type: "text",
-    },
-    {
-        id: 8,
-        title: "대출 기간",
-        type: "select",
-        selectlist: [
-            {
-                id: 0,
-                value: "5"
-            },
-            {
-                id: 1,
-                value: "8"
-            },
-        ],
-    },
-];
+const grtInfoData = collectData("GrtInfoInput");
 
 function GrtInfoInput(props) {
 
     //**항목별 데이터 분리 */
     let arrTitleData = [];
-    GrtInfoData.find((data) => {
+    grtInfoData.find((data) => {
         arrTitleData.push(data.title);
     });
     let arrRadioData = [];
-    GrtInfoData.find((data) => {
+    grtInfoData.find((data) => {
         if (data.type === "radio") {
             arrRadioData.push(data);
         }
     });
     let arrTextData = [];
-    GrtInfoData.find((data) => {
+    grtInfoData.find((data) => {
         if (data.type === "text") {
             arrTextData.push(data);
         }
     });
     let arrSeleectData = [];
-    GrtInfoData.find((data) => {
+    grtInfoData.find((data) => {
         if (data.type === "select") {
             arrSeleectData.push(data);
         }
     });
 
-    const GrtInfoDataLen = GrtInfoData.length;  //데이터길이
     let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
     let navigate = useNavigate(); //다음화면을 위한 navigate
     useEffect(()=> {
@@ -225,7 +88,7 @@ function GrtInfoInput(props) {
 
                         <div className="section line-tf4">
                             <ol className="sele-list type03 pad-b10">
-                                {GrtInfoData.map(function (data1, idx1) {
+                                {grtInfoData.map(function (data1, idx1) {
                                     return (
                                         <li key={`li_${idx1}`} className="item">
                                             <TitleComponent titleData={arrTitleData[idx1]} />
@@ -252,7 +115,7 @@ function GrtInfoInput(props) {
                                 <div className="ui-cont-wrap">
                                     <div className="ui-decide">
                                         <input type="checkbox" id="checkbox01" />
-                                        <label for="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
+                                        <label htmlFor ="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                                     </div>
                                 </div>
                             </div>
@@ -385,7 +248,7 @@ function validCheckEmpty(userResult) {
     for (let i = 0; i < userResult.length; i++) {
         if (!userResult[i] || userResult[i] === 99) {
             let josa = "";
-            if (checkBatchimEnding(GrtInfoData[GrtInfoData.findIndex((data) => data.id === i)].title)) {
+            if (checkBatchimEnding(grtInfoData[grtInfoData.findIndex((data) => data.id === i)].title)) {
                 josa = "을 ";
             } else {
                 josa = "를 ";
@@ -400,7 +263,7 @@ function validCheckEmpty(userResult) {
             }else if(userResult[8] < 1000000){
                return msg = ("1백만원 단위로 입력 가능합니다.")
             }
-            msg = GrtInfoData[GrtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
+            msg = grtInfoData[grtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
 
             return msg;
         } 

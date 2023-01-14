@@ -9,154 +9,18 @@
 import { useEffect, useRef, useState } from "react";
 import { element } from "prop-types";
 import OslHeader from "../../../modules/components/OslHeader";
-
+import collectData from "../../../modules/constants/collectData.js";
 /**
- * 화면명
+ * 화면명 : 자가진단 체크리스트
  * 설명
  * @param {*} props
  * props항목별 설명
  */
-const data = [
-  {
-    id: 1,
-    title: "영리목적으로 사업을 영위하는 개인기업에 해당하십니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "보증금지/제한 기업 또는 보증제한/취급유의/지역신용보증재단 우선취급업종 영위기업에 해당되십니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "심사항목 저촉사항이 있습니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: "신청기업의 실제경영자가 사업자등록증상 대표자입니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 5,
-    title: "사업자등록상 공동대표자가 있습니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 6,
-    title: "신청일 현재 신청기업 이외에 다른 기업을 운영 중에 있으며, 해당 기업이 신용보증기금, 기술보증기금, 지역신용보증재단에 보증잔액이 있습니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 7,
-    title: "신청일 현재 신용보증기금 또는 기술보증기금 보증잔액이 있습니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 8,
-    title: "사업자등록증상 개업일로부터 1년이 지났습니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-  {
-    id: 9,
-    title: "최근 1년 이내 대표자(실제경영자)가 변동 된 사실이 있습니까?",
-    type: "select",
-    answer: [
-      {
-        name: "예",
-        value: "y"
-      },
-      {
-        name: "아니요",
-        value: "n"
-      },
-    ],
-  },
-];
+const selfCheckData = collectData("SelfCheck");
 
 
 function SelfCheck(props) {
-
+  
   let [answer, setAnswer] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]);
 
   let [disabledYn, setDisabledYn] = useState(true);
@@ -184,7 +48,7 @@ function SelfCheck(props) {
 
             <div className="section pad-t30 line-tf4">
               <ol className="sele-list type03">
-                {data.map(function (data, idx) {
+                {selfCheckData.map(function (data, idx) {
                   return (
                     <>
                       <li className="item" key={idx}>
@@ -286,7 +150,7 @@ function validCheck(answer) {
   for (let idx = 0; idx < answer.length; idx++) {
     if (diffAnswer[idx] != answer[idx]) {
       msg[0] = idx;
-      msg[1] = data[idx].msg;
+      msg[1] = selfCheckData[idx].msg;
       return msg;
     }
   }
