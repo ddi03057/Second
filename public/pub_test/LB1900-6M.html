@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>IBK 온라인 입점 소상공인 부대출</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<link rel="shortcut icon" href="data:image/x-icon" type="image/x-icon">
+<link rel="stylesheet" href="assets\css\import.css">
+<script type="text/javascript">
+    // popup
+    function openPop(e){
+        document.getElementById(e).style.display="block";
+        document.body.style.overflow="hidden";
+    }
+    function closePop(e){
+        document.getElementById(e).style.display="none";
+        document.body.style.overflow="";
+    }
+</script>
+</head>
+<body>
+<!-- Wrapper -->
+<div class="wrapper">
+    <!-- header -->
+    <header class="header-wrap">
+        <!-- header -->
+        <div class="header">
+            <button type="button" class="btn btn-back">
+                <span class="blind">뒤로가기</span>
+            </button>
+            <div class="h-title">
+                <span>공동인증서 인증</span>
+            </div>
+            <button type="button" class="btn btn-close">
+                <span class="blind">닫기</span>
+            </button>
+        </div>
+        <!-- // header -->
+    </header>
+    <!-- // header -->
+
+    <!-- container -->
+    <div class="container">
+        <!-- content -->
+        <div class="content">
+            <!-- content내용 -->
+            <div class="content-body">
+                <!-- content-top -->
+                <button class="btn btn-lg default-bg" onclick="openPop('bottom01');" style="width: 50%; left: 50%; transform:translateX(-50%);">
+                    <span class="txt">팝업 오픈</span>
+                </button>
+
+                <div id="bottom01" class="bottom-sheet" style="display: ;">
+                    <div class="bottom-inner">
+                        <div class="bottom-header">
+                            <p class="title fc-01">시,군,구 선택</p>
+                            <button type="button" class="btn btn-close" onclick="closePop('bottom01');">
+                                <span class="blind">닫기</span>
+                            </button>
+                        </div>
+                        <div class="bottom-content">
+                            <div class="select-box">
+                                <ul class="select-btn-list col2">
+                                    <li><button><span>강남구</span></button></li>
+                                    <li><button><span>강동구</span></button></li>
+                                    <li><button><span>강북구</span></button></li>
+                                    <li><button><span>강서구</span></button></li>
+                                    <li><button><span>관악구</span></button></li>
+                                    <li><button><span>광진구</span></button></li>
+                                    <li><button><span>구로구</span></button></li>
+                                    <li><button><span>금천구</span></button></li>
+                                    <li><button><span>노원구</span></button></li>
+                                    <li><button><span>도봉구</span></button></li>
+                                    <li><button><span>동대문구</span></button></li>
+                                    <li><button><span>동작구</span></button></li>
+                                    <li><button><span>마포구</span></button></li>
+                                    <li><button><span>서대문구</span></button></li>
+                                    <li><button><span>서초구</span></button></li>
+                                    <li><button><span>성동구</span></button></li>
+                                    <li><button><span>성북구</span></button></li>
+                                    <li><button><span>송파구</span></button></li>
+                                    <li><button><span>동작구</span></button></li>
+                                    <li><button><span>마포구</span></button></li>
+                                    <li><button><span>서대문구</span></button></li>
+                                    <li><button><span>서초구</span></button></li>
+                                    <li><button><span>성동구</span></button></li>
+                                    <li><button><span>성북구</span></button></li>
+                                    <li><button><span>송파구</span></button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- //content내용 -->  
+            <!-- content-footer -->
+            <div class="content-footer">
+                <button type="button" class="btn btn-lg default-bg">
+                    <span class="txt">확인</span>
+                </button>
+            </div>
+            <!-- //content-footer -->
+        </div>
+        <!-- // content -->
+    </div>
+    <!-- // container -->
+   
+</div>
+<!-- //wrapper -->
+</body>
+</html>

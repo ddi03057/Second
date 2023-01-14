@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
 import collectData from "../../modules/constants/collectData";
@@ -37,6 +38,8 @@ function ApplyInfoInput(props) {
       arrSeleectData.push(data);
     }
   });  
+  
+  let navigate = useNavigate();
 
   function cbOslBtn() {
 

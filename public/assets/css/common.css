@@ -11,6 +11,18 @@
     display: none;
 }
 
+.flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.flex.type2 span {
+    padding: 0;
+}
+
 /* div Table */
 .dpTable {
     display: table;
@@ -97,6 +109,10 @@
     width: 160px !important;
 }
 
+.w175 {
+    width: 175px !important;
+}
+
 .w200 {
     width: 200px !important;
 }
@@ -176,6 +192,10 @@
 
 .mar-t10 {
     margin-top: 10px !important;
+}
+
+.mar-t15 {
+    margin-top: 40px !important;
 }
 
 .mar-t20 {

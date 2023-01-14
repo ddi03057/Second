@@ -57,9 +57,11 @@ const PathConstants = {
   GRTJUDGE_ACCOPEN: '/grtjudge/accopen',  //개좌개설
 
   LONEXECUTE_APPLYINFOINPUT: '/lonexecute/applyinfoinput',  //대출신청서작성 및 실행요청
+  LONEXECUTE_LONCONTENTCHECK: '/lonexecute/loncontentcheck', //대출 내용 최종 확인
   LONEXECUTE_AGRMINPUT: '/lonexecute/agrminput',  //여신거래약정서 작성
-  LONEXECUTE_UNTACTAGRM: '/lonexecute/untactagrm',  //비대면 약정
+  LONEXECUTE_UNTACTAGRM: '/lonexecute/untactagrm',  //대출 약관 동의
   LONEXECUTE_SUCCRESULT: '/lonexecute/result',  //대출실행결과
+  LONEXECUTE_ARSCERTIFICATE: '/lonexecute/arscertificate', // ARS인증
 
   POSTMANAGEMENT_REPAY: '/postmanagement/repay',  //대출상환
   POSTMANAGEMENT_REVOKREPAY: '/postmanagement/revokrepay', //계약철회 후 상환
@@ -80,9 +82,11 @@ const PathConstants = {
   GRTJUDGE_ACCOPEN_NM: '계좌개설',  //개좌개설
 
   LONEXECUTE_APPLYINFOINPUT_NM: '대출신청서작성 및 실행요청',  //대출신청서작성 및 실행요청
+  LONEXECUTE_LONCONTENTCHECK_NM: '대출 실행', // 대출 내용 최종 확인
   LONEXECUTE_AGRMINPUT_NM: '여신거래약정서 작성',  //여신거래약정서 작성
-  LONEXECUTE_UNTACTAGRM_NM: '비대면 약정',  //비대면 약정
+  LONEXECUTE_UNTACTAGRM_NM: '비대면 약정',  //대출 약관 동의
   LONEXECUTE_SUCCRESULT_NM: '대출실행결과',  //대출실행결과
+  LONEXECUTE_ARSCERTIFICATE_NM: '대출 신청', // ARS인증
 
   POSTMANAGEMENT_REPAY_NM: '대출상환',  //대출상환
   POSTMANAGEMENT_REVOKREPAY_NM: '계약철회 후 상환' //계약철회 후 상환

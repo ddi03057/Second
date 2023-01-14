@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { element } from "prop-types";
 import OslHeader from "../../../modules/components/OslHeader";
 import collectData from "../../../modules/constants/collectData.js";
+import { useNavigate } from "react-router";
 /**
  * 화면명 : 자가진단 체크리스트
  * 설명
@@ -27,11 +28,17 @@ function SelfCheck(props) {
 
   const itemRef = useRef([]);
 
-  const headerNm = props.headerNm;
+  let navigate = useNavigate();
+
+  function cbOslBtn(){
+    // navigate(
+    //   PathConstants. PREJUDGE_CUSTAGREE
+    //   );
+  }
 
   return (
     <>
-      <OslHeader headerNm={headerNm} />
+      <OslHeader headerNm={props.headerNm} />
       <div className="container">
         <div className="content">
           <div className="content-body certified">

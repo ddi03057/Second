@@ -1,5 +1,15 @@
 const arrJudgeStepNm = ["정보제공동의", "본인인증", "서류수집", "서류전송현황", "정보입력", "사전심사신청"];
 const arrLoanStepNm = ["보증승인정보", "대출신청내역", "여신거래약정", "대출약관", "대출실행"];
+
+const detailData = 
+  {
+    id: 0,
+    userNm: "김동협",
+    loanMn: "100000000",
+    lendrate : 2.688
+  }
+
+
 const pageList = [
   {
     id: 1,
@@ -859,6 +869,7 @@ const selfCheckData = [
 
 export default (props)=> {
   switch (props) {
+    case 'detail' : return detailData; // 상품안내 고객데이터
     case 'email': return emailList;
     case 'judgeStepNm': return arrJudgeStepNm;
     case 'loanStepNm': return arrLoanStepNm

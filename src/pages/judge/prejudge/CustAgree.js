@@ -19,8 +19,8 @@ import collectData from "../../../modules/constants/collectData.js";
 
 const custAgreeData = collectData("CustAgree");
 /**
- * 화면명
- * 설명
+ * 화면명 : 약관동의
+ * 설명 : 사전심사 - 정보조회 약관동의
  * @param {*} props
  * props항목별 설명
  */
@@ -48,9 +48,13 @@ function CustAgree(props) {
 
     const headerNm = props.headerNm;
 
-    function cbOslBtn() {
+    let navigate = useNavigate();
 
-    }   
+    function cbOslBtn() {
+        // navigate(
+        //     PathConstants.PREJUDGE_SUITTEST
+        // );
+    }
 
     return (
         <>

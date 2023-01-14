@@ -1,182 +1,17 @@
 @charset "UTF-8";
 /* Base Color */
 /* Mono Tone Color */
-/* Layout */
-/* Header */
-/* Aside */
-/* A Link */
-/* Component */
-/* Font Color */
-/* Status */
 /* Font Size */
 /* Content Size */
 /* 이하은 */
-.content .content-body .content-top {
-    position: relative;
-}
-.content .content-body .content-top .top-txt {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 16px;
-}
-.content .content-body .content-top .phone-num {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin: 30px 0 10px;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    font-size: 35px;
-    line-height: 28px;
-}
-.content .content-body .content-top .auth-num {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin: 40px 0;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    font-size: 80px;
-}
-.content .content-body .content-top .payment-img {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end;
-}
-.content .content-body .content-top .payment-img img {
-    width: 24vw;
-}
-.content .content-body .content-top.line-be4 {
-    border-bottom: 2px solid #e4e8eb;
-}
-
-.info-wrap {
-    padding: 10px 0;
-}
-.info-wrap .info-box {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    font-size: 18px;
-    line-height: 28px;
-}
-.info-wrap .info-box + .info-box {
-    margin-top: 10px;
-}
-.info-wrap .info-box .tit, .info-wrap .info-box .txt {
-    display: inline-block;
-    position: relative;
-    width: calc(100% - 30px);
-    word-break: keep-all;
-}
-.info-wrap .info-box.ai-c {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-}
-.info-wrap .info-box:last-child {
-    margin-bottom: 0;
-}
-
-.step-list .step-item {
-    font-size: 16px;
-    line-height: 28px;
-}
-.step-list .step-item + .step-item {
-    margin-top: 20px;
-}
-.step-list .step-item .step-tit {
-    margin-bottom: 5px;
-}
-
-.list-wrap .list-tit {
-    font-size: 16px;
-}
-.list-wrap .list-tit + [class*=bullet-] {
-    margin-top: 15px;
-}
-.list-wrap .bullet-type01 {
+.commitment .box-list-wrap {
     display: block;
-}
-.list-wrap .bullet-type01 .txt {
-    padding-left: 5px;
-    font-size: 16px;
-    line-height: 28px;
-}
-.list-wrap .bullet-type01 .txt + .txt {
-    margin-top: 10px;
-}
-.list-st1 li {
-    list-style-type: "·";
-}
-
-.list-st2 li {
-    list-style-type: "*";
-}
-
-.list-wrap .chk-txt {
-    margin-top: 30px;
-    font-size: 18px;
-}
-.list-wrap.type01 {
-    padding: 15px 15px 15px 20px;
-    background-color: #f8f8f8;
-}
-.list-wrap.type02 {
-    margin-left: 10px;
-}
-
-.descr-wrap .descr-cont + .descr-cont {
-    margin-top: 30px;
-}
-.descr-wrap .descr-cont .descr-tit {
-    margin-bottom: 20px;
-}
-.descr-wrap .descr-cont .descr-txt {
-    margin-bottom: 10px;
-    font-size: 18px;
-    line-height: 28px;
-}
-.descr-wrap .descr-add .descr-add-cont {
-    margin-left: 10px;
-}
-.descr-wrap .descr-add .descr-add-cont > .txt {
-    padding-left: 5px;
-    font-size: 14px;
-    line-height: 22px;
-}
-.descr-wrap .descr-add .descr-add-cont > .txt + .txt {
-    margin-top: 10px;
-}
-
-.auth-wrap .auth-txt {
-    padding: 10px 0;
-    font-size: 18px;
-    line-height: 28px;
-}
-.btn-line02 {
-    padding-bottom: 4px;
-    border-bottom: 1px solid #3982d8;
-    font-size: 18px;
-}
-
-.commitment .commit-wrap {
-    padding: 17px 15px;
+    background-color: #fff;
     border: 1px solid #d8d6de;
     border-radius: 4px;
+    overflow: hidden;
 }
-.commitment .commit-wrap .commit-header {
+.commitment .box-list-wrap .box-list-header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -187,14 +22,19 @@
         -ms-flex-pack: justify;
             justify-content: space-between;
     position: relative;
-    margin-bottom: 2px;
+    padding: 17px 15px;
 }
-.commitment .commit-wrap .commit-header .commit-open::before {
+.commitment .box-list-wrap .box-list-header .tit {
+    font-size: 16px;
+    font-weight: 500;
+    width: calc(100% - 30px);
+}
+.commitment .box-list-wrap .box-list-header .box-list-open::before {
     content: "";
-    display: none;
     position: absolute;
     top: 50%;
     right: 0;
+    right: 17px;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
     width: 12px;
@@ -203,11 +43,12 @@
     background-size: contain;
     cursor: pointer;
 }
-.commitment .commit-wrap .commit-header .commit-hide::before {
+.commitment .box-list-wrap .box-list-header .box-list-hide::before {
     content: "";
     position: absolute;
     top: 50%;
     right: 0;
+    right: 17px;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
     width: 12px;
@@ -216,36 +57,19 @@
     background-size: contain;
     cursor: pointer;
 }
-.commitment .commit-wrap .commit-cont {
+.commitment .box-list-wrap .box-list-cont {
     display: none;
-    margin-top: 15px;
+    -webkit-transition: all 0.6s cubic-bezier(0.44, 0.94, 0.8, 1.06);
+    transition: all 0.6s cubic-bezier(0.44, 0.94, 0.8, 1.06);
 }
-.commitment .commit-wrap .commit-cont > .txt {
+.commitment .box-list-wrap .box-list-cont > .txt {
     font-size: 14px;
     line-height: 22px;
 }
-.commitment .commit-wrap .commit-cont.active {
+.commitment .box-list-wrap .box-list-cont.active {
     display: block;
+    padding: 0 15px 17px;
 }
-.commitment .commit-wrap + .commit-wrap {
-    margin-top: 20px;
-}
-.commitment .commit-wrap:last-child {
-    margin-bottom: 10px;
-}
-
-.line-bf4 {
-    border-bottom: 2px solid #f4f4f4;
-}
-
-.fc-dark {
-    color: #333333;
-}
-
-.fc-gray {
-    color: #666666;
-}
-
-.fc-lightGray {
-    color: #999999;
+.commitment .box-list-wrap + .box-list-wrap {
+    margin: 20px 0;
 }
