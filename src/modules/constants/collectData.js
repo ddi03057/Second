@@ -732,8 +732,9 @@ const grtInfoData = [
 const selfCheckData = [
   {
     id: 1,
-    title: "영리목적으로 사업을 영위하는 개인기업에 해당하십니까?",
-    type: "select",
+    title: "1. 영리목적으로 사업을 영위하는 개인기업에 해당하십니까?",
+    type: "radio",
+    radioId: 0,
     answer: [
       {
         name: "예",
@@ -747,8 +748,9 @@ const selfCheckData = [
   },
   {
     id: 2,
-    title: "보증금지/제한 기업 또는 보증제한/취급유의/지역신용보증재단 우선취급업종 영위기업에 해당되십니까?",
-    type: "select",
+    title: "2. 보증금지/제한 기업 또는 보증제한/취급유의/지역신용보증재단 우선취급업종 영위기업에 해당되십니까?",
+    type: "radio",
+    radioId: 1,
     answer: [
       {
         name: "예",
@@ -762,8 +764,9 @@ const selfCheckData = [
   },
   {
     id: 3,
-    title: "심사항목 저촉사항이 있습니까?",
-    type: "select",
+    title: "3. 심사항목 저촉사항이 있습니까?",
+    type: "radio",
+    radioId: 2,
     answer: [
       {
         name: "예",
@@ -777,8 +780,9 @@ const selfCheckData = [
   },
   {
     id: 4,
-    title: "신청기업의 실제경영자가 사업자등록증상 대표자입니까?",
-    type: "select",
+    title: "4. 신청기업의 실제경영자가 사업자등록증상 대표자입니까?",
+    type: "radio",
+    radioId: 3,
     answer: [
       {
         name: "예",
@@ -792,8 +796,9 @@ const selfCheckData = [
   },
   {
     id: 5,
-    title: "사업자등록상 공동대표자가 있습니까?",
-    type: "select",
+    title: "5. 사업자등록상 공동대표자가 있습니까?",
+    type: "radio",
+    radioId: 4,
     answer: [
       {
         name: "예",
@@ -807,8 +812,9 @@ const selfCheckData = [
   },
   {
     id: 6,
-    title: "신청일 현재 신청기업 이외에 다른 기업을 운영 중에 있으며, 해당 기업이 신용보증기금, 기술보증기금, 지역신용보증재단에 보증잔액이 있습니까?",
-    type: "select",
+    title: "6. 신청일 현재 신청기업 이외에 다른 기업을 운영 중에 있으며, 해당 기업이 신용보증기금, 기술보증기금, 지역신용보증재단에 보증잔액이 있습니까?",
+    type: "radio",
+    radioId: 5,
     answer: [
       {
         name: "예",
@@ -822,8 +828,9 @@ const selfCheckData = [
   },
   {
     id: 7,
-    title: "신청일 현재 신용보증기금 또는 기술보증기금 보증잔액이 있습니까?",
-    type: "select",
+    title: "7. 신청일 현재 신용보증기금 또는 기술보증기금 보증잔액이 있습니까?",
+    type: "radio",
+    radioId: 6,
     answer: [
       {
         name: "예",
@@ -837,8 +844,9 @@ const selfCheckData = [
   },
   {
     id: 8,
-    title: "사업자등록증상 개업일로부터 1년이 지났습니까?",
-    type: "select",
+    title: "8. 사업자등록증상 개업일로부터 1년이 지났습니까?",
+    type: "radio",
+    radioId: 7,
     answer: [
       {
         name: "예",
@@ -852,8 +860,9 @@ const selfCheckData = [
   },
   {
     id: 9,
-    title: "최근 1년 이내 대표자(실제경영자)가 변동 된 사실이 있습니까?",
-    type: "select",
+    title: "9. 최근 1년 이내 대표자(실제경영자)가 변동 된 사실이 있습니까?",
+    type: "radio",
+    radioId: 8,
     answer: [
       {
         name: "예",

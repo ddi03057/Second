@@ -42,7 +42,9 @@ function ApplyInfoInput(props) {
   let navigate = useNavigate();
 
   function cbOslBtn() {
-
+    // navigate(
+    //   PathConstants.GUIDE_READY
+    //   );
   }
   return (
     <>

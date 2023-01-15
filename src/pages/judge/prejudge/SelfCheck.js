@@ -11,6 +11,8 @@ import { element } from "prop-types";
 import OslHeader from "../../../modules/components/OslHeader";
 import collectData from "../../../modules/constants/collectData.js";
 import { useNavigate } from "react-router";
+import RadioInlineComponent from "../../common/RadioInlineComponent";
+import TitleComponent from "../../common/TitleComponent";
 /**
  * 화면명 : 자가진단 체크리스트
  * 설명
@@ -21,20 +23,30 @@ const selfCheckData = collectData("SelfCheck");
 
 
 function SelfCheck(props) {
-  
-  let [answer, setAnswer] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]);
+  /**
+    * 항목별 데이터 분리
+    */
+  let arrTitleData = [];
+  selfCheckData.find((data) => {
+    arrTitleData.push(data.title);
+  });
+  let arrRadioData = [];
+  selfCheckData.find((data) => {
+    if (data.type === "radio") {
+      arrRadioData.push(data);
+    }
+  });
 
-  let [disabledYn, setDisabledYn] = useState(true);
-
-  const itemRef = useRef([]);
-
-  let navigate = useNavigate();
-
-  function cbOslBtn(){
-    // navigate(
-    //   PathConstants. PREJUDGE_CUSTAGREE
-    //   );
+  // popup
+  function openPop(e) {
+    document.getElementById(e).style.display = "block";
+    document.body.style.overflow = "hidden";
   }
+  function closePop(e) {
+    document.getElementById(e).style.display = "none";
+    document.body.style.overflow = "";
+  }
+
 
   return (
     <>
@@ -54,41 +66,191 @@ function SelfCheck(props) {
             </div>
 
             <div className="section pad-t30 line-tf4">
-              <ol className="sele-list type03">
-                {selfCheckData.map(function (data, idx) {
+              <ol className="sele-list type02">
+                {selfCheckData.map((data, idx) => {
                   return (
-                    <>
-                      <li className="item" key={idx}>
-                        <div className="question-wrap txt-wrap" key={idx}>
-                          <p className="txt" key={idx}>
-                            {data.id}. {data.title}
-                            {(data.id === 2 &&
-                              <div className="link-btn-wrap">
-                                <button type="button" className="link-btn type01">
-                                  <span className="ico-blue-arrow right">업종 펼쳐보기</span>
-                                </button>
-                              </div>
-                            )}
-                            {(data.id === 3 &&
-                              <ol className="order-list">
-                                <li data-num="①" className="item">신청일 현재 금융기관 연체 중</li>
-                                <li data-num="②" className="item">신청일 현재 국세,지방세, 4대보험 체납 중</li>
-                                <li data-num="③" className="item">최근 3개월 이내 10일 이상 계속된 연체대출금 보유</li>
-                                <li data-num="④" className="item">최근 1년 이내 당좌부도, 신용관리정보<br />(신용보증기금/기술보증기금/신용보증재단) 부실정보 보유</li>
-                                <li data-num="⑤" className="item">최근 1년 이내 사업장 또는 거주주택에 대한 권리침해(경매,압류,가압류,가처분)</li>
-                              </ol>
-                            )}
-                          </p>
-                        </div>
-                        <div className="sele-list type01 radius answer-wrap">
-                          <ButtionList key={idx} data={data} idx={idx} answer={answer} setAnswer={setAnswer} itemRef={itemRef}>
+                    <li className="item">
+                      <TitleComponent
+                        showYn={true}
+                        title={selfCheckData[idx].title}
+                        styleTxt="txt"
+                      />
 
-                          </ButtionList>
+                      <div className="sele-list type01 radius answer-wrap">
+                        <div className="item">
+                          <input type="radio" name="radio01" id="radio01_01" />
+                          <label htmlFor="radio01_01" className="item-cont">아니요</label>
                         </div>
-                      </li>
-                    </>
+                        <div className="item">
+                          <input type="radio" name="radio01" id="radio01_02" />
+                          <label htmlFor="radio01_02" className="item-cont">예</label>
+                        </div>
+                      </div>
+                    </li>
                   )
                 })}
+
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      2. 보증금지/제한 기업 또는 보증제한/취급유의/지역신용보증재단 우선취급업종 영위기업에 해당되십니까?
+                    </p>
+                  </div>
+
+                  <div className="link-btn-wrap">
+                    <button type="button" className="link-btn type01"
+                    onClick={(e)=>{
+                      openPop('layer01')
+                    }}>
+                      <span className="ico-blue-arrow right">업종 펼쳐보기</span>
+                    </button>
+                  </div>
+                  
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio02" id="radio02_01" />
+                      <label htmlFor="radio02_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio02" id="radio02_02" />
+                      <label htmlFor="radio02_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      3. 심사항목 저촉사항이 있습니까?
+                    </p>
+                    <ol className="order-list">
+                      <li data-num="①" className="item">신청일 현재 금융기관 연체 중</li>
+                      <li data-num="②" className="item">신청일 현재 국세,지방세, 4대보험 체납 중</li>
+                      <li data-num="③" className="item">최근 3개월 이내 10일 이상 계속된 연체대출금 보유</li>
+                      <li data-num="④" className="item">최근 1년 이내 당좌부도, 신용관리정보<br />(신용보증기금/기술보증기금/신용보증재단) 부실정보 보유</li>
+                      <li data-num="⑤" className="item">최근 1년 이내 사업장 또는 거주주택에 대한 권리침해(경매,압류,가압류,가처분)</li>
+                    </ol>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio03" id="radio03_01" />
+                      <label htmlFor="radio03_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio03" id="radio03_02" />
+                      <label htmlFor="radio03_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      4. 신청기업의 실제경영자가 사업자등록증상 대표자입니까?
+                    </p>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio04" id="radio04_01" />
+                      <label htmlFor="radio04_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio04" id="radio04_02" />
+                      <label htmlFor="radio04_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      5. 사업자등록상 공동대표자가 있습니까?
+                    </p>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio05" id="radio05_01" />
+                      <label htmlFor="radio05_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio05" id="radio05_02" />
+                      <label htmlFor="radio05_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      6. 신청일 현재 신청기업 이외에 다른 기업을 운영 중에 있으며, 해당 기업이 신용보증기금, 기술보증기금, 지역신용보증재단에 보증잔액이 있습니까?
+                    </p>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio06" id="radio06_01" />
+                      <label htmlFor="radio06_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio06" id="radio06_02" />
+                      <label htmlFor="radio06_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      7. 신청일 현재 신용보증기금 또는 기술보증기금 보증잔액이 있습니까?
+
+                    </p>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio07" id="radio07_01" />
+                      <label htmlFor="radio07_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio07" id="radio07_02" />
+                      <label htmlFor="radio07_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      8. 사업자등록증상 개업일로부터 1년이 지났습니까?
+                    </p>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio08" id="radio08_01" />
+                      <label htmlFor="radio08_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio08" id="radio08_02" />
+                      <label htmlFor="radio08_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
+                <li className="item">
+                  <div className="question-wrap txt-wrap">
+                    <p className="txt">
+                      9. 최근 1년 이내 대표자(실제경영자)가 변동 된 사실이 있습니까?
+                    </p>
+                  </div>
+
+                  <div className="sele-list type01 radius answer-wrap">
+                    <div className="item">
+                      <input type="radio" name="radio09" id="radio09_01" />
+                      <label htmlFor="radio09_01" className="item-cont">아니요</label>
+                    </div>
+                    <div className="item">
+                      <input type="radio" name="radio09" id="radio09_02" />
+                      <label htmlFor="radio09_02" className="item-cont">예</label>
+                    </div>
+                  </div>
+                </li>
               </ol>
 
               <div className="terms-wrap">
@@ -108,6 +270,7 @@ function SelfCheck(props) {
               </div>
             </div>
           </div>
+          {/* 푸터 */}
         </div>
       </div>
     </>
@@ -115,40 +278,7 @@ function SelfCheck(props) {
 
 }
 
-function ButtionList(props) {
- 
-  return (
-    <>
-      <div className ="item">
-        <input type="radio" name="radio03"
-        key={`${props.idx}`}
-        id={`radio${props.idx}`}
-        value={props.data.answer[1].value}
-        onChange={(e)=>{
-          let copy = [...props.answer];
-          copy[props.idx] = e.currentTarget.value;
-          props.setAnswer(copy);
-          console.log(props.answer)
-        }}
-        />
-          <label htmlFor ={`radio${props.idx}`} className ="item-cont">{props.data.answer[1].name}</label>
-      </div>
-      <div className ="item">
-        <input type="radio" name="radio03"
-        key={`${props.idx}1`}
-        id={`radio${props.idx}1`}
-        value={props.data.answer[0].value}
-        onChange={(e)=>{
-          let copy = [...props.answer];
-          copy[props.idx] = e.currentTarget.value;
-          props.setAnswer(copy);
-          console.log(props.answer)
-        }}/>
-          <label htmlFor ={`radio${props.idx}1`} className ="item-cont">{props.data.answer[0].name}</label>
-      </div>
-    </>
-  )
-}
+
 
 function validCheck(answer) {
 
