@@ -9,14 +9,12 @@
  */
 function RadioInlineComponent(props) {
   const objRadioData = props.radioData;
-  console.log("넘어온check값", props.checked);
   if (props.showYn) {
     return (
       <>
         <div className={props.styleSeleList}>
           {
             objRadioData.radioList.map((data, idx) => {
-              console.log("컴포넌트의check값", data.id)
               return (
                 <div key={`sRadio${objRadioData.id}_${data.id}`} className="item">
                   <input type="radio"
