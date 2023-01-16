@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
 import collectData from "../../modules/constants/collectData";
 import RadioInlineComponent from "../common/RadioInlineComponent";
 import SelectComponent from "../common/SelectComponent";
+import TextComponent from "../common/TextComponent";
 import TitleComponent from "../common/TitleComponent";
 const applyInfoInput = collectData("ApplyInfoInput");
 /**
@@ -37,11 +39,29 @@ function ApplyInfoInput(props) {
     if(data.type === "select") {
       arrSeleectData.push(data);
     }
-  });  
+  });
+  
+  
+  let [showTitleYn, setShowTitleYn] = useState(true);
+  let [showDirInputYn, setShowDirInupYn] = useState(false);
+  let [styleInput, setStyleInput] = useState("");
   
   let navigate = useNavigate();
 
+  useEffect(()=> {
+    //todo : 대출신청정보
+    //todo : 금리종류
+    //todo : 기업은행 수신계좌리스트(마통 제외)
+
+  }, []);
+  //todo : 서버에서 가져온값으로 초기화
+  let [userResult, setUserResult] = useState(["고객 적용 금리",{id:0, value:"사업장운영자금"},{id:0, value:"1일"},99]);
+
+  useEffect(()=> {
+    console.log(userResult);
+  }, [userResult]);
   function cbOslBtn() {
+    //todo : 다음페이지
     // navigate(
     //   PathConstants.GUIDE_READY
     //   );
@@ -109,36 +129,53 @@ function ApplyInfoInput(props) {
               </div>
             </div>
             <div className="section line-tf4">
-              <ol className="sele-list type03 pad-b10">
+              <ol className="sele-list type02 pad-b10">
                 {
                   applyInfoInput.map((data, idx)=> {
+                    if(idx===1) console.log(userResult[idx]);
                     return (
                       <li key={`li_${idx}`} className="item">
                         <TitleComponent
-                          showYn={true}
+                          showYn={(data.textId===1)?false:showTitleYn}
                           title={applyInfoInput[idx].title}
                           styleTxt="txt"
                         />
                         {
                           (data.type === "radio") && 
                             <RadioInlineComponent 
+                              showYn={true}
                               radioData={arrRadioData[data.radioId]}
                               styleSeleList={`sele-list type01 radius answer-wrap mar-t10 row${data.radioList.length} noflex1`}
+                              checked={(userResult[idx]!=99)&&userResult[idx].id}
                               onChangeFn={(radioIdx)=>{
+                                console.log(radioIdx);
                                 console.log(data.radioList[radioIdx].value);
-                                // let copy = [...props.userResult]
-                                // copy[props.idx] = data.value;
-                                // props.setUserResult(copy);
+                                let copy = [...userResult];
+                                copy[idx] = {id:radioIdx, value:data.radioList[radioIdx].value}
+                                setUserResult(copy);
+                                if(radioIdx===3) {
+                                  setShowDirInupYn(true);
+                                }else {
+                                  setShowDirInupYn(false);
+                                }
                               }}
                             />
                         }
                         {
                           (data.type === "text")  && 
-                            <div className="sele-list type01 radius answer-wrap mar-t10">
-                              <div className="item">
-                                <input type="text" className="ta-c" name="text01" id="text01_01" readOnly value="고객 적용 금리" />
-                              </div>
-                            </div>
+                            <TextComponent
+                              showYn={(data.textId===0)?true:showDirInputYn}
+                              styleSeleList="sele-list type01 radius answer-wrap mar-t10"
+                              styleInput={(data.textId===0)&&"ta-c"}
+                              textData={arrTextData[data.textId]}
+                              onChangeFn={(value)=>{
+                                let copy = [...userResult];
+                                let copy2 = {...userResult[2]}
+                                copy2.value = value;
+                                copy[data.id] = (idx!=3)?value:copy2;
+                                setUserResult(copy);
+                              }}
+                            />
                         }
                         {
                           (data.type === "select") &&
@@ -146,6 +183,11 @@ function ApplyInfoInput(props) {
                               showYn={true}
                               selectData={arrSeleectData[data.selectId]}
                               styleSeleList="sele-list type01 radius answer-wrap mar-t10"
+                              onChangeFn={(value)=> {
+                                let copy = [...userResult];
+                                copy[data.id] = value;
+                                setUserResult(copy);
+                              }}
                             />
                         }
                       </li>  

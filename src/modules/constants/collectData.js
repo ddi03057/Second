@@ -409,7 +409,9 @@ const applyInfoInputData = [
   {
     id: 0,
     title: "금리종류",
-    type: "text"
+    type: "text",
+    textId: 0,
+    value: "고객 적용 금리"
   },
   {
     id: 1,
@@ -457,6 +459,12 @@ const applyInfoInputData = [
     ]
   },
   {
+    id: 2,
+    title: "할부금 및 이자납입일 - 매월",
+    type: "text",
+    textId: 1
+  },
+  {
     id: 3,
     title: "대출금 입금 및 자동이체 계좌번호",
     type: "select",
@@ -467,6 +475,12 @@ const applyInfoInputData = [
         bru: "기업",
         accNum: "123-45678-00-00000",
         name: "기업 123-45678-00-00000"
+      },
+      {
+        id: 1,
+        bru: "국민",
+        accNum: "123-45678-00-00000",
+        name: "국민 123-45678-00-00000"
       }
     ]
   }
