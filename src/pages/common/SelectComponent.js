@@ -13,7 +13,12 @@ function SelectComponent(props) {
     <div className={props.styleSeleList}>
       <div className="item">
         <label className="ui-select">
-          <select name="sSel" id="sSel1">
+          <select 
+            name="sSel" 
+            id="sSel1" 
+            onChange={(e) => {
+              props.onChangeFn(e.target.value);
+            }}>
           {
             objSelectData.selectList.map((data, idx)=>{
               return (
