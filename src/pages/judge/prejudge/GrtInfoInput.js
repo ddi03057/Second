@@ -21,6 +21,7 @@ import OslHeader from "../../../modules/components/OslHeader.js";
 import PathConstants from "../../../modules/constants/PathConstants.js";
 import collectData from "../../../modules/constants/collectData.js";
 
+
 const grtInfoData = collectData("GrtInfoInput");
 
 function GrtInfoInput(props) {
@@ -51,7 +52,7 @@ function GrtInfoInput(props) {
 
     let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
     let navigate = useNavigate(); //다음화면을 위한 navigate
-    useEffect(()=> {
+    useEffect(() => {
         console.log(userResult);
     }, [userResult])
     function cbOslBtn() {
@@ -75,66 +76,75 @@ function GrtInfoInput(props) {
                 });
         }
     }
-    return (
-        <>
-            <OslHeader headerNm={props.headerNm} />
-            <div className="container">
-                <div className="content">
-                    <div className="content-body">
-                        <div className="content-top pad-b30">
-                            <p className="top-tit"><strong>조사 자료 자가체크를</strong> 위해<br />
-                                <strong>확인해야할 내용</strong>이 있습니다.</p>
-                        </div>
 
-                        <div className="section line-tf4">
-                            <ol className="sele-list type03 pad-b10">
-                                {grtInfoData.map(function (data1, idx1) {
-                                    return (
-                                        <li key={`li_${idx1}`} className="item">
-                                            <TitleComponent titleData={arrTitleData[idx1]} />
-                                            {(data1.type === "radio") &&
-                                                <RadioComponent
-                                                    radioData={arrRadioData[data1.radioId]}
-                                                    idx={idx1} userResult={userResult} setUserResult={setUserResult}
-                                                />
-                                            }
-                                            {(data1.type === "text") && <TextComponent textData={arrTextData} idx={idx1} userResult={userResult} setUserResult={setUserResult} />}
-                                            {(data1.type === "select" && <SelectComponent selectData={arrSeleectData} idx={idx1} userResult={userResult} setUserResult={setUserResult} />)}
-                                        </li>
-                                    )
-                                })}
+return (
+    <>
+        <OslHeader headerNm={props.headerNm} />
+        <div className="container">
+            <div className="content">
+                <div className="content-body">
+                    <div className="content-top pad-b30">
+                        <p className="top-tit"><strong>조사 자료 자가체크를</strong> 위해<br />
+                            <strong>확인해야할 내용</strong>이 있습니다.</p>
+                    </div>
 
-                            </ol>
-                            <div className="terms-wrap mar-t30">
-                                <div className="txt-wrap bg-gray">
-                                    <p className="info-con-txt mar-t0">* 대출 희망금액은 최대 1억원까지 입력 가능하며, 보증기관 심사과정에서 금액이 변동 될 수 있습니다.</p>
-                                    <p className="info-con-txt mar-t0">* 최소 신청 희망금액은 1천만원이며, 1백만원 단위로 입력 가능합니다.</p>
-                                    <p className="info-con-txt mar-t0">* 한도조회 이후 보증 신청 시 사업자등록증 상 주소로 사업장 현장실사 예정입니다.</p>
-                                </div>
+                    <div className="section line-tf4">
+                        <ol className="sele-list type02 pad-b10">
+                            {grtInfoData.map(function (data1, idx1) {
+                                return (
+                                    <li key={`li_${idx1}`} className="item">
+                                        <TitleComponent titleData={arrTitleData[idx1]} />
+                                        {(data1.type === "radio") &&
+                                            <RadioComponent
+                                                radioData={arrRadioData[data1.radioId]}
+                                                idx={idx1} userResult={userResult}
+                                                setUserResult={setUserResult}
+                                                
+                                            />
+                                        }
 
-                                <div className="ui-cont-wrap">
-                                    <div className="ui-decide">
-                                        <input type="checkbox" id="checkbox01" />
-                                        <label htmlFor ="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
-                                    </div>
+
+                                        {(data1.type === "text") && <TextComponent textData={arrTextData} idx={idx1} userResult={userResult} setUserResult={setUserResult} />}
+                                        {(data1.type === "select" && <SelectComponent selectData={arrSeleectData} idx={idx1} userResult={userResult} setUserResult={setUserResult} />)}
+                                    </li>
+                                )
+                            })}
+
+
+
+                        </ol>
+                        <div className="terms-wrap mar-t30">
+                            <div className="txt-wrap bg-gray">
+                                <p className="info-con-txt mar-t0">* 대출 희망금액은 최대 1억원까지 입력 가능하며, 보증기관 심사과정에서 금액이 변동 될 수 있습니다.</p>
+                                <p className="info-con-txt mar-t0">* 최소 신청 희망금액은 1천만원이며, 1백만원 단위로 입력 가능합니다.</p>
+                                <p className="info-con-txt mar-t0">* 한도조회 이후 보증 신청 시 사업자등록증 상 주소로 사업장 현장실사 예정입니다.</p>
+                            </div>
+
+                            <div className="ui-cont-wrap">
+                                <div className="ui-decide">
+                                    <input type="checkbox" id="checkbox01"
+                                    />
+                                    <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <OslBtn obj={{
-                        type: "button",
-                        disabled: false,
-                        text: ["확인"],
-                        link: "",
-                        callbackId: cbOslBtn
-                    }} />
-
-
                 </div>
+                <OslBtn obj={{
+                    type: "button",
+                    disabled: false,
+                    text: ["확인"],
+                    link: "",
+                    callbackId: cbOslBtn
+                }} />
+
 
             </div>
-        </>
-    )
+
+        </div>
+    </>
+)
+
 }
 function TitleComponent(props) {
     const titleData = props.titleData;
@@ -148,6 +158,41 @@ function TitleComponent(props) {
 }
 function RadioComponent(props) {
     const objRadioData = props.radioData;
+    const [visible, setVisible] = useState(false);
+
+
+
+    if (objRadioData.id === 0 || objRadioData.id === 1 || objRadioData.id === 3 ||
+        objRadioData.id === 4 || objRadioData.id === 5 || objRadioData.id === 6) {
+        return (
+            <>
+                <div className="sele-list type01 radius answer-wrap">
+                    {objRadioData.radiolist.map((data, idx) => {
+                        return (
+                            <div key={`sRadio${objRadioData.id}_${data.id}`} className="item">
+                                <input type="radio"
+                                    name={`sRadio${objRadioData.id}`}
+                                    id={`sRadio${objRadioData.id}_${data.id}`}
+                                    value={data}
+                                    onChange={(e) => {
+                                        let copy = [...props.userResult]
+                                        copy[props.idx] = data.id;
+                                        props.setUserResult(copy);
+                                    }}
+                                />
+                                <label htmlFor={`sRadio${objRadioData.id}_${data.id}`} className="item-cont">
+                                    {data.value}
+                                </label>
+                            </div>
+
+                        )
+                    })}
+                </div>
+            </>
+        )
+    } else if (objRadioData.id === 2) {
+
+    }
     return (
         <>
             <div className="sele-list type01 radius answer-wrap">
@@ -162,8 +207,10 @@ function RadioComponent(props) {
                                     let copy = [...props.userResult]
                                     copy[props.idx] = data.id;
                                     props.setUserResult(copy);
+                                    setVisible(!visible)
 
-                                }} />
+                                }}
+                            />
                             <label htmlFor={`sRadio${objRadioData.id}_${data.id}`} className="item-cont">
                                 {data.value}
                             </label>
@@ -172,9 +219,36 @@ function RadioComponent(props) {
                     )
                 })}
             </div>
+            {visible &&
+                <div className="sele-list answer-wrap">
+                    <div className="item">
+                        <div className="inp-block">
+                            <input type="text" className="inp type01 disabled w175 address"
+                                name="text01"
+                                id="text01_01"
+                                placeholder=""
+                                value=""
+                            />
+                            <button type="button" className="btn btn-md address-btn bg-skyblue"
+                           
+                            >
+                                <span className="fc-white fs-18">
+                                    주소찾기
+                                </span>
+                            </button>
+                        </div>
+                        <input type="text" className="inp type01" name="text01" id="text01_02" placeholder=""  />
+                        <input type="text" className="inp type01" name="text01" id="text01_03" placeholder=""  />
+                    </div>
+                </div>
+
+            }
+            
+
         </>
     )
 }
+
 
 function TextComponent(props) {
 
@@ -192,7 +266,7 @@ function TextComponent(props) {
                         className="w100p ta-r"
                         size="9"
                         onChange={(e) => {
-                            if(e.currentTarget.value > 100000000){
+                            if (e.currentTarget.value > 100000000) {
                                 alert("대출 희망금액은 최대 1억원까지 입력가능합니다.")
                             }
                             let copy = [...props.userResult];
@@ -258,15 +332,15 @@ function validCheckEmpty(userResult) {
             } else {
                 verb = "선택" + verb;
             }
-            if(userResult[8] < 10000000){
-               return msg = ("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
-            }else if(userResult[8] < 1000000){
-               return msg = ("1백만원 단위로 입력 가능합니다.")
+            if (userResult[8] < 10000000) {
+                return msg = ("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
+            } else if (userResult[8] < 1000000) {
+                return msg = ("1백만원 단위로 입력 가능합니다.")
             }
             msg = grtInfoData[grtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
 
             return msg;
-        } 
+        }
     }
     return null;
 }
@@ -286,4 +360,6 @@ function checkBatchimEnding(word) {
 
     return (uni - 44032) % 28 != 0;
 }
+
+
 export default GrtInfoInput;

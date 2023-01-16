@@ -632,14 +632,25 @@ const grtInfoData = [
   {
       id: 2,
       title: "주민등록상 주소지와 실제 거주지 주소가 같습니까?",
-      type: "find",
+      type: "radio",
+      radioId: 2,
+      radiolist: [
+          {
+              id: 0,
+              value: "있음"
+          },
+          {
+              id: 1,
+              value: "없음"
+          },
+      ],
 
   },
   {
       id: 3,
       title: "주민등록상 주소지 소유자",
       type: "radio",
-      radioId: 2,
+      radioId: 3,
       radiolist: [
           {
               id: 0,
@@ -659,7 +670,7 @@ const grtInfoData = [
       id: 4,
       title: "거주 주택 소유자",
       type: "radio",
-      radioId: 3,
+      radioId: 4,
       radiolist: [
           {
               id: 0,
@@ -679,7 +690,7 @@ const grtInfoData = [
       id: 5,
       title: "본인 또는 배우자 명의로 소유하고 있는 주택(실거주 불문)이 있습니까?",
       type: "radio",
-      radioId: 4,
+      radioId: 5,
       radiolist: [
           {
               id: 0,
@@ -695,7 +706,7 @@ const grtInfoData = [
       id: 6,
       title: "거주 주택 권리 침해(최근 1년 이내)",
       type: "radio",
-      radioId: 5,
+      radioId: 6,
       radiolist: [
           {
               id: 0,
@@ -735,14 +746,16 @@ const selfCheckData = [
     title: "1. 영리목적으로 사업을 영위하는 개인기업에 해당하십니까?",
     type: "radio",
     radioId: 0,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -751,14 +764,16 @@ const selfCheckData = [
     title: "2. 보증금지/제한 기업 또는 보증제한/취급유의/지역신용보증재단 우선취급업종 영위기업에 해당되십니까?",
     type: "radio",
     radioId: 1,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -767,14 +782,16 @@ const selfCheckData = [
     title: "3. 심사항목 저촉사항이 있습니까?",
     type: "radio",
     radioId: 2,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -783,14 +800,16 @@ const selfCheckData = [
     title: "4. 신청기업의 실제경영자가 사업자등록증상 대표자입니까?",
     type: "radio",
     radioId: 3,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -799,14 +818,16 @@ const selfCheckData = [
     title: "5. 사업자등록상 공동대표자가 있습니까?",
     type: "radio",
     radioId: 4,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -815,14 +836,16 @@ const selfCheckData = [
     title: "6. 신청일 현재 신청기업 이외에 다른 기업을 운영 중에 있으며, 해당 기업이 신용보증기금, 기술보증기금, 지역신용보증재단에 보증잔액이 있습니까?",
     type: "radio",
     radioId: 5,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -831,14 +854,16 @@ const selfCheckData = [
     title: "7. 신청일 현재 신용보증기금 또는 기술보증기금 보증잔액이 있습니까?",
     type: "radio",
     radioId: 6,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -847,14 +872,16 @@ const selfCheckData = [
     title: "8. 사업자등록증상 개업일로부터 1년이 지났습니까?",
     type: "radio",
     radioId: 7,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },
@@ -863,14 +890,16 @@ const selfCheckData = [
     title: "9. 최근 1년 이내 대표자(실제경영자)가 변동 된 사실이 있습니까?",
     type: "radio",
     radioId: 8,
-    answer: [
+    radioList: [
       {
+        id: 0,
         name: "예",
-        value: "y"
+        value: "예"
       },
       {
+        id: 1,
         name: "아니요",
-        value: "n"
+        value: "아니요"
       },
     ],
   },

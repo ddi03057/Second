@@ -21,6 +21,8 @@ import ApprInfo from './pages/judge/grtjudge/ApprInfo.js';
 import LonContentCheck from './pages/lonexecute/LonContentCheck.js';
 import ArsCertificate from './pages/lonexecute/ArsCertificate.js';
 
+
+
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 const ApplyInfoInput = lazy(() => import('./pages/lonexecute/ApplyInfoInput.js'));
