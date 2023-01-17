@@ -3,6 +3,7 @@
  */
 
 function GrtInfoInputModal() {
+  
   return (
     <>
       <div className="content-top">
@@ -20,7 +21,7 @@ function GrtInfoInputModal() {
                       <span className="blind">접기</span>
                   </button>
               </div>
-              <div className="box-list-cont">
+              <div className="box-list-cont active">
                   <p className="txt fc-lightGray">
                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
                   </p>
@@ -36,7 +37,7 @@ function GrtInfoInputModal() {
                       <span className="blind">접기</span>
                   </button>
               </div>
-              <div className="box-list-cont">
+              <div className="box-list-cont active">
                   <p className="txt fc-lightGray">
                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
                   </p>
@@ -52,7 +53,7 @@ function GrtInfoInputModal() {
                       <span className="blind">접기</span>
                   </button>
               </div>
-              <div className="box-list-cont">
+              <div className="box-list-cont active">
                   <p className="txt fc-lightGray">
                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
                   </p>

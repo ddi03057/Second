@@ -136,6 +136,7 @@ function CustAgree(props) {
       </div>
       <FullModal
         showYn={show}
+        handleClose={handleClose}
         headerNm="약관 동의"
         content={arrPdfData}
         type="pdf"

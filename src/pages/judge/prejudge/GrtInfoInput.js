@@ -90,7 +90,7 @@ function GrtInfoInput(props) {
           <div className="content-body">
             <div className="content-top pad-b30">
               <p className="top-tit"><strong>조사 자료 자가체크를</strong> 위해<br />
-                <strong onClick={()=>{handleShow();}}>확인해야할 내용</strong>이 있습니다.</p>
+                <strong>확인해야할 내용</strong>이 있습니다.</p>
             </div>
 
             <div className="section line-tf4">
@@ -132,7 +132,7 @@ function GrtInfoInput(props) {
                     <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                   </div>
                   <div className="ui-pop">
-                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={()=>handleShow}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
+                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={()=>handleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
                   </div>
                 </div>
               </div>
@@ -150,6 +150,7 @@ function GrtInfoInput(props) {
         </div>
           <FullModal 
             showYn={show}
+            handleClose={handleClose}
             headerNm=""
             content="GrtInfoInputModal"
             type="component"
