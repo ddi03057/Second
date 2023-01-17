@@ -38,7 +38,6 @@ function SelfCheck(props) {
   });
 
 
-
   let navigate = useNavigate();
 
   // popup
@@ -98,7 +97,7 @@ function SelfCheck(props) {
             <div className="section pad-t30 line-tf4">
               <ol className="sele-list type02">
                 {selfCheckData.map((data, idx) => {
-
+                  console.log(arrRadioData[data.radioId])
                   return (
                     <li key={`li_${idx}`} className="item">
                       <TitleComponent

@@ -13,20 +13,22 @@
  * props항목별 설명
  */
 
-
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn.js";
 import OslHeader from "../../../modules/components/OslHeader.js";
 import PathConstants from "../../../modules/constants/PathConstants.js";
 import collectData from "../../../modules/constants/collectData.js";
 import FullModal from "../../../modules/components/FullModal.js";
+import RadioInlineComponent from "../../common/RadioInlineComponent";
+import TitleComponent from "../../common/TitleComponent";
+import SelectComponent from "../../common/SelectComponent";
+import TextComponent from "../../common/TextComponent";
 
 
 const grtInfoData = collectData("GrtInfoInput");
 
 function GrtInfoInput(props) {
-
   //**항목별 데이터 분리 */
   let arrTitleData = [];
   grtInfoData.find((data) => {
@@ -50,8 +52,15 @@ function GrtInfoInput(props) {
       arrSeleectData.push(data);
     }
   });
+  let arrSearchData = [];
+  grtInfoData.find((data) => {
+    if (data.type === "search") {
+      arrSearchData.push(data);
+    }
+  });
 
-  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
+
+  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99,99]); //결과값 저장 state
   let navigate = useNavigate(); //다음화면을 위한 navigate
   useEffect(() => {
     console.log(userResult);
@@ -81,7 +90,7 @@ function GrtInfoInput(props) {
         });
     }
   }
-
+  const [visible, setVisible] = useState(false);
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
@@ -95,22 +104,65 @@ function GrtInfoInput(props) {
 
             <div className="section line-tf4">
               <ol className="sele-list type02 pad-b10">
-                {grtInfoData.map(function (data1, idx1) {
+                {grtInfoData.map((data, idx) => {
                   return (
-                    <li key={`li_${idx1}`} className="item">
-                      <TitleComponent titleData={arrTitleData[idx1]} />
-                      {(data1.type === "radio") &&
-                        <RadioComponent
-                          radioData={arrRadioData[data1.radioId]}
-                          idx={idx1} userResult={userResult}
-                          setUserResult={setUserResult}
+                    <li key={`li_${idx}`} className="item">
+                      <TitleComponent
+                        showYn={true}
+                        title={grtInfoData[idx].title}
+                        styleTxt="txt"
+                      />
+                      {(data.type === "radio" &&
+                        <>
+                          <RadioInlineComponent
+                            showYn={true}
+                            radioData={arrRadioData[data.radioId]}
+                            styleSeleList={`sele-list type01 radius answer-wrap`}
+                            checked={userResult[idx]}
+                            onChangeFn={(radioIdx) => {
+                              let copy = [...userResult]
+                              copy[idx] = radioIdx;
+                              setUserResult(copy);
+                            }}
+                          />
 
+                        </>
+                      )}
+                      {(data.type === "search" &&
+                        <Search arrSearchData={arrSearchData} userResult={userResult} setVisible={setVisible}
                         />
-                      }
-
-
-                      {(data1.type === "text") && <TextComponent textData={arrTextData} idx={idx1} userResult={userResult} setUserResult={setUserResult} />}
-                      {(data1.type === "select" && <SelectComponent selectData={arrSeleectData} idx={idx1} userResult={userResult} setUserResult={setUserResult} />)}
+                      )}
+                      {
+                          (data.type === "text")  && 
+                            <TextComponent
+                              showYn={true}
+                              styleSeleList="sele-list type01 radius answer-wrap"
+                              styleInput="w100p ta-r"
+                              textData={arrTextData[data.textId]}
+                              onChangeFn={(value)=>{
+                                if(value > 100000000){
+                                  alert("대출 희망금액은 최대 1억원까지 입력가능합니다.")
+                                }
+                                let copy = [...userResult];
+                                copy[data.id] = value;
+                                setUserResult(copy)
+                                
+                              }}
+                            />
+                        }
+                      {
+                          (data.type === "select") &&
+                            <SelectComponent
+                              showYn={true}
+                              selectData={arrSeleectData[data.selectId]}
+                              styleSeleList="sele-list type01 radius answer-wrap"
+                              onChangeFn={(value)=> {
+                                let copy = [...userResult];
+                                copy[data.id] = value;
+                                setUserResult(copy);
+                              }}
+                            />
+                        }
                     </li>
                   )
                 })}
@@ -132,7 +184,7 @@ function GrtInfoInput(props) {
                     <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                   </div>
                   <div className="ui-pop">
-                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={()=>handleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
+                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={() => handleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
                   </div>
                 </div>
               </div>
@@ -148,175 +200,46 @@ function GrtInfoInput(props) {
 
 
         </div>
-          <FullModal 
-            showYn={show}
-            handleClose={handleClose}
-            headerNm=""
-            content="GrtInfoInputModal"
-            type="component"
-          />
+        <FullModal
+          showYn={show}
+          handleClose={handleClose}
+          headerNm=""
+          content="GrtInfoInputModal"
+          type="component"
+        />
       </div>
     </>
   )
 
 }
-function TitleComponent(props) {
-  const titleData = props.titleData;
-  return (
-    <div className="question-wrap txt-wrap">
-      <p className="txt fc-6">
-        {titleData}
-      </p>
-    </div>
-  )
-}
-function RadioComponent(props) {
-  const objRadioData = props.radioData;
-  const [visible, setVisible] = useState(false);
 
+function Search(props) {
+  const data = props.arrSearchData;
 
-
-  if (objRadioData.id === 0 || objRadioData.id === 1 || objRadioData.id === 3 ||
-    objRadioData.id === 4 || objRadioData.id === 5 || objRadioData.id === 6) {
+  if (props.userResult[2] === 1) {
     return (
-      <>
-        <div className="sele-list type01 radius answer-wrap">
-          {objRadioData.radiolist.map((data, idx) => {
-            return (
-              <div key={`sRadio${objRadioData.id}_${data.id}`} className="item">
-                <input type="radio"
-                  name={`sRadio${objRadioData.id}`}
-                  id={`sRadio${objRadioData.id}_${data.id}`}
-                  value={data}
-                  onChange={(e) => {
-                    let copy = [...props.userResult]
-                    copy[props.idx] = data.id;
-                    props.setUserResult(copy);
-                  }}
-                />
-                <label htmlFor={`sRadio${objRadioData.id}_${data.id}`} className="item-cont">
-                  {data.value}
-                </label>
-              </div>
-
-            )
-          })}
-        </div>
-      </>
-    )
-  } else if (objRadioData.id === 2) {
-
-  }
-  return (
-    <>
-      <div className="sele-list type01 radius answer-wrap">
-        {objRadioData.radiolist.map((data, idx) => {
-          return (
-            <div key={`sRadio${objRadioData.id}_${data.id}`} className="item">
-              <input type="radio"
-                name={`sRadio${objRadioData.id}`}
-                id={`sRadio${objRadioData.id}_${data.id}`}
-                value={data}
-                onChange={(e) => {
-                  let copy = [...props.userResult]
-                  copy[props.idx] = data.id;
-                  props.setUserResult(copy);
-                  setVisible(!visible)
-
-                }}
-              />
-              <label htmlFor={`sRadio${objRadioData.id}_${data.id}`} className="item-cont">
-                {data.value}
-              </label>
-            </div>
-
-          )
-        })}
-      </div>
-      {visible &&
-        <div className="sele-list answer-wrap">
-          <div className="item">
-            <div className="inp-block">
-              <input type="text" className="inp type01 disabled w175 address"
-                name="text01"
-                id="text01_01"
-                placeholder=""
-                value=""
-              />
-              <button type="button" className="btn btn-md address-btn bg-skyblue"
-
-              >
-                <span className="fc-white fs-18">
-                  주소찾기
-                </span>
-              </button>
-            </div>
-            <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" />
-            <input type="text" className="inp type01" name="text01" id="text01_03" placeholder="" />
-          </div>
-        </div>
-
-      }
-    </>
-  )
-}
-
-
-function TextComponent(props) {
-
-  const objTextData = props.textData;
-
-  return (
-    <div className="form-group">
-      <div className="sele-list type01 radius answer-wrap">
+      <div className="sele-list answer-wrap">
         <div className="item">
-          <input
-            type="text"
-            name="text01"
-            id="text01_01"
-            placeholder="5000000"
-            className="w100p ta-r"
-            size="9"
-            onChange={(e) => {
-              if (e.currentTarget.value > 100000000) {
-                alert("대출 희망금액은 최대 1억원까지 입력가능합니다.")
-              }
-              let copy = [...props.userResult];
-              copy[props.idx] = e.currentTarget.value;
-              props.setUserResult(copy);
-              console.log(props.userResult)
-
-            }}
-          />
+          <div className="inp-block">
+            <input type="text" className="inp type01 disabled w175 address"
+              name="text01"
+              id="text01_01"
+              placeholder=""
+              value=""
+            />
+            <button type="button" className="btn btn-md address-btn bg-skyblue"
+            >
+              <span className="fc-white fs-18">
+                {data[0].title}
+              </span>
+            </button>
+          </div>
+          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" />
+          <input type="text" className="inp type01" name="text01" id="text01_03" placeholder="" />
         </div>
-        <span className="value-text">원</span>
       </div>
-    </div>
-  )
-}
-
-function SelectComponent(props) {
-  const objSelectData = props.selectData;
-  return (
-    <div className="sele-list type01 radius answer-wrap">
-      <div className="item">
-        <label className="ui-select">
-          <select name="sSel" id="sSel1"
-            onChange={(e) => {
-              let copy = [...props.userResult];
-              copy[props.idx] = e.currentTarget.value;
-              props.setUserResult(copy);
-            }}>
-            <option value="">선택하세요</option>
-            <option value="5">5년</option>
-            <option value="8">8년</option>
-          </select>
-          <span></span>
-        </label>
-      </div>
-    </div>
-  )
-
+    )
+  }
 }
 
 
@@ -345,9 +268,9 @@ function validCheckEmpty(userResult) {
       } else {
         verb = "선택" + verb;
       }
-      if (userResult[8] < 10000000) {
+      if (userResult[9] < 10000000) {
         return msg = ("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
-      } else if (userResult[8] < 1000000) {
+      } else if (userResult[9] < 1000000) {
         return msg = ("1백만원 단위로 입력 가능합니다.")
       }
       msg = grtInfoData[grtInfoData.findIndex((data) => data.id === i)].title + josa + verb;

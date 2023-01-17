@@ -166,7 +166,7 @@ function ApplyInfoInput(props) {
                             <TextComponent
                               showYn={(data.textId===0)?true:showDirInputYn}
                               styleSeleList="sele-list type01 radius answer-wrap mar-t10"
-                              styleInput={(data.textId===0)&&"ta-c"}
+                              styleInput={(data.textId===0)?"ta-c": ""}
                               textData={arrTextData[data.textId]}
                               onChangeFn={(value)=>{
                                 let copy = [...userResult];

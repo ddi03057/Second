@@ -51,6 +51,7 @@ function Routing() {
         <Route path={PathConstants.LONEXECUTE_ARSCERTIFICATE} element={<ArsCertificate headerNm={PathConstants.LONEXECUTE_ARSCERTIFICATE_NM}/> }/>
         <Route path={PathConstants.LONEXECUTE_AGRMINPUT} element={<AgrmInput headerNm={PathConstants.LONEXECUTE_AGRMINPUT_NM}/> }/>
         <Route path={PathConstants.LONEXECUTE_SUCCRESULT} element={<Result headerNm={PathConstants.LONEXECUTE_SUCCRESULT_NM}/> }/>
+        <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM_NM}/> }/>
         {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />
       </Routes>

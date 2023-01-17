@@ -607,11 +607,11 @@ const untactAgrmData = [
 
 const grtInfoData = [
   {
-      id: 0,
+      id: 1,
       title: "주 사업장 소유자",
       type: "radio",
       radioId: 0,
-      radiolist: [
+      radioList: [
           {
               id: 0,
               value: "본인"
@@ -628,11 +628,11 @@ const grtInfoData = [
       msg : "배우자, 타인 선택시 진행이 불가합니다."
   },
   {
-      id: 1,
+      id: 2,
       title: "주 사업장 관리 침해(최근 1년 이내)",
       type: "radio",
       radioId: 1,
-      radiolist: [
+      radioList: [
           {
               id: 0,
               value: "있음"
@@ -643,12 +643,13 @@ const grtInfoData = [
           },
       ],
   },
+  
   {
-      id: 2,
+      id: 3,
       title: "주민등록상 주소지와 실제 거주지 주소가 같습니까?",
       type: "radio",
       radioId: 2,
-      radiolist: [
+      radioList: [
           {
               id: 0,
               value: "있음"
@@ -661,51 +662,57 @@ const grtInfoData = [
 
   },
   {
-      id: 3,
-      title: "주민등록상 주소지 소유자",
-      type: "radio",
-      radioId: 3,
-      radiolist: [
-          {
-              id: 0,
-              value: "본인"
-          },
-          {
-              id: 1,
-              value: "배우자"
-          },
-          {
-              id: 2,
-              value: "타인"
-          },
-      ],
-  },
-  {
-      id: 4,
-      title: "거주 주택 소유자",
-      type: "radio",
-      radioId: 4,
-      radiolist: [
-          {
-              id: 0,
-              value: "본인"
-          },
-          {
-              id: 1,
-              value: "배우자"
-          },
-          {
-              id: 2,
-              value: "타인"
-          },
-      ],
+    id: 4,
+    title: "주소찾기",
+    type: "search",
+    searchId: 1
   },
   {
       id: 5,
+      title: "주민등록상 주소지 소유자",
+      type: "radio",
+      radioId: 3,
+      radioList: [
+          {
+              id: 0,
+              value: "본인"
+          },
+          {
+              id: 1,
+              value: "배우자"
+          },
+          {
+              id: 2,
+              value: "타인"
+          },
+      ],
+  },
+  {
+      id: 6,
+      title: "거주 주택 소유자",
+      type: "radio",
+      radioId: 4,
+      radioList: [
+          {
+              id: 0,
+              value: "본인"
+          },
+          {
+              id: 1,
+              value: "배우자"
+          },
+          {
+              id: 2,
+              value: "타인"
+          },
+      ],
+  },
+  {
+      id: 7,
       title: "본인 또는 배우자 명의로 소유하고 있는 주택(실거주 불문)이 있습니까?",
       type: "radio",
       radioId: 5,
-      radiolist: [
+      radioList: [
           {
               id: 0,
               value: "예"
@@ -717,11 +724,11 @@ const grtInfoData = [
       ],
   },
   {
-      id: 6,
+      id: 8,
       title: "거주 주택 권리 침해(최근 1년 이내)",
       type: "radio",
       radioId: 6,
-      radiolist: [
+      radioList: [
           {
               id: 0,
               value: "있음"
@@ -733,22 +740,24 @@ const grtInfoData = [
       ],
   },
   {
-      id: 7,
+      id: 9,
       title: "대출 희망 금액",
       type: "text",
+      textId: 0
   },
   {
-      id: 8,
+      id: 10,
       title: "대출 기간",
       type: "select",
-      selectlist: [
+      selectId:0,
+      selectList: [
           {
               id: 0,
-              value: "5"
+              name: "5"
           },
           {
               id: 1,
-              value: "8"
+              name: "8"
           },
       ],
   },

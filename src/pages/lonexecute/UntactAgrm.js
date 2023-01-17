@@ -7,8 +7,8 @@
  * css
  */
 /**
- * 화면명 : 대출 약관 동의
- * 설명  : 대출 실행 - 대출약관동의
+ * 화면명
+ * 설명
  * @param {*} props
  * props항목별 설명
  */
@@ -46,9 +46,7 @@ function UntactAgrm(props) {
   const [idxData, setIdxData] = useState(0);
 
   function cbOslBtn() {
-    // navigate(
-    //   PathConstants.GUIDE_READY
-    //   );
+
   }
 
   return (
