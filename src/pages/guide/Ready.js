@@ -31,122 +31,63 @@ function Ready(props) {
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
-      <div className ="container">
-        <div className ="content">
-          <div className ="content-body">
-            <div className ="content-top pad-b40">
-              <p className ="top-tit">
-                대출을 위해 미리 준비가<br />
-                필요한 것을 안내해드립니다.
-              </p>
-            </div>
-            <div className ="section pad-0">
-              <div className ="box-cont">
-                <div className ="b-title">본인 확인</div>
-                <div className ="b-txt"><b>본인 명의 휴대전화</b></div>
-              </div>
-
-              <div className ="box-cont">
-                <div className ="b-title">스크래핑</div>
-                <div className ="b-txt">
-                  <dl>
-                    <dt>국세청/정부24에 등록된 개인공동인증서</dt>
-                    <dd>
-                      <ul className ="list-type01">
-                        <li>
-                          개인공동인증서 스마트폰 복사가이드 안내화면
-                          <div className ="mar-t10">
-                            <button type="button" className ="btn btn-sm btn-default">
-                              <span className ="txt">안내화면</span>
-                            </button>
-                          </div>
-                        </li>
-                        <li className ="mar-t20">
-                          국세청/정부24 미가입(미등록) 고객을 위한 해당 사이트
-                          <div className ="mar-t10">
-                            <button
-                            type="button"
-                            className ="btn btn-sm btn-default"
-                            onClick={() => { window.location.href = 'https://www.nts.go.kr'; }}
-                            >
-                              <span className ="txt">국세청</span>
-                            </button>
-                            <button
-                            type="button"
-                            className ="btn btn-sm btn-default"
-                            onClick={() => { window.location.href = 'https://www.gov.kr'; }}
-                            >
-                              <span className ="txt">정부24</span>
-                            </button>
-                          </div>
-                        </li>
-                        <li className ="mar-t20">
-                          개인공동인증서 등록 완료 후 스마트폰 내 개인공동인증서 확인
-                          <div className ="mar-t10">
-                            <button type="button" className ="btn btn-sm btn-default">
-                              <span className ="txt">개인공동인증서 조회(관리)</span>
-                            </button>
-                          </div>
-                        </li>
-                        <li className ="mar-t20">
-                          전자서명을 위한 기업(사업자)공동인증서 확인
-                          <div className ="mar-t10">
-                            <button type="button" className ="btn btn-sm btn-default">
-                              <span className ="txt">기업(사업자)공동인증서 조회(관리)</span>
-                            </button>
-                          </div>
-                        </li>
-                      </ul>
-                    </dd>
-                  </dl>
+    <div class="container">
+        <div class="content">
+            <div class="content-body">
+                <div class="content-top pad-b40">
+                    <p class="top-tit">
+                        대출을 위해 미리 준비가<br />
+                        필요한 것을 안내해드립니다.
+                    </p>
                 </div>
-              </div>
-
-              <div className ="box-cont">
-                <div className ="b-title">대출 실행</div>
-                <div className ="b-txt">
-                  <dl>
-                    <dt>OTP</dt>
-                    <dd>
-                      <ul className ="list-type01">
-                        <li>
-                          보유 OTP 등록 및 동작 상태 확인
-                          <div className ="mar-t10">
-                            <button type="button" className ="btn btn-sm btn-default">
-                              <span className ="txt">OTP 테스트</span>
-                            </button>
-                          </div>
-                        </li>
-                      </ul>
-                    </dd>
-                  </dl>
+                <div class="section pad-0">
+                    <div class="box-cont">
+                        <div class="b-title">본인 확인</div>
+                        <div class="b-txt"><b>본인 명의 휴대전화</b></div>
+                    </div>
+                    <div class="box-cont">
+                        <div class="b-title">자료 수집</div>
+                        <div class="b-txt">
+                            <p class="fs18 lh30">
+                                <b>자료 수집을 위해</b>기관사이트에 접속하여 <b>PC에 저장된 공동인증서</b>를 등록해주세요
+                            </p>
+                                    <ul class="list-type01 mar-t20">
+                                        <li>
+                                            <span class="fs18">정부24</span>
+                                            <ul class="step-list">
+                                                <li class="step-item">
+                                                    <span class="step-tit fw-b fc-dark">Step 1.</span>
+                                                    <span class="step-txt fc-gray">PC에서 정부24 (www.gov.kr) 접속</span>
+                                                </li>
+                                                <li class="step-item">
+                                                    <span class="step-tit fw-b fc-dark">Step 2.</span>
+                                                    <span class="step-txt fc-gray">회원가입 및 로그인</span>
+                                                </li>
+                                                <li class="step-item">
+                                                    <span class="step-tit fw-b fc-dark">Step 3.</span>
+                                                    <span class="step-txt fc-gray">MY GOV &gt; 회원정보 &gt; 인증 등록/관리</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="mar-t40">
+                                            <span class="fs18">홈택스</span>
+                                            <ul class="step-list">
+                                                <li class="step-item">
+                                                    <span class="step-tit fw-b fc-dark">Step 1.</span>
+                                                    <span class="step-txt fc-gray">PC에서 홈택스 (www.hometax.go.kr) 접속</span>
+                                                </li>
+                                                <li class="step-item">
+                                                    <span class="step-tit fw-b fc-dark">Step 2.</span>
+                                                    <span class="step-txt fc-gray">로그인 화면 &gt; 인증서등록 &gt; 비밀번호 입력</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <div className ="box-cont">
-                <div className ="b-title">유의사항</div>
-                <div className ="b-txt pad-b0">
-                  <dl>
-                    <dt>계좌</dt>
-                    <dd>
-                      <ul className ="list-type04">
-                        <li>한도계좌를 풀어두지 않은 상태에서 진행 시 취소될 수 있음</li>
-                        <li>1인 1계좌</li>
-                        <li>최근 20일 이내에 사업자 계좌 개설 사실이 있을 경우 대출 실행이 불가합니다.</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
             </div>
-            <div className ="section pad-b0">
-              <div className ="box-chk">
-                <input type="checkbox" name="guide-confirm" id="guide-confirm" className ="check-input02 blind" />
-                <label for="guide-confirm" className ="check-label fc-gray">위 내용을 확인하였습니다.</label>
-              </div>
-            </div>
-          </div>
-          <OslBtn
+            <OslBtn
               obj={{
                 type: "button",
                 disabled: false,
@@ -155,7 +96,9 @@ function Ready(props) {
                 callbackId: cbOslBtn
               }} />
         </div>
-      </div>
+    </div>
+          
+       
 
     </>
   )

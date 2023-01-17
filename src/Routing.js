@@ -20,7 +20,9 @@ import Result from './pages/lonexecute/Result.js';
 import ApprInfo from './pages/judge/grtjudge/ApprInfo.js';
 import LonContentCheck from './pages/lonexecute/LonContentCheck.js';
 import ArsCertificate from './pages/lonexecute/ArsCertificate.js';
-
+import StampTax from './pages/lonexecute/StampTax.js';
+import DataCollect from './pages/judge/prejudge/DataCollect.js';
+import FinanceCusLaw from './pages/lonexecute/FinanceCusLaw.js';
 
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
@@ -45,6 +47,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck headerNm={PathConstants.PREJUDGE_SELFCHECK_NM}/>} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT_NM}/>} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<DocStatus headerNm={PathConstants.PREJUDGE_DOCSTATUS_NM}/>} />
+        <Route path={PathConstants.PREJUDGE_DATACOLLECT} element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM}/>} />
         <Route path={PathConstants.GRTJUDGE_APPRINFO} element={<ApprInfo headerNm={PathConstants.GRTJUDGE_APPRINFO_NM}/>} />
         <Route path={PathConstants.LONEXECUTE_APPLYINFOINPUT} element={<ApplyInfoInput headerNm={PathConstants.LONEXECUTE_APPLYINFOINPUT_NM} />} />
         <Route path={PathConstants.LONEXECUTE_LONCONTENTCHECK} element={<LonContentCheck headerNm={PathConstants.LONEXECUTE_LONCONTENTCHECK_NM}/> }/>
@@ -52,6 +55,8 @@ function Routing() {
         <Route path={PathConstants.LONEXECUTE_AGRMINPUT} element={<AgrmInput headerNm={PathConstants.LONEXECUTE_AGRMINPUT_NM}/> }/>
         <Route path={PathConstants.LONEXECUTE_SUCCRESULT} element={<Result headerNm={PathConstants.LONEXECUTE_SUCCRESULT_NM}/> }/>
         <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM_NM}/> }/>
+        <Route path={PathConstants.LONEXECUTE_STAMPTAX} element={<StampTax headerNm={PathConstants.LONEXECUTE_STAMPTAX_NM}/> }/>
+        <Route path={PathConstants.LONEXECUTE_FINANCECUSLAW} element={<FinanceCusLaw headerNm={PathConstants.LONEXECUTE_FINANCECUSLAW_NM}/> }/>
         {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />
       </Routes>
