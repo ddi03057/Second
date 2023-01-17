@@ -1,7 +1,31 @@
-function DataCollect(){
+/** 
+ * import 순서
+ * react hook, custom hook, 
+ * external component(module), 
+ * internal component(module), 
+ * data, 
+ * css
+ */
+
+import { useState } from "react";
+import OslHeader from "../../../modules/components/OslHeader";
+import OslBtn from "../../../modules/components/OslBtn";
+
+/**
+ * 화면명 : 자료 수집
+ * 설명 : 사업자번호, 행정구역 수집
+ * @param {*} props
+ * props항목별 설명
+ */
+function DataCollect(props){
+
+  function cbOslBtn() {
+    
+  }
+
   return(
     <>
-    {/* 헤더 */}
+    <OslHeader headerNm={props.headerNm} />
     <div class="container">
         <div class="content">
             <div class="content-body">
@@ -73,7 +97,14 @@ function DataCollect(){
                     </ul>
                 </div>
             </div>
-            {/* 푸터 다음 */}
+            <OslBtn
+              obj={{
+                type: "button",
+                disabled: false,
+                text: ["다음"],
+                link: "",
+                callbackId: cbOslBtn
+              }} />
         </div>
     </div>
     </>
