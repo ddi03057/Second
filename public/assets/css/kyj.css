@@ -1,8 +1,6 @@
 @charset "UTF-8";
 /* Base Color */
 /* Mono Tone Color */
-/* Font Size */
-/* Content Size */
 /* 김윤정 */
 /* 공통 */
 * + .inp-wrap {
@@ -106,6 +104,8 @@
     padding: 10px 20px;
 }
 .info-card-wrap.type01 .info-list > .item {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin-bottom: 5px;
 }
@@ -138,8 +138,12 @@
 }
 
 .content-body.certified .link-btn-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: flex-end;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
 }
 
 .order-list > .item {

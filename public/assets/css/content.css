@@ -1,7 +1,5 @@
 /* Base Color */
 /* Mono Tone Color */
-/* Font Size */
-/* Content Size */
 /* title */
 .top-tit {
     font-size: 23px;
@@ -25,16 +23,6 @@
 .top-txt {
     font-size: 16px;
     line-height: 28px;
-}
-
-.value-text {
-    display: inline-block;
-    width: 26px;
-    padding-right: 10px;
-    font-size: 18px;
-    line-height: 60px;
-    letter-spacing: -0.45px;
-    color: #666;
 }
 
 /* section */
@@ -152,7 +140,7 @@
 /* UI-0012-00 */
 .diagnosis .content-top {
     padding-bottom: 40px;
-    background: #fff url(../img/ico/ico_full_file.png) no-repeat calc(100% - 40px) calc(100% - 30px)/80px auto;
+    background: #fff url(../img/ico/ico_full_file.png) no-repeat calc(100% - 40px) calc(100% - 30px)/60px auto;
 }
 
 /* info-txt */
@@ -238,6 +226,16 @@
 }
 .terms-swiper .swiper-pagination .swiper-pagination-current {
     font-weight: bold;
+}
+
+.terms-list {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 0 28px;
+}
+.terms-list li img {
+    width: 100%;
 }
 
 .pop-wrap {
@@ -342,6 +340,7 @@
     border-left: 1px solid #cccccc;
     -webkit-box-sizing: content-box;
             box-sizing: content-box;
+    border-radius: 0;
 }
 .pop-wrap .pop-inner .pop-btn-area .btn-base {
     display: block;
@@ -464,11 +463,6 @@
     width: calc(100% - 30px);
     word-break: keep-all;
 }
-.info-wrap .info-box.ai-c {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-}
 
 .step-list .step-item {
     font-size: 16px;
@@ -518,4 +512,134 @@
     font-size: 18px;
     font-weight: bold;
     color: #3982d8;
+}
+
+* + .inp-wrap {
+    margin-top: 10px;
+}
+* + .terms-wrap {
+    margin-top: 30px;
+}
+* + .sele-list-wrap {
+    padding-top: 30px;
+}
+
+.info-card-wrap {
+    position: relative;
+}
+.info-card-wrap.type01 {
+    border: 1px solid #d8d6de;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.info-card-wrap.type01 a:-webkit-any-link {
+    color: #333;
+}
+.info-card-wrap.type01 + .info-card-wrap {
+    margin-top: 20px;
+}
+.info-card-wrap.type01 > .info-card-cont {
+    width: 100%;
+    height: 100%;
+}
+.info-card-wrap.type01 > a.info-card-cont {
+    display: block;
+}
+.info-card-wrap.type01 .tit-wrap {
+    position: relative;
+    min-height: 50px;
+    padding: 14px 20px 9px 58px;
+    font-size: 18px;
+    line-height: 30px;
+    word-break: break-all;
+}
+.info-card-wrap.type01 .tit-wrap::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    width: 28px;
+    height: 26px;
+    background-image: url("../img/ico/ico_document.png");
+    background-size: cover;
+}
+.info-card-wrap.type01 .tit-wrap .name {
+    font-weight: bold;
+}
+.info-card-wrap.type01 .info-list {
+    border-top: 1px solid #f4f4f4;
+    padding: 10px 20px;
+}
+.info-card-wrap.type01 .info-list > .item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 5px;
+}
+.info-card-wrap.type01 .info-list .txt {
+    font-size: 16px;
+    line-height: 28px;
+    min-width: 50px;
+    word-break: break-all;
+}
+.info-card-wrap.type01 .info-list .txt.tit {
+    color: #666;
+    margin-right: 14px;
+}
+.info-card-wrap.type01 .info-card-btn {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.sele-list-wrap > h2, .terms-wrap > h2 {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+.sele-list-wrap + .link-btn-wrap, .terms-wrap + .link-btn-wrap {
+    margin-top: 20px;
+}
+
+.content-body.certified .link-btn-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+}
+
+.terms-wrap .txt-wrap + .ui-cont-wrap {
+    margin-top: 20px;
+}
+
+.ui-cont-wrap.line-tf4 {
+    padding: 0 25px;
+    padding-top: 20px;
+}
+
+.info-wrap:not(.reject) + .txt-msg {
+    margin-top: 20px;
+}
+
+.no-data-wrap {
+    padding: 93px 25px 0 25px;
+}
+
+.info-wrap.tit-nowrap > .info-box .tit {
+    white-space: nowrap;
+}
+.info-wrap.tit-nowrap > .info-box .txt {
+    padding-left: 8px;
+    word-break: break-all;
+}
+.info-wrap.tit-nowrap > .info-box .tit, .info-wrap.tit-nowrap > .info-box .txt {
+    width: auto;
+    -ms-flex-preferred-size: auto;
+        flex-basis: auto;
 }

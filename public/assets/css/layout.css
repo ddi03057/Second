@@ -1,8 +1,5 @@
-@charset "UTF-8";
 /* Base Color */
 /* Mono Tone Color */
-/* Font Size */
-/* Content Size */
 .wrapper {
     display: block;
     position: relative;
@@ -51,7 +48,7 @@
     text-align: center;
     color: #333;
 }
-.header.only-end { /* kyj추가 */
+.header.only-end {
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;

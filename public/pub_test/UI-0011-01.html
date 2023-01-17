@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>IBK 온라인 입점 소상공인 부대출</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<link rel="shortcut icon" href="data:image/x-icon" type="image/x-icon">
+<link rel="stylesheet" href="assets\css\import.css">
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <!-- container -->
+        <div class="container pad-0">
+            <!-- content -->
+            <div class="content">
+                <!-- content내용 -->
+                <div class="content-body">
+                    <!-- content-top -->
+                    <div class="content-top">
+                        <p class="top-tit"><strong>윤리 경영 실천</strong> 및 <strong>보증브로커</strong> <br /> <strong>피해예방</strong>을 위한 협조 확약</p>
+                    </div>
+                    <!-- //content-top -->
+    
+                    <!-- section commitment-->
+                    <section class="section commitment">
+                        <div class="box-list-wrap">
+                            <div class="box-list-header">
+                                <h4 class="tit fc-gray">1. 윤리 경영 실천</h4>
+                                <button type="button" class="box-list-open">
+                                    <span class="blind">접기</span>
+                                </button>
+                                <button type="button" class="box-list-hide blind">
+                                    <span class="blind">접기</span>
+                                </button>
+                            </div>
+                            <div class="box-list-cont">
+                                <p class="txt fc-lightGray">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                                </p>
+                            </div>
+                        </div>
+                        <div class="box-list-wrap">
+                            <div class="box-list-header">
+                                <h4 class="tit fc-gray">2. 보증브로커 피해예방</h4>
+                                <button type="button" class="box-list-open">
+                                    <span class="blind">접기</span>
+                                </button>
+                                <button type="button" class="box-list-hide blind">
+                                    <span class="blind">접기</span>
+                                </button>
+                            </div>
+                            <div class="box-list-cont">
+                                <p class="txt fc-lightGray">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                                </p>
+                            </div>
+                        </div>
+                        <div class="box-list-wrap">
+                            <div class="box-list-header">
+                                <h4 class="tit fc-gray">3. 입력 내용 최종 확인</h4>
+                                <button type="button" class="box-list-open">
+                                    <span class="blind">접기</span>
+                                </button>
+                                <button type="button" class="box-list-hide blind">
+                                    <span class="blind">접기</span>
+                                </button>
+                            </div>
+                            <div class="box-list-cont">
+                                <p class="txt fc-lightGray">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- //section -->
+                </div>
+                <!-- //content내용 -->  
+                <!-- content-footer -->
+                <div class="content-footer">
+                    <button type="button" class="btn btn-lg default-bg">
+                        <span class="txt">닫기</span>
+                    </button>
+                </div>
+                <!-- //content-footer -->
+            </div>
+            <!-- // content -->
+        </div>
+        <!-- // container -->
+    
+    </div>
+    <!-- //wrapper -->
+
+    <script>
+        function boxList(){
+            const boxListHead = document.querySelectorAll(".box-list-header");
+            const boxListConts = document.querySelectorAll(".box-list-cont");
+            const boxListCont = document.querySelector(".box-list-cont");
+            const boxListOpen = document.querySelectorAll(".box-list-open");
+            const boxListHide = document.querySelectorAll(".box-list-hide");
+
+            for(let i=0; i<boxListConts.length; i++){
+                boxListHead[i].addEventListener("click", () => {
+                    boxListConts[i].classList.toggle ("active");
+                    boxListOpen[i].classList.toggle("blind"); 
+                    boxListHide[i].classList.toggle("blind");
+                })
+            }
+        }
+        boxList()
+    </script>
+</body>
+</html>
