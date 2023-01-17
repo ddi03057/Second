@@ -51,14 +51,15 @@ function CustAgree(props) {
 
   let navigate = useNavigate();
 
+  let [arrPdfData, setArrPdfData] = useState([]);
+
   function cbOslBtn() {
+    setArrPdfData(custAgreeData);
+    handleShow(true);
     // navigate(
     //     PathConstants.PREJUDGE_SUITTEST
     // );
   }
-  let arrPdfData = [];
-  arrPdfData.push(custAgreeData[0]);
-
 
   return (
     <>
@@ -99,6 +100,7 @@ function CustAgree(props) {
                       <a data-id=""
                         className="btn-pop-arrow"
                         onClick={() => {
+                          setArrPdfData([custAgreeData[data.id]]);
                           handleShow(true);
                           //모달창에서 확인 버튼 누를시 전체 동의 로직 만들어야함
                         }}
@@ -140,6 +142,8 @@ function CustAgree(props) {
         headerNm="약관 동의"
         content={arrPdfData}
         type="pdf"
+        disabledYn={true}
+        footerNm="확인"
       />
     </>
   );
