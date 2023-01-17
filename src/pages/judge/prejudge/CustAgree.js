@@ -136,15 +136,17 @@ function CustAgree(props) {
           </div>
         </div>
       </div>
-      <FullModal
-        showYn={show}
-        handleClose={handleClose}
-        headerNm="약관 동의"
-        content={arrPdfData}
-        type="pdf"
-        disabledYn={true}
-        footerNm="확인"
-      />
+      {show&&
+        <FullModal
+          showYn={show}
+          handleClose={handleClose}
+          headerNm="약관 동의"
+          content={arrPdfData}
+          type="pdf"
+          disabledYn={true}
+          footerNm="확인"
+        />
+      }
     </>
   );
 }

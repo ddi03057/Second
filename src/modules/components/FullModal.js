@@ -20,15 +20,22 @@ function FullModal(props) {
   const content = props.content;
   const type = props.type
   const footerNm = props.footerNm;
+
+  
+  const [disabledYn, setDisabledYn] = useState(props.disabledYn);
+  const [popHeight, setPopHeight] = useState(0);
+
   useEffect(()=> {
-    console.log("쇼", showYn);
     if(showYn) {
-      
       document.body.style.overflow="hidden";
-      console.log("height", document.querySelector(".pop-content").scrollHeight);
+      //console.log("height", document.querySelector(".pop-content").scrollHeight);
     }
   }, [showYn]);
-  const [disabledYn, setDisabledYn] = useState(props.disabledYn);
+  useEffect(()=> {
+  //   console.log(document.querySelector(".pop-content").offsetHeight, popHeight);
+  //   (popHeight!=0 && document.querySelector(".pop-content").offsetHeight >= popHeight)&& setDisabledYn(false);
+  }, [popHeight])
+
   return (
     <div id="layer00" className="pop-wrap pop-full" style={{display: showYn?"block":"none"}}>
       <div className="pop-inner">
@@ -46,8 +53,8 @@ function FullModal(props) {
         </div>
         <div className="pop-content" style={{overflow: "auto"}}
           onScroll={(e)=>{
-            console.log(e.target.scrollTop);
-            if(document.querySelector(".pop-content").scrollHeight - Math.floor(document.querySelector(".pop-content").scrollTop) === document.querySelector(".pop-content").clientHeight) {
+            //console.log(e.target.scrollTop);
+            if(document.querySelector(".pop-content").scrollHeight - Math.round(document.querySelector(".pop-content").scrollTop) == document.querySelector(".pop-content").clientHeight) {
               setDisabledYn(false);
             }
           }}>
@@ -58,7 +65,10 @@ function FullModal(props) {
                 return (
                   <PdfViewer 
                     pdfData={data}
-                  />
+                    setPopHeight={setPopHeight}
+                    content={content}
+                    idx={idx}
+                  ></PdfViewer>
                 )
               })   
           }
