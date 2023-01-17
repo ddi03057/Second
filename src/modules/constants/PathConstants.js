@@ -34,6 +34,8 @@ const PathConstants = {
   LOGIN: '/login', //로그인
   LOGOUT: '/logout', //로그아웃
   PROGRESS: '/progress', //진행상태
+  ERROR: '/error',//에러
+
     //dummy
   GUIDE: '/guide',  //안내
   PREJUDGE: '/prejudge',  //사전심사
@@ -43,6 +45,8 @@ const PathConstants = {
   POSTMANAGEMENT: '/postmanagement', //사후관리
 
   //depth2
+  ERROR_SERVICEERROR: '/error/serviceerror', //일시적 서비스 장애
+  ERROR_SYSTEMINSPECT: '/error/systeminspect', //시스템 점검
   GUIDE_DETAIL: '/guide/detail',  //상품안내
   GUIDE_READY: '/guide/ready',  //대출신청 전 사전준비안내
 
@@ -52,16 +56,19 @@ const PathConstants = {
   PREJUDGE_SELFCHECK: '/prejudge/selfcheck',  //자가진단
   PREJUDGE_GRTINFOINPUT: '/prejudge/grtinfoinput',  //사전심사자료작성
   PREJUDGE_DOCSTATUS: '/prejudge/docstatus',  //서류제출상태
+  PREJUDGE_DATACOLLECT: '/prejudge/datacollect', //사업자번호, 행정구역 주소지 입력
   
   GRTJUDGE_APPRINFO: '/grtjudge/apprinfo',  //보증승인내역 확인
   GRTJUDGE_ACCOPEN: '/grtjudge/accopen',  //개좌개설
 
   LONEXECUTE_APPLYINFOINPUT: '/lonexecute/applyinfoinput',  //대출신청서작성 및 실행요청
+  LONEXECUTE_STAMPTAX: '/lonexecute/stamptax', // 인지세 확인
   LONEXECUTE_LONCONTENTCHECK: '/lonexecute/loncontentcheck', //대출 내용 최종 확인
   LONEXECUTE_AGRMINPUT: '/lonexecute/agrminput',  //여신거래약정서 작성
   LONEXECUTE_UNTACTAGRM: '/lonexecute/untactagrm',  //대출 약관 동의
   LONEXECUTE_SUCCRESULT: '/lonexecute/result',  //대출실행결과
   LONEXECUTE_ARSCERTIFICATE: '/lonexecute/arscertificate', // ARS인증
+  LONEXECUTE_FINANCECUSLAW: '/lonexecute/financecuslaw', // 금융소비자법 대응
 
   POSTMANAGEMENT_REPAY: '/postmanagement/repay',  //대출상환
   POSTMANAGEMENT_REVOKREPAY: '/postmanagement/revokrepay', //계약철회 후 상환
@@ -77,16 +84,19 @@ const PathConstants = {
   PREJUDGE_SELFCHECK_NM: '자가진단',  //자가진단
   PREJUDGE_GRTINFOINPUT_NM: '사전심사자료작성',  //사전심사자료작성
   PREJUDGE_DOCSTATUS_NM: '서류제출상태',  //서류제출상태
+  PREJUDGE_DATACOLLECT_NM: '자료수집', //사업자번호, 행정구역 주소지 입력
   
   GRTJUDGE_APPRINFO_NM: '보증승인내역 확인',  //보증승인내역 확인
   GRTJUDGE_ACCOPEN_NM: '계좌개설',  //개좌개설
 
   LONEXECUTE_APPLYINFOINPUT_NM: '대출신청서작성 및 실행요청',  //대출신청서작성 및 실행요청
+  LONEXECUTE_STAMPTAX_NM: '대출 실행', //인지세 확인
   LONEXECUTE_LONCONTENTCHECK_NM: '대출 실행', // 대출 내용 최종 확인
   LONEXECUTE_AGRMINPUT_NM: '여신거래약정서 작성',  //여신거래약정서 작성
   LONEXECUTE_UNTACTAGRM_NM: '비대면 약정',  //대출 약관 동의
   LONEXECUTE_SUCCRESULT_NM: '대출실행결과',  //대출실행결과
   LONEXECUTE_ARSCERTIFICATE_NM: '대출 신청', // ARS인증
+  LONEXECUTE_FINANCECUSLAW_NM: '중요사항 안내 확인', // 금융소비자법 대응
 
   POSTMANAGEMENT_REPAY_NM: '대출상환',  //대출상환
   POSTMANAGEMENT_REVOKREPAY_NM: '계약철회 후 상환' //계약철회 후 상환
