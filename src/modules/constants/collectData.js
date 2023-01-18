@@ -397,6 +397,88 @@ const custAgreeData = [
 
   }
 ];
+const financeCusLawData = [
+  {
+    id: 0,
+    title: "",
+    type: "radio",
+    radioId: 0,
+    radioList : [
+      {
+        id: 0,
+        value: "예",
+      },
+      {
+        id: 1,
+        value: "아니요",
+      },
+      
+    ]
+  },
+  {
+    id: 1,
+    title: "",
+    type: "radio",
+    radioId: 1,
+    radioList : [
+      {
+        id: 0,
+        value: "예",
+      },
+      {
+        id: 1,
+        value: "아니요",
+      },
+      
+    ]
+  },
+  {
+    id: 2,
+    title: "",
+    type: "radio",
+    radioId: 2,
+    radioList : [
+      {
+        id: 0,
+        value: "예",
+      },
+      {
+        id: 1,
+        value: "아니요",
+      },
+      
+    ]
+  },
+  {
+    id: 3,
+    title: "금리인하요구권이란 금융소비자가 본인의 신용상태가 개선 되었다고 판단되는 경우(재무상태 개선, 신용등급 또는 개인 신용평점 상승 등) 은행에 자신이 적용받는 금리인하를 요구할 수 있는 권리(은행법 제30조의2)를 말합니다.",
+    type: "text",
+    textId: 0
+    
+  },
+  {
+    id: 4,
+    title: "본인은 IBK기업은행과 대출거래를 함에 있어 은행직원과 상담하여 위에서 설명한 내용을 포함하여 대출거래의 주요내용 및 고객부담비용에 대하여 충분히 설명을 듣고 이해하였음을 확인합니다.",
+    type: "text",
+    textId: 1
+    
+  },
+  {
+    id: 5 ,
+    title: "본인은 은행 직원으로부터 금융소비자의 권리와 의무에 대하여 충분히 설명을 듣고 이해하였음을 확인합니다.",
+    type: "text",
+    textId: 2
+    
+  },
+  {
+    id: 6,
+    title: "본인은 대출계약 신청에 따라 은행직원으로부터 여신거래약정서(기업용) 본, 은행여신거래기본약관(기업용), 동 상품설명서를 교부 받았음을 확인합니다.",
+    type: "text",
+    textId: 3
+    
+  },
+  
+]
 
 const applyInfoInputData = [
   {
@@ -934,6 +1016,7 @@ export default (props)=> {
     case 'UntactAgrm' : return untactAgrmData; //비대면 약정
     case 'GrtInfoInput' : return grtInfoData; //조사자료 자가체크 //사전심사자료작성
     case 'SelfCheck' : return selfCheckData; //자가진단 체크리스트
+    case 'FinanceCusLaw' : return financeCusLawData; //금융소비자법 대응
     default : return null;
   }
 };
