@@ -21,7 +21,7 @@ function AlertModal(props) {
             {
               arrBtnNm.map((data, idx)=> {
                 return (
-                  <button type="button" className="btn btn-base fc-01" 
+                  <button key={`alertBtn-${idx}`} type="button" className="btn btn-base fc-01" 
                     onClick={(e)=>{
                       props.onClickFn();
                     }}>
