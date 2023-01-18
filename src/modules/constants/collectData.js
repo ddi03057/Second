@@ -90,11 +90,11 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "일반금융소비자" 
+              value : "일반금융소비자" 
           },
           {
               id : 1,
-              name : "전문금융소비자" 
+              value : "전문금융소비자" 
           },
       ],
       fixedId : 0,
@@ -119,11 +119,11 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "운전 자금" 
+              value : "운전 자금" 
           },
           {
               id : 1,
-              name : "사설 자금" 
+              value : "사설 자금" 
           },
       ],
       fixedId : 0,
@@ -139,15 +139,15 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "1억원 미만" 
+              value : "1억원 미만" 
           },
           {
               id : 1,
-              name : "1억원 이상 10억원 미만" 
+              value : "1억원 이상 10억원 미만" 
           },
           {
               id : 2,
-              name : "10억원 이상" 
+              value : "10억원 이상" 
           }
       ],
 
@@ -161,15 +161,15 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "1억원 미만" 
+              value : "1억원 미만" 
           },
           {
               id : 1,
-              name : "1억원 이상 10억원 미만" 
+              value : "1억원 이상 10억원 미만" 
           },
           {
               id : 2,
-              name : "10억원 이상" 
+              value : "10억원 이상" 
           }
       ],
 
@@ -183,15 +183,15 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "현재보다 감소" 
+              value : "현재보다 감소" 
           },
           {
               id : 1,
-              name : "현재수준 유지" 
+              value : "현재수준 유지" 
           },
           {
               id : 2,
-              name : "현재보다 증가" 
+              value : "현재보다 증가" 
           }
       ],
 
@@ -205,15 +205,15 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "1억원 미만" 
+              value : "1억원 미만" 
           },
           {
               id : 1,
-              name : "1억원 이상 10억원 미만" 
+              value : "1억원 이상 10억원 미만" 
           },
           {
               id : 2,
-              name : "10억원 이상" 
+              value : "10억원 이상" 
           }
       ],
 
@@ -227,15 +227,15 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "현재 소득의 10% 미만" 
+              value : "현재 소득의 10% 미만" 
           },
           {
               id : 1,
-              name : "현재 소득의 10% 이상 50% 미만" 
+              value : "현재 소득의 10% 이상 50% 미만" 
           },
           {
               id : 2,
-              name : "현재 소득의 50% 이상" 
+              value : "현재 소득의 50% 이상" 
           }
       ],
 
@@ -249,15 +249,15 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "현재 연체 중이며 연체 정리가 어려움" 
+              value : "현재 연체 중이며 연체 정리가 어려움" 
           },
           {
               id : 1,
-              name : "현재 연체 중이나 정리 예정" 
+              value : "현재 연체 중이나 정리 예정" 
           },
           {
               id : 2,
-              name : "현재 연체 정보 없음" 
+              value : "현재 연체 정보 없음" 
           }
       ],
 
@@ -271,11 +271,11 @@ const suitTestData = [
       radioList : [
         {
           id : 0,
-          name : "알고 있음" 
+          value : "알고 있음" 
         },
         {
           id : 1,
-          name : "잘 모름"
+          value : "잘 모름"
         }
       ]
       
@@ -319,19 +319,19 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
-              name : "사업 소득" 
+              value : "사업 소득" 
           },
           {
               id : 1,
-              name : "임대 소득" 
+              value : "임대 소득" 
           },
           {
               id : 2,
-              name : "금융 소득" 
+              value : "금융 소득" 
           },
           {
               id : 3,
-              name : "기타 소득" 
+              value : "기타 소득" 
           }
       ],
 
