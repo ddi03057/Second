@@ -480,6 +480,163 @@ const financeCusLawData = [
   
 ]
 
+const stampTaxData = [
+  {
+    id: 0,
+    title: "1. 타인으로부터 사업을 상속 또는 증여받아 해당 사업과 같은 종류의 사업을 계속하는 경우 (다만, 법인을 새로 설립하여 해당 사업과 같은 종류의 사업을 계속하는 경우는 제외)",
+    type: "radio",
+    radioId: 0,
+    radioList:[
+      {
+        id: 0,
+        value: "해당함"
+      },
+      {
+        id: 1,
+        value: "해당하지 않음"
+      }
+    ]
+
+  },
+  {
+    id: 1,
+    title: "2. 개인사업자가 기존 사업을 계속 영위하면서 다른 개인사업자(법인은 제외)를 새로 설립하여 사업을 개시하는 경우",
+    type: "radio",
+    radioId: 1,
+    radioList:[
+      {
+        id: 0,
+        value: "해당함"
+      },
+      {
+        id: 1,
+        value: "해당하지 않음"
+      }
+    ]
+
+  },
+  {
+    id: 2,
+    title: "3. 개인사업자가 기존 사업을 폐업한 후 사업을 재개하여 폐업 전의 사업과같은 종류의 사업을 계속 하는 경우(개인사업자의 법인전환 포함) (다만, 사업을 폐업한 날부터 3년(부도 또는 파산으로 폐업한 경우는 2년) 이상이 지난 후에 기존 사업과 같은 종류의 사업을 개시하는 경우는 제외)",
+    type: "radio",
+    radioId: 2,
+    radioList:[
+      {
+        id: 0,
+        value: "해당함"
+      },
+      {
+        id: 1,
+        value: "해당하지 않음"
+      }
+    ]
+
+  },
+  {
+    id: 3,
+    title: "4. 개인사업자가 기존 사업을 계속 영위하면서 단독 또는 친족과 합하여 의결권 있는 주식 기준 30%이상 지분 보유 또는 최대 주주인 중소법인을 설립하여 기존 사업과 같은 종류의 사업을 개시하는 경우 * 배우자(사실혼 관계포함), 6촌 이내의 혈족 및 4촌 이내의 인척 ",
+    type: "radio",
+    radioId: 3,
+    radioList:[
+      {
+        id: 0,
+        value: "해당함"
+      },
+      {
+        id: 1,
+        value: "해당하지 않음"
+      }
+    ]
+
+  },
+  {
+    id: 4,
+    title: "5. 중소법인이 의결권 있는 발행주식 기준 30%이상 지분을 소유함과 동시에(해당 법인과 그 임원이 소유하고 있는 주식을 합산) 최대주주로서 다른 중소법인을 설립하는 경우 (업종 동일여부 불문)",
+    type: "radio",
+    radioId: 4,
+    radioList:[
+      {
+        id: 0,
+        value: "해당함"
+      },
+      {
+        id: 1,
+        value: "해당하지 않음"
+      }
+    ]
+
+  },
+  {
+    id: 5,
+    title: "6. 중소법인이 조직변경 등 기업형태를 변경하여 변경 전의 사업과 같은 종류의 사업을 계속하는 경우",
+    type: "radio",
+    radioId: 5,
+    radioList:[
+      {
+        id: 0,
+        value: "해당함"
+      },
+      {
+        id: 1,
+        value: "해당하지 않음"
+      }
+    ]
+
+  },
+  {
+    id: 6,
+    title: "",
+    type: "check",
+    checkId: 0,
+    checkList:[
+      {
+        id: 0,
+        value: true
+      },
+      {
+        id: 1,
+        value: false
+      }
+    ]
+
+  },
+  {
+    id: 7,
+    title: "",
+    type: "check",
+    checkId: 1,
+    checkList:[
+      {
+        id: 0,
+        value: true
+      },
+      {
+        id: 1,
+        value: false
+      }
+    ]
+
+  },
+  {
+    id: 8,
+    title: "",
+    type: "check",
+    checkId: 2,
+    checkList:[
+      {
+        id: 0,
+        value: true
+      },
+      {
+        id: 1,
+        value: false
+      }
+    ]
+
+  },
+  
+]
+
 const applyInfoInputData = [
   {
     id: 0,
@@ -1017,6 +1174,7 @@ export default (props)=> {
     case 'GrtInfoInput' : return grtInfoData; //조사자료 자가체크 //사전심사자료작성
     case 'SelfCheck' : return selfCheckData; //자가진단 체크리스트
     case 'FinanceCusLaw' : return financeCusLawData; //금융소비자법 대응
+    case 'StampTax' : return stampTaxData; //인지세 확인
     default : return null;
   }
 };
