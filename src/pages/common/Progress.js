@@ -23,13 +23,16 @@ import OslHeader from '../../modules/components/OslHeader';
  * 대출실행 complete
  *  activeStep=3
  * tobe
- * back에서 진행상태조회 전문 oslNofcLoanPgstInq 
+ * 화면랜더링시, back에서 진행상태조회 전문 oslNofcLoanPgstInq 리턴값 받아와야함
  * 사전심사 
- *  -거절 : 접수상태에서 계정계 전문으로 거절 떨어지면 
- *  -접수 : 스크래핑 서류제출 상태화면 '다음'클릭시 >> 사전심사 접수상태로 진입
+ *  -거절 
+ *  -접수 
  * 보증심사 
- *  거절, 진행중, 완료
- * 대출실행 완료
+ *  -거절
+ *  -진행중
+ *  -완료
+ * 대출실행 
+ *  -완료
  * @param {*} props 
  * step 0,1,2 사전심사, 보증신청, 대출실행
  * status 0,1,2 거절, 진행중, 완료
