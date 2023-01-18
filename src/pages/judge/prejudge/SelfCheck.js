@@ -14,6 +14,7 @@ import OslBtn from "../../../modules/components/OslBtn";
 import collectData from "../../../modules/constants/collectData.js";
 import RadioInlineComponent from "../../common/RadioInlineComponent";
 import TitleComponent from "../../common/TitleComponent";
+import AlertModal from "../../../modules/components/AlertModal";
 /**
  * 화면명 : 자가진단 체크리스트
  * 설명
@@ -37,22 +38,29 @@ function SelfCheck(props) {
     }
   });
 
+  const NO_CHECK_MSG = "체크리스트 항목을 확인바랍니다.";
+  const NO_AGREE_MSG = "동의여부를 확인 바랍니다.";
+  const VALID_ERR_MSG = "자가진단 결과 등 상품 부적합하여 신규가 불가합니다.";
+  const SUCCESS_MSG = "체크리스트 선택이 완료되었습니다."; //확인용
 
   let navigate = useNavigate();
 
   // popup
-  function openPop(e) {
-    document.getElementById(e).style.display = "block";
+  function openPop() {
+    setShow(true);
     document.body.style.overflow = "hidden";
   }
-  function closePop(e) {
-    document.getElementById(e).style.display = "none";
+  function closePop() {
+    setShow(false);
     document.body.style.overflow = "";
   }
 
   let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
 
- 
+  const [show, setShow] = useState(false);
+  const handleShow = ()=> openPop();
+  const handleClose = ()=> closePop();
+  let [msgCont, setMsgCont] = useState("");
   // Issue 컴포넌트
 
   const [bChecked, setChecked] = useState(false);
@@ -62,19 +70,24 @@ function SelfCheck(props) {
   };
 
   function cbOslBtn() {
-    const msg = validCheck(userResult);
+    const msgType = validCheck({userResult, bChecked});
+    console.log("메세지타입",msgType);
+    // switch(msgType) {
+    //   case "noAgree" :  alert("!"); setMsgCont(NO_AGREE_MSG); break;
+    //   case "noCheck" :  alert("!!"); setMsgCont(NO_CHECK_MSG); break;
+    //   case "vaildErr":  alert("!!!"); setMsgCont(VALID_ERR_MSG); break;
+    //   case "success" :  alert("!!!!"); setMsgCont(SUCCESS_MSG); break;
+    // }
+    if(msgType === "noAgree") setMsgCont(NO_AGREE_MSG);
+    else if(msgType === "noCheck") setMsgCont(NO_CHECK_MSG);
+    else if(msgType === "validErr") setMsgCont(VALID_ERR_MSG);
+    else setMsgCont(SUCCESS_MSG);
     
-    if (msg === false) {
-      alert("123") // 선택값 검증에 오류가 있을때
-    }
-    else if (msg === "") {
-      alert("ok") // 정상진행일때
-    }
-    if(bChecked === false){
-      console.log("12312321") // 동의 체크박스 체크가 안되어있을때
-    }
+
+    handleShow();
 
   }
+
 
   return (
     <>
@@ -127,6 +140,7 @@ function SelfCheck(props) {
                           showYn={true}
                           radioData={arrRadioData[data.radioId]}
                           styleSeleList={`sele-list type01 radius answer-wrap`}
+                          checked={userResult[idx]}
                           onChangeFn={(radioIdx) => {
                             let copy = [...userResult]
                             copy[idx] = radioIdx;
@@ -168,6 +182,22 @@ function SelfCheck(props) {
             }} />
         </div>
       </div>
+      {show&&
+        <AlertModal
+          show={show}
+          msg={msgCont}
+          btnNm={["확인"]}
+          onClickFn={()=> {
+            handleClose();
+            if(msgCont === SUCCESS_MSG) {
+              alert("success");
+              //다음화면 이동
+            }
+          }}
+        />
+      }
+
+      
     </>
   )
 
@@ -175,23 +205,33 @@ function SelfCheck(props) {
 
 
 
-function validCheck(userResult) {
+function validCheck({userResult, bChecked}) {
 
-  let msg = [];
+  let msgType = "";
   const diffUserResult = ["0", "1", "1", "0", "1", "1", "1", "0", "1"];
+  console.log(userResult);
+  console.log(bChecked);
+  if(!bChecked) {
+    msgType = "noAgree";
+    return msgType;
+  }
+  // userResult.find((data)=> { 
+  //   if(data === 99) {
+  //     msgType = "noCheck"
+  //   }
+  // })
   for (let idx = 0; idx < userResult.length; idx++) {
-    if (diffUserResult[idx] != userResult[idx]) {
-      
-      return false;
-    } else if (!userResult.length === 8) {
-      return (
-        <>
-          {/* 선택되지 않은 항목이 있는경우의 Alert */}
-        </>
-      )
+    if(userResult[idx] === 99) {
+      return msgType = "noCheck";
+    }else if(diffUserResult[idx] != userResult[idx]) {
+      msgType = "validErr";
+      return msgType;
+    }else {
+      msgType = "beforeSuccess";
     }
   }
-  return "";
+  msgType = "success"
+  return msgType;
 }
 
 export default SelfCheck;

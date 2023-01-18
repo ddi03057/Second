@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#html
+/public/pub_test
+
 # testing
 /coverage
 
