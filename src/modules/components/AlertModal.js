@@ -23,7 +23,7 @@ function AlertModal(props) {
                 return (
                   <button key={`alertBtn-${idx}`} type="button" className="btn btn-base fc-01" 
                     onClick={(e)=>{
-                      props.onClickFn();
+                      props.onClickFn(idx);
                     }}>
                     <span>{data}</span>
                   </button>
