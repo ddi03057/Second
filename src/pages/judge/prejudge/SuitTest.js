@@ -246,8 +246,8 @@ function SuitTest(props) {
               PathConstants.PREJUDGE_SUITRESULT,
               {
                 state: {
-                  result: true,
-                  value: userResult
+                  result: userResult,
+                  crdBru: userCrdBru
               }
             });
           }
