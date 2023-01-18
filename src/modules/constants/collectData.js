@@ -350,55 +350,48 @@ const suitTestData = [
 
 const custAgreeData = [
   {
-      id: 1,
+      id: 0,
       title: "(필수) 개인(신용)정보 수집 이용 및 제공관련 고객권리 안내문",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2017110617593821483973066352935.pdf"
 
   },
   {
-      id: 2,
+      id: 1,
       title: "(필수) 개인(신용)정보 수집 이용 동의, 고유식별번호 수집 이용 동의",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2019031909261764480323824044447.pdf"
   },
   {
-      id: 3,
+      id: 2,
       title: "(필수) 개인(신용)정보 수집이용 제공 동의(여신금융거래)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2020262473283826319128117808560.pdf"
   },
   {
-      id: 4,
+      id: 3,
       title: "(필수) 개인(신용)정보 수집이용 제공 동의(비여신금융거래)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022053115131329259593606625324.pdf"
 
   },
   {
-      id: 5,
+      id: 4,
       title: "(필수) 개인정보 및 기업정보의 수집 · 이용 · 제공 활용 동의서(신용보증기금)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022053115164629259806850189960.pdf"
 
   },
   {
-      id: 6,
+      id: 5,
       title: "(필수) 중소기업지원사업 통합관리 시스템 정보 활용을 위한 동의서(신용보증기금)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022021612253920263835375609685.pdf"
 
   },
   {
-      id: 7,
+      id: 6,
       title: "(필수) 여신금융협회 이용약관 동의",
-      type: "pdf",
-      pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
-
-  },
-  {
-      id: 8,
-      title: "(필수) 여신금융협회 개인정보 수집 및 이용",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
 
