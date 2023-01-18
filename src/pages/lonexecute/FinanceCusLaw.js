@@ -1,7 +1,29 @@
-function FinanceCusLaw() {
+/** 
+ * import 순서
+ * react hook, custom hook, 
+ * external component(module), 
+ * internal component(module), 
+ * data, 
+ * css
+ */
+import { useState } from "react"
+import OslHeader from "../../modules/components/OslHeader"
+import OslBtn from "../../modules/components/OslBtn"
+/**
+ * 화면명 : 금융 소비자법 대응
+ * 설명 : 
+ * @param {*} props
+ * props항목별 설명
+ */
+function FinanceCusLaw(props) {
+
+  function cbOslBtn(){
+    
+  }
+
   return(
     <>
-    {/* 헤더 */}
+    <OslHeader headerNm={props.headerNm} />
     <div class="container">
         <div class="content">
             <div class="content-body">
@@ -98,7 +120,14 @@ function FinanceCusLaw() {
                     </div>
                 </div>
             </div>
-            {/* 푸터 ARS인증하기 */}
+            <OslBtn
+              obj={{
+                type: "button",
+                disabled: false,
+                text: ["ARS인증"],
+                link: "",
+                callbackId: cbOslBtn
+              }} />
         </div>
     </div>
     </>
