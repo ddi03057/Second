@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useLayoutEffect } from 'react';
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
+import OslBtn from '../../modules/components/OslBtn';
 //import { Card } from 'react-bootstrap';
 
 import OslHeader from '../../modules/components/OslHeader';
@@ -121,7 +122,9 @@ function Progress(props) {
     //상태코드 세팅
     //stateCd = "";
   }, []);
-
+  function cbOslBtn() {
+    ajaxTest3();
+  }
   return (
     <>
       {(!!props.headerNm)&&<OslHeader headerNm={props.headerNm}/>}
@@ -181,9 +184,15 @@ function Progress(props) {
           </div>
         </div>
       </div>
-      <button onClick={()=> {
-        ajaxTest3();
-      }}>aaaaaaaa</button>
+      <OslBtn
+          obj={{
+            type: "button",
+            disabled: false,
+            text: ["test"],
+            link: "",
+            callbackId: cbOslBtn
+          }} ></OslBtn>
+      
       {/* <Card>
         <Card.Header style={{backgroundColor: "#FFFFFF", borderBottom: "0"}}>
           <Stepper 

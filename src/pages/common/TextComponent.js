@@ -21,8 +21,6 @@ function TextComponent(props) {
   useEffect(()=> {
     if(props.inputType==="number") {
       document.querySelector("#text"+objTextData.id).setAttribute("pattern", "\d*"); //아이폰때무네..
-      document.querySelector("#text"+objTextData.id).setAttribute("min", props.min);
-      document.querySelector("#text"+objTextData.id).setAttribute("max", props.max);
     }else {
       document.querySelector("#text"+objTextData.id).setAttribute("maxLength", 40);
     }
