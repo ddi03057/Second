@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import SelectComponent from "../../common/SelectComponent";
+import TextComponent from "../../common/TextComponent";
+import TitleComponent from "../../common/TitleComponent";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
+import AlertModal from "../../../modules/components/AlertModal";
+import { placeholder } from "@babel/types";
+
 
 const suitTestData = collectData("SuitTest");
 /**
@@ -13,7 +19,6 @@ const suitTestData = collectData("SuitTest");
  * props항목별 설명
  */
 function SuitTest(props) {
-  console.log(suitTestData);
   // useEffect(()=> {
   //   suitTestData = data("SuitTest");
   // }, []);
@@ -43,12 +48,28 @@ function SuitTest(props) {
     }
   });
 
-  const suitTestDataLen = suitTestData.length;  //데이터길이
+  let [showTitleYn, setShowTitleYn] = useState(true);
   const [showCrdElYn, setShowCrdElYn] = useState(true); //신용관련 element show/hide
   let [userResult, setUserResult] = useState(["01",99,"01",99,99,99,99,99,99,99,99,99]); //결과값 저장 state
   let [userCrdBru, setUserCrdBru] = useState("01"); //신용기관 선택값
   let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
+  let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
   let navigate = useNavigate(); //다음화면을 위한 navigate
+
+   // popup
+   function openPop() {
+    setShow(true);
+    document.body.style.overflow = "hidden";
+  }
+  function closePop() {
+    setShow(false);
+    document.body.style.overflow = "";
+  }
+  const [show, setShow] = useState(false);
+  const handleShow = ()=> openPop();
+  const handleClose = ()=> closePop();
+  let [msgCont, setMsgCont] = useState("");
+  const [successYn, setSuccessYn] = useState(false);
 
   useEffect(()=> {
     
@@ -71,27 +92,25 @@ function SuitTest(props) {
 
   function cbOslBtn() {
     
-    const msg = validCheckEmpty(userResult, userCrdBru, userCrdScr);
+    const msg = validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr);
+    
     if(!!msg) {
-      alert(msg);
+      setMsgCont(msg);
+      handleShow();
       //스크롤이동
     }else {
       
       //데이터 전송
-      alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
-      //다음페이지 이동
-      navigate(
-        PathConstants.PREJUDGE_SUITRESULT,
-        {
-          state: {
-            result: true,
-            value: userResult
-        }
-      });
+      setSuccessYn(true);
+      setMsgCont("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
+      handleShow();
+      //alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
+      
     }
     
     
   }
+  //console.log(showTitleYn, arrTitleData);
   return (
     <>
     
@@ -121,50 +140,67 @@ function SuitTest(props) {
             </div>
           </div>
           <div className="section line-tf4">
-            <ol className="sele-list type03">
+            <ul className="sele-list type02">
               {
                 suitTestData.map((data, idx)=> {
                   
                   return (
                     <li key={`li_${idx}`} className="item">
-                      <TitleComponent 
-                        titleData={arrTitleData[idx]} 
-                        showCrdElYn={(data.id===9&&data.type!="radio")?showCrdElYn:true} />
+                      <TitleComponent
+                        showYn={(data.id===9 && data.type!="radio")?showCrdElYn:true}
+                        title={arrTitleData[idx]}
+                        styleTxt="txt"
+                      />
                       { 
                         (data.type === "radio") && 
-                          <RadioComponent 
-                            radioData={arrRadioData[data.radioId]} 
-                            styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
-                            fixedId={(data.radioId===0 || data.radioId===1)&&arrRadioData[data.radioId].fixedId}
-                            userResult={userResult}
-                            setUserResult={setUserResult}
-                            dataId={data.id}
-                          /> 
+                        <RadioComponent 
+                          radioData={arrRadioData[data.radioId]} 
+                          styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
+                          fixedId={(data.radioId===0 || data.radioId===1)&&arrRadioData[data.radioId].fixedId}
+                          onChangeFn={(radioDataId)=> {
+                            let copy = [...userResult];
+                            copy[data.id] = "0" + (radioDataId+1);
+                            props.setUserResult(copy);
+                          }}
+                        /> 
                       }
                       { 
                         (data.type === "text")  && 
-                          <TextComponent 
-                            textData={arrTextData[data.textId]} 
-                            userResult={userResult}
-                            setUserResult={setUserResult}
-                            setUserCrdScr={setUserCrdScr}
-                            dataId={data.id}
-                            showCrdElYn={data.id===9?showCrdElYn:true}
-                          /> 
+                          <TextComponent
+                            showYn={(data.textId===1)?showCrdElYn:true}
+                            styleSeleList="sele-list type01 radius answer-wrap"
+                            styleInput=""
+                            textData={arrTextData[data.textId]}
+                            inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
+                            onChangeFn={(value)=>{
+                              let copy = [...userResult];
+                              copy[data.id] = value;
+                              setUserResult(copy);
+                            }}
+                          />                          
                       }
                       { 
                         (data.type === "select")&& 
-                          <SelectComponent 
+                          // <SelectComponent 
+                          //   selectData={arrSeleectData[data.selectId]}
+                          //   styleSeleList="sele-list type01 radius answer-wrap mar-t10"
+                          //   setUserCrdBru={setUserCrdBru}
+                          //   showCrdElYn={data.id===9?showCrdElYn:true}
+                          // />
+                          <SelectComponent
+                            showYn={showCrdElYn}
                             selectData={arrSeleectData[data.selectId]}
-                            setUserCrdBru={setUserCrdBru}
-                            showCrdElYn={data.id===9?showCrdElYn:true}
-                          />
+                            styleSeleList="sele-list type01 radius answer-wrap mar-t10"
+                            onChangeFn={(value)=> {
+                              setUserCrdBru(value);
+                            }}
+                          />                          
                       }
                     </li>
                   )
                 })
               }
-            </ol>
+            </ul>
             <div className="terms-wrap mar-t20">
               <div className="txt-wrap bg-gray">
                 <p className="txt s-txt">
@@ -180,7 +216,9 @@ function SuitTest(props) {
 
               <div className="ui-cont-wrap">
                 <div className="ui-decide">
-                  <input type="checkbox" id="checkbox01"/>
+                  <input type="checkbox" id="checkbox01" onChange={()=> {
+                    setAgreeYn(!agreeYn);
+                  }}/>
                     <label htmlFor="checkbox01" className="input-label">본인은 위 안내사항을 충분히 이해하고 동의합니다.</label>
                 </div>
                 <p className="info-con-txt mar-t10">* 본 확인서는 [금융소비자 보호에 관한 법률] 제17조 및 제18조에 따라 작성되었습니다.</p>
@@ -198,6 +236,30 @@ function SuitTest(props) {
           }} ></OslBtn>
       </div>
     </div>
+    {
+      show&&
+      <AlertModal
+        show={show}
+        msg={msgCont}
+        btnNm={["확인"]}
+        onClickFn={()=> {
+          handleClose();
+          if(successYn) {
+            //다음화면 이동
+            navigate(
+              PathConstants.PREJUDGE_SUITRESULT,
+              {
+                state: {
+                  result: userResult,
+                  crdBru: userCrdBru
+              }
+            });
+          }
+        }}
+      />
+
+    
+    }
     </>
   );
 
@@ -207,7 +269,7 @@ function SuitTest(props) {
  * 타이틀영역 컴포넌트
  * @param {} props 
  * @returns 
- */
+
 function TitleComponent(props) {
   const titleData = props.titleData;
   if(props.showCrdElYn) {
@@ -223,9 +285,10 @@ function TitleComponent(props) {
   }
   
 }
+ */
 
 /**
- * 라디오박스 컴포넌트
+ * 라디오박스 컴포넌트(적정성 적합성용)
  * @param {} props 
  * @returns 
  */
@@ -246,14 +309,17 @@ function RadioComponent(props) {
                   name={`sRadio${objRadioData.id}`} 
                   id={`sRadio${objRadioData.id}_${data.id}`} 
                   value="" 
-                  checked={(!fixedId && fixedId===data.id)?true:null}
+                  checked={null}
                   onChange={(e)=>{
-                    let copy = [...props.userResult];
-                    copy[props.dataId] = "0" + (data.id+1);
-                    props.setUserResult(copy);
+                    props.onChangeFn(data.id);
+                    // console.log(fixedId);
+                    // let copy = [...props.userResult];
+                    // copy[props.dataId] = "0" + (data.id+1);
+                    // console.log(props.userResult, copy);
+                    // props.setUserResult(copy);
                   }}
                 />
-                  <span className="radio"></span>{data.name}
+                  <span className="radio"></span>{data.value}
               </label>
             </div>
           )
@@ -267,7 +333,7 @@ function RadioComponent(props) {
  * 텍스트박스 컴포넌트
  * @param {*} props 
  * @returns 
- */
+
 function TextComponent(props) {
   const objTextData = props.textData;
   if(props.showCrdElYn) {
@@ -301,12 +367,12 @@ function TextComponent(props) {
     return null;
   }
 }
-
+ */
 /**
  * 셀렉트박스 컴포넌트
  * @param {} props 
  * @returns 
- */
+
 function SelectComponent(props) {
   const objSelectData = props.selectData;
   if(props.showCrdElYn) {
@@ -334,7 +400,7 @@ function SelectComponent(props) {
     return null;
   }
 }
-
+ */
 /**
  * 빈값 밸리데이션 체크
  * 빈값일시 항목별 title, 조사, 동사로 메세지값 완성
@@ -343,10 +409,12 @@ function SelectComponent(props) {
  * @param {입력한 신용점수} userCrdScr 
  * @returns 
  */
-function validCheckEmpty(userResult, userCrdBru, userCrdScr) {
+function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
 
   let msg = "";
   let verb = "하시기 바랍니다.";
+
+  if(!agreeYn) return "동의여부를 확인 바랍니다.";
   for(let i=0; i<userResult.length; i++) {
     if(!userResult[i] || userResult[i] === 99) {
       let josa = "";
