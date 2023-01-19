@@ -7,7 +7,7 @@
  * css
  */
 /**
- * 화면명
+ * 화면명 : 보증심사자료 작성
  * 설명
  * @param {*} props
  * props항목별 설명
@@ -24,7 +24,7 @@ import RadioInlineComponent from "../../common/RadioInlineComponent";
 import TitleComponent from "../../common/TitleComponent";
 import SelectComponent from "../../common/SelectComponent";
 import TextComponent from "../../common/TextComponent";
-
+import AlertModal from "../../../modules/components/AlertModal";
 
 const grtInfoData = collectData("GrtInfoInput");
 
@@ -60,7 +60,7 @@ function GrtInfoInput(props) {
   });
 
 
-  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99,99]); //결과값 저장 state
+  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
   let navigate = useNavigate(); //다음화면을 위한 navigate
   useEffect(() => {
     console.log(userResult);
@@ -69,27 +69,31 @@ function GrtInfoInput(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [comshow, setComShow] = useState(false);
+  const comHandleShow = () => setComShow(true);
+  const comHandleClose = () => setComShow(false);
+
+  // popup
+  function openPop() {
+    setShow(true);
+    document.body.style.overflow = "hidden";
+  }
+  function closePop() {
+    setShow(false);
+    document.body.style.overflow = "";
+  }
+
+
   function cbOslBtn() {
 
-    const msg = validCheckEmpty(userResult);
-    if (!!msg) {
-      alert(msg);
-      //스크롤이동
-    } else {
+    const msgType = validCheckEmpty(userResult);
+    if (msgType === "1000") setMsgCont("대출 희망 금액은 최소 1천만부터 입력가능합니다.");
+    else if (msgType === "100") setMsgCont("1백만원 단위로 입력 가능합니다.")
+    else setMsgCont("SUCCESS");
 
-      //데이터 전송
-      alert("고객님의 소중한 응답에 감사합니다.");
-      //다음페이지 이동
-      navigate(
-        PathConstants.PREJUDGE_SUITRESULT,
-        {
-          state: {
-            result: true,
-            value: userResult
-          }
-        });
-    }
+    handleShow()
   }
+  let [msgCont, setMsgCont] = useState("");
   const [visible, setVisible] = useState(false);
   return (
     <>
@@ -133,36 +137,40 @@ function GrtInfoInput(props) {
                         />
                       )}
                       {
-                          (data.type === "text")  && 
-                            <TextComponent
-                              showYn={true}
-                              styleSeleList="sele-list type01 radius answer-wrap"
-                              styleInput="w100p ta-r"
-                              textData={arrTextData[data.textId]}
-                              onChangeFn={(value)=>{
-                                if(value > 100000000){
-                                  alert("대출 희망금액은 최대 1억원까지 입력가능합니다.")
-                                }
-                                let copy = [...userResult];
-                                copy[data.id] = value;
-                                setUserResult(copy)
-                                
-                              }}
-                            />
-                        }
+                        (data.type === "text") &&
+                        <TextComponent
+                          showYn={true}
+                          styleSeleList="sele-list type01 radius answer-wrap"
+                          styleInput="w100p ta-r"
+                          textData={arrTextData[data.textId]}
+                          inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
+                          onChangeFn={(value) => {
+                            let Do = Math.floor(value / 1000000) * 1000000;
+                            console.log(Do)
+                            if (value > 100000000) {
+                              setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.")
+                              handleShow()
+                            }
+                            let copy = [...userResult];
+                            copy[data.id] = Do;
+                            setUserResult(copy)
+
+                          }}
+                        />
+                      }
                       {
-                          (data.type === "select") &&
-                            <SelectComponent
-                              showYn={true}
-                              selectData={arrSeleectData[data.selectId]}
-                              styleSeleList="sele-list type01 radius answer-wrap"
-                              onChangeFn={(value)=> {
-                                let copy = [...userResult];
-                                copy[data.id] = value;
-                                setUserResult(copy);
-                              }}
-                            />
-                        }
+                        (data.type === "select") &&
+                        <SelectComponent
+                          showYn={true}
+                          selectData={arrSeleectData[data.selectId]}
+                          styleSeleList="sele-list type01 radius answer-wrap"
+                          onChangeFn={(value) => {
+                            let copy = [...userResult];
+                            copy[data.id] = value;
+                            setUserResult(copy);
+                          }}
+                        />
+                      }
                     </li>
                   )
                 })}
@@ -184,7 +192,7 @@ function GrtInfoInput(props) {
                     <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                   </div>
                   <div className="ui-pop">
-                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={() => handleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
+                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={() => comHandleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
                   </div>
                 </div>
               </div>
@@ -201,13 +209,24 @@ function GrtInfoInput(props) {
 
         </div>
         <FullModal
-          showYn={show}
-          handleClose={handleClose}
+          showYn={comshow}
+          handleClose={comHandleClose}
           headerNm=""
           content="GrtInfoInputModal"
           type="component"
         />
+
       </div>
+      {show &&
+        <AlertModal
+          show={show}
+          msg={msgCont}
+          btnNm={["확인"]}
+          onClickFn={() => {
+            handleClose();
+          }}
+        />
+      }
     </>
   )
 
@@ -252,7 +271,7 @@ function Search(props) {
 * @returns 
 */
 function validCheckEmpty(userResult) {
-
+  let msgType = "";
   let msg = "";
   let verb = "하시기 바랍니다.";
   for (let i = 0; i < userResult.length; i++) {
@@ -269,13 +288,13 @@ function validCheckEmpty(userResult) {
         verb = "선택" + verb;
       }
       if (userResult[9] < 10000000) {
-        return msg = ("대출 희망금액은 최소 1천만부터 입력 가능합니다.")
-      } else if (userResult[9] < 1000000) {
-        return msg = ("1백만원 단위로 입력 가능합니다.")
+        return msgType = ("1000")
       }
+
       msg = grtInfoData[grtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
 
       return msg;
+      return msgType;
     }
   }
   return null;

@@ -15,6 +15,7 @@ import collectData from "../../../modules/constants/collectData.js";
 import RadioInlineComponent from "../../common/RadioInlineComponent";
 import TitleComponent from "../../common/TitleComponent";
 import AlertModal from "../../../modules/components/AlertModal";
+import FullModal from "../../../modules/components/FullModal.js";
 /**
  * 화면명 : 자가진단 체크리스트
  * 설명
@@ -60,6 +61,10 @@ function SelfCheck(props) {
   const [show, setShow] = useState(false);
   const handleShow = ()=> openPop();
   const handleClose = ()=> closePop();
+  const [comshow, setComShow] = useState(false);
+  const comHandleShow = () => setComShow(true);
+  const comHandleClose = () => setComShow(false);
+
   let [msgCont, setMsgCont] = useState("");
   // Issue 컴포넌트
 
@@ -88,7 +93,6 @@ function SelfCheck(props) {
 
   }
 
-
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
@@ -110,7 +114,6 @@ function SelfCheck(props) {
             <div className="section pad-t30 line-tf4">
               <ol className="sele-list type02">
                 {selfCheckData.map((data, idx) => {
-                  console.log(arrRadioData[data.radioId])
                   return (
                     <li key={`li_${idx}`} className="item">
                       <TitleComponent
@@ -121,7 +124,7 @@ function SelfCheck(props) {
                       {(data.id === 2) &&
                         <div className="link-btn-wrap">
                           <button type="button" className="link-btn type01">
-                            <span className="ico-blue-arrow right">업종 펼쳐보기</span>
+                            <span className="ico-blue-arrow right" onClick={() => comHandleShow()}>업종 확인</span>
                           </button>
                         </div>
                       }
@@ -145,7 +148,6 @@ function SelfCheck(props) {
                             let copy = [...userResult]
                             copy[idx] = radioIdx;
                             setUserResult(copy);
-                            console.log(userResult);
                           }}
                         />
                       }
@@ -196,30 +198,28 @@ function SelfCheck(props) {
           }}
         />
       }
-
-      
+      <FullModal
+          showYn={comshow}
+          handleClose={comHandleClose}
+          headerNm=""
+          content="SelfCheckModal"
+          type="selfcheck"
+        />
     </>
   )
 
 }
-
-
 
 function validCheck({userResult, bChecked}) {
 
   let msgType = "";
   const diffUserResult = ["0", "1", "1", "0", "1", "1", "1", "0", "1"];
   console.log(userResult);
-  console.log(bChecked);
+  
   if(!bChecked) {
     msgType = "noAgree";
     return msgType;
   }
-  // userResult.find((data)=> { 
-  //   if(data === 99) {
-  //     msgType = "noCheck"
-  //   }
-  // })
   for (let idx = 0; idx < userResult.length; idx++) {
     if(userResult[idx] === 99) {
       return msgType = "noCheck";

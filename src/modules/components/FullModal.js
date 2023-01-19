@@ -76,6 +76,8 @@ function FullModal(props) {
             (type==="component")&&
               <ModalContents componentNm={content}/>
           }
+          {(type === "selfcheck") &&
+          <ModalContents componentNm={content}/>}
         </div>
         <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} />
         

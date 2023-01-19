@@ -82,7 +82,7 @@ const PathConstants = {
   PREJUDGE_SUITTEST_NM: '적합성적정성검사',  //적합성적정성검사
   PREJUDGE_SUITRESULT_NM: '적합성적정성결과',  //적합성적정성결과
   PREJUDGE_SELFCHECK_NM: '자가진단',  //자가진단
-  PREJUDGE_GRTINFOINPUT_NM: '사전심사자료작성',  //사전심사자료작성
+  PREJUDGE_GRTINFOINPUT_NM: '보증심사자료 작성',  //보증심사자료작성
   PREJUDGE_DOCSTATUS_NM: '서류제출상태',  //서류제출상태
   PREJUDGE_DATACOLLECT_NM: '자료수집', //사업자번호, 행정구역 주소지 입력
   

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 
 /**
  * li 하위 텍스트 컴포넌트
@@ -6,10 +7,26 @@
  * textData
  * styleTxt
  * styleInput
+ * inputType
+ * min
+ * max
+ * maxlength
  * @returns 
  */
 function TextComponent(props) {
   const objTextData = props.textData;
+  //if(props.inputType==="text") props.maxLength=40;
+  
+
+  useEffect(()=> {
+    if(props.inputType==="number") {
+      document.querySelector("#text"+objTextData.id).setAttribute("pattern", "\d*"); //아이폰때무네..
+      document.querySelector("#text"+objTextData.id).setAttribute("min", props.min);
+      document.querySelector("#text"+objTextData.id).setAttribute("max", props.max);
+    }else {
+      document.querySelector("#text"+objTextData.id).setAttribute("maxLength", 40);
+    }
+  }, []);
   if(props.showYn) {
     return (
       <div className="form-group">
@@ -17,7 +34,7 @@ function TextComponent(props) {
           <div className="item">
             <input 
               className={props.styleInput}
-              type="text"
+              type={props.inputType}
               name={`text${objTextData.id}`}  
               id={`text${objTextData.id}`}
               placeholder={objTextData.placeholder}

@@ -23,6 +23,7 @@ import ArsCertificate from './pages/lonexecute/ArsCertificate.js';
 import StampTax from './pages/lonexecute/StampTax.js';
 import DataCollect from './pages/judge/prejudge/DataCollect.js';
 import FinanceCusLaw from './pages/lonexecute/FinanceCusLaw.js';
+import Main from './pages/Main.js';
 
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
@@ -38,6 +39,7 @@ function Routing() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
+        <Route path="/main" element={<Main />} />
         <Route path={PathConstants.PROGRESS} element={<Progress headerNm={PathConstants.PROGRESS_NM} />} />
         <Route path={PathConstants.GUIDE_DETAIL} element={<Detail headerNm={PathConstants.GUIDE_DETAIL_NM}/>} />
         <Route path={PathConstants.GUIDE_READY} element={<Ready headerNm={PathConstants.GUIDE_READY_NM}/>} />
