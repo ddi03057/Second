@@ -144,8 +144,6 @@ function GrtInfoInput(props) {
                           styleInput="w100p ta-r"
                           textData={arrTextData[data.textId]}
                           inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
-                          min={1}
-                          max={31}
                           onChangeFn={(value) => {
                             let Do = Math.floor(value / 1000000) * 1000000;
                             console.log(Do)

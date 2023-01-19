@@ -169,8 +169,6 @@ function ApplyInfoInput(props) {
                             styleInput={(data.textId === 0) ? "ta-c" : ""}
                             textData={arrTextData[data.textId]}
                             inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
-                            min={1}
-                            max={31}
                             onChangeFn={(value) => {
                               let copy = [...userResult];
                               let copy2 = { ...userResult[2] }
