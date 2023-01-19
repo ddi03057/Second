@@ -5,6 +5,7 @@ import OslBtn from '../../modules/components/OslBtn';
 //import { Card } from 'react-bootstrap';
 
 import OslHeader from '../../modules/components/OslHeader';
+import request from '../../modules/utils/Axios';
 
 /**
  * asis
@@ -103,19 +104,32 @@ function Progress(props) {
     }
   };
   //console.log(JSON.parse(axiosHeaders));
-  const ajaxTest3 = () => 
-    axios.post("/api1/BoxUi/OSL001/connectTest",{},{
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8', 
-        'Accept': 'application/json', 
-        'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
-      }
+  const ajaxTest3 = async () => {
+    const res = await request({
+      method: "post",
+      url: "/OSL001/connectTest",
+      data: {}
+    }) 
+    .then((response) => {
+      return response;
     })
-    .then((response)=>{
-      console.log(response);
-    })
-    .catch(error=> console.log(error))
-  
+    .catch((error) => {
+      console.log("error : ", error);
+    });
+    console.log("===res=== ", res);
+    // axios.post("/api1/OSL001/connectTest",{},{
+    //   headers: {
+    //     'Content-Type': 'application/json; charset=utf-8', 
+    //     'Accept': 'application/json', 
+    //     'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+    //   }
+    // })
+    // .then((response)=>{
+    //   console.log(response);
+    // })
+    // .catch(error=> console.log(error))
+  }
+
   const stateCd = "";
   useLayoutEffect(()=> {
     
