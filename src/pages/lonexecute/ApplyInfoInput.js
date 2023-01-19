@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
@@ -60,6 +60,9 @@ function ApplyInfoInput(props) {
   useEffect(() => {
     console.log(userResult);
   }, [userResult]);
+  useLayoutEffect(()=> {
+    console.log(applyInfoInput);
+  }, [])
   function cbOslBtn() {
     //todo : 다음페이지
     // navigate(
@@ -132,7 +135,6 @@ function ApplyInfoInput(props) {
               <ol className="sele-list type02 pad-b10">
                 {
                   applyInfoInput.map((data, idx) => {
-                    if (idx === 1) console.log(userResult[idx]);
                     return (
                       <li key={`li_${idx}`} className="item">
                         <TitleComponent
