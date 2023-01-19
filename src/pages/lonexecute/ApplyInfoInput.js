@@ -24,40 +24,40 @@ function ApplyInfoInput(props) {
   });
   let arrRadioData = [];
   applyInfoInput.find((data) => {
-    if(data.type === "radio") {
+    if (data.type === "radio") {
       arrRadioData.push(data);
     }
   });
   let arrTextData = [];
   applyInfoInput.find((data) => {
-    if(data.type === "text") {
+    if (data.type === "text") {
       arrTextData.push(data);
     }
   });
   let arrSeleectData = [];
   applyInfoInput.find((data) => {
-    if(data.type === "select") {
+    if (data.type === "select") {
       arrSeleectData.push(data);
     }
   });
-  
-  
+
+
   let [showTitleYn, setShowTitleYn] = useState(true);
   let [showDirInputYn, setShowDirInupYn] = useState(false);
   let [styleInput, setStyleInput] = useState("");
-  
+
   let navigate = useNavigate();
 
-  useEffect(()=> {
+  useEffect(() => {
     //todo : 대출신청정보
     //todo : 금리종류
     //todo : 기업은행 수신계좌리스트(마통 제외)
 
   }, []);
   //todo : 서버에서 가져온값으로 초기화
-  let [userResult, setUserResult] = useState(["고객 적용 금리",{id:0, value:"사업장운영자금"},{id:0, value:"1일"},99]);
+  let [userResult, setUserResult] = useState(["고객 적용 금리", { id: 0, value: "사업장운영자금" }, { id: 0, value: "1일" }, 99]);
 
-  useEffect(()=> {
+  useEffect(() => {
     console.log(userResult);
   }, [userResult]);
   function cbOslBtn() {
@@ -131,69 +131,72 @@ function ApplyInfoInput(props) {
             <div className="section line-tf4">
               <ol className="sele-list type02 pad-b10">
                 {
-                  applyInfoInput.map((data, idx)=> {
-                    if(idx===1) console.log(userResult[idx]);
+                  applyInfoInput.map((data, idx) => {
+                    if (idx === 1) console.log(userResult[idx]);
                     return (
                       <li key={`li_${idx}`} className="item">
                         <TitleComponent
-                          showYn={(data.textId===1)?false:showTitleYn}
+                          showYn={(data.textId === 1) ? false : showTitleYn}
                           title={applyInfoInput[idx].title}
                           styleTxt="txt"
                         />
                         {
-                          (data.type === "radio") && 
-                            <RadioInlineComponent 
-                              showYn={true}
-                              radioData={arrRadioData[data.radioId]}
-                              styleSeleList={`sele-list type01 radius answer-wrap mar-t10 row${data.radioList.length} noflex1`}
-                              checked={(userResult[idx]!=99)&&userResult[idx].id}
-                              onChangeFn={(radioIdx)=>{
-                                console.log(radioIdx);
-                                console.log(data.radioList[radioIdx].value);
-                                let copy = [...userResult];
-                                copy[idx] = {id:radioIdx, value:data.radioList[radioIdx].value}
-                                setUserResult(copy);
-                                if(radioIdx===3) {
-                                  setShowDirInupYn(true);
-                                }else {
-                                  setShowDirInupYn(false);
-                                }
-                              }}
-                            />
+                          (data.type === "radio") &&
+                          <RadioInlineComponent
+                            showYn={true}
+                            radioData={arrRadioData[data.radioId]}
+                            styleSeleList={`sele-list type01 radius answer-wrap mar-t10 row${data.radioList.length} noflex1`}
+                            checked={(userResult[idx] != 99) && userResult[idx].id}
+                            onChangeFn={(radioIdx) => {
+                              console.log(radioIdx);
+                              console.log(data.radioList[radioIdx].value);
+                              let copy = [...userResult];
+                              copy[idx] = { id: radioIdx, value: data.radioList[radioIdx].value }
+                              setUserResult(copy);
+                              if (radioIdx === 3) {
+                                setShowDirInupYn(true);
+                              } else {
+                                setShowDirInupYn(false);
+                              }
+                            }}
+                          />
                         }
                         {
-                          (data.type === "text")  && 
-                            <TextComponent
-                              showYn={(data.textId===0)?true:showDirInputYn}
-                              styleSeleList="sele-list type01 radius answer-wrap mar-t10"
-                              styleInput={(data.textId===0)?"ta-c": ""}
-                              textData={arrTextData[data.textId]}
-                              onChangeFn={(value)=>{
-                                let copy = [...userResult];
-                                let copy2 = {...userResult[2]}
-                                copy2.value = value;
-                                copy[data.id] = (idx!=3)?value:copy2;
-                                setUserResult(copy);
-                              }}
-                            />
+                          (data.type === "text") &&
+                          <TextComponent
+                            showYn={(data.textId === 0) ? true : showDirInputYn}
+                            styleSeleList="sele-list type01 radius answer-wrap mar-t10"
+                            styleInput={(data.textId === 0) ? "ta-c" : ""}
+                            textData={arrTextData[data.textId]}
+                            inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
+                            min={1}
+                            max={31}
+                            onChangeFn={(value) => {
+                              let copy = [...userResult];
+                              let copy2 = { ...userResult[2] }
+                              copy2.value = value;
+                              copy[data.id] = (idx != 3) ? value : copy2;
+                              setUserResult(copy);
+                            }}
+                          />
                         }
                         {
                           (data.type === "select") &&
-                            <SelectComponent
-                              showYn={true}
-                              selectData={arrSeleectData[data.selectId]}
-                              styleSeleList="sele-list type01 radius answer-wrap mar-t10"
-                              onChangeFn={(value)=> {
-                                let copy = [...userResult];
-                                copy[data.id] = value;
-                                setUserResult(copy);
-                              }}
-                            />
+                          <SelectComponent
+                            showYn={true}
+                            selectData={arrSeleectData[data.selectId]}
+                            styleSeleList="sele-list type01 radius answer-wrap mar-t10"
+                            onChangeFn={(value) => {
+                              let copy = [...userResult];
+                              copy[data.id] = value;
+                              setUserResult(copy);
+                            }}
+                          />
                         }
-                      </li>  
+                      </li>
                     )
                   })
-                  
+
                 }
               </ol>
             </div>

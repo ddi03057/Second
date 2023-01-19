@@ -1,3 +1,5 @@
+import { placeholder } from "@babel/types";
+
 const arrJudgeStepNm = ["정보제공동의", "본인인증", "서류수집", "서류전송현황", "정보입력", "사전심사신청"];
 const arrLoanStepNm = ["보증승인정보", "대출신청내역", "여신거래약정", "대출약관", "대출실행"];
 
@@ -643,7 +645,8 @@ const applyInfoInputData = [
     title: "금리종류",
     type: "text",
     textId: 0,
-    value: "고객 적용 금리"
+    value: "고객 적용 금리",
+    placeholder: ""
   },
   {
     id: 1,
@@ -694,6 +697,7 @@ const applyInfoInputData = [
     id: 2,
     title: "할부금 및 이자납입일 - 매월",
     type: "text",
+    placeholder : "숫자만 입력",
     textId: 1
   },
   {
@@ -975,7 +979,8 @@ const grtInfoData = [
       id: 9,
       title: "대출 희망 금액",
       type: "text",
-      textId: 0
+      textId: 0,
+      placeholder: "숫자만 입력"
   },
   {
       id: 10,

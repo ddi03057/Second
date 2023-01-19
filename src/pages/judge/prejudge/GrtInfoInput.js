@@ -60,7 +60,7 @@ function GrtInfoInput(props) {
   });
 
 
-  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99,99]); //결과값 저장 state
+  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
   let navigate = useNavigate(); //다음화면을 위한 navigate
   useEffect(() => {
     console.log(userResult);
@@ -88,9 +88,9 @@ function GrtInfoInput(props) {
 
     const msgType = validCheckEmpty(userResult);
     if (msgType === "1000") setMsgCont("대출 희망 금액은 최소 1천만부터 입력가능합니다.");
-    else if(msgType === "100") setMsgCont("1백만원 단위로 입력 가능합니다.")
+    else if (msgType === "100") setMsgCont("1백만원 단위로 입력 가능합니다.")
     else setMsgCont("SUCCESS");
-    
+
     handleShow()
   }
   let [msgCont, setMsgCont] = useState("");
@@ -137,39 +137,42 @@ function GrtInfoInput(props) {
                         />
                       )}
                       {
-                          (data.type === "text")  && 
-                            <TextComponent
-                              showYn={true}
-                              styleSeleList="sele-list type01 radius answer-wrap"
-                              styleInput="w100p ta-r"
-                              textData={arrTextData[data.textId]}
-                              onChangeFn={(value)=>{
-                                let Do = Math.floor(value / 1000000) * 1000000;
-                                console.log(Do)
-                                if(value > 100000000){
-                                  setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.")
-                                  handleShow()
-                                }
-                                let copy = [...userResult];
-                                copy[data.id] = Do;
-                                setUserResult(copy)
-                                
-                              }}
-                            />
-                        }
+                        (data.type === "text") &&
+                        <TextComponent
+                          showYn={true}
+                          styleSeleList="sele-list type01 radius answer-wrap"
+                          styleInput="w100p ta-r"
+                          textData={arrTextData[data.textId]}
+                          inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
+                          min={1}
+                          max={31}
+                          onChangeFn={(value) => {
+                            let Do = Math.floor(value / 1000000) * 1000000;
+                            console.log(Do)
+                            if (value > 100000000) {
+                              setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.")
+                              handleShow()
+                            }
+                            let copy = [...userResult];
+                            copy[data.id] = Do;
+                            setUserResult(copy)
+
+                          }}
+                        />
+                      }
                       {
-                          (data.type === "select") &&
-                            <SelectComponent
-                              showYn={true}
-                              selectData={arrSeleectData[data.selectId]}
-                              styleSeleList="sele-list type01 radius answer-wrap"
-                              onChangeFn={(value)=> {
-                                let copy = [...userResult];
-                                copy[data.id] = value;
-                                setUserResult(copy);
-                              }}
-                            />
-                        }
+                        (data.type === "select") &&
+                        <SelectComponent
+                          showYn={true}
+                          selectData={arrSeleectData[data.selectId]}
+                          styleSeleList="sele-list type01 radius answer-wrap"
+                          onChangeFn={(value) => {
+                            let copy = [...userResult];
+                            copy[data.id] = value;
+                            setUserResult(copy);
+                          }}
+                        />
+                      }
                     </li>
                   )
                 })}
@@ -214,14 +217,14 @@ function GrtInfoInput(props) {
           content="GrtInfoInputModal"
           type="component"
         />
-        
+
       </div>
-      {show&&
+      {show &&
         <AlertModal
           show={show}
           msg={msgCont}
           btnNm={["확인"]}
-          onClickFn={()=> {
+          onClickFn={() => {
             handleClose();
           }}
         />
@@ -289,7 +292,7 @@ function validCheckEmpty(userResult) {
       if (userResult[9] < 10000000) {
         return msgType = ("1000")
       }
-      
+
       msg = grtInfoData[grtInfoData.findIndex((data) => data.id === i)].title + josa + verb;
 
       return msg;
