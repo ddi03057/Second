@@ -8,6 +8,7 @@ import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
 import AlertModal from "../../../modules/components/AlertModal";
+import { placeholder } from "@babel/types";
 
 
 const suitTestData = collectData("SuitTest");
@@ -156,9 +157,11 @@ function SuitTest(props) {
                           radioData={arrRadioData[data.radioId]} 
                           styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
                           fixedId={(data.radioId===0 || data.radioId===1)&&arrRadioData[data.radioId].fixedId}
-                          userResult={userResult}
-                          setUserResult={setUserResult}
-                          dataId={data.id}
+                          onChangeFn={(radioDataId)=> {
+                            let copy = [...userResult];
+                            copy[data.id] = "0" + (radioDataId+1);
+                            props.setUserResult(copy);
+                          }}
                         /> 
                       }
                       { 
@@ -168,6 +171,9 @@ function SuitTest(props) {
                             styleSeleList="sele-list type01 radius answer-wrap"
                             styleInput=""
                             textData={arrTextData[data.textId]}
+                            inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
+                            min={20}
+                            max={99}
                             onChangeFn={(value)=>{
                               let copy = [...userResult];
                               copy[data.id] = value;
@@ -305,11 +311,14 @@ function RadioComponent(props) {
                   name={`sRadio${objRadioData.id}`} 
                   id={`sRadio${objRadioData.id}_${data.id}`} 
                   value="" 
-                  checked={(!fixedId && fixedId===data.id)?true:null}
+                  checked={null}
                   onChange={(e)=>{
-                    let copy = [...props.userResult];
-                    copy[props.dataId] = "0" + (data.id+1);
-                    props.setUserResult(copy);
+                    props.onChangeFn(data.id);
+                    // console.log(fixedId);
+                    // let copy = [...props.userResult];
+                    // copy[props.dataId] = "0" + (data.id+1);
+                    // console.log(props.userResult, copy);
+                    // props.setUserResult(copy);
                   }}
                 />
                   <span className="radio"></span>{data.value}

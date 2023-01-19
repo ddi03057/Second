@@ -342,7 +342,7 @@ const suitTestData = [
       standardVal : "",
       type : "text",
       textId : 2,
-      placeholder : ""
+      placeholder : "이메일주소 입력"
       
 
   }
