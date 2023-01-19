@@ -69,6 +69,9 @@ function GrtInfoInput(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [comshow, setComShow] = useState(false);
+  const comHandleShow = () => setComShow(true);
+  const comHandleClose = () => setComShow(false);
 
   // popup
   function openPop() {
@@ -188,7 +191,7 @@ function GrtInfoInput(props) {
                     <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                   </div>
                   <div className="ui-pop">
-                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={() => handleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
+                    <a data-id="" className="btn-pop-arrow" title="윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등" onClick={() => comHandleShow()}><span className="blind">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</span></a>
                   </div>
                 </div>
               </div>
@@ -205,13 +208,15 @@ function GrtInfoInput(props) {
 
         </div>
         <FullModal
-          showYn={show}
-          handleClose={handleClose}
+          showYn={comshow}
+          handleClose={comHandleClose}
           headerNm=""
           content="GrtInfoInputModal"
           type="component"
         />
-        {show&&
+        
+      </div>
+      {show&&
         <AlertModal
           show={show}
           msg={msgCont}
@@ -221,7 +226,6 @@ function GrtInfoInput(props) {
           }}
         />
       }
-      </div>
     </>
   )
 
