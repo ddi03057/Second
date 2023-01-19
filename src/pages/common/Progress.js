@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useLayoutEffect } from 'react';
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
+import OslBtn from '../../modules/components/OslBtn';
 //import { Card } from 'react-bootstrap';
 
 import OslHeader from '../../modules/components/OslHeader';
+import request from '../../modules/utils/Axios';
 
 /**
  * asis
@@ -94,25 +96,49 @@ function Progress(props) {
   // .catch(()=>{
   //   console.log("fail");
   // })
-  const axiosHeaders = {
-    'Content-type': 'application/json; charset=utf-8',
-    'Accept': 'application/json',
-    'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+  const config = {
+    headers: {
+      'Content-type': 'application/json; charset=utf-8',
+      'Accept': 'application/json',
+      'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+    }
   };
-  console.log(JSON.parse(axiosHeaders));
-  const ajaxTest3 = () => axios.post("/api1/BoxUi/OSL001/connectTest",{},{headers: {'Content-type': 'application/json; charset=utf-8',
-  'Accept': 'application/json',
-  'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'}}).then((response)=>{
-    console.log(response);
-  })
-  
+  //console.log(JSON.parse(axiosHeaders));
+  const ajaxTest3 = async () => {
+    const res = await request({
+      method: "post",
+      url: "/OSL001/connectTest",
+      data: {}
+    }) 
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.log("error : ", error);
+    });
+    console.log("===res=== ", res);
+    // axios.post("/api1/OSL001/connectTest",{},{
+    //   headers: {
+    //     'Content-Type': 'application/json; charset=utf-8', 
+    //     'Accept': 'application/json', 
+    //     'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+    //   }
+    // })
+    // .then((response)=>{
+    //   console.log(response);
+    // })
+    // .catch(error=> console.log(error))
+  }
+
   const stateCd = "";
   useLayoutEffect(()=> {
-    ajaxTest3();
+    
     //상태코드 세팅
     //stateCd = "";
   }, []);
-
+  function cbOslBtn() {
+    ajaxTest3();
+  }
   return (
     <>
       {(!!props.headerNm)&&<OslHeader headerNm={props.headerNm}/>}
@@ -171,7 +197,16 @@ function Progress(props) {
             </div>
           </div>
         </div>
-      </div>      
+      </div>
+      <OslBtn
+          obj={{
+            type: "button",
+            disabled: false,
+            text: ["test"],
+            link: "",
+            callbackId: cbOslBtn
+          }} ></OslBtn>
+      
       {/* <Card>
         <Card.Header style={{backgroundColor: "#FFFFFF", borderBottom: "0"}}>
           <Stepper 
