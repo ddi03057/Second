@@ -104,16 +104,15 @@ function Progress(props) {
   };
   //console.log(JSON.parse(axiosHeaders));
   const ajaxTest3 = () => 
-    axios.post("/api1/BoxUi/OSL001/connectTest",{},{
+    axios.post("/api1/OSL001/connectTest",{},{
       headers: {
         'Content-Type': 'application/json; charset=utf-8', 
         'Accept': 'application/json', 
         'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
       }
+      //,responseType: 'string'
     })
-    .then((response)=>{
-      console.log(response);
-    })
+    .then((response)=> console.log(response))
     .catch(error=> console.log(error))
   
   const stateCd = "";
