@@ -94,21 +94,30 @@ function Progress(props) {
   // .catch(()=>{
   //   console.log("fail");
   // })
-  const axiosHeaders = {
-    'Content-type': 'application/json; charset=utf-8',
-    'Accept': 'application/json',
-    'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+  const config = {
+    headers: {
+      'Content-type': 'application/json; charset=utf-8',
+      'Accept': 'application/json',
+      'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+    }
   };
-  console.log(JSON.parse(axiosHeaders));
-  const ajaxTest3 = () => axios.post("/api1/BoxUi/OSL001/connectTest",{},{headers: {'Content-type': 'application/json; charset=utf-8',
-  'Accept': 'application/json',
-  'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'}}).then((response)=>{
-    console.log(response);
-  })
+  //console.log(JSON.parse(axiosHeaders));
+  const ajaxTest3 = () => 
+    axios.post("/api1/BoxUi/OSL001/connectTest",{},{
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8', 
+        'Accept': 'application/json', 
+        'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+      }
+    })
+    .then((response)=>{
+      console.log(response);
+    })
+    .catch(error=> console.log(error))
   
   const stateCd = "";
   useLayoutEffect(()=> {
-    ajaxTest3();
+    
     //상태코드 세팅
     //stateCd = "";
   }, []);
@@ -171,7 +180,10 @@ function Progress(props) {
             </div>
           </div>
         </div>
-      </div>      
+      </div>
+      <button onClick={()=> {
+        ajaxTest3();
+      }}>aaaaaaaa</button>
       {/* <Card>
         <Card.Header style={{backgroundColor: "#FFFFFF", borderBottom: "0"}}>
           <Stepper 

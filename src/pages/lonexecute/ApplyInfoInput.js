@@ -168,6 +168,9 @@ function ApplyInfoInput(props) {
                               styleSeleList="sele-list type01 radius answer-wrap mar-t10"
                               styleInput={(data.textId===0)?"ta-c": ""}
                               textData={arrTextData[data.textId]}
+                              inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
+                              min={1}
+                              max={999}
                               onChangeFn={(value)=>{
                                 let copy = [...userResult];
                                 let copy2 = {...userResult[2]}
