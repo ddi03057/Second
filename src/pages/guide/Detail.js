@@ -33,7 +33,7 @@ function Detail(props) {
   const data = detailData;
   return (
     <>
-    <OslHeader headerNm = {props.headerNm}/>
+    {(!!props.headerNm)&&<OslHeader headerNm={props.headerNm}/>}
         <div className ="container">
           <div className ="content">
             <div className ="content-body">
