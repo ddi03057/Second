@@ -172,8 +172,6 @@ function SuitTest(props) {
                             styleInput=""
                             textData={arrTextData[data.textId]}
                             inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
-                            min={20}
-                            max={99}
                             onChangeFn={(value)=>{
                               let copy = [...userResult];
                               copy[data.id] = value;
