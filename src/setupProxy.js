@@ -3,7 +3,8 @@ const proxy =require("http-proxy-middleware");
 module.exports = function(app) {
   app.use(
     proxy.createProxyMiddleware("/api1", {
-      target: "https://api.plos.org/",
+      // target: "https://api.plos.org/",
+      target: "http://10.189.52.200:8081",
       changeOrigin: true,
       pathRewrite: {"^/api1": ""},
     })

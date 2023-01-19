@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useLayoutEffect } from 'react';
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
 //import { Card } from 'react-bootstrap';
 
@@ -23,11 +24,13 @@ import OslHeader from '../../modules/components/OslHeader';
  * 대출실행 complete
  *  activeStep=3
  * tobe
- * 화면랜더링시, back에서 진행상태조회 전문 oslNofcLoanPgstInq 리턴값 받아와야함
+ * 화면랜더링시, back에서 진행상태조회 전문 oslNofcLoanPgstInq 리턴값 받아와야함 ( 코드값에 무슨단계에 어떤상태인지 별로 정의되어있는듯)
  * 사전심사 
  *  -거절 
  *  -접수 
+ *  (-완료)
  * 보증심사 
+ *  (-신청)
  *  -거절
  *  -진행중
  *  -완료
@@ -91,6 +94,24 @@ function Progress(props) {
   // .catch(()=>{
   //   console.log("fail");
   // })
+  const axiosHeaders = {
+    'Content-type': 'application/json; charset=utf-8',
+    'Accept': 'application/json',
+    'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+  };
+  console.log(JSON.parse(axiosHeaders));
+  const ajaxTest3 = () => axios.post("/api1/BoxUi/OSL001/connectTest",{},{headers: {'Content-type': 'application/json; charset=utf-8',
+  'Accept': 'application/json',
+  'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'}}).then((response)=>{
+    console.log(response);
+  })
+  
+  const stateCd = "";
+  useLayoutEffect(()=> {
+    ajaxTest3();
+    //상태코드 세팅
+    //stateCd = "";
+  }, []);
 
   return (
     <>
@@ -134,7 +155,7 @@ function Progress(props) {
                 </ul>
               </div>
 
-              <div className="process-wrap">
+              {/* <div className="process-wrap">
                 <ol className="process-h">
                   <li className="complete">사전심사</li>
                   <li>보증신청</li>
@@ -146,7 +167,7 @@ function Progress(props) {
                 <button type="button" className="btn btn-lg default-bg">
                   <span className="txt">보증 신청</span>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
