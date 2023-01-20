@@ -12,6 +12,7 @@ import PdfViewer from "../../pages/common/PdfViewer";
  *  type="pdf"
  *  disabledYn={true}
  *  footerNm="확인"
+ *  onClickFn={function}
  * @returns 
  */
 function FullModal(props) {
@@ -26,6 +27,15 @@ function FullModal(props) {
   const [popHeight, setPopHeight] = useState(0);
 
   useEffect(()=> {
+    setTimeout(()=> {
+      if(document.querySelector(".pop-content").clientHeight + 10 > document.querySelector(".pop-content").scrollHeight) setDisabledYn(false);
+    }, 1000)
+    //const totalHeight = document.querySelector(".pop-content").scrollHeight;
+    //const pageHeight = document.querySelector(".pop-content").clientHeight;
+    
+  }, []);
+
+  useEffect(()=> {
     if(showYn) {
       document.body.style.overflow="hidden";
       //console.log("height", document.querySelector(".pop-content").scrollHeight);
@@ -34,7 +44,7 @@ function FullModal(props) {
   useEffect(()=> {
   //   console.log(document.querySelector(".pop-content").offsetHeight, popHeight);
   //   (popHeight!=0 && document.querySelector(".pop-content").offsetHeight >= popHeight)&& setDisabledYn(false);
-  }, [popHeight])
+  }, [popHeight]);
 
   return (
     <div id="layer00" className="pop-wrap pop-full" style={{display: showYn?"block":"none"}}>
@@ -84,14 +94,14 @@ function FullModal(props) {
           {(type === "selfcheck") &&
           <ModalContents componentNm={content}/>}
         </div>
-        <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} />
+        <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} onClickFn={props.onClickFn} />
         
       </div>
     </div>
   );
 }
 
-function FooterBtn({disabledYn, footerNm, handleClose}) {
+function FooterBtn({disabledYn, footerNm, handleClose, onClickFn}) {
   
   return (
     <div className="pop-btn-area">
@@ -100,6 +110,7 @@ function FooterBtn({disabledYn, footerNm, handleClose}) {
           document.body.style.overflow = "";
           document.getElementById("layer00").style.display = "none";
           handleClose();
+          onClickFn();
         }}
       >
         <span className="txt">{footerNm}</span>
