@@ -160,7 +160,7 @@ function SuitTest(props) {
                           onChangeFn={(radioDataId)=> {
                             let copy = [...userResult];
                             copy[data.id] = "0" + (radioDataId+1);
-                            props.setUserResult(copy);
+                            setUserResult(copy);
                           }}
                         /> 
                       }

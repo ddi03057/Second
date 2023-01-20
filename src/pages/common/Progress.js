@@ -96,14 +96,9 @@ function Progress(props) {
   // .catch(()=>{
   //   console.log("fail");
   // })
-  const config = {
-    headers: {
-      'Content-type': 'application/json; charset=utf-8',
-      'Accept': 'application/json',
-      'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
-    }
-  };
+
   //console.log(JSON.parse(axiosHeaders));
+
   const ajaxTest3 = async () => {
     const res = await request({
       method: "post",
@@ -129,6 +124,7 @@ function Progress(props) {
     // })
     // .catch(error=> console.log(error))
   }
+
 
   const stateCd = "";
   useLayoutEffect(()=> {
