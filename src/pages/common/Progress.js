@@ -72,20 +72,24 @@ function Progress(props) {
   //let [stateCd, setStateCd] = useState("");
   //let [footMsg, setFootMsg] = useState([]);
   let stateCd = "";
+  let rejectReason = "";
   let arrFootMsg = [];
   useLayoutEffect(()=> {
     
-    //진행상태조회
+    //진행상태조회 axois
     //stateCd = "";
+    //rejectReason
 
     if(stateCd === "사전심사거절") {
       arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_REJECT_FOOT_MSG").msg;
+      rejectReason = "";
     }else if(stateCd === "사전심사접수완료") {
       arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_APPLY_COMPLETE_FOOT_MSG").msg;
     }else if(stateCd === "보증심사진행중") {
       arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_ING_FOOT_MSG").msg;
     }else if(stateCd === "보증심사거절") {
       arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_REJECT_FOOT_MSG").msg;
+      rejectReason = "";
     }else if(stateCd === "보증심사완료") {
       arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_COMPLETE_FOOT_MSG").msg;
     }
@@ -108,17 +112,21 @@ function Progress(props) {
                   <li>대출실행</li>
                 </ol>
                 <p className="txt-result">
-                  <b>사전심사 조건</b>을<br /><b>충족하지 않았습니다.</b>
+                  {stateCd==="사전심사거절"&&<><b>사전심사 조건</b>을<br /><b>충족하지 않았습니다.</b></>}
+                  {stateCd==="사전심사접수완료"&&<><b>사전심사 접수</b>가<br /><b>완료</b>되었습니다.</>}
+                  {stateCd==="보증심사진행중"&&<><b>보증 심사</b>가 <b>진행중</b>입니다.</>}
+                  {stateCd==="보증심사거절"&&<><b>보증 심사 조건</b>을<br /><b>충족하지 않았습니다.</b></>}
+                  {stateCd==="보증심사완료"&&<><b>보증 심사</b>가<br /><b>완료</b>되었습니다.</>}
+                  {stateCd==="대출실행완료"&&<><b>대출 실행</b>이<br /><b>완료</b>되었습니다.</>}
                 </p>
-                <div className="info-wrap reject">
-                  <div className="info-box">
-                    <span className="tit fc-gray">거절사유</span>
-                    <span className="txt fc-dark ta-r">이렇게 실패를 하여 실패 하게 되었습니다.</span>
-                  </div>
-                </div>
-                <ul className="txt-msg list-type05">
-                  <li>세부 내용은 담당 신용보증기금 고객센터(<a href="tel:15886565">1588-6565</a>)에 문의 바랍니다.</li>
-                </ul>
+                {
+                  stateCd === "사전심사거절"&&
+                    <RejReason rejectReason={rejectReason} />
+                }
+                {
+                  arrFootMsg.length > 0&&
+                    <FooterMsg arrFootMsg={arrFootMsg} />
+                }
               </div>
 
               <div className="process-wrap">
@@ -151,7 +159,7 @@ function RejReason(props) {
     <div className="info-wrap reject">
       <div className="info-box">
         <span className="tit fc-gray">거절사유</span>
-        <span className="txt fc-dark ta-r">이렇게 실패를 하여 실패 하게 되었습니다.{props.reason}</span>
+        <span className="txt fc-dark ta-r">{props.reason}</span>
       </div>
     </div>
   )

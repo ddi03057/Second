@@ -1165,21 +1165,64 @@ const selfCheckData = [
   },
 ];
 
+const progressFootMsgData = [
+
+  {
+    id: 0,
+    name: "PREJUDGE_APPLY_COMPLETE_FOOT_MSG",
+    msg: ["사전심사 결과 조회는 당일, 진행 가능 여부는 수일 내 결정하여 통지 드릴 예정이며 네이버 톡톡과 휴대폰 문자메시지로 알려드립니다."]
+  },
+  {
+    id: 1,
+    name: "PREJUDGE_REJECT_FOOT_MSG",
+    msg: [
+      "세부 내용은 담당 신용보증기금 고객센터(<a href=\"tel:15886565\">1588-6565</a>)에 문의 바랍니다."
+    ]
+  },
+  {
+    id: 2,
+    name: "GRTJUDGE_ING_FOOT_MSG",
+    msg: [
+      "신용보증기금 영업점 직원의 사업장 현장실사를 통해 최종 결과가 확정됩니다.",
+      "현장 실사 시 특이사항이 있는 경우 실사 결과가 변동될 수 있습니다.",
+      "신청일부터 최종 승인까지 최대 10 영업일 소요  됩니다.",
+      "최종 승인 이후 보증료 납부, 대출 실행 가능합니다.",
+      "기타 사항은 담당 신용보증기금 영업점에 문의 바랍니다."
+    ]
+  },
+  {
+    id: 3,
+    name: "GRTJUDGE_REJECT_FOOT_MSG",
+    msg: [
+      "세부 내용은 담당 신용보증기금 영업점에 문의 바랍니다."
+    ]
+  },
+  {
+    id: 4,
+    name: "GRTJUDGE_COMPLETE_FOOT_MSG",
+    msg: [
+      "대출 실행 기한 이내에 대출 실행을 완료해 주시기 바랍니다. 경과 시 보증 승인은 자동 취소됩니다.",
+      "대출 실행은 영업일 09시~15시에만 가능합니다."
+    ]
+  }
+];
+
 export default (props)=> {
   switch (props) {
-    case 'detail' : return detailData; // 상품안내 고객데이터
-    case 'email': return emailList;
-    case 'judgeStepNm': return arrJudgeStepNm;
-    case 'loanStepNm': return arrLoanStepNm
-    case 'page': return pageList;
-    case 'SuitTest': return suitTestData; //적합성적정성검사 데이터
-    case 'CustAgree' : return custAgreeData; // 고객동의 데이터
-    case 'ApplyInfoInput': return applyInfoInputData; //대출신청서작성 및 실행요청
-    case 'UntactAgrm' : return untactAgrmData; //비대면 약정
-    case 'GrtInfoInput' : return grtInfoData; //조사자료 자가체크 //사전심사자료작성
-    case 'SelfCheck' : return selfCheckData; //자가진단 체크리스트
-    case 'FinanceCusLaw' : return financeCusLawData; //금융소비자법 대응
-    case 'StampTax' : return stampTaxData; //인지세 확인
-    default : return null;
+    case 'detail' :         return detailData; // 상품안내 고객데이터
+    case 'email':           return emailList;
+    case 'judgeStepNm':     return arrJudgeStepNm;
+    case 'loanStepNm':      return arrLoanStepNm
+    case 'page':            return pageList;
+    case 'progressFootMsg': return progressFootMsgData; //진행상태별 하단 안내문구
+    case 'SuitTest':        return suitTestData; //적합성적정성검사 데이터
+    case 'CustAgree' :      return custAgreeData; // 고객동의 데이터
+    case 'ApplyInfoInput':  return applyInfoInputData; //대출신청서작성 및 실행요청
+    case 'UntactAgrm' :     return untactAgrmData; //비대면 약정
+    case 'GrtInfoInput' :   return grtInfoData; //조사자료 자가체크 //사전심사자료작성
+    case 'SelfCheck' :      return selfCheckData; //자가진단 체크리스트
+    case 'FinanceCusLaw' :  return financeCusLawData; //금융소비자법 대응
+    case 'StampTax' :       return stampTaxData; //인지세 확인
+    default :               return null;
   }
 };
