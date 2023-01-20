@@ -54,6 +54,7 @@ function Progress(props) {
   const GRTJUDGE_REJECT_FOOT_MSG = [];
   const GRTJUDGE_COMPLETE_FOOT_MSG = [];
 
+
   const ajaxTest3 = async () => {
     const res = await request({
       method: "post",
@@ -69,11 +70,13 @@ function Progress(props) {
     console.log("===res=== ", res);
   }
 
+
   //let [stateCd, setStateCd] = useState("");
   //let [footMsg, setFootMsg] = useState([]);
   let stateCd = "";
   let rejectReason = "";
   let arrFootMsg = [];
+
   useLayoutEffect(()=> {
     
     //진행상태조회 axois

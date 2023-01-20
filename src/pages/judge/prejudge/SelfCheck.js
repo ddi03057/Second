@@ -192,7 +192,6 @@ function SelfCheck(props) {
           onClickFn={()=> {
             handleClose();
             if(msgCont === SUCCESS_MSG) {
-              alert("success");
               //다음화면 이동
             }
           }}
