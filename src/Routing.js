@@ -24,6 +24,8 @@ import StampTax from './pages/lonexecute/StampTax.js';
 import DataCollect from './pages/judge/prejudge/DataCollect.js';
 import FinanceCusLaw from './pages/lonexecute/FinanceCusLaw.js';
 import Main from './pages/Main.js';
+import ServiceError from './error/ServiceError.js';
+import SystemInspect from './error/SystemInspect';
 
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
@@ -59,6 +61,8 @@ function Routing() {
         <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM_NM}/> }/>
         <Route path={PathConstants.LONEXECUTE_STAMPTAX} element={<StampTax headerNm={PathConstants.LONEXECUTE_STAMPTAX_NM}/> }/>
         <Route path={PathConstants.LONEXECUTE_FINANCECUSLAW} element={<FinanceCusLaw headerNm={PathConstants.LONEXECUTE_FINANCECUSLAW_NM}/> }/>
+        <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError headerNm={PathConstants.ERROR_SERVICEERROR_NM}/> }/>
+        <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemInspect headerNm={PathConstants.ERROR_SYSTEMINSPECT_NM}/> }/>
         {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />
       </Routes>
