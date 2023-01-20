@@ -21,6 +21,11 @@ function FullModal(props) {
   const content = props.content;
   const type = props.type
   const footerNm = props.footerNm;
+console.log(content,typeof content);
+  let contId = "";
+  if(content.length === 1) {
+    contId = content[0].id;
+  }
 
   
   const [disabledYn, setDisabledYn] = useState(props.disabledYn);
@@ -94,14 +99,13 @@ function FullModal(props) {
           {(type === "selfcheck") &&
           <ModalContents componentNm={content}/>}
         </div>
-        <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} onClickFn={props.onClickFn}/>
-        
+        <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} onClickFn={props.onClickFn} contId={contId} />
       </div>
     </div>
   );
 }
 
-function FooterBtn({disabledYn, footerNm, handleClose, onClickFn}) {
+function FooterBtn({disabledYn, footerNm, handleClose, onClickFn, contId}) {
   
   return (
     <div className="pop-btn-area">
@@ -110,7 +114,7 @@ function FooterBtn({disabledYn, footerNm, handleClose, onClickFn}) {
           document.body.style.overflow = "";
           document.getElementById("layer00").style.display = "none";
           handleClose();
-          onClickFn();
+          onClickFn(contId);
         }}
       >
         <span className="txt">{footerNm}</span>
