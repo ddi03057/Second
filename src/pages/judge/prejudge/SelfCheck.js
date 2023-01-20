@@ -200,7 +200,7 @@ function SelfCheck(props) {
       <FullModal
           showYn={comshow}
           handleClose={comHandleClose}
-          headerNm=""
+          headerNm="보증취급 제한업종 안내"
           content="SelfCheckModal"
           type="selfcheck"
         />
