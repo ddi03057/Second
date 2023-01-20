@@ -54,7 +54,12 @@ function FullModal(props) {
         <div className="pop-content" style={{overflow: "auto"}}
           onScroll={(e)=>{
             //console.log(e.target.scrollTop);
-            if(document.querySelector(".pop-content").scrollHeight - Math.round(document.querySelector(".pop-content").scrollTop) == document.querySelector(".pop-content").clientHeight) {
+            const totalHeight = document.querySelector(".pop-content").scrollHeight;
+            const scrollHeight = Math.round(document.querySelector(".pop-content").scrollTop);
+            const diffHeight = totalHeight - scrollHeight;
+            const pageHeight = document.querySelector(".pop-content").clientHeight;
+            
+            if(pageHeight+10 > diffHeight) {
               setDisabledYn(false);
             }
           }}>

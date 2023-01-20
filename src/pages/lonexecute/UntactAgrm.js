@@ -18,7 +18,7 @@ import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
-
+import FullModal from "../../modules/components/FullModal";
 
 const untactAgrmData = collectData("UntactAgrm");
 
@@ -35,6 +35,7 @@ function UntactAgrm(props) {
     }
   };
 
+  let [arrPdfData, setArrPdfData] = useState([]);
 
   const [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99]);
 
@@ -94,6 +95,17 @@ function UntactAgrm(props) {
           </div>
         </div>
       </div>
+      {show&&
+        <FullModal
+          showYn={show}
+          handleClose={handleClose}
+          headerNm="약관 동의"
+          content={arrPdfData}
+          type="pdf"
+          disabledYn={true}
+          footerNm="확인"
+        />
+      }
     </>
   )
 }
