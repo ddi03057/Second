@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
 import OslBtn from '../../modules/components/OslBtn';
 //import { Card } from 'react-bootstrap';
@@ -70,33 +70,47 @@ function Progress(props) {
     console.log("===res=== ", res);
   }
 
-
+  const [procing, setProcing] = useState(["", "", ""]);
   //let [stateCd, setStateCd] = useState("");
   //let [footMsg, setFootMsg] = useState([]);
-  let stateCd = "";
+  let [stateCd, setStateCd] = useState("");
   let rejectReason = "";
-  let arrFootMsg = [];
+  
+  let [arrFootMsg, setArrFootMsg] = useState([]);
 
   useLayoutEffect(()=> {
     
     //진행상태조회 axois
-    //stateCd = "";
+    setStateCd("보증심사진행중");
+    //axios end
+    
     //rejectReason
-
+    console.log(stateCd);
+    console.log(arrFootMsg);
+  }, []);
+  useLayoutEffect(()=> {
     if(stateCd === "사전심사거절") {
-      arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_REJECT_FOOT_MSG").msg;
+      setProcing(["ing", "", ""]);
+      setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_REJECT_FOOT_MSG").msg]);
       rejectReason = "";
     }else if(stateCd === "사전심사접수완료") {
-      arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_APPLY_COMPLETE_FOOT_MSG").msg;
+      setProcing(["ing", "", ""]);
+      setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_APPLY_COMPLETE_FOOT_MSG").msg]);
     }else if(stateCd === "보증심사진행중") {
-      arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_ING_FOOT_MSG").msg;
+      setProcing(["", "ing", ""]);
+      setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_ING_FOOT_MSG").msg]);
     }else if(stateCd === "보증심사거절") {
-      arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_REJECT_FOOT_MSG").msg;
+      setProcing(["", "ing", ""]);
+      setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_REJECT_FOOT_MSG").msg]);
       rejectReason = "";
     }else if(stateCd === "보증심사완료") {
-      arrFootMsg = progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_COMPLETE_FOOT_MSG").msg;
+      setProcing(["", "complete", ""]);
+      setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_COMPLETE_FOOT_MSG").msg]);
+    }else {
+      setProcing(["", "", "complete"]);
     }
-  }, []);
+  }, [stateCd]);
+
   function cbOslBtn() {
     ajaxTest3();
   }
@@ -110,9 +124,9 @@ function Progress(props) {
             <div className="section pad-t30">
               <div className="process-wrap">
                 <ol className="process-h">
-                  <li className="ing">사전심사</li>
-                  <li>보증신청</li>
-                  <li>대출실행</li>
+                  <li className={procing[0]}>사전심사</li>
+                  <li className={procing[1]}>보증신청</li>
+                  <li className={procing[2]}>대출실행</li>
                 </ol>
                 <p className="txt-result">
                   {stateCd==="사전심사거절"&&<><b>사전심사 조건</b>을<br /><b>충족하지 않았습니다.</b></>}
@@ -123,6 +137,10 @@ function Progress(props) {
                   {stateCd==="대출실행완료"&&<><b>대출 실행</b>이<br /><b>완료</b>되었습니다.</>}
                 </p>
                 {
+                  (stateCd==="보증심사진행중" || stateCd==="보증심사거절" || stateCd==="대출실행완료")&&
+                    <StateInfo stateInfoList={null} styleWrap={stateCd==="대출실행완료"?"info-wrap pad-b0 tit-nowrap":"info-wrap pad-t0 pad-b20"}/>
+                }
+                {
                   stateCd === "사전심사거절"&&
                     <RejReason rejectReason={rejectReason} />
                 }
@@ -130,20 +148,6 @@ function Progress(props) {
                   arrFootMsg.length > 0&&
                     <FooterMsg arrFootMsg={arrFootMsg} />
                 }
-              </div>
-
-              <div className="process-wrap">
-                <ol className="process-h">
-                  <li className="ing">사전심사</li>
-                  <li>보증신청</li>
-                  <li>대출실행</li>
-                </ol>
-                <p className="txt-result">
-                  <b>사전심사 접수</b>가<br /><b>완료</b>되었습니다.
-                </p>
-                <ul className="txt-msg list-type05">
-                  <li>사전심사 결과 조회는 당일, 진행 가능 여부는 수일 내 결정하여 통지 드릴 예정이며 네이버 톡톡과 휴대폰 문자메시지로 알려드립니다.</li>
-                </ul>
               </div>
             </div>
           </div>
@@ -153,6 +157,56 @@ function Progress(props) {
     </>
     
 
+  )
+}
+
+function StateInfo(props) {
+  let styleWrap = "";
+  return (
+    <>
+    <div className={props.styleWrap}>
+      {/* {
+        props.stateInfoList.map((data, idx)=> {
+          data.nm?예상보증료
+          return (
+            <div className="info-box">
+              <span className="tit fc-gray">{data.nm}</span>
+              <span className={`txt fc-dark ta-r`}>{data.value}</span>
+            </div>
+          )
+        })
+      } */}
+      <div className="info-box">
+          <span className="tit fc-gray">신청일자</span>
+          <span className="txt fc-dark ta-r">2021.06.22</span>
+      </div>
+      <div className="info-box">
+          <span className="tit fc-gray">대출금액</span>
+          <span className="txt fc-dark ta-r">30,450,000원</span>
+      </div>
+      <div className="info-box">
+          <span className="tit fc-gray">대출이자</span>
+          <span className="txt fc-dark ta-r">0.00%<br /><span className="fs14 fc-lightGray ta-r">(기준금리 0.00% + 가산금리 0.00%)</span></span>
+      </div> 
+      <div className="info-box">
+          <span className="tit fc-gray">대출 실행일</span>
+          <span className="txt fc-dark ta-r">2021.07.02</span>
+      </div>
+      <div className="info-box">
+          <span className="tit fc-gray">거치기간 만료일</span>
+          <span className="txt fc-dark ta-r">2022.07.02</span>
+      </div>
+      <div className="info-box">
+          <span className="tit fc-gray">대출 만료일</span>
+          <span className="txt fc-dark ta-r">2026.07.02</span>
+      </div>
+      <div className="info-box">
+          <span className="tit fc-gray">이자지급시기</span>
+          <span className="txt fc-dark ta-r">매월 10일</span>
+      </div>
+        
+    </div>
+    </>
   )
 }
 
@@ -169,12 +223,13 @@ function RejReason(props) {
 }
 
 function FooterMsg(props) {
+  
   return (
     <ul className="txt-msg list-type05">
       {
         props.arrFootMsg.map((data,idx)=> {
           return (
-            <li>{data[idx]}</li>
+            <li>{data}</li>
           )
         })
         
