@@ -1207,6 +1207,9 @@ const progressFootMsgData = [
   }
 ];
 
+
+
+
 export default (props)=> {
   switch (props) {
     case 'detail' :         return detailData; // 상품안내 고객데이터
