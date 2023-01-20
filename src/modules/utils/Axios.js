@@ -132,6 +132,7 @@ const request = async function (opt) {
 
     return response;
   } catch (error) {
+    console.log("resErr", error);
     return error;
   }
 };

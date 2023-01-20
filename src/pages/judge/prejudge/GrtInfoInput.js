@@ -95,6 +95,8 @@ function GrtInfoInput(props) {
   }
   let [msgCont, setMsgCont] = useState("");
   const [visible, setVisible] = useState(false);
+
+  
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
@@ -145,17 +147,18 @@ function GrtInfoInput(props) {
                           textData={arrTextData[data.textId]}
                           inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
                           onChangeFn={(value) => {
-                            let Do = Math.floor(value / 1000000) * 1000000;
-                            console.log(Do)
+                            let inputValue = Math.floor(value / 1000000);
+                            let outputValue = inputValue * 1000000;
                             if (value > 100000000) {
                               setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.")
                               handleShow()
                             }
                             let copy = [...userResult];
-                            copy[data.id] = Do;
+                            copy[data.id] = outputValue;
                             setUserResult(copy)
 
                           }}
+                          
                         />
                       }
                       {
@@ -212,6 +215,7 @@ function GrtInfoInput(props) {
           showYn={comshow}
           handleClose={comHandleClose}
           headerNm=""
+          footerNm= "닫기"
           content="GrtInfoInputModal"
           type="component"
         />
@@ -270,7 +274,7 @@ function Search(props) {
 * @param {입력한 신용점수} userCrdScr 
 * @returns 
 */
-function validCheckEmpty(userResult) {
+function validCheckEmpty(userResult,props) {
   let msgType = "";
   let msg = "";
   let verb = "하시기 바랍니다.";
