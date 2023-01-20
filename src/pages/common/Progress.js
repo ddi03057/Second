@@ -104,6 +104,7 @@ function Progress(props) {
     }
   };
   //console.log(JSON.parse(axiosHeaders));
+
   const ajaxTest3 = async () => {
     const res = await request({
       method: "post",
@@ -129,6 +130,19 @@ function Progress(props) {
     // })
     // .catch(error=> console.log(error))
   }
+
+  // const ajaxTest3 = () => 
+  //   axios.post("/api1/OSL001/connectTest",{},{
+  //     headers: {
+  //       'Content-Type': 'application/json; charset=utf-8', 
+  //       'Accept': 'application/json', 
+  //       'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
+  //     }
+  //     //,responseType: 'string'
+  //   })
+  //   .then((response)=> console.log(response))
+  //   .catch(error=> console.log(error))
+  
 
   const stateCd = "";
   useLayoutEffect(()=> {
