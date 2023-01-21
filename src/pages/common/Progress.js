@@ -48,13 +48,6 @@ const progressFootMsgData = collectData("progressFootMsg");
  */
 function Progress(props) {
 
-  const PREJUDGE_APPLY_COMPLETE_FOOT_MSG = [];
-  let prejudgeRejectFootMsg = [];
-  const GRTJUDGE_ING_FOOT_MSG = [];
-  const GRTJUDGE_REJECT_FOOT_MSG = [];
-  const GRTJUDGE_COMPLETE_FOOT_MSG = [];
-
-
   const ajaxTest3 = async () => {
     const res = await request({
       method: "post",
@@ -78,13 +71,16 @@ function Progress(props) {
   
   let [arrFootMsg, setArrFootMsg] = useState([]);
 
+  let [styleInfoWrap, setStyleInfoWrap] = useState("");
+
   useLayoutEffect(()=> {
     
     //진행상태조회 axois
     setStateCd("보증심사진행중");
+    //rejectReason
     //axios end
     
-    //rejectReason
+    
     console.log(stateCd);
     console.log(arrFootMsg);
   }, []);
@@ -108,6 +104,8 @@ function Progress(props) {
       setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "GRTJUDGE_COMPLETE_FOOT_MSG").msg]);
     }else {
       setProcing(["", "", "complete"]);
+      //tobe:그냥 완료"tit-nowrap"  상환및 청약철회""
+      setStyleInfoWrap(" tit-nowrap");
     }
   }, [stateCd]);
 
@@ -137,8 +135,8 @@ function Progress(props) {
                   {stateCd==="대출실행완료"&&<><b>대출 실행</b>이<br /><b>완료</b>되었습니다.</>}
                 </p>
                 {
-                  (stateCd==="보증심사진행중" || stateCd==="보증심사거절" || stateCd==="대출실행완료")&&
-                    <StateInfo stateInfoList={null} styleWrap={stateCd==="대출실행완료"?"info-wrap pad-b0 tit-nowrap":"info-wrap pad-t0 pad-b20"}/>
+                  (stateCd==="보증심사진행중" || stateCd==="보증심사거절")&&
+                    <StateInfo stateInfoList={null}/>
                 }
                 {
                   stateCd === "사전심사거절"&&
@@ -150,6 +148,10 @@ function Progress(props) {
                 }
               </div>
             </div>
+            {
+              stateCd === "대출실행완료"&&
+                <CompleteStateInfo CompleteStateInfoList={null} styleInfoWrap={styleInfoWrap}/>
+            }
           </div>
         </div>
       </div>
@@ -163,15 +165,15 @@ function Progress(props) {
 function StateInfo(props) {
   let styleWrap = "";
   return (
-    <>
-    <div className={props.styleWrap}>
-      {/* {
+    
+    <div className="info-wrap pad-t0 pad-b20">
+      {/* { todo: data받아오면 해당 loop로 적용하고 테스트
         props.stateInfoList.map((data, idx)=> {
           data.nm?예상보증료
           return (
             <div className="info-box">
               <span className="tit fc-gray">{data.nm}</span>
-              <span className={`txt fc-dark ta-r`}>{data.value}</span>
+              <span className={`txt fc-dark ta-r`}>{data.value}<span className="fs14 fc-lightGray ta-r">추가될값</span></span>
             </div>
           )
         })
@@ -206,7 +208,61 @@ function StateInfo(props) {
       </div>
         
     </div>
-    </>
+    
+  )
+}
+
+function CompleteStateInfo(props) {
+  return (
+    <div className="section pad-0 pad-t30">
+      <div className="box-cont">
+          <div className="b-title">대출 상태</div>
+          <div className="b-txt pad-b0">
+              <div className={`info-wrap pad-b0${props.styleInfoWrap}`}>
+                {/* { todo: data받아오면 해당 loop로 적용하고 테스트
+                  props.completeStateInfoList.map((data, idx)=> {
+                    data.nm?예상보증료
+                    return (
+                      <div className="info-box">
+                        <span className="tit fc-gray">{data.nm}</span>
+                        <span className={`txt fc-dark ta-r`}>{data.value}<span className="fs14 fc-lightGray ta-r">추가될값</span></span>
+                      </div>
+                    )
+                  })
+                } */}
+                  <div className="info-box">
+                      <span className="tit fc-gray">신청일자</span>
+                      <span className="txt fc-dark ta-r">2021.06.22</span>
+                  </div>
+                  <div className="info-box">
+                      <span className="tit fc-gray">대출금액</span>
+                      <span className="txt fc-dark ta-r">30,450,000원</span>
+                  </div>
+                  <div className="info-box">
+                      <span className="tit fc-gray">대출이자</span>
+                      <span className="txt fc-dark ta-r">0.00%<br /><span className="fs14 fc-lightGray ta-r">(기준금리 0.00% + 가산금리 0.00%)</span></span>
+                  </div> 
+                  <div className="info-box">
+                      <span className="tit fc-gray">대출 실행일</span>
+                      <span className="txt fc-dark ta-r">2021.07.02</span>
+                  </div>
+                  <div className="info-box">
+                      <span className="tit fc-gray">거치기간 만료일</span>
+                      <span className="txt fc-dark ta-r">2022.07.02</span>
+                  </div>
+                  <div className="info-box">
+                      <span className="tit fc-gray">대출 만료일</span>
+                      <span className="txt fc-dark ta-r">2026.07.02</span>
+                  </div>
+                  <div className="info-box">
+                      <span className="tit fc-gray">이자지급시기</span>
+                      <span className="txt fc-dark ta-r">매월 10일</span>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+  </div>
   )
 }
 
