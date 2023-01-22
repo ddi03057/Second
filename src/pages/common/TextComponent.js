@@ -37,6 +37,7 @@ function TextComponent(props) {
                 props.onChangeFn(e.target.value);
               }} 
               value={objTextData.value}
+
             />
           </div>
           {/* <div className="btn-wrap">

@@ -726,50 +726,52 @@ const untactAgrmData = [
   {
       id: 0,
       title: "(필수) 기업대출 상품설명서",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2017110617593821483973066352935.pdf"
+
 
   },
   {
       id: 1,
       title: "(필수) 여신거래약정서(기업용)",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2019031909261764480323824044447.pdf"
 
   },
   {
       id: 2,
       title: "(필수) 신용보증약정서",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2020262473283826319128117808560.pdf"
 
   },
   {
       id: 3,
       title: "(필수) 신용보증약정 설명서",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2022053115131329259593606625324.pdf"
 
   },
   {
       id: 4,
       title: "(필수) 은행여신거래 기본약관(기업용)",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2022053115164629259806850189960.pdf"
 
   },
   {
       id: 5,
       title: "(필수) 금리인하요구원 안내 확인서",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2022021612253920263835375609685.pdf"
+
 
   },
   {
       id: 6,
       title: "(필수) 대출신청서",
-      type: "text",
-      pdfvalue: ""
+      type: "pdf",
+      pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
 
   },
   {
@@ -1206,6 +1208,9 @@ const progressFootMsgData = [
     ]
   }
 ];
+
+
+
 
 export default (props)=> {
   switch (props) {

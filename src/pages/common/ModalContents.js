@@ -66,6 +66,10 @@ function GrtInfoInputModal() {
 
 function SelfCheckModal() {
 
+    const serchList = ()=>{
+        
+    }
+
     return (
         <>
             <div className="container">

@@ -21,10 +21,10 @@ function FullModal(props) {
   const content = props.content;
   const type = props.type
   const footerNm = props.footerNm;
-
+console.log(content,typeof content);
   let contId = "";
-  if(!Array.isArray(content)) {
-    contId = content.id;
+  if(content.length === 1) {
+    contId = content[0].id;
   }
 
   
@@ -100,7 +100,6 @@ function FullModal(props) {
           <ModalContents componentNm={content}/>}
         </div>
         <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} onClickFn={props.onClickFn} contId={contId} />
-        
       </div>
     </div>
   );

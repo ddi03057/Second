@@ -27,16 +27,7 @@ const custAgreeData = collectData("CustAgree");
  */
 function CustAgree(props) {
 
-  const [checkItems, setCheckItems] = useState([]);
-
-  // 체크박스 단일 선택
-  const handleSingleCheck = (checked, id) => {
-    if (checked) {
-      setCheckItems(prev => [...prev, id]);
-    } else {
-      setCheckItems(checkItems.filter((el) => el !== id));
-    }
-  };
+  const [checkItems, setCheckItems] = useState([99,99,99,99,99,99,99]);
 
   const [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99]);
 
@@ -53,6 +44,29 @@ function CustAgree(props) {
 
   let [arrPdfData, setArrPdfData] = useState([]);
 
+  const [isChecked, setIsChecked] = useState([false,false,false,false,false,false,false]);
+
+  // useEffect(()=> {
+  //   console.log("useEffect[checkItems]",checkItems);
+    
+  //   checkItems.map((data, idx)=> {
+  //     let copy = [...isChecked];
+  //     if(data === 1) {
+        
+  //       copy[idx] = true;
+        
+  //     }else {
+        
+  //       copy[idx] = false;
+        
+  //     }
+  //     setIsChecked(copy);
+  //   })
+  // }, [checkItems]);
+  // useEffect(()=> {
+  //   console.log("useEffect[isChecked]", isChecked);
+
+  // }, [isChecked])
   function cbOslBtn() {
     setArrPdfData(custAgreeData);
     handleShow(true);
@@ -87,16 +101,19 @@ function CustAgree(props) {
                         type="checkbox"
                         key={`agree-terms-${data.id}`}
                         name="agree_terms"
-                        checked={checkItems.includes(data.id) ? true : false}
+                        checked={checkItems[idx]===99?false:checkItems[idx]===0?false:true
+                          // (checkItems[idx] === 99)? :(checkItems[idx]===1)?setIsChecked(true):setIsChecked(false)
+                        }
                         id={idx}
                         className="check-input blind"
-                        onChange={(e) => {
-                          handleSingleCheck(e.target.checked, data.id)
-                          let copy = [...userResult];
-                          copy[idx] = e.currentTarget.checked;
-                          setUserResult(copy);
-                          console.log(checkItems)
-                        }} />
+                        onChange={(e)=>{
+                          if(checkItems[idx] != 99){
+                            let copy = [...checkItems];
+                            copy[idx] = copy[idx]===0?1:0;
+                            setCheckItems(copy);
+                          }
+                        }}
+                      />
                       <label htmlFor={idx} className="check-label">{data.title}</label>
                       <a data-id=""
                         className="btn-pop-arrow"
@@ -146,6 +163,18 @@ function CustAgree(props) {
           type="pdf"
           disabledYn={true}
           footerNm="확인"
+          onClickFn={(contId)=>{
+            console.log(contId,typeof contId)
+            if(typeof contId === "number") {
+              let copy = [...checkItems];
+              copy[contId] = 1;
+              setCheckItems(copy);
+            }else {
+              setCheckItems([1,1,1,1,1,1,1]);
+            }
+            
+          }}
+          
         />
       }
     </>
