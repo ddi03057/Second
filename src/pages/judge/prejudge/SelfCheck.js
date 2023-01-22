@@ -24,6 +24,7 @@ import FullModal from "../../../modules/components/FullModal.js";
  */
 const selfCheckData = collectData("SelfCheck");
 
+
 function SelfCheck(props) {
   /**
     * 항목별 데이터 분리
@@ -202,6 +203,7 @@ function SelfCheck(props) {
           handleClose={comHandleClose}
           headerNm="보증취급 제한업종 안내"
           content="SelfCheckModal"
+          footerNm="확인"
           type="selfcheck"
         />
     </>

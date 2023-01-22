@@ -11,12 +11,16 @@ import { useState } from "react";
 import OslHeader from "../../../modules/components/OslHeader";
 import OslBtn from "../../../modules/components/OslBtn";
 
+
 /**
  * 화면명 : 자료 수집
  * 설명 : 사업자번호, 행정구역 수집
  * @param {*} props
  * props항목별 설명
  */
+
+
+
 function DataCollect(props){
 
   function cbOslBtn() {

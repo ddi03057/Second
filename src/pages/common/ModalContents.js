@@ -1,6 +1,8 @@
 /**
  * FullModal로 띄워야하는 화면 아래 function으로 생성하여 switch문에 추가
  */
+import collectData from "../../modules/constants/collectData.js";
+
 
 function GrtInfoInputModal() {
 
@@ -66,8 +68,11 @@ function GrtInfoInputModal() {
 
 function SelfCheckModal() {
 
-    const serchList = ()=>{
-        
+    const jobData = collectData("job");
+
+
+    const serchList = () => {
+
     }
 
     return (
@@ -103,166 +108,20 @@ function SelfCheckModal() {
                                     </thead>
 
                                     <tbody className="first-blue">
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span className="txt-data">G47841</span>
-                                            </td>
-                                            <td>
-                                                <span className="txt-data">예술품 및 골동품 소매업</span>
-                                            </td>
-                                        </tr>
+                                        {jobData.map(function (data, idx) {
+                                            return (
+                                                <>
+                                                    <tr>
+                                                        <td>
+                                                            <span className="txt-data">{data.code}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span className="txt-data">{data.value}</span>
+                                                        </td>
+                                                    </tr>
+                                                </>
+                                            )
+                                        })}
                                     </tbody>
 
                                 </table>
