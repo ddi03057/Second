@@ -12,6 +12,8 @@ import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
+import request from "../../modules/utils/Axios";
+import { useLayoutEffect } from "react";
 
 
 const detailData = collectData("detail");
@@ -31,6 +33,28 @@ function Detail(props) {
       );
   }
   const data = detailData;
+
+  let [jsonData , setJsonData] = useState([]);
+
+  const ajaxTest = async () => {
+    const res = await request({
+      method: "post",
+      url: "/OSL001/connectTest",
+      data: {}
+    }) 
+    .then((response) => {
+      console.log(response);
+      return response;
+    })
+  
+    .catch((error) => {
+      console.log("error : ", error);
+    });
+  }
+
+  useLayoutEffect(()=> {
+    ajaxTest()
+  }, [])
   return (
     <>
     {(!!props.headerNm)&&<OslHeader headerNm={props.headerNm}/>}
