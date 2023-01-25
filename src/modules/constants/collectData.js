@@ -1419,7 +1419,7 @@ const untactAgrmData = [
 
 const grtInfoData = [
   {
-      id: 1,
+      id: 0,
       title: "주 사업장 소유자",
       type: "radio",
       radioId: 0,
@@ -1440,7 +1440,7 @@ const grtInfoData = [
       msg : "배우자, 타인 선택시 진행이 불가합니다."
   },
   {
-      id: 2,
+      id: 1,
       title: "주 사업장 관리 침해(최근 1년 이내)",
       type: "radio",
       radioId: 1,
@@ -1457,7 +1457,7 @@ const grtInfoData = [
   },
   
   {
-      id: 3,
+      id: 2,
       title: "주민등록상 주소지와 실제 거주지 주소가 같습니까?",
       type: "radio",
       radioId: 2,
@@ -1474,13 +1474,13 @@ const grtInfoData = [
 
   },
   {
-    id: 4,
+    id: 3,
     title: "주소찾기",
     type: "search",
     searchId: 1
   },
   {
-      id: 5,
+      id: 4,
       title: "주민등록상 주소지 소유자",
       type: "radio",
       radioId: 3,
@@ -1500,7 +1500,7 @@ const grtInfoData = [
       ],
   },
   {
-      id: 6,
+      id: 5,
       title: "거주 주택 소유자",
       type: "radio",
       radioId: 4,
@@ -1520,7 +1520,7 @@ const grtInfoData = [
       ],
   },
   {
-      id: 7,
+      id: 6,
       title: "본인 또는 배우자 명의로 소유하고 있는 주택(실거주 불문)이 있습니까?",
       type: "radio",
       radioId: 5,
@@ -1536,7 +1536,7 @@ const grtInfoData = [
       ],
   },
   {
-      id: 8,
+      id: 7,
       title: "거주 주택 권리 침해(최근 1년 이내)",
       type: "radio",
       radioId: 6,
@@ -1552,14 +1552,14 @@ const grtInfoData = [
       ],
   },
   {
-      id: 9,
+      id: 8,
       title: "대출 희망 금액",
       type: "text",
       textId: 0,
       placeholder: "숫자만 입력"
   },
   {
-      id: 10,
+      id: 9,
       title: "대출 기간",
       type: "select",
       selectId:0,

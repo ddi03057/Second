@@ -61,11 +61,33 @@ function GrtInfoInput(props) {
   });
 
 
-  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
+  let [userResult, setUserResult] = useState([99, 99, 99, 999, 99, 99, 99, 99, 99, '5']); //결과값 저장 state
+  const [disabledYn, setDisabledYn] = useState(true);
+  const [agreeYn, setAgreeYn] = useState(false);
+  const [successYn, setSuccessYn] = useState(false);
   let navigate = useNavigate(); //다음화면을 위한 navigate
   useEffect(() => {
+    //빈값체크하고 버튼 활성화/비활성화
     console.log(userResult);
-  }, [userResult])
+    let validCheckIdx = userResult.findIndex((data,idx)=>data===99);
+    console.log(validCheckIdx);
+    if(validCheckIdx  === -1 && agreeYn) {
+      setDisabledYn(false);
+    }else {
+      setDisabledYn(true);
+    }
+  }, [userResult, agreeYn]);
+
+  useEffect(()=> {
+    console.log("agreeYn", agreeYn);
+  }, [agreeYn]);
+
+  useEffect(()=> {
+    console.log("화면성공여부",successYn);
+    if(successYn) {
+      //다음화면
+    }
+  }, [successYn]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -76,6 +98,7 @@ function GrtInfoInput(props) {
   const [showPost, setShowPost] = useState(false);
   const postHandleShow = () => setShowPost(true);
   const postHandleClose = () => setShowPost(false);
+  
 
   // popup
   function openPop() {
@@ -90,12 +113,25 @@ function GrtInfoInput(props) {
 
   function cbOslBtn() {
 
-    const msgType = validCheckEmpty(userResult);
-    if (msgType === "1000") setMsgCont("대출 희망 금액은 최소 1천만부터 입력가능합니다.");
-    else if (msgType === "100") setMsgCont("1백만원 단위로 입력 가능합니다.")
-    else setMsgCont("SUCCESS");
-
-    handleShow()
+    let lonAmt = userResult[8];
+    let lonAmtTmp = Math.floor(lonAmt % 1000000)
+    lonAmt = Math.floor(lonAmt / 1000000) * 1000000;
+    console.log(msgCont, lonAmt);
+    if(lonAmt < 10000000) {
+      setMsgCont("대출 희망 금액은 최소 1천만부터 입력가능합니다.");
+      handleShow();
+    }else if(lonAmtTmp != 0) {
+      setMsgCont("1백만원 단위로 입력 가능합니다.");
+      handleShow();
+    }else if(lonAmt > 100000000) {
+      setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.");
+      handleShow();
+    }
+    else {
+      setSuccessYn(true);
+    }
+    
+    
   }
   let [msgCont, setMsgCont] = useState("");
   const [visible, setVisible] = useState(false);
@@ -118,7 +154,7 @@ function GrtInfoInput(props) {
                   return (
                     <li key={`li_${idx}`} className="item">
                       <TitleComponent
-                        showYn={true}
+                        showYn={(idx === 3 && userResult[2] === 1)?true:(idx !=3 )?true:false }
                         title={grtInfoData[idx].title}
                         styleTxt="txt"
                       />
@@ -131,7 +167,7 @@ function GrtInfoInput(props) {
                             checked={userResult[idx]}
                             onChangeFn={(radioIdx) => {
                               let copy = [...userResult]
-                              copy[idx] = radioIdx;
+                              copy[data.id] = radioIdx;
                               setUserResult(copy);
                             }}
                           />
@@ -151,14 +187,8 @@ function GrtInfoInput(props) {
                           textData={arrTextData[data.textId]}
                           inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
                           onChangeFn={(value) => {
-                            let inputValue = Math.floor(value / 1000000);
-                            let outputValue = inputValue * 1000000;
-                            if (value > 100000000) {
-                              setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.")
-                              handleShow()
-                            }
                             let copy = [...userResult];
-                            copy[data.id] = outputValue;
+                            copy[data.id] = value===0?99:value;
                             setUserResult(copy)
 
                           }}
@@ -194,7 +224,7 @@ function GrtInfoInput(props) {
 
                 <div className="ui-cont-wrap flex">
                   <div className="ui-decide">
-                    <input type="checkbox" id="checkbox01"
+                    <input type="checkbox" id="checkbox01" value={agreeYn} onChange={()=> {setAgreeYn(!agreeYn)}}
                     />
                     <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                   </div>
@@ -207,7 +237,7 @@ function GrtInfoInput(props) {
           </div>
           <OslBtn obj={{
             type: "button",
-            disabled: false,
+            disabled: disabledYn,
             text: ["확인"],
             link: "",
             callbackId: cbOslBtn
@@ -223,6 +253,9 @@ function GrtInfoInput(props) {
             footerNm= "닫기"
             content="GrtInfoInputModal"
             type="component"
+            onClickFn={()=> {
+
+            }}
           />
         }
         {showPost &&
@@ -242,6 +275,7 @@ function GrtInfoInput(props) {
           msg={msgCont}
           btnNm={["확인"]}
           onClickFn={() => {
+            setMsgCont("");
             handleClose();
           }}
         />
@@ -292,6 +326,7 @@ function Search(props) {
               id="text01_01"
               placeholder=""
               value={postCd}
+              readOnly
             />
             <button type="button" className="btn btn-md address-btn bg-skyblue"
               onClick={postHandleClick}
@@ -306,6 +341,8 @@ function Search(props) {
         </div>
       </div>
     )
+  }else {
+    return null;
   }
 }
 
