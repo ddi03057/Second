@@ -25,6 +25,7 @@ import TitleComponent from "../../common/TitleComponent";
 import SelectComponent from "../../common/SelectComponent";
 import TextComponent from "../../common/TextComponent";
 import AlertModal from "../../../modules/components/AlertModal";
+import { useDaumPostcodePopup } from "react-daum-postcode";
 
 const grtInfoData = collectData("GrtInfoInput");
 
@@ -72,6 +73,9 @@ function GrtInfoInput(props) {
   const [comshow, setComShow] = useState(false);
   const comHandleShow = () => setComShow(true);
   const comHandleClose = () => setComShow(false);
+  const [showPost, setShowPost] = useState(false);
+  const postHandleShow = () => setShowPost(true);
+  const postHandleClose = () => setShowPost(false);
 
   // popup
   function openPop() {
@@ -135,7 +139,7 @@ function GrtInfoInput(props) {
                         </>
                       )}
                       {(data.type === "search" &&
-                        <Search arrSearchData={arrSearchData} userResult={userResult} setVisible={setVisible}
+                        <Search arrSearchData={arrSearchData} userResult={userResult} setVisible={setVisible} postHandleShow={postHandleShow}
                         />
                       )}
                       {
@@ -211,15 +215,26 @@ function GrtInfoInput(props) {
 
 
         </div>
-        <FullModal
-          showYn={comshow}
-          handleClose={comHandleClose}
-          headerNm=""
-          footerNm= "닫기"
-          content="GrtInfoInputModal"
-          type="component"
-        />
-
+        {comshow &&
+          <FullModal
+            showYn={comshow}
+            handleClose={comHandleClose}
+            headerNm=""
+            footerNm= "닫기"
+            content="GrtInfoInputModal"
+            type="component"
+          />
+        }
+        {showPost &&
+          <FullModal
+            showYn={showPost}
+            handleClose={postHandleClose}
+            headerNm=""
+            footerNm= "닫기"
+            content=""
+            type="post"
+          />
+        }
       </div>
       {show &&
         <AlertModal
@@ -238,6 +253,34 @@ function GrtInfoInput(props) {
 
 function Search(props) {
   const data = props.arrSearchData;
+  const [postCd, setPostCd] = useState("");
+  const [addr1, setAddr1] = useState("");
+
+  const showPost = useDaumPostcodePopup();
+
+  const postHandleComplete = (data) => {
+    console.log("콜백데이터", data);
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    setPostCd(data.sigunguCode);
+    setAddr1(fullAddress);
+  };
+
+  const postHandleClick = () => {
+    showPost({ onComplete: postHandleComplete });
+  };
 
   if (props.userResult[2] === 1) {
     return (
@@ -248,16 +291,17 @@ function Search(props) {
               name="text01"
               id="text01_01"
               placeholder=""
-              value=""
+              value={postCd}
             />
             <button type="button" className="btn btn-md address-btn bg-skyblue"
+              onClick={postHandleClick}
             >
               <span className="fc-white fs-18">
                 {data[0].title}
               </span>
             </button>
           </div>
-          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" />
+          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" value={addr1} readOnly/>
           <input type="text" className="inp type01" name="text01" id="text01_03" placeholder="" />
         </div>
       </div>
