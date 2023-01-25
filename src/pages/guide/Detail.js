@@ -7,7 +7,7 @@
  * css
  */
 import { useState, } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
@@ -29,32 +29,23 @@ function Detail(props) {
   
   function cbOslBtn(){
     navigate(
-      PathConstants.GUIDE_READY
+      PathConstants.GUIDE_READY,
+      {
+        state:{
+          BZN : location.state.BZN
+        }
+      }
       );
   }
   const data = detailData;
 
   let [jsonData , setJsonData] = useState([]);
 
-  const ajaxTest = async () => {
-    const res = await request({
-      method: "post",
-      url: "/OSL001/connectTest",
-      data: {}
-    }) 
-    .then((response) => {
-      console.log(response);
-      return response;
-    })
-  
-    .catch((error) => {
-      console.log("error : ", error);
-    });
-  }
+  const location = useLocation();
+  const BZN = location.state.BZN
 
-  useLayoutEffect(()=> {
-    ajaxTest()
-  }, [])
+  console.log(BZN)
+
   return (
     <>
     {(!!props.headerNm)&&<OslHeader headerNm={props.headerNm}/>}

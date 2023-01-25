@@ -10,7 +10,9 @@
 import { useState } from "react";
 import OslHeader from "../../../modules/components/OslHeader";
 import OslBtn from "../../../modules/components/OslBtn";
-
+import API from "../../../modules/constants/API.js";
+import request from "../../../modules/utils/Axios";
+import { useNavigate } from "react-router-dom";
 
 /**
  * 화면명 : 자료 수집
@@ -22,6 +24,34 @@ import OslBtn from "../../../modules/components/OslBtn";
 
 
 function DataCollect(props){
+    
+    let navigate = useNavigate();
+
+    const DataCollect = async () => {
+        const res = await request({
+          method: "post",
+          url: PREJUDGE_DATACOLLECT,
+          data: {}
+        }) 
+        .then((response) => {
+          console.log(response);
+          setJsonData(response);
+          navigate(
+                PathConstants.GUIDE_DETAIL,
+                {
+                  state:{
+                    BZN : 12345
+                  }
+                }
+                );
+          return response;
+        })
+      
+        .catch((error) => {
+          console.log("error : ", error);
+        });
+      }
+
 
   function cbOslBtn() {
     

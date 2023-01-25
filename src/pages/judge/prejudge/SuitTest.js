@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import SelectComponent from "../../common/SelectComponent";
 import TextComponent from "../../common/TextComponent";
 import TitleComponent from "../../common/TitleComponent";
@@ -8,8 +8,8 @@ import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
 import AlertModal from "../../../modules/components/AlertModal";
-import { placeholder } from "@babel/types";
-
+import API from "../../../modules/constants/API.js";
+import request from "../../../modules/utils/Axios";
 
 const suitTestData = collectData("SuitTest");
 /**
@@ -83,11 +83,9 @@ function SuitTest(props) {
 
   useEffect(()=> {
 
-    console.log(userCrdBru);
   }, [userCrdBru]);
   useEffect(()=> {
 
-    console.log(userCrdScr);
   }, [userCrdScr]);
 
   function cbOslBtn() {
@@ -105,12 +103,45 @@ function SuitTest(props) {
       setMsgCont("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
       handleShow();
       //alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
-      
+      const SuitTest = async () => {
+        const res = await request({
+          method: "post",
+          url: API.PREJUDGE_CUSTAGREE,
+          data: {
+            OSL_LOAP_NO : location.state.OSL_LOAN_NO, //대출기본 번호
+            LFNC_ACM_DCD : userResult[0], //여신금융상담소비자구분
+            AGE : userResult[1], // 연령
+            LFNC_LNUG_DCD : userResult[2], //여신금융대출용도구분
+            LFNC_HLAS_DCD : userResult[3], //보유자산구분
+            LFNC_ENPR_PSNT_INCM_DCD : userResult[4], //기업현재소득구분
+            LFNC_FTR_ANTC_ANIC_DCD : userResult[5], //미래예상연간소득구분
+            LFNC_LBLT_DCD : userResult[6], //부채구분
+            LFNC_OVDU_DCD : userResult[7], //고정지출구분
+            CDBU_SCR : userResult[8], //연체구분
+            LFNC_CRDT_SCR_VAIN_DCD : userResult[9], //CB점수 02:잘모름
+            LFNC_CRDT_SCR_CNFA_YN : userCrdBru, //신용점수평가기관
+            // LFNC_REPM_WAY_DCD : userResult[0], //신용점수확인여부
+            CUS_EAD : userResult[10], //변제방법구분
+            INNF_GTHR_COSN_YN : userResult[11], //고객이메일주소
+          }
+        })
+          .then((response) => {
+            //setResponse(response);
+            return response;
+          })
+    
+          .catch((error) => {
+            console.log("error : ", error);
+          });
+      }
     }
     
     
   }
-  //console.log(showTitleYn, arrTitleData);
+
+  const location = useLocation();
+  const BZN = location.state.BZN
+  // const LOAN_NO = location.state.OSL_LOAN_NO
   return (
     <>
     

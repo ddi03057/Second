@@ -30,6 +30,7 @@ const PathConstants = {
     //대출계약 미철회 상환(일반상환)
   
   //depth 1
+  INDEX: '/guide/index', //첫페이지
   MAIN: '/main',
   LOGIN: '/login', //로그인
   LOGOUT: '/logout', //로그아웃

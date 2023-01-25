@@ -4,6 +4,7 @@ import Progress from "./common/Progress";
 import MyLon from "./postmanagement/MyLon";
 import TabComponent from "./common/TabComponent";
 import PathConstants from "../modules/constants/PathConstants";
+import axios from "axios";
 
 function Main(props) {
   const tabList = [
@@ -27,6 +28,8 @@ function Main(props) {
   useEffect(()=> {
     console.log(tabIdx);
   }, [tabIdx])
+
+  
   
   return (
     <>

@@ -9,13 +9,14 @@
 
 
 import { memo, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData.js";
+import request from "../../../modules/utils/Axios";
 import FullModal from "../../../modules/components/FullModal";
-
+import API from "../../../modules/constants/API.js";
 
 
 const custAgreeData = collectData("CustAgree");
@@ -27,7 +28,7 @@ const custAgreeData = collectData("CustAgree");
  */
 function CustAgree(props) {
 
-  const [checkItems, setCheckItems] = useState([99,99,99,99,99,99,99]);
+  const [checkItems, setCheckItems] = useState([99, 99, 99, 99, 99, 99, 99]);
 
   const [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99]);
 
@@ -44,21 +45,21 @@ function CustAgree(props) {
 
   let [arrPdfData, setArrPdfData] = useState([]);
 
-  const [isChecked, setIsChecked] = useState([false,false,false,false,false,false,false]);
+  const [isChecked, setIsChecked] = useState([false, false, false, false, false, false, false]);
 
   // useEffect(()=> {
   //   console.log("useEffect[checkItems]",checkItems);
-    
+
   //   checkItems.map((data, idx)=> {
   //     let copy = [...isChecked];
   //     if(data === 1) {
-        
+
   //       copy[idx] = true;
-        
+
   //     }else {
-        
+
   //       copy[idx] = false;
-        
+
   //     }
   //     setIsChecked(copy);
   //   })
@@ -70,10 +71,43 @@ function CustAgree(props) {
   function cbOslBtn() {
     setArrPdfData(custAgreeData);
     handleShow(true);
-    // navigate(
-    //     PathConstants.PREJUDGE_SUITTEST
-    // );
+    if (checkItems.includes(99)) {
+      console.log(false)
+    } else {
+      navigate(
+        PathConstants.PREJUDGE_SUITTEST,
+        {
+          state:{
+              BZN : location.state.BZN,
+              //OSL_LOAN_NO : response
+            }
+        }
+      );
+    }
+
   }
+
+  const [response, setResponse] = useState();
+
+  const custAgree = async () => {
+    const res = await request({
+      method: "post",
+      url: API.PREJUDGE_CUSTAGREE,
+      data: {}
+    })
+      .then((response) => {
+        console.log(response);
+        //setResponse(response);
+        return response;
+      })
+
+      .catch((error) => {
+        console.log("error : ", error);
+      });
+  }
+
+  const location = useLocation();
+  const BZN = location.state.BZN
 
 
   return (
@@ -101,15 +135,15 @@ function CustAgree(props) {
                         type="checkbox"
                         key={`agree-terms-${data.id}`}
                         name="agree_terms"
-                        checked={checkItems[idx]===99?false:checkItems[idx]===0?false:true
+                        checked={checkItems[idx] === 99 ? false : checkItems[idx] === 0 ? false : true
                           // (checkItems[idx] === 99)? :(checkItems[idx]===1)?setIsChecked(true):setIsChecked(false)
                         }
                         id={idx}
                         className="check-input blind"
-                        onChange={(e)=>{
-                          if(checkItems[idx] != 99){
+                        onChange={(e) => {
+                          if (checkItems[idx] != 99) {
                             let copy = [...checkItems];
-                            copy[idx] = copy[idx]===0?1:0;
+                            copy[idx] = copy[idx] === 0 ? 1 : 0;
                             setCheckItems(copy);
                           }
                         }}
@@ -154,7 +188,7 @@ function CustAgree(props) {
           </div>
         </div>
       </div>
-      {show&&
+      {show &&
         <FullModal
           showYn={show}
           handleClose={handleClose}
@@ -163,18 +197,18 @@ function CustAgree(props) {
           type="pdf"
           disabledYn={true}
           footerNm="확인"
-          onClickFn={(contId)=>{
-            console.log(contId,typeof contId)
-            if(typeof contId === "number") {
+          onClickFn={(contId) => {
+            console.log(contId, typeof contId)
+            if (typeof contId === "number") {
               let copy = [...checkItems];
               copy[contId] = 1;
               setCheckItems(copy);
-            }else {
-              setCheckItems([1,1,1,1,1,1,1]);
+            } else {
+              setCheckItems([1, 1, 1, 1, 1, 1, 1]);
             }
-            
+
           }}
-          
+
         />
       }
     </>

@@ -71,10 +71,6 @@ function SelfCheckModal() {
     const jobData = collectData("job");
 
 
-    const serchList = () => {
-
-    }
-
     return (
         <>
             <div className="container">

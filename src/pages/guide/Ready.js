@@ -7,7 +7,7 @@
  * css
  */
 import { useState, } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
@@ -20,13 +20,22 @@ import collectData from "../../modules/constants/collectData";
  */
 function Ready(props) {
 
+
   let navigate = useNavigate();
 
   function cbOslBtn(){
     navigate(
-      PathConstants. PREJUDGE_CUSTAGREE
+      PathConstants. PREJUDGE_CUSTAGREE,
+      {
+        state:{
+            BZN : location.state.BZN
+          }
+      }
       );
   }
+  const location = useLocation();
+  const BZN = location.state.BZN
+  console.log(BZN)
 
   return (
     <>
