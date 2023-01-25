@@ -32,6 +32,7 @@ console.log(content,typeof content);
   const [popHeight, setPopHeight] = useState(0);
 
   useEffect(()=> {
+    //스크롤없을땐 1초뒤 버튼활성화
     setTimeout(()=> {
       if(document.querySelector(".pop-content").clientHeight + 10 > document.querySelector(".pop-content").scrollHeight) setDisabledYn(false);
     }, 1000)
@@ -43,13 +44,8 @@ console.log(content,typeof content);
   useEffect(()=> {
     if(showYn) {
       document.body.style.overflow="hidden";
-      //console.log("height", document.querySelector(".pop-content").scrollHeight);
     }
   }, [showYn]);
-  useEffect(()=> {
-  //   console.log(document.querySelector(".pop-content").offsetHeight, popHeight);
-  //   (popHeight!=0 && document.querySelector(".pop-content").offsetHeight >= popHeight)&& setDisabledYn(false);
-  }, [popHeight]);
 
   return (
     <div id="layer00" className="pop-wrap pop-full" style={{display: showYn?"block":"none"}}>
@@ -96,8 +92,7 @@ console.log(content,typeof content);
             (type==="component")&&
               <ModalContents componentNm={content}/>
           }
-          {(type === "selfcheck") &&
-          <ModalContents componentNm={content}/>}
+          
         </div>
         <FooterBtn disabledYn={disabledYn} footerNm={footerNm} handleClose={props.handleClose} onClickFn={props.onClickFn} contId={contId} />
       </div>

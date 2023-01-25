@@ -1464,11 +1464,11 @@ const grtInfoData = [
       radioList: [
           {
               id: 0,
-              value: "있음"
+              value: "예"
           },
           {
               id: 1,
-              value: "없음"
+              value: "아니오"
           },
       ],
 

@@ -204,7 +204,7 @@ function SelfCheck(props) {
           headerNm="보증취급 제한업종 안내"
           content="SelfCheckModal"
           footerNm="확인"
-          type="selfcheck"
+          type="component"
         />
     </>
   )
