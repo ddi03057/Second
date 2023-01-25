@@ -25,7 +25,8 @@ import DataCollect from './pages/judge/prejudge/DataCollect.js';
 import FinanceCusLaw from './pages/lonexecute/FinanceCusLaw.js';
 import Main from './pages/Main.js';
 import ServiceError from './error/ServiceError.js';
-import SystemInspect from './error/SystemInspect';
+import SystemInspect from './error/SystemInspect.js';
+import Certificate from './pages/common/Certificate.js';
 
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
@@ -42,7 +43,8 @@ function Routing() {
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/main" element={<Main />} />
-        <Route path={PathConstants.PROGRESS} element={<Progress headerNm={PathConstants.PROGRESS_NM} />} />
+        <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />
+        <Route path={PathConstants.PROGRESS} element={<Progress headerNm={PathConstants.PROGRESS_NM} />} />        
         <Route path={PathConstants.GUIDE_DETAIL} element={<Detail headerNm={PathConstants.GUIDE_DETAIL_NM}/>} />
         <Route path={PathConstants.GUIDE_READY} element={<Ready headerNm={PathConstants.GUIDE_READY_NM}/>} />
         <Route path={PathConstants.PREJUDGE_CUSTAGREE} element={<CustAgree headerNm={PathConstants.PREJUDGE_CUSTAGREE_NM} />} />
