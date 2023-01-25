@@ -7,6 +7,10 @@ import RadioInlineComponent from "../common/RadioInlineComponent";
 import SelectComponent from "../common/SelectComponent";
 import TextComponent from "../common/TextComponent";
 import TitleComponent from "../common/TitleComponent";
+import API from "../../modules/constants/API.js";
+import request from "../../modules/utils/Axios";
+
+
 const applyInfoInput = collectData("ApplyInfoInput");
 /**
  * 화면명 : 대출신청서작성 및 실행요청
@@ -60,7 +64,7 @@ function ApplyInfoInput(props) {
   useEffect(() => {
     console.log(userResult);
   }, [userResult]);
-  useLayoutEffect(()=> {
+  useLayoutEffect(() => {
     console.log(applyInfoInput);
   }, [])
   function cbOslBtn() {
@@ -68,6 +72,31 @@ function ApplyInfoInput(props) {
     // navigate(
     //   PathConstants.GUIDE_READY
     //   );
+    ApplyInfoInput();
+  }
+
+  const ApplyInfoInput = async () => {
+    const res = await request({
+      method: "post",
+      url: API.LONEXECUTE.LONEXECUTE_APPLYINFOINPUT,
+      data: {
+        oslLoapNo: "0005",
+        apinKcd: "02",
+        fnusCd: "02",
+        itpmStacCylDcd: "04",
+        itpmScdlDd: "35",
+        attrAcntEnn: "0000-1111-2222-3333"
+      }
+    })
+      .then((response) => {
+        console.log(response);
+        //setResponse(response);
+        return response;
+      })
+
+      .catch((error) => {
+        console.log("error : ", error);
+      });
   }
   return (
     <>
@@ -170,7 +199,7 @@ function ApplyInfoInput(props) {
                             styleSeleList="sele-list type01 radius answer-wrap mar-t10"
                             styleInput={(data.textId === 0) ? "ta-c" : ""}
                             textData={arrTextData[data.textId]}
-                            inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
+                            inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
                             onChangeFn={(value) => {
                               let copy = [...userResult];
                               let copy2 = { ...userResult[2] }

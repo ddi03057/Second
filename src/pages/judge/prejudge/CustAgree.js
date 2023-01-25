@@ -76,12 +76,7 @@ function CustAgree(props) {
     } else {
       navigate(
         PathConstants.PREJUDGE_SUITTEST,
-        {
-          state:{
-              BZN : location.state.BZN,
-              //OSL_LOAN_NO : response
-            }
-        }
+        
       );
     }
 
@@ -105,9 +100,6 @@ function CustAgree(props) {
         console.log("error : ", error);
       });
   }
-
-  const location = useLocation();
-  const BZN = location.state.BZN
 
 
   return (

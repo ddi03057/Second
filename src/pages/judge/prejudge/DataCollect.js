@@ -13,6 +13,8 @@ import OslBtn from "../../../modules/components/OslBtn";
 import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
 import { useNavigate } from "react-router-dom";
+import { useLayoutEffect } from "react";
+import PathConstants from "../../../modules/constants/PathConstants";
 
 /**
  * 화면명 : 자료 수집
@@ -30,20 +32,11 @@ function DataCollect(props){
     const DataCollect = async () => {
         const res = await request({
           method: "post",
-          url: PREJUDGE_DATACOLLECT,
+          url: API.PREJUDGE_DATACOLLECT,
           data: {}
         }) 
         .then((response) => {
-          console.log(response);
-          setJsonData(response);
-          navigate(
-                PathConstants.GUIDE_DETAIL,
-                {
-                  state:{
-                    BZN : 12345
-                  }
-                }
-                );
+          
           return response;
         })
       
@@ -52,9 +45,14 @@ function DataCollect(props){
         });
       }
 
+    useLayoutEffect(()=> {
+        DataCollect()
+      }, [])
 
   function cbOslBtn() {
-    
+    navigate(
+        PathConstants.CERTIFICATE
+    )
   }
 
   return(

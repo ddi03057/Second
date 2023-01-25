@@ -26,6 +26,10 @@ import SelectComponent from "../../common/SelectComponent";
 import TextComponent from "../../common/TextComponent";
 import AlertModal from "../../../modules/components/AlertModal";
 import { useDaumPostcodePopup } from "react-daum-postcode";
+import API from "../../../modules/constants/API.js";
+import request from "../../../modules/utils/Axios";
+import { Context1 } from "./../../../App.js";
+import { useContext } from "react";
 
 const grtInfoData = collectData("GrtInfoInput");
 
@@ -69,23 +73,22 @@ function GrtInfoInput(props) {
   useEffect(() => {
     //빈값체크하고 버튼 활성화/비활성화
     console.log(userResult);
-    let validCheckIdx = userResult.findIndex((data,idx)=>data===99);
-    console.log(validCheckIdx);
-    if(validCheckIdx  === -1 && agreeYn) {
+    let validCheckIdx = userResult.findIndex((data, idx) => data === 99);
+    if (validCheckIdx === -1 && agreeYn) {
       setDisabledYn(false);
-    }else {
+    } else {
       setDisabledYn(true);
     }
   }, [userResult, agreeYn]);
 
-  useEffect(()=> {
-    console.log("agreeYn", agreeYn);
+  useEffect(() => {
   }, [agreeYn]);
 
-  useEffect(()=> {
-    console.log("화면성공여부",successYn);
-    if(successYn) {
-      //다음화면
+  useEffect(() => {
+    if (successYn) {
+      navigate(
+        PathConstants.PREJUDGE_DOCSTATUS
+      )
     }
   }, [successYn]);
 
@@ -98,7 +101,7 @@ function GrtInfoInput(props) {
   const [showPost, setShowPost] = useState(false);
   const postHandleShow = () => setShowPost(true);
   const postHandleClose = () => setShowPost(false);
-  
+
 
   // popup
   function openPop() {
@@ -110,33 +113,69 @@ function GrtInfoInput(props) {
     document.body.style.overflow = "";
   }
 
-
+  let test = useContext(Context1);
+  
   function cbOslBtn() {
 
     let lonAmt = userResult[8];
     let lonAmtTmp = Math.floor(lonAmt % 1000000)
     lonAmt = Math.floor(lonAmt / 1000000) * 1000000;
     console.log(msgCont, lonAmt);
-    if(lonAmt < 10000000) {
+    if (lonAmt < 10000000) {
       setMsgCont("대출 희망 금액은 최소 1천만부터 입력가능합니다.");
       handleShow();
-    }else if(lonAmtTmp != 0) {
+    } else if (lonAmtTmp != 0) {
       setMsgCont("1백만원 단위로 입력 가능합니다.");
       handleShow();
-    }else if(lonAmt > 100000000) {
+    } else if (lonAmt > 100000000) {
       setMsgCont("대출 희망금액은 최대 1억원까지 입력가능합니다.");
       handleShow();
     }
     else {
       setSuccessYn(true);
     }
-    
-    
+
+    GrtInfoInput();
   }
+  const GrtInfoInput = async () => {
+    const res = await request({
+      method: "post",
+      url: API.PREJUDGE.PREJUDGE_GRTINFOINPUT,
+      data: {
+        oslLoapNo: "0002",
+        bsunOwrRlcd: "01",
+        bsunRgifDcd: "01",
+        bsunZpcd: "04541",
+        bsunRdnd: "서울 구 을지로 79",
+        bsunRdnmDtad: "서울 중구 을지로 79 B2",
+        iruTrthRsplAdrYn: "Y",
+        iruAdpaSelfOwnCd: "01",
+        rshsOwrRlcd: "01",
+        bsunOwnYn: "Y",
+        rshsRgifDcd: "01",
+        lastLoapAmt: "5000000",
+        loanTrmCnt: "5",
+        loteUncd: "01",
+        rshsRdnd: "서울 중구 을지로 79",
+        rshsRdnmDtad: "서울 중구 을지로 79 B2",
+        rshsZpcd: "04541"
+
+      }
+    })
+      .then((response) => {
+        console.log(response)
+        return response;
+      })
+
+      .catch((error) => {
+        console.log("error : ", error);
+      });
+  }
+
   let [msgCont, setMsgCont] = useState("");
   const [visible, setVisible] = useState(false);
 
-  
+
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
@@ -154,7 +193,7 @@ function GrtInfoInput(props) {
                   return (
                     <li key={`li_${idx}`} className="item">
                       <TitleComponent
-                        showYn={(idx === 3 && userResult[2] === 1)?true:(idx !=3 )?true:false }
+                        showYn={(idx === 3 && userResult[2] === 1) ? true : (idx != 3) ? true : false}
                         title={grtInfoData[idx].title}
                         styleTxt="txt"
                       />
@@ -188,11 +227,11 @@ function GrtInfoInput(props) {
                           inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
                           onChangeFn={(value) => {
                             let copy = [...userResult];
-                            copy[data.id] = value===0?99:value;
+                            copy[data.id] = value === 0 ? 99 : value;
                             setUserResult(copy)
 
                           }}
-                          
+
                         />
                       }
                       {
@@ -224,7 +263,7 @@ function GrtInfoInput(props) {
 
                 <div className="ui-cont-wrap flex">
                   <div className="ui-decide">
-                    <input type="checkbox" id="checkbox01" value={agreeYn} onChange={()=> {setAgreeYn(!agreeYn)}}
+                    <input type="checkbox" id="checkbox01" value={agreeYn} onChange={() => { setAgreeYn(!agreeYn) }}
                     />
                     <label htmlFor="checkbox01" className="input-label">윤리 경영 실천 및 보증브로커 피해예방을 위한 협조 확약 등</label>
                   </div>
@@ -250,10 +289,10 @@ function GrtInfoInput(props) {
             showYn={comshow}
             handleClose={comHandleClose}
             headerNm=""
-            footerNm= "닫기"
+            footerNm="닫기"
             content="GrtInfoInputModal"
             type="component"
-            onClickFn={()=> {
+            onClickFn={() => {
 
             }}
           />
@@ -263,7 +302,7 @@ function GrtInfoInput(props) {
             showYn={showPost}
             handleClose={postHandleClose}
             headerNm=""
-            footerNm= "닫기"
+            footerNm="닫기"
             content=""
             type="post"
           />
@@ -336,12 +375,12 @@ function Search(props) {
               </span>
             </button>
           </div>
-          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" value={addr1} readOnly/>
+          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" value={addr1} readOnly />
           <input type="text" className="inp type01" name="text01" id="text01_03" placeholder="" />
         </div>
       </div>
     )
-  }else {
+  } else {
     return null;
   }
 }
@@ -355,7 +394,7 @@ function Search(props) {
 * @param {입력한 신용점수} userCrdScr 
 * @returns 
 */
-function validCheckEmpty(userResult,props) {
+function validCheckEmpty(userResult, props) {
   let msgType = "";
   let msg = "";
   let verb = "하시기 바랍니다.";

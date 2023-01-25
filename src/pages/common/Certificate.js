@@ -1,13 +1,35 @@
 import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
+import { useNavigate } from "react-router";
+import PathConstants from "../../modules/constants/PathConstants";
+import request from "../../modules/utils/Axios";
+import API from "../../modules/constants/API.js";
 
 function Certificate(props) {
 
+  let navigate = useNavigate();
   function cbOslBtn(){
-    // navigate(
-    //   PathConstants.GUIDE_READY
-    //   );
+    navigate(
+      PathConstants.PREJUDGE_GRTINFOINPUT
+      );
   }
+
+  const Certificate = async () => {
+    const res = await request({
+      method: "post",
+      url: API.PREJUDGE_CERTIFICATE,
+      data: {}
+    }) 
+    .then((response) => {
+      console.log(response)
+      return response;
+    })
+  
+    .catch((error) => {
+      console.log("error : ", error);
+    });
+  }
+
   return (
     <>
       <OslHeader headerNm={props.headerNm}/>

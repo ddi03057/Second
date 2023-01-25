@@ -37,26 +37,26 @@
     <link href="%PUBLIC_URL%/esg/esglogin.css" rel="stylesheet" />
 
     <script>
-      function esgLogin(){
-        if(getClientOs() == "PC"){
-          let element = `<div class="pcLoginWrap on" id="pcLoginWrap">
-                          <div class="bg"></div>
-                          <div class="pclayerPopCont">
-                            <iframe src="`+loginDomain()+"/COM001/login.do"+`" width="100%" height="100%" scrolling="auto" frameBorder="0" id="ifrmPage">이 브라우저는 iframe을
-                              지원하지 않습니다.
-                            </iframe>
-                          </div>
-                        </div>`;
-          $("body").prepend(element);
-        }else{
-          location.href=loginDomain()+"/COM001/login.do";
-        }
-      }
-      function esgCallbackInit(){
-        deleteCookie("auth");
-        $("#pcLoginWrap").remove();
-        window.location.href='/';
-      }
+      // function esgLogin(){
+      //   if(getClientOs() == "PC"){
+      //     let element = `<div class="pcLoginWrap on" id="pcLoginWrap">
+      //                     <div class="bg"></div>
+      //                     <div class="pclayerPopCont">
+      //                       <iframe src="`+loginDomain()+"/COM001/login.do"+`" width="100%" height="100%" scrolling="auto" frameBorder="0" id="ifrmPage">이 브라우저는 iframe을
+      //                         지원하지 않습니다.
+      //                       </iframe>
+      //                     </div>
+      //                   </div>`;
+      //     $("body").prepend(element);
+      //   }else{
+      //     location.href=loginDomain()+"/COM001/login.do";
+      //   }
+      // }
+      // function esgCallbackInit(){
+      //   deleteCookie("auth");
+      //   $("#pcLoginWrap").remove();
+      //   window.location.href='/';
+      // }
     </script>
   <!-- 로그인 추가 end -->
   </head>

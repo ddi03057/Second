@@ -10,6 +10,8 @@ import collectData from "../../../modules/constants/collectData";
 import AlertModal from "../../../modules/components/AlertModal";
 import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
+import { Context1 } from "./../../../App.js";
+import { useContext } from "react";
 
 const suitTestData = collectData("SuitTest");
 /**
@@ -31,33 +33,33 @@ function SuitTest(props) {
   });
   let arrRadioData = [];
   suitTestData.find((data) => {
-    if(data.type === "radio") {
+    if (data.type === "radio") {
       arrRadioData.push(data);
     }
   });
   let arrTextData = [];
   suitTestData.find((data) => {
-    if(data.type === "text") {
+    if (data.type === "text") {
       arrTextData.push(data);
     }
   });
   let arrSeleectData = [];
   suitTestData.find((data) => {
-    if(data.type === "select") {
+    if (data.type === "select") {
       arrSeleectData.push(data);
     }
   });
 
   let [showTitleYn, setShowTitleYn] = useState(true);
   const [showCrdElYn, setShowCrdElYn] = useState(true); //신용관련 element show/hide
-  let [userResult, setUserResult] = useState(["01",99,"01",99,99,99,99,99,99,99,99,99]); //결과값 저장 state
+  let [userResult, setUserResult] = useState(["01", 99, "01", 99, 99, 99, 99, 99, 99, 99, 99, 99]); //결과값 저장 state
   let [userCrdBru, setUserCrdBru] = useState("01"); //신용기관 선택값
   let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
   let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
   let navigate = useNavigate(); //다음화면을 위한 navigate
 
-   // popup
-   function openPop() {
+  // popup
+  function openPop() {
     setShow(true);
     document.body.style.overflow = "hidden";
   }
@@ -66,152 +68,153 @@ function SuitTest(props) {
     document.body.style.overflow = "";
   }
   const [show, setShow] = useState(false);
-  const handleShow = ()=> openPop();
-  const handleClose = ()=> closePop();
+  const handleShow = () => openPop();
+  const handleClose = () => closePop();
   let [msgCont, setMsgCont] = useState("");
   const [successYn, setSuccessYn] = useState(false);
 
-  useEffect(()=> {
-    
+  useEffect(() => {
+
     console.log(userResult);
-    if(userResult[9] === "02") {
+    if (userResult[9] === "02") {
       setShowCrdElYn(false);
-    }else {
+    } else {
       setShowCrdElYn(true);
     }
   }, [userResult]);
 
-  useEffect(()=> {
+  useEffect(() => {
 
   }, [userCrdBru]);
-  useEffect(()=> {
+  useEffect(() => {
 
   }, [userCrdScr]);
 
   function cbOslBtn() {
-    
+
     const msg = validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr);
-    
-    if(!!msg) {
+
+    if (!!msg) {
       setMsgCont(msg);
       handleShow();
       //스크롤이동
-    }else {
-      
+    } else {
+
       //데이터 전송
       setSuccessYn(true);
       setMsgCont("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
       handleShow();
       //alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
-      const SuitTest = async () => {
-        const res = await request({
-          method: "post",
-          url: API.PREJUDGE_CUSTAGREE,
-          data: {
-            OSL_LOAP_NO : location.state.OSL_LOAN_NO, //대출기본 번호
-            LFNC_ACM_DCD : userResult[0], //여신금융상담소비자구분
-            AGE : userResult[1], // 연령
-            LFNC_LNUG_DCD : userResult[2], //여신금융대출용도구분
-            LFNC_HLAS_DCD : userResult[3], //보유자산구분
-            LFNC_ENPR_PSNT_INCM_DCD : userResult[4], //기업현재소득구분
-            LFNC_FTR_ANTC_ANIC_DCD : userResult[5], //미래예상연간소득구분
-            LFNC_LBLT_DCD : userResult[6], //부채구분
-            LFNC_OVDU_DCD : userResult[7], //고정지출구분
-            CDBU_SCR : userResult[8], //연체구분
-            LFNC_CRDT_SCR_VAIN_DCD : userResult[9], //CB점수 02:잘모름
-            LFNC_CRDT_SCR_CNFA_YN : userCrdBru, //신용점수평가기관
-            // LFNC_REPM_WAY_DCD : userResult[0], //신용점수확인여부
-            CUS_EAD : userResult[10], //변제방법구분
-            INNF_GTHR_COSN_YN : userResult[11], //고객이메일주소
-          }
-        })
-          .then((response) => {
-            //setResponse(response);
-            return response;
-          })
-    
-          .catch((error) => {
-            console.log("error : ", error);
-          });
-      }
+      
     }
-    
-    
+    SuitTest();
+
   }
 
+  const SuitTest = async () => {
+    const res = await request({
+      method: "post",
+      url: API.PREJUDGE.PREJUDGE_SUITTEST,
+      data: {
+        age: "35",
+        cdbuScr: "500",
+        cusEad: "ibk@gamil.com",
+        lfncAcmDcd: "01",
+        lfncCrdtScrCnfaYn: "Y",
+        lfncCrdtScrVainDcd: "01",
+        lfncEnprPsntIncmDcd: "01",
+        lfncFtrAntcAnicDcd: "01",
+        lfncFxngExpdDcd: "01",
+        lfncHlasDcd: "01",
+        lfncLbltDcd: "01",
+        lfncOvduDcd: "01",
+        lfncRepmWayDcd: "01",
+        oslLoapNo: "0006"
+      }
+    })
+      .then((response) => {
+        //setResponse(response);
+        return response;
+      })
+
+      .catch((error) => {
+        console.log("error : ", error);
+      });
+  }
+  let test = useContext(Context1);
+  console.log(test.objParam.lonNum)
   const location = useLocation();
-  const BZN = location.state.BZN
-  // const LOAN_NO = location.state.OSL_LOAN_NO
+
   return (
     <>
-    
-    <OslHeader headerNm={props.headerNm}/>
-    <div className="container">
-      <div className="content">
-        <div className="content-body">
-          <div className="content-top">
-            <p className="top-tit"><strong>사업자 정보를 확인</strong>하는 중 입니다.
-            </p>
-            <p className="top-txt">
-              기다리는 시간 동안 사장님께서 작성하셔야 하는 확인서가 있어요!
-            </p>
-          </div>
-          <div className="section line-tf4 bg-greyf4">
-            <div className="bg-white">
-              <p className="info-tit">적합성ㆍ적정성고객정보 확인서</p>
-              <p className="info-con-txt">
-                본 확인서는 [금융소비자 보호에 관한 법률]에 의거하여 고객님의 연령, 대출목적(용도) 등을 파악하고, 고객님이 신청하신 상품이 고객님의 상황에 적합・적정한지 여부를 확인하기 위한 기초 자료로 활용됩니다.
+
+      <OslHeader headerNm={props.headerNm} />
+      <div className="container">
+        <div className="content">
+          <div className="content-body">
+            <div className="content-top">
+              <p className="top-tit"><strong>사업자 정보를 확인</strong>하는 중 입니다.
               </p>
-              <p className="info-con-txt">
-                아래 체크리스트에 고객님의 상황에 부합하거나 가장 가까운 항목을 정확히 선택하여 주시기 바랍니다.
-              </p>
-              <p className="info-con-txt">
-                - 보유자산, 부채 항목은 작성일 기준, 현재 소득은 최근 1년 기준으로 작성하세요.
+              <p className="top-txt">
+                기다리는 시간 동안 사장님께서 작성하셔야 하는 확인서가 있어요!
               </p>
             </div>
-          </div>
-          <div className="section line-tf4">
-            <ul className="sele-list type02">
-              {
-                suitTestData.map((data, idx)=> {
-                  
-                  return (
-                    <li key={`li_${idx}`} className="item">
-                      <TitleComponent
-                        showYn={(data.id===9 && data.type!="radio")?showCrdElYn:true}
-                        title={arrTitleData[idx]}
-                        styleTxt="txt"
-                      />
-                      { 
-                        (data.type === "radio") && 
-                        <RadioComponent 
-                          radioData={arrRadioData[data.radioId]} 
-                          styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
-                          fixedId={(data.radioId===0 || data.radioId===1)&&arrRadioData[data.radioId].fixedId}
-                          onChangeFn={(radioDataId)=> {
-                            let copy = [...userResult];
-                            copy[data.id] = "0" + (radioDataId+1);
-                            setUserResult(copy);
-                          }}
-                        /> 
-                      }
-                      { 
-                        (data.type === "text")  && 
+            <div className="section line-tf4 bg-greyf4">
+              <div className="bg-white">
+                <p className="info-tit">적합성ㆍ적정성고객정보 확인서</p>
+                <p className="info-con-txt">
+                  본 확인서는 [금융소비자 보호에 관한 법률]에 의거하여 고객님의 연령, 대출목적(용도) 등을 파악하고, 고객님이 신청하신 상품이 고객님의 상황에 적합・적정한지 여부를 확인하기 위한 기초 자료로 활용됩니다.
+                </p>
+                <p className="info-con-txt">
+                  아래 체크리스트에 고객님의 상황에 부합하거나 가장 가까운 항목을 정확히 선택하여 주시기 바랍니다.
+                </p>
+                <p className="info-con-txt">
+                  - 보유자산, 부채 항목은 작성일 기준, 현재 소득은 최근 1년 기준으로 작성하세요.
+                </p>
+              </div>
+            </div>
+            <div className="section line-tf4">
+              <ul className="sele-list type02">
+                {
+                  suitTestData.map((data, idx) => {
+
+                    return (
+                      <li key={`li_${idx}`} className="item">
+                        <TitleComponent
+                          showYn={(data.id === 9 && data.type != "radio") ? showCrdElYn : true}
+                          title={arrTitleData[idx]}
+                          styleTxt="txt"
+                        />
+                        {
+                          (data.type === "radio") &&
+                          <RadioComponent
+                            radioData={arrRadioData[data.radioId]}
+                            styleFormGroup={(data.radioId != 8) ? "form-group" : "form-group inline row2"}
+                            fixedId={(data.radioId === 0 || data.radioId === 1) && arrRadioData[data.radioId].fixedId}
+                            onChangeFn={(radioDataId) => {
+                              let copy = [...userResult];
+                              copy[data.id] = "0" + (radioDataId + 1);
+                              setUserResult(copy);
+                            }}
+                          />
+                        }
+                        {
+                          (data.type === "text") &&
                           <TextComponent
-                            showYn={(data.textId===1)?showCrdElYn:true}
+                            showYn={(data.textId === 1) ? showCrdElYn : true}
                             styleSeleList="sele-list type01 radius answer-wrap"
                             styleInput=""
                             textData={arrTextData[data.textId]}
-                            inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
-                            onChangeFn={(value)=>{
+                            inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
+                            onChangeFn={(value) => {
                               let copy = [...userResult];
                               copy[data.id] = value;
                               setUserResult(copy);
                             }}
-                          />                          
-                      }
-                      { 
-                        (data.type === "select")&& 
+                          />
+                        }
+                        {
+                          (data.type === "select") &&
                           // <SelectComponent 
                           //   selectData={arrSeleectData[data.selectId]}
                           //   styleSeleList="sele-list type01 radius answer-wrap mar-t10"
@@ -222,75 +225,75 @@ function SuitTest(props) {
                             showYn={showCrdElYn}
                             selectData={arrSeleectData[data.selectId]}
                             styleSeleList="sele-list type01 radius answer-wrap mar-t10"
-                            onChangeFn={(value)=> {
+                            onChangeFn={(value) => {
                               setUserCrdBru(value);
                             }}
-                          />                          
-                      }
-                    </li>
-                  )
-                })
-              }
-            </ul>
-            <div className="terms-wrap mar-t20">
-              <div className="txt-wrap bg-gray">
-                <p className="txt s-txt">
-                  본인은 은행에 제공한 적합성・적정성 관련 정보와 관련하여 다음과 같은 사항을 확인합니다.
-                </p>
-                <ul className="info-con-wrap mar-t10">
-                  <li className="info-con-txt">1. 적합성・적정성 관련 정보는 본인의 연령, 대출목적(용도) 등의 정보를 정확히 알려드린 것입니다.</li>
-                  <li className="info-con-txt">2. 적합성・적정성 판단결과 “적합”의 의미는 고객님과  여신 상담이 가능한 것을 말하며, 여신신청에 대한 승인을 의미하는 것은 아닙니다.</li>
-                  <li className="info-con-txt">3. 본인이 제공한 정보가 정확하지 않거나, 정보에 변경사항이 발생한 경우에는 적합성・적정성 판단이 달라질 수 있음을 설명 받았습니다.</li>
-                  <li className="info-con-txt">4. 상기 목적을 위해 본인의 개인(신용)정보를 수집, 이용 또는 제공하는 것에 동의합니다.</li>
-                </ul>
-              </div>
-
-              <div className="ui-cont-wrap">
-                <div className="ui-decide">
-                  <input type="checkbox" id="checkbox01" onChange={()=> {
-                    setAgreeYn(!agreeYn);
-                  }}/>
-                    <label htmlFor="checkbox01" className="input-label">본인은 위 안내사항을 충분히 이해하고 동의합니다.</label>
+                          />
+                        }
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+              <div className="terms-wrap mar-t20">
+                <div className="txt-wrap bg-gray">
+                  <p className="txt s-txt">
+                    본인은 은행에 제공한 적합성・적정성 관련 정보와 관련하여 다음과 같은 사항을 확인합니다.
+                  </p>
+                  <ul className="info-con-wrap mar-t10">
+                    <li className="info-con-txt">1. 적합성・적정성 관련 정보는 본인의 연령, 대출목적(용도) 등의 정보를 정확히 알려드린 것입니다.</li>
+                    <li className="info-con-txt">2. 적합성・적정성 판단결과 “적합”의 의미는 고객님과  여신 상담이 가능한 것을 말하며, 여신신청에 대한 승인을 의미하는 것은 아닙니다.</li>
+                    <li className="info-con-txt">3. 본인이 제공한 정보가 정확하지 않거나, 정보에 변경사항이 발생한 경우에는 적합성・적정성 판단이 달라질 수 있음을 설명 받았습니다.</li>
+                    <li className="info-con-txt">4. 상기 목적을 위해 본인의 개인(신용)정보를 수집, 이용 또는 제공하는 것에 동의합니다.</li>
+                  </ul>
                 </div>
-                <p className="info-con-txt mar-t10">* 본 확인서는 [금융소비자 보호에 관한 법률] 제17조 및 제18조에 따라 작성되었습니다.</p>
+
+                <div className="ui-cont-wrap">
+                  <div className="ui-decide">
+                    <input type="checkbox" id="checkbox01" onChange={() => {
+                      setAgreeYn(!agreeYn);
+                    }} />
+                    <label htmlFor="checkbox01" className="input-label">본인은 위 안내사항을 충분히 이해하고 동의합니다.</label>
+                  </div>
+                  <p className="info-con-txt mar-t10">* 본 확인서는 [금융소비자 보호에 관한 법률] 제17조 및 제18조에 따라 작성되었습니다.</p>
+                </div>
               </div>
             </div>
           </div>
+          <OslBtn
+            obj={{
+              type: "button",
+              disabled: false,
+              text: ["제출"],
+              link: "",
+              callbackId: cbOslBtn
+            }} ></OslBtn>
         </div>
-        <OslBtn
-          obj={{
-            type: "button",
-            disabled: false,
-            text: ["제출"],
-            link: "",
-            callbackId: cbOslBtn
-          }} ></OslBtn>
       </div>
-    </div>
-    {
-      show&&
-      <AlertModal
-        show={show}
-        msg={msgCont}
-        btnNm={["확인"]}
-        onClickFn={()=> {
-          handleClose();
-          if(successYn) {
-            //다음화면 이동
-            navigate(
-              PathConstants.PREJUDGE_SUITRESULT,
-              {
-                state: {
-                  result: userResult,
-                  crdBru: userCrdBru
-              }
-            });
-          }
-        }}
-      />
+      {
+        show &&
+        <AlertModal
+          show={show}
+          msg={msgCont}
+          btnNm={["확인"]}
+          onClickFn={() => {
+            handleClose();
+            if (successYn) {
+              //다음화면 이동
+              navigate(
+                PathConstants.PREJUDGE_SUITRESULT,
+                {
+                  state: {
+                    result: userResult,
+                    crdBru: userCrdBru
+                  }
+                });
+            }
+          }}
+        />
 
-    
-    }
+
+      }
     </>
   );
 
@@ -327,21 +330,21 @@ function RadioComponent(props) {
   const objRadioData = props.radioData;
   const styleFormGroup = props.styleFormGroup;
   const fixedId = props.fixedId;
-  
+
   return (
     <>
       {
-        objRadioData.radioList.map((data, idx)=>{
+        objRadioData.radioList.map((data, idx) => {
           return (
             <div key={`sRadio${objRadioData.id}_${data.id}`} className={styleFormGroup}>
               <label className="form-radio">
-                <input 
-                  type="radio" 
-                  name={`sRadio${objRadioData.id}`} 
-                  id={`sRadio${objRadioData.id}_${data.id}`} 
-                  value="" 
+                <input
+                  type="radio"
+                  name={`sRadio${objRadioData.id}`}
+                  id={`sRadio${objRadioData.id}_${data.id}`}
+                  value=""
                   checked={null}
-                  onChange={(e)=>{
+                  onChange={(e) => {
                     props.onChangeFn(data.id);
                     // console.log(fixedId);
                     // let copy = [...props.userResult];
@@ -350,7 +353,7 @@ function RadioComponent(props) {
                     // props.setUserResult(copy);
                   }}
                 />
-                  <span className="radio"></span>{data.value}
+                <span className="radio"></span>{data.value}
               </label>
             </div>
           )
@@ -445,9 +448,9 @@ function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
   let msg = "";
   let verb = "하시기 바랍니다.";
 
-  if(!agreeYn) return "동의여부를 확인 바랍니다.";
-  for(let i=0; i<userResult.length; i++) {
-    if(!userResult[i] || userResult[i] === 99) {
+  if (!agreeYn) return "동의여부를 확인 바랍니다.";
+  for (let i = 0; i < userResult.length; i++) {
+    if (!userResult[i] || userResult[i] === 99) {
       let josa = "";
       if (checkBatchimEnding(suitTestData[suitTestData.findIndex((data) => data.id === i)].title)) {
         josa = "을 ";
@@ -462,11 +465,11 @@ function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
       msg = suitTestData[suitTestData.findIndex((data) => data.id === i)].title + josa + verb;
 
       return msg;
-    }else if(i === 9) {
-      if(userResult[i] === '01') {
-        if(!userCrdBru) {
+    } else if (i === 9) {
+      if (userResult[i] === '01') {
+        if (!userCrdBru) {
           return "신용기관을 선택하시기 바랍니다.";
-        }else if(!userCrdScr) {
+        } else if (!userCrdScr) {
           return "신용점수를 입력하시기 바랍니다.";
         }
       }
