@@ -10,6 +10,8 @@ import request from '../../modules/utils/Axios';
 
 const progressFootMsgData = collectData("progressFootMsg");
 /**
+ * 컴포넌트명: 진행상태
+ * 설명 :
  * asis
  * 화면당 3 step 사전심사, 보증신청, 대출실행
  * 사전심사 active,complete 보증신청 active,complete 대출실행 active,complete 총 6가지 경우
