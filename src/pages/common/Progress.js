@@ -41,8 +41,6 @@ const progressFootMsgData = collectData("progressFootMsg");
  * 대출실행 
  *  -완료
  * @param {*} props 
- * step 0,1,2 사전심사, 보증신청, 대출실행
- * status 0,1,2 거절, 진행중, 완료
  * 
  * @returns 
  */
@@ -285,7 +283,7 @@ function FooterMsg(props) {
       {
         props.arrFootMsg.map((data,idx)=> {
           return (
-            <li>{data}</li>
+            <li key={`ftMsg${idx}`}>{data}</li>
           )
         })
         
