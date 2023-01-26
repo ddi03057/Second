@@ -1,84 +1,77 @@
-/** 
- * import 순서
- * react hook, custom hook, 
- * external component(module), 
- * internal component(module), 
- * data, 
- * css
- */
-
-
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
+import FullModal from "../../../modules/components/FullModal";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData.js";
-import FullModal from "../../../modules/components/FullModal";
-
-
-
 const custAgreeData = collectData("CustAgree");
+
 /**
- * 화면명 : 약관동의
+ * 컴포넌트명 : 약관동의
  * 설명 : 사전심사 - 정보조회 약관동의
  * @param {*} props
  * props항목별 설명
  */
 function CustAgree(props) {
 
-  const [checkItems, setCheckItems] = useState([99,99,99,99,99,99,99]);
+  //하단 동의하기버튼명
+  const ALL_BTN_NM = "모두 동의하고 다음";
+  const ONE_BTN_NM = "동의하고 다음";
 
-  const [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99]);
+  /**
+   * 체크항목 state
+   * 초기값    99
+   * 체크해제  0
+   * 체크      1
+   */
+  const [checkItems, setCheckItems] = useState([99,99,99,99,99,99,99,99,99]);
 
+  const [agreeBtnNm, setAgreeBtnNm] = useState(ALL_BTN_NM); //동의버튼명 state
+  const [disabledYn, setDisabledYn] = useState(false); //동의버튼활성화여부 state
+
+  //모달 show/hide function
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  //모달 show여부 state
   const [show, setShow] = useState(false);
-
-  const [idxData, setIdxData] = useState(0);
-
-  const headerNm = props.headerNm;
 
   let navigate = useNavigate();
 
   let [arrPdfData, setArrPdfData] = useState([]);
 
-  const [isChecked, setIsChecked] = useState([false,false,false,false,false,false,false]);
+  //체크상태로 밸리데이션체크 겸 버튼상태변경 및 다음화면이동 
+  useEffect(()=> {
+    console.log("useEffect[checkItems]",checkItems);
+    if(checkItems.filter((data)=> data === 1).length === 9 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
+      //다음화면이동
+      navigate(PathConstants.PREJUDGE_SUITTEST);
+    }else if(checkItems.find((data)=> data === 1) && (!!checkItems.find((data)=> data === 99) || checkItems.findIndex((data)=> data === 0) >-1 )) { //한개이상 체크 및 한개이상 체크해제상태
+      setAgreeBtnNm(ONE_BTN_NM);
+      setDisabledYn(true);
+    }else if(checkItems.filter((data)=> data === 0 || data === 99).length === 9) { // 모두 해제상태 및 초기상태
+      setAgreeBtnNm(ALL_BTN_NM);
+      setDisabledYn(false);
+    }else { //모두체크 상태
+      setAgreeBtnNm(ONE_BTN_NM);
+      setDisabledYn(false);
+    }
+  }, [checkItems]);
 
-  // useEffect(()=> {
-  //   console.log("useEffect[checkItems]",checkItems);
-    
-  //   checkItems.map((data, idx)=> {
-  //     let copy = [...isChecked];
-  //     if(data === 1) {
-        
-  //       copy[idx] = true;
-        
-  //     }else {
-        
-  //       copy[idx] = false;
-        
-  //     }
-  //     setIsChecked(copy);
-  //   })
-  // }, [checkItems]);
-  // useEffect(()=> {
-  //   console.log("useEffect[isChecked]", isChecked);
-
-  // }, [isChecked])
+  //동의하기버튼 콜백
   function cbOslBtn() {
-    setArrPdfData(custAgreeData);
-    handleShow(true);
-    // navigate(
-    //     PathConstants.PREJUDGE_SUITTEST
-    // );
+    if(agreeBtnNm === ALL_BTN_NM) { //모두동의하고다음
+      setArrPdfData(custAgreeData);
+      handleShow(true);
+    }else { //동의하고다음
+      //다음화면이동
+      navigate(PathConstants.PREJUDGE_SUITTEST);
+    }
   }
-
 
   return (
     <>
-      <OslHeader headerNm={headerNm} />
+      <OslHeader headerNm={props.headerNm} />
       <div className="container">
         <div className="content">
           <div className="content-body">
@@ -101,9 +94,7 @@ function CustAgree(props) {
                         type="checkbox"
                         key={`agree-terms-${data.id}`}
                         name="agree_terms"
-                        checked={checkItems[idx]===99?false:checkItems[idx]===0?false:true
-                          // (checkItems[idx] === 99)? :(checkItems[idx]===1)?setIsChecked(true):setIsChecked(false)
-                        }
+                        checked={checkItems[idx]===99?false:checkItems[idx]===0?false:true}
                         id={idx}
                         className="check-input blind"
                         onChange={(e)=>{
@@ -120,7 +111,6 @@ function CustAgree(props) {
                         onClick={() => {
                           setArrPdfData([custAgreeData[data.id]]);
                           handleShow(true);
-                          //모달창에서 확인 버튼 누를시 전체 동의 로직 만들어야함
                         }}
                       />
 
@@ -134,11 +124,27 @@ function CustAgree(props) {
               <p className="mar-t10 mar-b30 point-tit">신청 전 유의사항을 꼭 확인해주세요</p>
               <div className="agree-form">
                 <p key="key-000" className="box-chk">
-                  <input type="checkbox" name="agree_terms_10" id="agree_terms_10" className="check-input blind" />
+                  <input type="checkbox" name="agree_terms_10" id="agree_terms_10" className="check-input blind" 
+                    onChange={(e)=>{
+                      
+                      let copy = [...checkItems];
+                      copy[7] = copy[7]===0||copy[7]===99?1:0;
+                      setCheckItems(copy);
+                      
+                    }}
+                  />
                   <label htmlFor="agree_terms_10" className="check-label">IBK기업은행에 상담 중인 대출이 없습니다.</label>
                 </p>
                 <p key="key-001" className="box-chk">
-                  <input type="checkbox" name="agree_terms_11" id="agree_terms_11" className="check-input blind" />
+                  <input type="checkbox" name="agree_terms_11" id="agree_terms_11" className="check-input blind" 
+                    onChange={(e)=>{
+                      
+                      let copy = [...checkItems];
+                      copy[8] = copy[8]===0||copy[8]===99?1:0;
+                      setCheckItems(copy);
+                      
+                    }}
+                  />
                   <label htmlFor="agree_terms_11" className="check-label">기타은행에서 정한 신용등급 등 취급제한 사유에 따라 대출 취급이 거절될 수 있음을 충분히 이해하였습니다.</label>
                 </p>
               </div>
@@ -146,8 +152,8 @@ function CustAgree(props) {
             <OslBtn
               obj={{
                 type: "button",
-                disabled: false,
-                text: ["모두 동의하고 다음"],
+                disabled: disabledYn,
+                text: [agreeBtnNm],
                 link: "",
                 callbackId: cbOslBtn
               }} />
@@ -170,7 +176,7 @@ function CustAgree(props) {
               copy[contId] = 1;
               setCheckItems(copy);
             }else {
-              setCheckItems([1,1,1,1,1,1,1]);
+              setCheckItems([1,1,1,1,1,1,1,1,1]);
             }
             
           }}
@@ -180,22 +186,5 @@ function CustAgree(props) {
     </>
   );
 }
-
-
-function validCheck(userResult) {
-
-  let msg = [];
-  const diffAnswer = [true, true, true, true, true, true, true, true];
-  for (let idx = 0; idx < userResult.length; idx++) {
-    if (diffAnswer[idx] != userResult[idx]) {
-      msg[0] = idx;
-      msg[1] = custAgreeData[idx].msg;
-      return msg;
-      console.log(msg)
-    }
-  }
-  return "";
-}
-
 
 export default CustAgree;
