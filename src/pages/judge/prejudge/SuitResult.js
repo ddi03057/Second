@@ -20,7 +20,6 @@ const suitTestData = collectData("SuitTest");
  * props항목별 설명
  */
 function SuitResult(props) {
-  const headerNm = props.headerNm
 
   const navigate = useNavigate();
   /**
@@ -29,11 +28,11 @@ function SuitResult(props) {
   const { state } = useLocation();
   const crdBru = state.crdBru;
   const userResult = state.result;
-  const DIFF_RESULT = ["01","","01","01","01","01","01","01","01","","01",""];
+  const DIFF_RESULT = [0,99,0,0,0,0,0,0,0,99,0,99]; //적합성적정성 답안지
 
   let userRadioResult = [...userResult];
   let diffRadioResult = [...DIFF_RESULT];
-  let discordIdxList = [];
+  let incorrectIdxList = [];
   //radio선택항목만 남김
   userRadioResult.splice(1,1);
   userRadioResult.splice(8,1);
@@ -44,11 +43,11 @@ function SuitResult(props) {
   
   diffRadioResult.map((data, idx)=> {
     if(data != userRadioResult[idx]) {
-      discordIdxList.push(userRadioResult[idx]);
+      incorrectIdxList.push(userRadioResult[idx]);
     }
   });
 
-  if(discordIdxList.length === 0) { //적합
+  if(incorrectIdxList.length === 0) { //적합
     function cbOslBtn(navigate, link) {
       //SelfCheck
       navigate(PathConstants.PREJUDGE_SELFCHECK);
@@ -87,7 +86,13 @@ function SuitResult(props) {
   }else { //부적합
     function cbOslBtn() {
       //진행상태 이동
-      navigate(PathConstants.PROGRESS);
+      navigate(PathConstants.MAIN,
+        {
+          state: {
+            tabIdx: 2 //진행상태
+          }
+        }
+      );
     }
     return (
       <>
@@ -107,27 +112,27 @@ function SuitResult(props) {
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">보유자산</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[3].radioList.find((data)=> data.id===parseInt(userResult[3])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[3].radioList.find((data)=> data.id===userResult[3]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">현재소득</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[4].radioList.find((data)=> data.id===parseInt(userResult[4])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[4].radioList.find((data)=> data.id===userResult[4]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">미래예상소득</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[5].radioList.find((data)=> data.id===parseInt(userResult[5])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[5].radioList.find((data)=> data.id===userResult[5]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">부채</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[6].radioList.find((data)=> data.id===parseInt(userResult[6])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[6].radioList.find((data)=> data.id===userResult[6]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">고정지출</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[7].radioList.find((data)=> data.id===parseInt(userResult[7])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[7].radioList.find((data)=> data.id===userResult[7]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">연채여부</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[8].radioList.find((data)=> data.id===parseInt(userResult[8])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[8].radioList.find((data)=> data.id===userResult[8]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">신용점수</span>
