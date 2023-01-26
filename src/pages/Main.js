@@ -25,14 +25,19 @@ const tabList = [
 ];
 
 function Main(props) {
+  let propsTabIdx = 0;
   /**
    * state = {tabIdx: 0,1,2}
    */
   const { state } = useLocation();
-  const propsTabIdx = state.tabIdx;
+  try {
+    propsTabIdx = state.tabIdx;
+  }catch {
+    //에러페이지
+  }
 
-  if(!propsTabIdx) propsTabIdx=1;
-  let [tabIdx, setTabIdx] = useState(propsTabIdx); //0,1,2
+  if(propsTabIdx != 0 && !propsTabIdx) propsTabIdx = 0;
+  const [tabIdx, setTabIdx] = useState(propsTabIdx); //0,1,2
   useEffect(()=> {
     console.log(tabIdx);
     setTabIdx(tabIdx);

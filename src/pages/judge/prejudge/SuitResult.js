@@ -14,7 +14,7 @@ import PathConstants from '../../../modules/constants/PathConstants.js';
 //suitTestData[5].radioList.find((data)=> data.id===parseInt(userResult[5])-1).value
 const suitTestData = collectData("SuitTest");
 /**
- * 화면명 : 적합성 적정성 결과
+ * 컴포넌트명 : 적합성 적정성 결과
  * 설명
  * @param {*} props
  * props항목별 설명
@@ -22,12 +22,18 @@ const suitTestData = collectData("SuitTest");
 function SuitResult(props) {
 
   const navigate = useNavigate();
+  let crdBru = "";
+  let userResult = [];
   /**
    * state = {result: [적합성적정성 결과값 배열], crdBru: "신용기관"}
    */
   const { state } = useLocation();
-  const crdBru = state.crdBru;
-  const userResult = state.result;
+  try {
+    crdBru = state.crdBru;
+    userResult = state.result;
+  }catch {
+    //에러페이지
+  }
   const DIFF_RESULT = [0,99,0,0,0,0,0,0,0,99,0,99]; //적합성적정성 답안지
 
   let userRadioResult = [...userResult];
