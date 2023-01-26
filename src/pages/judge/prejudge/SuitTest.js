@@ -50,8 +50,8 @@ function SuitTest(props) {
 
   let [showTitleYn, setShowTitleYn] = useState(true);
   const [showCrdElYn, setShowCrdElYn] = useState(true); //신용관련 element show/hide
-  let [userResult, setUserResult] = useState(["01",99,"01",99,99,99,99,99,99,99,99,99]); //결과값 저장 state
-  let [userCrdBru, setUserCrdBru] = useState("01"); //신용기관 선택값
+  let [userResult, setUserResult] = useState([0,99,0,99,99,99,99,99,99,99,99,99]); //결과값 저장 state
+  let [userCrdBru, setUserCrdBru] = useState(0); //신용기관 선택값
   let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
   let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
   let navigate = useNavigate(); //다음화면을 위한 navigate
@@ -72,9 +72,8 @@ function SuitTest(props) {
   const [successYn, setSuccessYn] = useState(false);
 
   useEffect(()=> {
-    
     console.log(userResult);
-    if(userResult[9] === "02") {
+    if(userResult[9] === 1) {
       setShowCrdElYn(false);
     }else {
       setShowCrdElYn(true);
@@ -156,10 +155,10 @@ function SuitTest(props) {
                         <RadioComponent 
                           radioData={arrRadioData[data.radioId]} 
                           styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
-                          fixedId={(data.radioId===0 || data.radioId===1)&&arrRadioData[data.radioId].fixedId}
+                          checked={userResult[data.id]}
                           onChangeFn={(radioDataId)=> {
                             let copy = [...userResult];
-                            copy[data.id] = "0" + (radioDataId+1);
+                            copy[data.id] = radioDataId;
                             setUserResult(copy);
                           }}
                         /> 
@@ -295,7 +294,6 @@ function TitleComponent(props) {
 function RadioComponent(props) {
   const objRadioData = props.radioData;
   const styleFormGroup = props.styleFormGroup;
-  const fixedId = props.fixedId;
   
   return (
     <>
@@ -309,14 +307,9 @@ function RadioComponent(props) {
                   name={`sRadio${objRadioData.id}`} 
                   id={`sRadio${objRadioData.id}_${data.id}`} 
                   value="" 
-                  checked={null}
+                  checked={(props.checked === data.id) ? true : false}
                   onChange={(e)=>{
                     props.onChangeFn(data.id);
-                    // console.log(fixedId);
-                    // let copy = [...props.userResult];
-                    // copy[props.dataId] = "0" + (data.id+1);
-                    // console.log(props.userResult, copy);
-                    // props.setUserResult(copy);
                   }}
                 />
                   <span className="radio"></span>{data.value}
@@ -416,7 +409,7 @@ function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
 
   if(!agreeYn) return "동의여부를 확인 바랍니다.";
   for(let i=0; i<userResult.length; i++) {
-    if(!userResult[i] || userResult[i] === 99) {
+    if((userResult[i] != 0 && !userResult[i]) || userResult[i] === 99) {
       let josa = "";
       if (checkBatchimEnding(suitTestData[suitTestData.findIndex((data) => data.id === i)].title)) {
         josa = "을 ";
@@ -432,7 +425,7 @@ function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
 
       return msg;
     }else if(i === 9) {
-      if(userResult[i] === '01') {
+      if(userResult[i] === 0) {
         if(!userCrdBru) {
           return "신용기관을 선택하시기 바랍니다.";
         }else if(!userCrdScr) {
