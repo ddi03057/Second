@@ -1,9 +1,11 @@
 import OslBtn from "../../modules/components/OslBtn";
-
+/**
+ * 컴포넌트명: 나의대출
+ * 설명: 대출계좌 조회(전문) > 대출계좌 있으면 대출정보 화면 보여주고, 대출계좌가 없으면 대출계좌 없다는 문구화면 보여줌
+ * @param {*} props 
+ * @returns 
+ */
 function MyLon(props) {
-  function cbOslBtn() {
-
-  }
 
   // const { state } = useLocation();
 
@@ -11,6 +13,9 @@ function MyLon(props) {
 
   // if (userResult === true) {
 
+    function cbOslBtn() {
+
+    }
     return (
 
       <div className="container">

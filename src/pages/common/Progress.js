@@ -10,6 +10,8 @@ import request from '../../modules/utils/Axios';
 
 const progressFootMsgData = collectData("progressFootMsg");
 /**
+ * 컴포넌트명: 진행상태
+ * 설명 :
  * asis
  * 화면당 3 step 사전심사, 보증신청, 대출실행
  * 사전심사 active,complete 보증신청 active,complete 대출실행 active,complete 총 6가지 경우
@@ -41,8 +43,6 @@ const progressFootMsgData = collectData("progressFootMsg");
  * 대출실행 
  *  -완료
  * @param {*} props 
- * step 0,1,2 사전심사, 보증신청, 대출실행
- * status 0,1,2 거절, 진행중, 완료
  * 
  * @returns 
  */
@@ -285,7 +285,7 @@ function FooterMsg(props) {
       {
         props.arrFootMsg.map((data,idx)=> {
           return (
-            <li>{data}</li>
+            <li key={`ftMsg${idx}`}>{data}</li>
           )
         })
         

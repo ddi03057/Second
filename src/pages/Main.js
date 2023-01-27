@@ -4,32 +4,50 @@ import Progress from "./common/Progress";
 import MyLon from "./postmanagement/MyLon";
 import TabComponent from "./common/TabComponent";
 import PathConstants from "../modules/constants/PathConstants";
+
 import axios from "axios";
 
+import { useLocation } from "react-router";
+
+const tabList = [
+  {
+    id: 0,
+    link: PathConstants.GUIDE_DETAIL,
+    name: "상품안내"
+  },
+  {
+    id: 1,
+    link: "",
+    name: "나의대출"
+  },
+  {
+    id: 2,
+    link: "",
+    name: "진행상태"
+  }
+];
+
+
 function Main(props) {
-  const tabList = [
-    {
-      id: 0,
-      link: PathConstants.GUIDE_DETAIL,
-      name: "상품안내"
-    },
-    {
-      id: 1,
-      link: "",
-      name: "나의대출"
-    },
-    {
-      id: 2,
-      link: "",
-      name: "진행상태"
-    }
-  ];
-  let [tabIdx, setTabIdx] = useState(0); //0,1,2
+  let propsTabIdx = 0;
+  /**
+   * state = {tabIdx: 0,1,2}
+   */
+  const { state } = useLocation();
+  try {
+    propsTabIdx = state.tabIdx;
+  }catch {
+    //에러페이지
+  }
+
+  if(propsTabIdx != 0 && !propsTabIdx) propsTabIdx = 0;
+  const [tabIdx, setTabIdx] = useState(propsTabIdx); //0,1,2
   useEffect(()=> {
     console.log(tabIdx);
-  }, [tabIdx])
 
-  
+    setTabIdx(tabIdx);
+  }, [tabIdx]);
+
   
   return (
     <>
