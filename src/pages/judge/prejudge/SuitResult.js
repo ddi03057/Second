@@ -23,6 +23,7 @@ function SuitResult(props) {
 
   const navigate = useNavigate();
   let crdBru = "";
+  let crdScr = "";
   let userResult = [];
   /**
    * state = {result: [적합성적정성 결과값 배열], crdBru: "신용기관"}
@@ -30,6 +31,7 @@ function SuitResult(props) {
   const { state } = useLocation();
   try {
     crdBru = state.crdBru;
+    crdScr = state.crdScr;
     userResult = state.result;
   }catch {
     //에러페이지
@@ -143,11 +145,11 @@ function SuitResult(props) {
                   <div className="info-box">
                     <span className="tit fc-gray">신용점수</span>
                     <span className="txt fc-dark ta-r">
-                      {userResult[9] === "02"?<>잘모름</>:`${userResult[9]}점`}
+                      {userResult[9] === 1?<>잘모름</>:`${crdScr}점`}
                     </span>
                   </div>
                   {
-                    userResult[9] === "01"&&
+                    userResult[9] === 0&&
                       <div className="info-box">
                         <span className="tit fc-gray">평가기관</span>
                         <span className="txt fc-dark ta-r">{crdBru}</span>
@@ -155,7 +157,7 @@ function SuitResult(props) {
                   }
                   <div className="info-box">
                     <span className="tit fc-gray">변제방법</span>
-                    <span className="txt fc-dark ta-r">{suitTestData[12].radioList.find((data)=> data.id===parseInt(userResult[10])-1).value}</span>
+                    <span className="txt fc-dark ta-r">{suitTestData[12].radioList.find((data)=> data.id===userResult[10]).value}</span>
                   </div>
                   <div className="info-box">
                     <span className="tit fc-gray">이메일주소</span>

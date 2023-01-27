@@ -51,7 +51,7 @@ function SuitTest(props) {
   let [showTitleYn, setShowTitleYn] = useState(true);
   const [showCrdElYn, setShowCrdElYn] = useState(true); //신용관련 element show/hide
   let [userResult, setUserResult] = useState([0,99,0,99,99,99,99,99,99,99,99,99]); //결과값 저장 state
-  let [userCrdBru, setUserCrdBru] = useState(0); //신용기관 선택값
+  let [userCrdBru, setUserCrdBru] = useState("KCB"); //신용기관 선택값
   let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
   let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
   let navigate = useNavigate(); //다음화면을 위한 navigate
@@ -172,9 +172,14 @@ function SuitTest(props) {
                             textData={arrTextData[data.textId]}
                             inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
                             onChangeFn={(value)=>{
-                              let copy = [...userResult];
-                              copy[data.id] = value;
-                              setUserResult(copy);
+                              if(data.id === 9) {
+                                setUserCrdScr(value);
+                              }else {
+                                let copy = [...userResult];
+                                copy[data.id] = value;
+                                setUserResult(copy);
+                              }
+                              
                             }}
                           />                          
                       }
@@ -250,7 +255,8 @@ function SuitTest(props) {
               {
                 state: {
                   result: userResult,
-                  crdBru: userCrdBru
+                  crdBru: userCrdBru,
+                  crdScr: userCrdScr
               }
             });
           }
