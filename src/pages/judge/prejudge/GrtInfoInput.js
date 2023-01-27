@@ -142,7 +142,7 @@ function GrtInfoInput(props) {
       method: "post",
       url: API.PREJUDGE.PREJUDGE_GRTINFOINPUT,
       data: {
-        oslLoapNo: "0002",
+        oslLoapNo: "1111",
         bsunOwrRlcd: "01",
         bsunRgifDcd: "01",
         bsunZpcd: "04541",
@@ -293,7 +293,6 @@ function GrtInfoInput(props) {
             content="GrtInfoInputModal"
             type="component"
             onClickFn={() => {
-
             }}
           />
         }

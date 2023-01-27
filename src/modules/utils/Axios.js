@@ -27,16 +27,16 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     config.headers = Object.assign(
+      config.headers,
       {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json; charset=UTF-8",
         'appKey': 'l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL'
-      },
-      config.headers
+      }
     );
 
     if (config.method === "post") {
-      const contentType = config.headers["Content-type"];
+      const contentType = config.headers.get("Content-type");
 
       if (contentType) {
         if (contentType.includes("multipart")) {
