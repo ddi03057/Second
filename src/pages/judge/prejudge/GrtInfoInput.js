@@ -137,28 +137,26 @@ function GrtInfoInput(props) {
 
     GrtInfoInput();
   }
+  const [postCd, setPostCd] = useState("");
+  const [addr1, setAddr1] = useState("");
+  const [addr2, setAddr2] = useState("")
+
   const GrtInfoInput = async () => {
+
     const res = await request({
       method: "post",
       url: API.PREJUDGE.PREJUDGE_GRTINFOINPUT,
       data: {
-        oslLoapNo: "1111",
-        bsunOwrRlcd: "01",
-        bsunRgifDcd: "01",
-        bsunZpcd: "04541",
-        bsunRdnd: "서울 구 을지로 79",
-        bsunRdnmDtad: "서울 중구 을지로 79 B2",
-        iruTrthRsplAdrYn: "Y",
-        iruAdpaSelfOwnCd: "01",
-        rshsOwrRlcd: "01",
-        bsunOwnYn: "Y",
-        rshsRgifDcd: "01",
-        lastLoapAmt: "5000000",
-        loanTrmCnt: "5",
-        loteUncd: "01",
-        rshsRdnd: "서울 중구 을지로 79",
-        rshsRdnmDtad: "서울 중구 을지로 79 B2",
-        rshsZpcd: "04541"
+        oslLoapNo: "0005", //대출 키
+        bsunOwrRlcd: userResult[0], // 주사업장소유자
+        bsunRgifDcd: userResult[1], // 주사업장관리침해
+        rshsOwrRlcd: userResult[5], //거주주택소유자
+        rshsRgifDcd: userResult[7], //거주주택권리침해
+        // lastLoapAmt: "5000000", //대출희망금액
+        // loanTrmCnt: "5", //대출기간
+        rshsRdnd: addr1, //거주주택도로명주소
+        rshsRdnmDtad: addr2, //거주주택상세주소
+        rshsZpcd: postCd// 거주주택우편번호
 
       }
     })
@@ -171,10 +169,11 @@ function GrtInfoInput(props) {
         console.log("error : ", error);
       });
   }
-
+  
+  
+  
   let [msgCont, setMsgCont] = useState("");
   const [visible, setVisible] = useState(false);
-
 
   return (
     <>
@@ -215,6 +214,7 @@ function GrtInfoInput(props) {
                       )}
                       {(data.type === "search" &&
                         <Search arrSearchData={arrSearchData} userResult={userResult} setVisible={setVisible} postHandleShow={postHandleShow}
+                        setAddr1={setAddr1} setAddr2={setAddr2} setPostCd={setPostCd} addr1={addr1} addr2={addr2} postCd={postCd}
                         />
                       )}
                       {
@@ -324,9 +324,9 @@ function GrtInfoInput(props) {
 }
 
 function Search(props) {
+  
   const data = props.arrSearchData;
-  const [postCd, setPostCd] = useState("");
-  const [addr1, setAddr1] = useState("");
+  
 
   const showPost = useDaumPostcodePopup();
 
@@ -346,13 +346,14 @@ function Search(props) {
     }
 
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    setPostCd(data.sigunguCode);
-    setAddr1(fullAddress);
+    props.setPostCd(data.sigunguCode);
+    props.setAddr1(fullAddress);
   };
 
   const postHandleClick = () => {
     showPost({ onComplete: postHandleComplete });
   };
+
 
   if (props.userResult[2] === 1) {
     return (
@@ -363,7 +364,7 @@ function Search(props) {
               name="text01"
               id="text01_01"
               placeholder=""
-              value={postCd}
+              value={props.postCd}
               readOnly
             />
             <button type="button" className="btn btn-md address-btn bg-skyblue"
@@ -374,8 +375,12 @@ function Search(props) {
               </span>
             </button>
           </div>
-          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" value={addr1} readOnly />
-          <input type="text" className="inp type01" name="text01" id="text01_03" placeholder="" />
+          <input type="text" className="inp type01" name="text01" id="text01_02" placeholder="" value={props.addr1} readOnly />
+          <input type="text" className="inp type01" name="text01" id="text01_03" placeholder="" value={props.addr2}
+          onChange={(e)=>{
+            props.setAddr2(e.currentTarget.value)
+            
+          }}/>
         </div>
       </div>
     )

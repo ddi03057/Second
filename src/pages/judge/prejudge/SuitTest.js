@@ -109,9 +109,9 @@ function SuitTest(props) {
       setMsgCont("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
       handleShow();
       //alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
+      SuitTest();
       
     }
-    
     
   }
   const SuitTest = async () => {
@@ -119,24 +119,25 @@ function SuitTest(props) {
       method: "post",
       url: API.PREJUDGE.PREJUDGE_SUITTEST,
       data: {
-        age: "35",
-        cdbuScr: "500",
-        cusEad: "ibk@gamil.com",
-        lfncAcmDcd: "01",
-        lfncCrdtScrCnfaYn: "Y",
-        lfncCrdtScrVainDcd: "01",
-        lfncEnprPsntIncmDcd: "01",
-        lfncFtrAntcAnicDcd: "01",
-        lfncFxngExpdDcd: "01",
-        lfncHlasDcd: "01",
-        lfncLbltDcd: "01",
-        lfncOvduDcd: "01",
-        lfncRepmWayDcd: "01",
-        oslLoapNo: "0110"
+        oslLoapNo: "0014", //key
+        lfncAcmDcd: userResult[0], //여신금융상담소비자구분코드
+        age: userResult[1], // 연령
+        lfncLnugDcd: userResult[2], // 여신금융대출용도구분코드
+        lfncHlasDcd: userResult[3], //여신금융상담보유자산구분코드
+        lfncEnprPsntIncmDcd: userResult[4], //여신금융상담기업현재소득구분코드
+        lfncFtrAntcAnicDcd: userResult[5], //여신금융상담미래예상연간소득구분코드
+        lfncLbltDcd: userResult[6], //여신금융상담부채구분코드
+        lfncFxngExpdDcd: userResult[7], //여신금융상담고정지출구분코드
+        lfncOvduDcd: userResult[8], //여신금융상담연체구분코드
+        cdbuScr: userCrdScr, //cb점수 (신용점수)
+        lfncRepmWayDcd: userResult[10],//여신금융상담변제방법구분코드
+        cusEad: userResult[11], //고객이메일주소
+        lfncCrdtScrVainDcd: userCrdBru, //여신금융상담신용평가기관구분코드 01,02
+        
       }
     })
       .then((response) => {
-        //setResponse(response);
+        console.log(response)
         return response;
       })
 

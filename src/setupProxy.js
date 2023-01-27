@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     proxy.createProxyMiddleware("/api1", {
       // target: "https://api.plos.org/", //http://devloan2.ibkbox.net"
-      target: "http://localhost:8090",
+      target: "http://localhost:8091",
       changeOrigin: true,
       secure: false,
       pathRewrite: {"^/api1": ""},

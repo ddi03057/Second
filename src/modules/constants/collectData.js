@@ -300,13 +300,13 @@ const suitTestData = [
     selectList : [
       {
         id : 0,
-        value : "KCB",
+        value : "01",
         name : "KCB", //01
         title : "올크레딧"
       },
       {
         id : 1,
-        value : "NICE",
+        value : "02",
         name : "NICE",
         title : "나이스" //02
       }

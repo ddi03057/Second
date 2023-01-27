@@ -11,6 +11,7 @@ import collectData from "../../../modules/constants/collectData.js";
 import request from "../../../modules/utils/Axios";
 
 import API from "../../../modules/constants/API.js";
+import { useLayoutEffect } from "react";
 
 
 const custAgreeData = collectData("CustAgree");
@@ -54,8 +55,10 @@ function CustAgree(props) {
 const custAgree = async () => {
   const res = await request({
     method: "post",
-    url: API.PREJUDGE_CUSTAGREE,
-    data: {}
+    url: API.PREJUDGE.PREJUDGE_CUSTAGREE,
+    data: {
+      
+    }
   })
     .then((response) => {
       console.log(response);
@@ -67,6 +70,9 @@ const custAgree = async () => {
       console.log("error : ", error);
     });
   }
+  useLayoutEffect(()=> {
+    custAgree()
+  }, [])
   //체크상태로 밸리데이션체크 겸 버튼상태변경 및 다음화면이동 
   useEffect(()=> {
     console.log("useEffect[checkItems]",checkItems);
