@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>IBK 온라인 입점 소상공인 부대출</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<link rel="shortcut icon" href="data:image/x-icon" type="image/x-icon">
+<link rel="stylesheet" href="./../../assets\css\import.css">
+<script type="text/javascript">
+    // popup
+    function openPop(e){
+        document.getElementById(e).classList.add("active");
+        document.body.style.overflow="hidden";
+    }
+    function closePop(e){
+        document.getElementById(e).classList.remove("active");
+        document.body.style.overflow="";
+    }
+
+    document.addEventListener("click", function(e) {
+            if (
+                event.target.closest(".bottom-sheet") &&
+                !event.target.closest(".bottom-inner")
+            ) {
+                event.target.closest(".bottom-sheet").classList.remove("active");
+                document.body.style.overflow="";
+            }
+        },
+        false
+    )
+
+</script>
+</head>
+<body>
+<!-- Wrapper -->
+<div class="wrapper">
+    <!-- header -->
+    <header class="header-wrap">
+        <!-- header -->
+        <div class="header">
+            <div class="h-title">
+                <span>자료수집</span>
+            </div>
+            <button type="button" class="btn btn-close">
+                <span class="blind">닫기</span>
+            </button>
+        </div>
+        <!-- // header -->
+    </header>
+    <!-- // header -->
+
+    <!-- container -->
+    <div class="container">
+        <!-- content -->
+        <div class="content">
+            <!-- content내용 -->
+            <div class="content-body">
+                <!-- content-top -->
+                <div class="content-top">
+                    <p class="top-tit"><strong>자료 수집을</strong> 위해<br />
+                        <strong>입력해야할 내용</strong>이 있습니다.
+                    </p>
+                </div>
+                <!-- //content-top -->
+                <!-- section -->
+                <div class="section">
+                    <ul class="sele-list type02">
+                        <li class="item"> 
+                            <div class="question-wrap txt-wrap">
+                                <p class="txt fc-6">
+                                    사업자 번호
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <div class="sele-list type01 radius answer-wrap">
+                                    <div class="item">
+                                        <input type="number" name="text01" id="text01_01" placeholder="사업자 번호"/>
+                                    </div>
+                                    <div class="btn-wrap">
+                                        <button type="reset" class="btn btn-sm btn-reset"><span class="blind">재작성</span></button>
+                                    </div>
+                                </div>
+                                <span class="sm-txt info">주민등록상 행정구역을 선택해주세요.</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="question-wrap txt-wrap">
+                                <p class="txt fc-6">
+                                    시,도
+                                </p>
+                            </div>
+
+                            <div class="sele-list type01 radius answer-wrap mar-t10">
+                                <div class="item" onclick="openPop('bottom01');">
+                                    <label class="ui-select">
+                                        <select name="sSel" id="sSel1" disabled="">
+                                            <option value="">선택불가</option>
+                                            <option value="">선택1</option>
+                                            <option value="">선택2</option>
+                                        </select>
+                                        <span class="radio"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="question-wrap txt-wrap">
+                                <p class="txt fc-6">
+                                    시,군,구
+                                </p>
+                            </div>
+
+                            <div class="sele-list type01 radius answer-wrap mar-t10">
+                                <div class="item" onclick="openPop('bottom02');">
+                                    <label class="ui-select">
+                                        <select name="sSel" id="sSel1" disabled="">
+                                            <option value="">선택불가</option>
+                                            <option value="">선택1</option>
+                                            <option value="">선택2</option>
+                                        </select>
+                                        <span class="radio"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //section -->
+            </div>
+            <!-- //content내용 -->  
+            <!-- content-footer -->
+            <div class="content-footer">
+                <button type="button" class="btn btn-lg default-bg">
+                    <span class="txt">다음</span>
+                </button>
+            </div>
+            <!-- //content-footer -->
+        </div>
+        <!-- // content -->
+    </div>
+    <!-- // container -->
+
+</div>
+<!-- //wrapper -->
+<div id="bottom01" class="bottom-sheet">
+    <div class="bottom-inner">
+        <div class="bottom-header">
+            <p class="title fc-01">시,도 선택</p>
+            <button type="button" class="btn btn-close" onclick="closePop('bottom01');">
+                <span class="blind">닫기</span>
+            </button>
+        </div>
+        <div class="bottom-content">
+            <div class="select-box">
+                <ul class="select-btn-list col2">
+                    <li>
+                        <button><span>서울특별시</span></button>
+                    </li>
+                    <li>
+                        <button><span>부산광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>대구광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>인천광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>광주광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>대전광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>울산광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>경기도</span></button>
+                    </li>
+                    <li>
+                        <button><span>강원도</span></button>
+                    </li>
+                    <li>
+                        <button><span>충청북도</span></button>
+                    </li>
+                    <li>
+                        <button><span>충청남도</span></button>
+                    </li>
+                    <li>
+                        <button><span>전라북도</span></button>
+                    </li>
+                    <li>
+                        <button><span>전라남도</span></button>
+                    </li>
+                    <li>
+                        <button><span>경상북도</span></button>
+                    </li>
+                    <li>
+                        <button><span>경상남도</span></button>
+                    </li>
+                    <li>
+                        <button><span>제주특별자치도</span></button>
+                    </li>
+                    <li>
+                        <button><span>세종특별자치시</span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="bottom02" class="bottom-sheet">
+    <div class="bottom-inner">
+        <div class="bottom-header">
+            <p class="title fc-01">시,군,구 선택</p>
+            <button type="button" class="btn btn-close" onclick="closePop('bottom02');">
+                <span class="blind">닫기</span>
+            </button>
+        </div>
+        <div class="bottom-content">
+            <div class="select-box">
+                <ul class="select-btn-list col2">
+                    <li><button><span>강남구</span></button></li>
+                    <li><button><span>강동구</span></button></li>
+                    <li><button><span>강북구</span></button></li>
+                    <li><button><span>강서구</span></button></li>
+                    <li><button><span>관악구</span></button></li>
+                    <li><button><span>광진구</span></button></li>
+                    <li><button><span>구로구</span></button></li>
+                    <li><button><span>금천구</span></button></li>
+                    <li><button><span>노원구</span></button></li>
+                    <li><button><span>도봉구</span></button></li>
+                    <li><button><span>동대문구</span></button></li>
+                    <li><button><span>동작구</span></button></li>
+                    <li><button><span>마포구</span></button></li>
+                    <li><button><span>서대문구</span></button></li>
+                    <li><button><span>서초구</span></button></li>
+                    <li><button><span>성동구</span></button></li>
+                    <li><button><span>성북구</span></button></li>
+                    <li><button><span>송파구</span></button></li>
+                    <li><button><span>동작구</span></button></li>
+                    <li><button><span>마포구</span></button></li>
+                    <li><button><span>서대문구</span></button></li>
+                    <li><button><span>서초구</span></button></li>
+                    <li><button><span>성동구</span></button></li>
+                    <li><button><span>성북구</span></button></li>
+                    <li><button><span>송파구</span></button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
