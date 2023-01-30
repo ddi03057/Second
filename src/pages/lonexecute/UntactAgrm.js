@@ -28,11 +28,7 @@ function UntactAgrm(props) {
   const ALL_BTN_NM = "모두 동의하고 다음";
   const ONE_BTN_NM = "동의하고 다음";
 
-  const [checkItems, setCheckItems] = useState([99, 99, 99, 99, 99, 99, 99]);
-
-
-  const [isChecked, setIsChecked] = useState([false, false, false, false, false, false, false]);
-
+  const [checkItems, setCheckItems] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99]);
 
   let [arrPdfData, setArrPdfData] = useState([]);
 
@@ -45,9 +41,38 @@ function UntactAgrm(props) {
 
   const [idxData, setIdxData] = useState(0);
 
+  let navigate = useNavigate();
+
+  const [agreeBtnNm, setAgreeBtnNm] = useState(ALL_BTN_NM); //동의버튼명 state
+  const [disabledYn, setDisabledYn] = useState(false); //동의버튼활성화여부 state
+
+  //체크상태로 밸리데이션체크 겸 버튼상태변경 및 다음화면이동 
+  useEffect(() => {
+    console.log("useEffect[checkItems]", checkItems);
+    if (checkItems.filter((data) => data === 1).length === 16 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
+      //다음화면이동
+      //navigate(PathConstants.PREJUDGE_SUITTEST);
+    } else if (checkItems.find((data) => data === 1) && (!!checkItems.find((data) => data === 99) || checkItems.findIndex((data) => data === 0) > -1)) { //한개이상 체크 및 한개이상 체크해제상태
+      setAgreeBtnNm(ONE_BTN_NM);
+      setDisabledYn(true);
+    } else if (checkItems.filter((data) => data === 0 || data === 99).length === 16) { // 모두 해제상태 및 초기상태
+      setAgreeBtnNm(ALL_BTN_NM);
+      setDisabledYn(false);
+    } else { //모두체크 상태
+      setAgreeBtnNm(ONE_BTN_NM);
+      setDisabledYn(false);
+    }
+  }, [checkItems]);
+
+
   function cbOslBtn() {
-    setArrPdfData(untactAgrmData);
-    handleShow(true);
+    if (agreeBtnNm === ALL_BTN_NM) { //모두동의하고다음
+      setArrPdfData(untactAgrmData);
+      handleShow(true);
+    } else { //동의하고다음
+      //다음화면이동
+      //navigate(PathConstants.PREJUDGE_SUITTEST);
+    }
   }
 
   return (
@@ -118,8 +143,8 @@ function UntactAgrm(props) {
             <OslBtn
               obj={{
                 type: "button",
-                disabled: false,
-                text: ["모두 동의하고 다음"],
+                disabled: disabledYn,
+                text: [agreeBtnNm],
                 link: "",
                 callbackId: cbOslBtn
               }} />
@@ -166,7 +191,15 @@ function ContentList(props) {
             <>
               <p className="box-chk"
                 key={`box-chk1-${data.id}`}>
-                <input type="checkbox" name="agree_terms_11" id={idx} className="check-input blind" />
+                <input type="checkbox"
+                  name="agree_terms_11"
+                  id={idx}
+                  className="check-input blind"
+                  onChange={(e) => {
+                    let copy = [...props.checkItems];
+                    copy[idx] = copy[idx] === 0 ? 0 : 1;
+                    props.setCheckItems(copy);
+                  }} />
                 <label htmlFor={idx} className="check-label no-pop">{data.title}</label>
               </p>
               <div className="box-chk-add">
@@ -180,7 +213,15 @@ function ContentList(props) {
           return (
             <>
               <p className="box-chk" key={`box-chk2-${data.id}`}>
-                <input type="checkbox" name="agree_terms_11" id={idx} className="check-input blind" />
+                <input type="checkbox"
+                name="agree_terms_11"
+                id={idx}
+                className="check-input blind"
+                onChange={(e) => {
+                  let copy = [...props.checkItems];
+                  copy[idx] = copy[idx] === 0 ? 0 : 1;
+                  props.setCheckItems(copy);
+                }}/>
                 <label htmlFor={idx} className="check-label no-pop">{data.title}</label>
               </p>
               <div className="box-chk-add">
