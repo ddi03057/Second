@@ -26,17 +26,71 @@
     -->
 
     <!-- 퍼블css -->
-    <link rel="stylesheet" href="/assets/css/import.css">
+    <link rel="stylesheet" href="/assets/css/import.css" />
     <!-- 퍼블css -->
 
     <title>React App</title>
     <!-- 로그인추가 start -->
-    <script type="text/javascript" src="%PUBLIC_URL%/esg/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="https://www.ibkbox.net/ui/static_m/js/commonBox.js"></script>
-    <script type="text/javascript" src="https://www.ibkbox.net/ui/static_m/js/boxlogin.js"></script>
-    <link href="%PUBLIC_URL%/esg/esglogin.css" rel="stylesheet" />
+    <script type="text/javascript" src="./common/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="./common/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" src="./common/tokenBase.js"></script>
+    <script type="text/javascript" src="./common/boxlogin.js"></script>
 
     <script>
+    document.addEventListener("DOMContentLoaded", () => {  
+      function oslLogin() {
+        if(getClientOs() == "PC") {
+          alert("pc는 지원하지 않습니다.");
+          location.href = loginDomain()+"/COM001/login.do?callType=spa";
+        }else {
+          location.href = loginDomain()+"/COM001/login.do?callType=spa";
+        }
+        
+      }
+      function oslLogout() {
+        // 쿠키정리
+        deleteCookie("idSave");
+        deleteCookie("auth");
+        deleteCookie("cookieExpires");
+        sessionStorage.clear();
+
+        location.href = loginDomain() + "/magicsso/SPLogout.jsp?nextPage=" + location.origin+"/ui/spa/index.html";        
+      }
+      if(getCookie("auth") != undefined){
+        if(isValidSession()){
+          var data = parseJwt(sessionStorage.getItem("SI"));
+          // $("#headerAlertWrap").show();
+          // $("#liLoginBtn").hide();
+          // $("#liLogoutBtn").show();
+          
+          // $("#gnbLoginBtn > span").text(data.lgnMnbrNm);
+        }else{
+          // $("#headerAlertWrap").hide();
+    
+          sessionStorage.setItem("callType", "spa");
+          
+          var host = location.host;
+          var boxName = host.substring(0, host.indexOf("."));
+          if(boxName.indexOf("local") > -1){
+            boxName = boxName.replace("local", "");
+          }else if(boxName.indexOf("dev") > -1){
+            boxName = boxName.replace("dev", "");
+          }else{
+            ;
+          }
+          
+          try{
+            $("#ifrmPage").attr("src", loginDomain()+"/COM001/loginMain.do?boxName="+boxName);
+          }catch(e){
+            location.href = "/ui/spa/index.html";
+          }
+        }
+      }else{
+        // $("#headerAlertWrap").hide();
+        sessionStorage.clear();
+        // clearInterval(_alrtTimer);
+      }
+    });
       // function esgLogin(){
       //   if(getClientOs() == "PC"){
       //     let element = `<div class="pcLoginWrap on" id="pcLoginWrap">
