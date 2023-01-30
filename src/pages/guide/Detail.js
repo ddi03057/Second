@@ -31,20 +31,13 @@ function Detail(props) {
     navigate(
       PathConstants.GUIDE_READY,
       {
-        state:{
-          BZN : location.state.BZN
-        }
+        
       }
       );
   }
   const data = detailData;
 
-  let [jsonData , setJsonData] = useState([]);
 
-  const location = useLocation();
-  const BZN = location.state.BZN
-
-  console.log(BZN)
 
   return (
     <>

@@ -27,15 +27,11 @@ function Ready(props) {
     navigate(
       PathConstants. PREJUDGE_CUSTAGREE,
       {
-        state:{
-            BZN : location.state.BZN
-          }
+        
       }
       );
   }
-  const location = useLocation();
-  const BZN = location.state.BZN
-  console.log(BZN)
+ 
 
   return (
     <>

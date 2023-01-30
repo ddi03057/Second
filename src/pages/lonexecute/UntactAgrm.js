@@ -24,10 +24,14 @@ const untactAgrmData = collectData("UntactAgrm");
 
 function UntactAgrm(props) {
 
-  const [checkItems, setCheckItems] = useState([99,99,99,99,99,99,99]);
+  //하단 동의하기버튼명
+  const ALL_BTN_NM = "모두 동의하고 다음";
+  const ONE_BTN_NM = "동의하고 다음";
+
+  const [checkItems, setCheckItems] = useState([99, 99, 99, 99, 99, 99, 99]);
 
 
-  const [isChecked, setIsChecked] = useState([false,false,false,false,false,false,false]);
+  const [isChecked, setIsChecked] = useState([false, false, false, false, false, false, false]);
 
 
   let [arrPdfData, setArrPdfData] = useState([]);
@@ -59,40 +63,43 @@ function UntactAgrm(props) {
             </div>
             <div className="section line-tf4">
               <div className="agree-form">
-                {untactAgrmData.map(function(data,idx){
-                  {if (data.type === "pdf"){
-                  return(
-                    <p key={`p-${idx}`} className="box-chk">
-                      <input
-                        type="checkbox"
-                        key={`agree-terms-${data.id}`}
-                        name="agree_terms"
-                        checked={checkItems[idx]===99?false:checkItems[idx]===0?false:true
-                          // (checkItems[idx] === 99)? :(checkItems[idx]===1)?setIsChecked(true):setIsChecked(false)
-                        }
-                        id={idx}
-                        className="check-input blind"
-                        onChange={(e)=>{
-                          if(checkItems[idx] != 99){
-                            let copy = [...checkItems];
-                            copy[idx] = copy[idx]===0?1:0;
-                            setCheckItems(copy);
-                          }
-                        }}
-                      />
-                      <label htmlFor={idx} className="check-label">{data.title}</label>
-                      <a data-id=""
-                        className="btn-pop-arrow"
-                        onClick={() => {
-                          setArrPdfData([untactAgrmData[data.id]]);
-                          handleShow(true);
-                          //모달창에서 확인 버튼 누를시 전체 동의 로직 만들어야함
-                        }}
-                      />
+                {untactAgrmData.map(function (data, idx) {
+                  {
+                    if (data.type === "pdf") {
+                      return (
+                        <p key={`p-${idx}`} className="box-chk">
+                          <input
+                            type="checkbox"
+                            key={`agree-terms-${data.id}`}
+                            name="agree_terms"
+                            checked={checkItems[idx] === 99 ? false : checkItems[idx] === 0 ? false : true
+                              // (checkItems[idx] === 99)? :(checkItems[idx]===1)?setIsChecked(true):setIsChecked(false)
+                            }
+                            id={idx}
+                            className="check-input blind"
+                            onChange={(e) => {
+                              if (checkItems[idx] != 99) {
+                                let copy = [...checkItems];
+                                copy[idx] = copy[idx] === 0 ? 1 : 0;
+                                setCheckItems(copy);
+                              }
+                            }}
+                          />
+                          <label htmlFor={idx} className="check-label">{data.title}</label>
+                          <a data-id=""
+                            className="btn-pop-arrow"
+                            onClick={() => {
+                              setArrPdfData([untactAgrmData[data.id]]);
+                              handleShow(true);
+                              //모달창에서 확인 버튼 누를시 전체 동의 로직 만들어야함
+                            }}
+                          />
 
-                    </p>
-                
-                  )}}
+                        </p>
+
+                      )
+                    }
+                  }
                 })}
               </div>
             </div>
@@ -119,7 +126,7 @@ function UntactAgrm(props) {
           </div>
         </div>
       </div>
-      {show&&
+      {show &&
         <FullModal
           showYn={show}
           handleClose={handleClose}
@@ -128,16 +135,16 @@ function UntactAgrm(props) {
           type="pdf"
           disabledYn={true}
           footerNm="확인"
-          onClickFn={(contId)=>{
-            console.log(contId,typeof contId)
-            if(typeof contId === "number") {
+          onClickFn={(contId) => {
+            console.log(contId, typeof contId)
+            if (typeof contId === "number") {
               let copy = [...checkItems];
               copy[contId] = 1;
               setCheckItems(copy);
-            }else {
-              setCheckItems([1,1,1,1,1,1,1]);
+            } else {
+              setCheckItems([1, 1, 1, 1, 1, 1, 1]);
             }
-            
+
           }}
         />
       }
