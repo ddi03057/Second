@@ -2,40 +2,73 @@
 //진행상태체크
 //체크되면 navigate
 
+import { useEffect } from "react";
+import { memo } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { loginDomain } from "../../modules/common/boxlogin";
+import { oslLogin } from "../../modules/common/oslLogin";
 import callOpenApi, { authorization } from "../../modules/common/tokenBase";
 import AlertModal from "../../modules/components/AlertModal";
 import PathConstants from "../../modules/constants/PathConstants";
 
 
 export default ()=> {
+  let tokenYn = false;
   let navigate = useNavigate();
   let [progState, setProgState] = useState("");
-  const successFn = (res)=> {
-    setProgState(res.data);
-  }
+  let [routePath, setRoutePath] = useState("");
+  const [show, setShow] = useState(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  useEffect(()=> {
+    
+    if(tokenYn) {
+      setProgState("first");
+      //진행상태체크
+      let param = {};
+      // callOpenApi("", param, successFn, errorFn);
+      const successFn = (res)=> {
+        setProgState(res.data);
+    
+      }
+      const errorFn = ()=> {
   
-  const errorFn = ()=> {
-  
-  }
-  if(authorization(null)) { //토큰있음
-    //진행상태체크
-    let param = {};
-    callOpenApi("", param, successFn, errorFn);
-    switch(progState) {
-      case "" : 
-        navigate(
-          PathConstants.GUIDE_DETAIL,
-          {}
-        );
+      }
+      
+      if(routePath != "") {
+        alert(routePath);
+        
+      }
     }
+  }, []);
+  useEffect(()=> {
+    if(!!progState) {
+      switch(progState) {
+        case "first" :
+          navigate(PathConstants.PREJUDGE_CUSTAGREE);
+          break;
+        default : 
+          navigate(PathConstants.GUIDE_DETAIL);
+      }
+    }
+  }, [progState]);
+
+  
+  
+    
+    
+  console.log("authorization", authorization(null));
+  if(authorization(null)) { //토큰있음
+    alert("토큰있음");
+    tokenYn = true;
+    return (
+      null
+    );
 
   }else { //토큰없음
-    const [show, setShow] = useState(true);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
     return (
       <AlertModal 
         show={show}
@@ -43,7 +76,7 @@ export default ()=> {
         btnNm={["확인", "취소"]}
         onClickFn={(btnIdx) => {
           if(btnIdx === 0) {
-            window.location.href = loginDomain() + "/COM001/login.do?callType=spa";
+            oslLogin();
           }else {
             handleClose();
             navigate(

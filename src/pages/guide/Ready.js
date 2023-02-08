@@ -15,6 +15,7 @@ import collectData from "../../modules/constants/collectData";
 import { getClientOs, loginDomain } from "./../../modules/common/boxlogin.js";
 import { oslLogin, oslLogout} from "./../../modules/common/oslLogin.js";
 import { getSessionData } from "../../modules/common/tokenBase";
+import Redirect from "../common/Redirect.js";
 
 /**
  * 화면명
@@ -30,8 +31,7 @@ function Ready(props) {
   function cbOslBtn() {
 
     //console.log(getSessionData());
-    oslLogin();
-
+    navigate("/");
     //console.log(loginDomain());
     // navigate(
     //   PathConstants. PREJUDGE_CUSTAGREE,

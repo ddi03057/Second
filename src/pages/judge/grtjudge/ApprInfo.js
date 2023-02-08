@@ -13,6 +13,9 @@ import OslHeader from "../../../modules/components/OslHeader";
 import OslBtn from "../../../modules/components/OslBtn";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
+import callOpenApi from "../../../modules/common/tokenBase";
+import { useLayoutEffect } from "react";
+import API from "../../../modules/constants/API";
 
 /**
  * 화면명 : 보증 승인 내역
@@ -22,6 +25,10 @@ import collectData from "../../../modules/constants/collectData";
  */
 function ApprInfo(props) {
 
+  let apprInfoData = {};
+  useLayoutEffect(()=> {
+    callOpenApi(API.LONEXECUTE.LONEXECUTE_APPRINFO, {}, api1SuccessFn, api1ErrorFn);
+  },[]);
   let navigate = useNavigate();
 
   function cbOslBtn() {
@@ -30,14 +37,15 @@ function ApprInfo(props) {
     //   );
   }
 
-  // const { state } = useLocation();
-
-  // const userResult = state.result;
-
-  // if (userResult === true) {
-
-  return (
-    <><div className="wrapper">
+  const api1SuccessFn = (res)=> {
+    apprInfoData = res.data;
+  }
+  const api1ErrorFn = ()=> {
+    
+  }
+  if(apprInfoData.rslt_data === "0000") {
+    return (
+      <>
       <OslHeader headerNm={props.headerNm} />
       <div className="container">
         <div className="content">
@@ -50,39 +58,39 @@ function ApprInfo(props) {
               <div className="info-wrap">
                 <div className="info-box">
                   <span className="tit fc-gray">기업명</span>
-                  <span className="txt fc-dark ta-r">기은상사</span>
+                  <span className="txt fc-dark ta-r">기은상사{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">대표자명</span>
-                  <span className="txt fc-dark ta-r">홍길동</span>
+                  <span className="txt fc-dark ta-r">홍길동{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보증기</span>
-                  <span className="txt fc-dark ta-r">서울신용보증재</span>
+                  <span className="txt fc-dark ta-r">서울신용보증재{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보증서 발급금액</span>
-                  <span className="txt fc-dark ta-r">30,000,000원</span>
+                  <span className="txt fc-dark ta-r">30,000,000원{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보증서 발급</span>
-                  <span className="txt fc-dark ta-r">2022. 06. 23</span>
+                  <span className="txt fc-dark ta-r">2022. 06. 23{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보증서 만기일</span>
-                  <span className="txt fc-dark ta-r">2021. 07. 01</span>
+                  <span className="txt fc-dark ta-r">2021. 07. 01{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">담당 영업점</span>
-                  <span className="txt fc-dark ta-r">을지로지점</span>
+                  <span className="txt fc-dark ta-r">을지로지점{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">예상보증료</span>
-                  <span className="txt fc-dark ta-r">0.0%</span>
+                  <span className="txt fc-dark ta-r">0.0%{apprInfoData}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">대출실행기</span>
-                  <span className="txt fc-dark ta-r">9999.01.01</span>
+                  <span className="txt fc-dark ta-r">9999.01.01{apprInfoData}</span>
                 </div>
               </div>
             </section>
@@ -112,33 +120,41 @@ function ApprInfo(props) {
             }} />
         </div>
       </div>
-    </div>
-      {/* 대출 실패
-     } else  {  
-         return (
-             <>
-           <div class="container">
-                <div class="content">
-            <div class="content-body approval-empty">
-                <div class="content-top">
-                    <p class="top-tit">대출 실행 <b>가능한 보증서</b><br /><b>내역이 없습니다.</b></p>
-                </div>
-                <div class="section line-tf4">
-                    <p class="fs18 lh30">* 보증승인 관련한 자세한 사항은 IBK 고객센터 또는 가까운 영업점으로 문의해 주시기 바랍니다.</p>
-                </div>
+      </>
+    )
+  }else {
+    if("내역이 없으면") {
+    return (
+      <>
+      <OslHeader headerNm={props.headerNm} />
+      <div class="container">
+        <div class="content">
+          <div class="content-body approval-empty">
+            <div class="content-top">
+              <p class="top-tit">대출 실행 <b>가능한 보증서</b><br /><b>내역이 없습니다.</b></p>
             </div>
-            <div class="content-footer">
-                <button type="button" class="btn btn-lg default-bg">
-                    <span class="txt">확인</span>
-                </button>
+            <div class="section line-tf4">
+              <p class="fs18 lh30">* 보증승인 관련한 자세한 사항은 IBK 고객센터 또는 가까운 영업점으로 문의해 주시기 바랍니다.</p>
             </div>
+          </div>
+          <div class="content-footer">
+            <button type="button" class="btn btn-lg default-bg">
+              <span class="txt">확인</span>
+            </button>
+          </div>
         </div>
-    </div>
-             </>
-         )
-     } */}
-    </>
-  )
+      </div>
+      </>
+    );
+    }else {
+      //에러
+      return (
+        <>에러페이지</>
+      )
+    }
+  }
+
+
 }
 
 export default ApprInfo;

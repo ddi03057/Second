@@ -119,7 +119,7 @@ export const authorization = ( callback )=> {
 	
 	if( isSessionExpire() ){
 		console.log("SessionExpire=true");
-		refreshAccessToken( callback );				
+		if(refreshAccessToken( callback )) return true;	
 	}
 	else{
 		console.log("SessionExpire=false");
@@ -136,7 +136,7 @@ function refreshAccessToken( callback ){
 		callback(null);
 	}
 	else{
-		console.log("SessionRefreshExpire==>false");
+		console.log("SessionRefreshExpire==>false", callback);
 		if(callback === null) return true;
 		//var refreshToken = getRefreshToken();
 		var refreshToken = getSessionRefreshToken();
