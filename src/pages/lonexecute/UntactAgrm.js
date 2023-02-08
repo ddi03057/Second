@@ -19,6 +19,7 @@ import OslHeader from "../../modules/components/OslHeader";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
 import FullModal from "../../modules/components/FullModal";
+import callOpenApi from "../../modules/common/tokenBase.js"
 
 const untactAgrmData = collectData("UntactAgrm");
 
@@ -52,6 +53,13 @@ function UntactAgrm(props) {
     if (checkItems.filter((data) => data === 1).length === 16 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
       //다음화면이동
       //navigate(PathConstants.PREJUDGE_SUITTEST);
+      callOpenApi("/api/osl000/pgstInq",{}, function(res) {
+        console.log("!!!");
+        console.log(res);
+        //navigate(PathConstants.PREJUDGE_SUITTEST);
+      },function(e) {
+        alert(e);
+      });
     } else if (checkItems.find((data) => data === 1) && (!!checkItems.find((data) => data === 99) || checkItems.findIndex((data) => data === 0) > -1)) { //한개이상 체크 및 한개이상 체크해제상태
       setAgreeBtnNm(ONE_BTN_NM);
       setDisabledYn(true);
@@ -137,7 +145,8 @@ function UntactAgrm(props) {
                   checkItems={checkItems}
                   setCheckItems={setCheckItems}
                   userResult={userResult}
-                  setUserResult={setUserResult} />
+                  setUserResult={setUserResult} 
+                />
               </div>
             </div>
             <OslBtn
@@ -167,7 +176,7 @@ function UntactAgrm(props) {
               copy[contId] = 1;
               setCheckItems(copy);
             } else {
-              setCheckItems([1, 1, 1, 1, 1, 1, 1]);
+              setCheckItems([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
             }
 
           }}
@@ -195,9 +204,10 @@ function ContentList(props) {
                   name="agree_terms_11"
                   id={idx}
                   className="check-input blind"
+                  checked={props.checkItems[data.id]===99?false:props.checkItems[data.id]===0?false:true}
                   onChange={(e) => {
                     let copy = [...props.checkItems];
-                    copy[idx] = copy[idx] === 0 ? 0 : 1;
+                    copy[idx] = copy[idx] === 99 || copy[idx] === 0 ? 1 : 0;
                     props.setCheckItems(copy);
                   }} />
                 <label htmlFor={idx} className="check-label no-pop">{data.title}</label>
@@ -217,9 +227,10 @@ function ContentList(props) {
                 name="agree_terms_11"
                 id={idx}
                 className="check-input blind"
+                checked={props.checkItems[data.id]===99?false:props.checkItems[data.id]===0?false:true}
                 onChange={(e) => {
                   let copy = [...props.checkItems];
-                  copy[idx] = copy[idx] === 0 ? 0 : 1;
+                  copy[idx] = copy[idx] === 99 || copy[idx] === 0 ? 1 : 0;
                   props.setCheckItems(copy);
                 }}/>
                 <label htmlFor={idx} className="check-label no-pop">{data.title}</label>

@@ -166,6 +166,7 @@ function CustAgree(props) {
               <div className="agree-form">
                 <p key="key-000" className="box-chk">
                   <input type="checkbox" name="agree_terms_10" id="agree_terms_10" className="check-input blind" 
+                    checked={checkItems[7]===99?false:checkItems[7]===0?false:true}
                     onChange={(e)=>{
                       
                       let copy = [...checkItems];
@@ -178,6 +179,7 @@ function CustAgree(props) {
                 </p>
                 <p key="key-001" className="box-chk">
                   <input type="checkbox" name="agree_terms_11" id="agree_terms_11" className="check-input blind" 
+                    checked={checkItems[8]===99?false:checkItems[8]===0?false:true}
                     onChange={(e)=>{
                       
                       let copy = [...checkItems];
