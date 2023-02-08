@@ -32,6 +32,7 @@ import Index from './pages/guide/Index.js';
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 const ApplyInfoInput = lazy(() => import('./pages/lonexecute/ApplyInfoInput.js'));
+const Redirect = lazy(()=> import('./pages/common/Redirect.js'));
 
 //라우터 목록 정의
 function Routing() {
@@ -42,6 +43,7 @@ function Routing() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
+        <Route path="/" element={<Redirect />} />
         <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
         <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />

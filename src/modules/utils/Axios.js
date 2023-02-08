@@ -53,7 +53,8 @@ instance.interceptors.request.use(
 
     config.headers = Object.assign(
       config.headers,
-      { "appKey": true?process.env.REACT_APP_LRB_APP_KEY:process.env.REACT_APP_MNB_APP_KEY }
+      { "appKey": ""//true?process.env.REACT_APP_LRB_APP_KEY:process.env.REACT_APP_MNB_APP_KEY 
+      }
     );
     config.data = JSON.stringify(config.data);
 

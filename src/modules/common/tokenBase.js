@@ -123,6 +123,7 @@ export const authorization = ( callback )=> {
 	}
 	else{
 		console.log("SessionExpire=false");
+		if(callback === null) return true;
 		callback( getSessionData() );	
 	}
 }
@@ -131,11 +132,12 @@ function refreshAccessToken( callback ){
 	
 	if( isSessionRefreshExpire() ) {
 		console.log("SessionRefreshExpire==>true");
+		if(callback === null) return false;
 		callback(null);
 	}
 	else{
 		console.log("SessionRefreshExpire==>false");
-		
+		if(callback === null) return true;
 		//var refreshToken = getRefreshToken();
 		var refreshToken = getSessionRefreshToken();
 		
