@@ -8,9 +8,6 @@ function App() {
   let [objParam, setObjParam] = useState({bizNum: "12345", lonNum: "6789"});
   return (
     <>
-    
-    
-    
       <Context1.Provider value={{objParam}}>
       <div className="wrapper">
         <Routing />

@@ -26,18 +26,22 @@ import { useEffect } from "react";
  */
 
 
+
 function DataCollect(props) {
 
   const [disabledYn, setDisabledYn] = useState(true);
   const [showDistricts, setShowDistricts] = useState(false);
   const handleCloseDistricts = () => setShowDistricts(false); document.body.style.overflow = "";
   const handleShowDistricts = () => setShowDistricts(true); document.body.style.overflow = "hidden";
-  const [showSido, setShowSido] = useState(false);
-  const handleCloseSido = () => setShowSido(false); document.body.style.overflow = "";
-  const handleShowSido = () => setShowSido(true); document.body.style.overflow = "hidden";
-  const [showSigungu, setShowSigungu] = useState(false);
-  const handleCloseSigungu = () => setShowSigungu(false); document.body.style.overflow = "";
-  const handleShowSigungu = () => setShowSigungu(true); document.body.style.overflow = "hidden";
+  const [active, setActive] = useState("");
+
+  const clicked = (e) => {
+    const clicked = e.target.closest('.bottom-inner');
+    if(clicked) return;
+    else{
+      setActive("")
+    }
+  }
 
 
   let [fade, setFade] = useState('');
@@ -55,25 +59,25 @@ function DataCollect(props) {
 
   let navigate = useNavigate();
 
-  const DataCollect = async () => {
-    const res = await request({
-      method: "post",
-      url: API.PREJUDGE_DATACOLLECT,
-      data: {}
-    })
-      .then((response) => {
+  // const DataCollect = async () => {
+  //   const res = await request({
+  //     method: "post",
+  //     url: API.PREJUDGE_DATACOLLECT,
+  //     data: {}
+  //   })
+  //     .then((response) => {
 
-        return response;
-      })
+  //       return response;
+  //     })
 
-      .catch((error) => {
-        console.log("error : ", error);
-      });
-  }
+  //     .catch((error) => {
+  //       console.log("error : ", error);
+  //     });
+  // }
 
-  useLayoutEffect(() => {
-    DataCollect()
-  }, [])
+  // useLayoutEffect(() => {
+  //   DataCollect()
+  // }, [])
 
 
 
@@ -81,11 +85,12 @@ function DataCollect(props) {
 
 
   }
+  
 
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
-      <div className="container">
+      <div className="container" >
         <div className="content">
           <div className="content-body">
             <div className="content-top">
@@ -149,9 +154,6 @@ function DataCollect(props) {
                             handleShowDistricts();
                           }}
                         >
-                          <option value="">선택불가</option>
-                          <option value="">선택1</option>
-                          <option value="">선택2</option>
                         </select>
                         <span className="radio"></span>
                       </label>
@@ -171,19 +173,23 @@ function DataCollect(props) {
             }} />
         </div>
       </div>
-      {showDistricts && <ViewDistricts show={showDistricts} handleClose={handleCloseDistricts} fade={fade}></ViewDistricts>}
-      {showSido && <ViewSido show={showSido} handleClose={handleCloseSido}></ViewSido>}
-      {showSigungu && <ViewSigungu show={showSigungu} handleClose={handleCloseSigungu}></ViewSigungu>}
+      {showDistricts && <ViewDistricts clicked={clicked} active={active} setActive={setActive} show={showDistricts} handleClose={handleCloseDistricts} fade={fade}></ViewDistricts>}
     </>
   )
 }
 
+
 function ViewDistricts(props) {
   const showYn = props.show;
+  useEffect(()=> {
+    setTimeout(()=> props.setActive(" active"),10);
+  }, [showYn])
+  
 
   return (
 
-    <div id="bottom01" className="bottom-sheet" style={{ display: showYn ? "block" : "none" }}>
+    <div id="bottom01" className={"bottom-sheet" + (showYn ? props.active : '')}
+    onClick={(e)=> props.clicked(e)}>
       <div className="bottom-inner">
         <div className="bottom-header">
           <p className="title fc-01">시,도 선택</p>
@@ -198,143 +204,63 @@ function ViewDistricts(props) {
         <div className="bottom-content">
           <div className="select-box">
             <ul className="select-btn-list col2">
-              <li>
-                <button><span>서울특별시</span></button>
-              </li>
+            <li>
+                        <button><span>서울특별시</span></button>
+                    </li>
+                    <li>
+                        <button><span>부산광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>대구광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>인천광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>광주광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>대전광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>울산광역시</span></button>
+                    </li>
+                    <li>
+                        <button><span>경기도</span></button>
+                    </li>
+                    <li>
+                        <button><span>강원도</span></button>
+                    </li>
+                    <li>
+                        <button><span>충청북도</span></button>
+                    </li>
+                    <li>
+                        <button><span>충청남도</span></button>
+                    </li>
+                    <li>
+                        <button><span>전라북도</span></button>
+                    </li>
+                    <li>
+                        <button><span>전라남도</span></button>
+                    </li>
+                    <li>
+                        <button><span>경상북도</span></button>
+                    </li>
+                    <li>
+                        <button><span>경상남도</span></button>
+                    </li>
+                    <li>
+                        <button><span>제주특별자치도</span></button>
+                    </li>
+                    <li>
+                        <button><span>세종특별자치시</span></button>
+                    </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
 
-  )
-}
-
-function ViewSido(props) {
-  const showYn = props.show;
-  return (
-    <div id="bottom01" className="bottom-sheet" style={{ display: showYn ? "block" : "none" }}>
-      <div className="bottom-inner">
-        <div className="bottom-header">
-          <p className="title fc-01">시,도 선택</p>
-          <button type="button" className="btn btn-close"
-            onClick={() => {
-              props.handleClose();
-            }}
-          >
-            <span className="blind">닫기</span>
-          </button>
-        </div>
-        <div className="bottom-content">
-          <div className="select-box">
-            <ul className="select-btn-list col2">
-              <li>
-                <button><span>서울특별시</span></button>
-              </li>
-              <li>
-                <button><span>부산광역시</span></button>
-              </li>
-              <li>
-                <button><span>대구광역시</span></button>
-              </li>
-              <li>
-                <button><span>인천광역시</span></button>
-              </li>
-              <li>
-                <button><span>광주광역시</span></button>
-              </li>
-              <li>
-                <button><span>대전광역시</span></button>
-              </li>
-              <li>
-                <button><span>울산광역시</span></button>
-              </li>
-              <li>
-                <button><span>경기도</span></button>
-              </li>
-              <li>
-                <button><span>강원도</span></button>
-              </li>
-              <li>
-                <button><span>충청북도</span></button>
-              </li>
-              <li>
-                <button><span>충청남도</span></button>
-              </li>
-              <li>
-                <button><span>전라북도</span></button>
-              </li>
-              <li>
-                <button><span>전라남도</span></button>
-              </li>
-              <li>
-                <button><span>경상북도</span></button>
-              </li>
-              <li>
-                <button><span>경상남도</span></button>
-              </li>
-              <li>
-                <button><span>제주특별자치도</span></button>
-              </li>
-              <li>
-                <button><span>세종특별자치시</span></button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function ViewSigungu(props) {
-  const showYn = props.show;
-  return (
-    <div id="bottom01" className="bottom-sheet" style={{ display: showYn ? "block" : "none" }}>
-      <div className="bottom-inner">
-        <div className="bottom-header">
-          <p className="title fc-01">시,군,구 선택</p>
-          <button type="button" className="btn btn-close"
-            onClick={() => {
-              props.handleClose();
-            }}
-          >
-            <span className="blind">닫기</span>
-          </button>
-        </div>
-        <div className="bottom-content">
-          <div className="select-box">
-            <ul className="select-btn-list col2">
-              <li><button><span>강남구</span></button></li>
-              <li><button><span>강동구</span></button></li>
-              <li><button><span>강북구</span></button></li>
-              <li><button><span>강서구</span></button></li>
-              <li><button><span>관악구</span></button></li>
-              <li><button><span>광진구</span></button></li>
-              <li><button><span>구로구</span></button></li>
-              <li><button><span>금천구</span></button></li>
-              <li><button><span>노원구</span></button></li>
-              <li><button><span>도봉구</span></button></li>
-              <li><button><span>동대문구</span></button></li>
-              <li><button><span>동작구</span></button></li>
-              <li><button><span>마포구</span></button></li>
-              <li><button><span>서대문구</span></button></li>
-              <li><button><span>서초구</span></button></li>
-              <li><button><span>성동구</span></button></li>
-              <li><button><span>성북구</span></button></li>
-              <li><button><span>송파구</span></button></li>
-              <li><button><span>동작구</span></button></li>
-              <li><button><span>마포구</span></button></li>
-              <li><button><span>서대문구</span></button></li>
-              <li><button><span>서초구</span></button></li>
-              <li><button><span>성동구</span></button></li>
-              <li><button><span>성북구</span></button></li>
-              <li><button><span>송파구</span></button></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
   )
 }
 
