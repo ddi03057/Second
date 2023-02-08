@@ -1,6 +1,11 @@
+import axios from "axios";
+import { getCookie } from "./boxlogin";
+import oslLogin from "./oslLogin";
+
 /**
  * 주의사항 : 반드시 env.js 가 import 되어야 한다.
  */
+var _APP_KEY          = "l7xxK128ZveJ93TckkQ3lfiy4BBL8XGHeJJP";
 var _STORAGE_KEY = "session";
 var _SESSION_KEY = "SI";
 
@@ -26,7 +31,7 @@ var _GET_METHOD = "GET";
 
 var _REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
 
-
+var _REFRESH_TOKEN_EXPIRESIN = 1800;
 
 
 /**
@@ -35,6 +40,256 @@ var _REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
 //var _STORAGE = localStorage;	
 var _STORAGE = sessionStorage;
 
+/*
+1. authorization(callback)
+2. isSessionExpire()
+3. refreshAccessToken(callback)
+4. isSessionRefreshExpire()
+
+*/
+
+//callOpenApi
+export default ( uri, data, successCB, errorCB )=> {
+	
+	//console.log( "callOpenApi: uri="+uri );
+	//console.log( "callOpenApi: data="+JSON.stringify(data,null,2) );
+	
+	authorization( async function( oAuth ) {
+		
+		console.log("authorization");
+		console.log(oAuth);
+		console.log(oAuth.accessToken);
+		var successCallBack = successCB || AjaxSuccessHandler;
+		var errorCallBack = errorCB || AjaxErrorHandler;
+		var appKey = _APP_KEY;
+		var sendData = data || {};
+
+		// if( oAuth == null || oAuth.accessToken == null ) {
+		// 	oslLogin();
+		// 	return ;
+		// }
+		
+		let configData = {
+			headers: {
+				"Content-Type": "application/json",
+				"appKey": "l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL",
+				"Authorization": oAuth.tokenType+" "+oAuth.accessToken
+			}
+		}
+		console.log(getCookie("auth"));
+		console.log(configData);
+		await axios.post(
+			"/api2/" + uri,
+			JSON.stringify(sendData),
+			configData
+		).then((res)=> {
+			successCallBack(res);
+		}).catch((jqXHR, textStatus, exception, errorThrown)=> {
+			errorCallBack(jqXHR, textStatus, exception, errorThrown);
+		});
+		console.log(2222222);
+		// $.ajax({
+		// 	type: _POST_METHOD,
+		// 	url: _OPEN_API_URL + uri,
+		// 	beforeSend: function (xhr){
+		// 		xhr.setRequestHeader( "Content-Type", "application/json"  );
+		// 		xhr.setRequestHeader( "appKey", appKey );
+				
+		// 		if( oAuth == null || oAuth.accessToken == null ){
+		// 			//alert("로그인 이후 이용하시기 바랍니다.");
+		// 			xhr.abort();
+		// 		}
+		// 		else{
+		// 			xhr.setRequestHeader( "Authorization", oAuth.tokenType+" "+oAuth.accessToken );				
+		// 		}			
+				
+		// 	},
+		// 	data: JSON.stringify(sendData),
+		// 	success: function (data){
+		// 		successCallBack(data);
+		// 	},
+		// 	error: function (jqXHR, textStatus, exception, errorThrown){
+		// 		errorCallBack(jqXHR, textStatus, exception, errorThrown);
+		// 	}
+		// });
+	});
+}
+
+export const authorization = ( callback )=> {
+	
+	if( isSessionExpire() ){
+		console.log("SessionExpire=true");
+		refreshAccessToken( callback );				
+	}
+	else{
+		console.log("SessionExpire=false");
+		callback( getSessionData() );	
+	}
+}
+
+function refreshAccessToken( callback ){
+	
+	if( isSessionRefreshExpire() ) {
+		console.log("SessionRefreshExpire==>true");
+		callback(null);
+	}
+	else{
+		console.log("SessionRefreshExpire==>false");
+		
+		//var refreshToken = getRefreshToken();
+		var refreshToken = getSessionRefreshToken();
+		
+		if( refreshToken == null ){
+			callback(null);
+		}
+		else
+		{
+			//console.log("refreshToken==>"+refreshToken);
+			
+			var sendData = {
+					"appKey": _APP_KEY,
+					"refreshToken": refreshToken,
+					"grantType": _REFRESH_TOKEN_GRANT_TYPE
+			};
+
+			let configData = {
+				headers: {
+					"Content-Type": "application/json",
+					"appKey": _APP_KEY
+				}
+			}
+
+			axios.post(
+				"/api3/app/cm/v1/cmm300/tokenRefresh",
+				JSON.stringify(sendData),
+				configData
+			).then((res)=> {
+				updateSession(res, callback);
+			}).catch((jqXHR, textStatus, exception, errorThrown)=> {
+				callback(null);
+			});
+			
+			// $.ajax({
+			// 	type: _POST_METHOD,
+			// 	url: _OPEN_API_URL + _ACCESS_TOKEN_REFRESH_URI,
+			// 	beforeSend: function (xhr){
+			// 		xhr.setRequestHeader( "Content-Type", "application/json"  );
+			// 		xhr.setRequestHeader( "appKey", _APP_KEY );
+			// 	},
+			// 	data: JSON.stringify(sendData),
+			// 	success: function(data){
+			// 		//saveStorage(data);
+			// 		//updateStorage(data);
+			// 		//console.log( "refresh token success="+JSON.stringify(data,null,2) );
+			// 		updateSession(data, callback);
+			// 		//callback(data);
+			// 	},
+			// 	error: function (jqXHR, textStatus, exception, errorThrown){
+			// 		//AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown);
+			// 		callback(null);
+			// 	}
+			// });
+		}
+	}
+}
+
+function updateSession( newData, callback ){	
+	var data = getSessionData();
+	if( data ){
+		for(let key in newData ){
+			/**
+			 * Token 갱신시에 2개의 필드는 널이 리턴되므로 업데이트 하지 않음
+			 */
+			if( key !== "grantType" && key !== "refreshTokenExpiresIn" ){
+				data[key] = newData[key];
+			}
+		}
+	}
+	else{
+		data = newData;
+	}
+	
+	let configData = {
+		headers: {
+			"Content-Type": "application/json"			
+		}
+	}
+	axios.post(
+		"/api1/COM001/getRefreshToken.do", 
+		JSON.stringify(data), 
+		configData
+	).then((token) => {
+		console.log(token);
+		saveSession(token.si);
+		callback(data);
+	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
+		AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown);
+	});
+/*
+	$.ajax({
+		type: _POST_METHOD,
+		url: "/COM001/getRefreshToken.do",
+		beforeSend: function (xhr){
+			xhr.setRequestHeader( "Content-Type", "application/json"  );
+		},
+		data: JSON.stringify(data),
+		success: function(token){
+			//console.log( "token="+JSON.stringify(token,null,2) );
+			saveSession(token.si);
+			//console.log( "data2="+JSON.stringify(data,null,2) );
+			callback(data);
+		},
+		error: function (jqXHR, textStatus, exception, errorThrown){
+			AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown);
+		}
+	});
+*/
+}
+
+export const getSessionData = ()=> {
+	var token = _STORAGE.getItem(_SESSION_KEY);
+	//console.log("token="+JSON.stringify(token,null,2));
+	if( token == null || token === undefined ){
+		return null;
+	}
+	return parseJwt(token);	
+}
+
+export const isSessionExpire = ()=> {	
+	if( getSessionData() == null ){
+		return true;
+	}
+	
+	console.log("isSessionExpire: session time="+getSessionValue(_EXPIRE_KEY)+" cur time="+getCurTimestamp());
+	
+	if( getSessionValue(_EXPIRE_KEY) < getCurTimestamp() ){
+		return true;
+	}
+	return false;
+}
+
+export const isSessionRefreshExpire = ()=> {	
+	if( getSessionData() == null ){
+		return true;
+	}	
+	if( getSessionValue(_REFRESH_TOKEN_EXPIRE_KEY) < getCurTimestamp() ){
+		return true;
+	}
+	return false;
+}
+
+function getCurTimestamp(){
+	return Math.floor(new Date().getTime()/1000);
+}
+
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+	return JSON.parse(jsonPayload);
+}
 
 
 function getStorageObj(data){
@@ -64,7 +319,7 @@ function updateStorage( input ){
 	var data = getStorageData();
 	var newData = getStorageObj(input);
 	if( data ){
-		for( key in newData ){
+		for(let key in newData ){
 			data[key] = newData[key];
 		}
 		_STORAGE.setItem(_STORAGE_KEY,JSON.stringify(data));
@@ -74,58 +329,12 @@ function updateStorage( input ){
 	}
 }
 
-function updateSession( newData, callback ){	
-	var data = getSessionData();
-	if( data ){
-		for( key in newData ){
-			/**
-			 * Token 갱신시에 2개의 필드는 널이 리턴되므로 업데이트 하지 않음
-			 */
-			if( key !== "grantType" && key !== "refreshTokenExpiresIn" ){
-				data[key] = newData[key];
-			}
-		}
-	}
-	else{
-		data = newData;
-	}
-	
-	//console.log( "data="+JSON.stringify(data,null,2) );
-	
-	$.ajax({
-		type: _POST_METHOD,
-		url: "/COM001/getRefreshToken.do",
-		beforeSend: function (xhr){
-			xhr.setRequestHeader( "Content-Type", "application/json"  );
-		},
-		data: JSON.stringify(data),
-		success: function(token){
-			//console.log( "token="+JSON.stringify(token,null,2) );
-			saveSession(token.si);
-			//console.log( "data2="+JSON.stringify(data,null,2) );
-			callback(data);
-		},
-		error: function (jqXHR, textStatus, exception, errorThrown){
-			AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown);
-		}
-	});
-}
-
 function getStorageData(){
 	var sessionData = _STORAGE.getItem(_STORAGE_KEY);
 	if( sessionData === undefined ){
 		return null;
 	}
 	return JSON.parse(sessionData);	
-}
-
-function getSessionData(){
-	var token = _STORAGE.getItem(_SESSION_KEY);
-	//console.log("token="+JSON.stringify(token,null,2));
-	if( token == null || token === undefined ){
-		return null;
-	}
-	return parseJwt(token);	
 }
 
 function getStorageValue( key ){	
@@ -146,28 +355,11 @@ function getSessionValue( key ){
 	return null;
 }
 
-function getCurTimestamp(){
-	return Math.floor(new Date().getTime()/1000);
-}
-
 function isExpire(){	
 	if( getStorageData() == null ){
 		return true;
 	}	
 	if( getStorageValue(_EXPIRE_KEY) < getCurTimestamp() ){
-		return true;
-	}
-	return false;
-}
-
-function isSessionExpire(){	
-	if( getSessionData() == null ){
-		return true;
-	}
-	
-	console.log("isSessionExpire: session time="+getSessionValue(_EXPIRE_KEY)+" cur time="+getCurTimestamp());
-	
-	if( getSessionValue(_EXPIRE_KEY) < getCurTimestamp() ){
 		return true;
 	}
 	return false;
@@ -183,30 +375,8 @@ function isRefreshExpire(){
 	return false;
 }
 
-function isSessionRefreshExpire(){	
-	if( getSessionData() == null ){
-		return true;
-	}	
-	if( getSessionValue(_REFRESH_TOKEN_EXPIRE_KEY) < getCurTimestamp() ){
-		return true;
-	}
-	return false;
-}
-
 function clearStorage(){
 	_STORAGE.clear();
-}
-
-function authorization( callback ){
-	
-	if( isSessionExpire() ){
-		//console.log("SessionExpire=true");
-		refreshAccessToken( callback );				
-	}
-	else{
-		//console.log("SessionExpire=false");
-		callback( getSessionData() );	
-	}
 }
 
 
@@ -222,100 +392,7 @@ function getSessionRefreshToken(){
 	return isSessionRefreshExpire() ? null : getSessionValue( _REFRESH_TOKEN_KEY );
 }
 
-function refreshAccessToken( callback ){
-	
-	if( isSessionRefreshExpire() ) {
-		//console.log("SessionRefreshExpire==>true");
-		callback(null);
-	}
-	else{
-		//console.log("SessionRefreshExpire==>false");
-		
-		//var refreshToken = getRefreshToken();
-		var refreshToken = getSessionRefreshToken();
-		
-		if( refreshToken == null ){
-			callback(null);
-		}
-		else
-		{
-			//console.log("refreshToken==>"+refreshToken);
-			
-			var sendData = {
-					"appKey": _APP_KEY,
-					"refreshToken": refreshToken,
-					"grantType": _REFRESH_TOKEN_GRANT_TYPE
-			};
-			
-			$.ajax({
-				type: _POST_METHOD,
-				url: _OPEN_API_URL + _ACCESS_TOKEN_REFRESH_URI,
-				beforeSend: function (xhr){
-					xhr.setRequestHeader( "Content-Type", "application/json"  );
-					xhr.setRequestHeader( "appKey", _APP_KEY );
-				},
-				data: JSON.stringify(sendData),
-				success: function(data){
-					//saveStorage(data);
-					//updateStorage(data);
-					//console.log( "refresh token success="+JSON.stringify(data,null,2) );
-					updateSession(data, callback);
-					//callback(data);
-				},
-				error: function (jqXHR, textStatus, exception, errorThrown){
-					//AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown);
-					callback(null);
-				}
-			});
-		}
-	}
-}
-
-
-function callOpenApi( uri, data, successCB, errorCB ){
-	
-	//console.log( "callOpenApi: uri="+uri );
-	//console.log( "callOpenApi: data="+JSON.stringify(data,null,2) );
-	
-	authorization( function( oAuth ) {
-		
-		
-		
-		var successCallBack = successCB || AjaxSuccessHandler;
-		var errorCallBack = errorCB || AjaxErrorHandler;
-		var appKey = _APP_KEY;
-		var sendData = data || {};
-		
-		//console.log("sendData="+ JSON.stringify(sendData,null,2));
-		//console.log("callOpenApi: oAuth=",JSON.stringify(oAuth,null,2));
-		
-		$.ajax({
-			type: _POST_METHOD,
-			url: _OPEN_API_URL + uri,
-			beforeSend: function (xhr){
-				xhr.setRequestHeader( "Content-Type", "application/json"  );
-				xhr.setRequestHeader( "appKey", appKey );
-				
-				if( oAuth == null || oAuth.accessToken == null ){
-					//alert("로그인 이후 이용하시기 바랍니다.");
-					xhr.abort();
-				}
-				else{
-					xhr.setRequestHeader( "Authorization", oAuth.tokenType+" "+oAuth.accessToken );				
-				}			
-				
-			},
-			data: JSON.stringify(sendData),
-			success: function (data){
-				successCallBack(data);
-			},
-			error: function (jqXHR, textStatus, exception, errorThrown){
-				errorCallBack(jqXHR, textStatus, exception, errorThrown);
-			}
-		});
-	});
-}
-
+/*
 function getOpenApi( uri, data, successCB, errorCB ){
 	
 	var successCallBack = successCB || AjaxSuccessHandler;
@@ -404,7 +481,7 @@ function callOpenApiSecret( uri, data, secret, successCB, errorCB ){
 		}
 	});
 }
-
+*/
 
 function AjaxSuccessHandler(data){
 	// skip...
@@ -433,7 +510,7 @@ function AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown) {
     alert(msg);
 }
 
-function checkLogin( callback ){
+export function checkLogin( callback ){
 	if( isSessionExpire() ){
 		callback(!isSessionRefreshExpire());
 	}
@@ -442,7 +519,7 @@ function checkLogin( callback ){
 	}
 }
 
-function isValidSession(){
+export function isValidSession(){
 	if( isSessionExpire() ){
 		return !isSessionRefreshExpire();
 	}
@@ -479,14 +556,5 @@ function getProfileAthrCd() {
 function getProfileBsnnNo() {
 	var p = getSessionValue( _PROFILE_BSNN_NO );
 	return (p == null || p == "null" || p == "undefined") ? "" : String(p);
-}
-
-function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
 }
 

@@ -28,91 +28,41 @@
     <!-- 퍼블css -->
     <link rel="stylesheet" href="/assets/css/import.css" />
     <!-- 퍼블css -->
+    <link href="%PUBLIC_URL%/esg/esglogin.css" rel="stylesheet" />
 
     <title>React App</title>
-    <!-- 로그인추가 start -->
-    <script type="text/javascript" src="./common/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="./common/jquery.tmpl.min.js"></script>
-    <script type="text/javascript" src="./common/tokenBase.js"></script>
-    <script type="text/javascript" src="./common/boxlogin.js"></script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {  
-      function oslLogin() {
-        if(getClientOs() == "PC") {
-          alert("pc는 지원하지 않습니다.");
-          location.href = loginDomain()+"/COM001/login.do?callType=spa";
-        }else {
-          location.href = loginDomain()+"/COM001/login.do?callType=spa";
-        }
-        
-      }
-      function oslLogout() {
-        // 쿠키정리
-        deleteCookie("idSave");
-        deleteCookie("auth");
-        deleteCookie("cookieExpires");
-        sessionStorage.clear();
-
-        location.href = loginDomain() + "/magicsso/SPLogout.jsp?nextPage=" + location.origin+"/ui/spa/index.html";        
-      }
-      if(getCookie("auth") != undefined){
-        if(isValidSession()){
-          var data = parseJwt(sessionStorage.getItem("SI"));
-          // $("#headerAlertWrap").show();
-          // $("#liLoginBtn").hide();
-          // $("#liLogoutBtn").show();
+      
+      window.addEventListener("message", function(e) {
+        if(typeof e.data == "object"){
+          var obj = e.data;
+          console.log(obj);
           
-          // $("#gnbLoginBtn > span").text(data.lgnMnbrNm);
-        }else{
-          // $("#headerAlertWrap").hide();
-    
-          sessionStorage.setItem("callType", "spa");
-          
-          var host = location.host;
-          var boxName = host.substring(0, host.indexOf("."));
-          if(boxName.indexOf("local") > -1){
-            boxName = boxName.replace("local", "");
-          }else if(boxName.indexOf("dev") > -1){
-            boxName = boxName.replace("dev", "");
-          }else{
-            ;
+          if(obj.tokenInfo != undefined){
+            // 초기화
+            sessionStorage.clear();
+            sessionStorage.setItem("SI", obj.tokenInfo);
+            location.href = "/prejudge/custagree";
           }
           
-          try{
-            $("#ifrmPage").attr("src", loginDomain()+"/COM001/loginMain.do?boxName="+boxName);
-          }catch(e){
-            location.href = "/ui/spa/index.html";
+          }else if(typeof e.data == "string"){
+          // iframe 스크롤보이기
+          if("scroll_auto" == e.data){
+            document.querySelector("#ifrmPage").setAttribute("scrolling", "auto");
+          // iframe 스크롤보이기
+          }else if("scroll_no" == e.data){
+            document.querySelector("#ifrmPage").setAttribute("scrolling", "no");
+          // ESG자가진단 화면 호출
+          }else if("redirectBiz" == e.data){
+            location.href = "/consult/selectBiz";
+            // 로그인 화면 닫기
+          }else if("btn_close" == e.data){
+            document.querySelector(".pcLoginWrap").classList.remove("on");
           }
         }
-      }else{
-        // $("#headerAlertWrap").hide();
-        sessionStorage.clear();
-        // clearInterval(_alrtTimer);
-      }
-    });
-      // function esgLogin(){
-      //   if(getClientOs() == "PC"){
-      //     let element = `<div class="pcLoginWrap on" id="pcLoginWrap">
-      //                     <div class="bg"></div>
-      //                     <div class="pclayerPopCont">
-      //                       <iframe src="`+loginDomain()+"/COM001/login.do"+`" width="100%" height="100%" scrolling="auto" frameBorder="0" id="ifrmPage">이 브라우저는 iframe을
-      //                         지원하지 않습니다.
-      //                       </iframe>
-      //                     </div>
-      //                   </div>`;
-      //     $("body").prepend(element);
-      //   }else{
-      //     location.href=loginDomain()+"/COM001/login.do";
-      //   }
-      // }
-      // function esgCallbackInit(){
-      //   deleteCookie("auth");
-      //   $("#pcLoginWrap").remove();
-      //   window.location.href='/';
-      // }
+      });
     </script>
-  <!-- 로그인 추가 end -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

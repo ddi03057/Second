@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { Document, Page } from "react-pdf";
+//import { Document, Page } from "react-pdf";
 import Loading from "../../modules/components/Loading";
 
 const PdfViewer = memo((props)=> {
@@ -27,13 +27,14 @@ const PdfViewer = memo((props)=> {
   }
 
   return (
-    <Document file={{ url: "/api3"+props.pdfData.pdfvalue, httpHeaders: { 'X-CustomHeader': '40359820958024350238508234' }, withCredentials: true }} onLoadSuccess={onDocumentLoadSuccess} loading={<Loading />}>
-      {
-        Array.from(new Array(numPages), (el, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} width={1280/3-20} height={720/2} renderTextLayer={false} renderAnnotationLayer={false} onLoadSuccess={onPageLoadSuccess} loading={<Loading />}/>
-        ))
-      }
-    </Document>
+    // <Document file={{ url: "/api3"+props.pdfData.pdfvalue, httpHeaders: { 'X-CustomHeader': '40359820958024350238508234' }, withCredentials: true }} onLoadSuccess={onDocumentLoadSuccess} loading={<Loading />}>
+    //   {
+    //     Array.from(new Array(numPages), (el, index) => (
+    //       <Page key={`page_${index + 1}`} pageNumber={index + 1} width={1280/3-20} height={720/2} renderTextLayer={false} renderAnnotationLayer={false} onLoadSuccess={onPageLoadSuccess} loading={<Loading />}/>
+    //     ))
+    //   }
+    // </Document>
+    null
   );
 });
 
