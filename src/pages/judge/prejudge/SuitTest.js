@@ -8,6 +8,7 @@ import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
 import AlertModal from "../../../modules/components/AlertModal";
+import callOpenApi from "../../../modules/common/tokenBase";
 import { placeholder } from "@babel/types";
 import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
@@ -24,9 +25,20 @@ const suitTestData = collectData("SuitTest");
  * props항목별 설명
  */
 function SuitTest(props) {
-  // useEffect(()=> {
-  //   suitTestData = data("SuitTest");
-  // }, []);
+  useEffect(()=> {
+    //적합성적정성고객정보사전조회
+    //callOpenApi("", {}, api1SuccessFn, api1ErrorFn);
+  }, []);
+  const [age, setAge] = useState(36);
+  const [email, setEmail] = useState("testIbk@gmail.com");
+  const api1SuccessFn = (res)=> {
+    setAge(res.data.age);
+    setEmail(res.data.email);
+  }
+  const api1ErrorFn = ()=> {
+
+  }
+
   /**
    * 항목별 데이터 분리
    */
@@ -43,6 +55,8 @@ function SuitTest(props) {
   let arrTextData = [];
   suitTestData.find((data) => {
     if(data.type === "text") {
+      if(data.title==="연령") data["value"] = age;
+      if(data.title==="교부 받을 이메일 주소") data["value"] = email;
       arrTextData.push(data);
     }
   });
@@ -59,6 +73,7 @@ function SuitTest(props) {
   let [userCrdBru, setUserCrdBru] = useState("KCB"); //신용기관 선택값
   let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
   let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
+  let [alertBtnNm, setAlertBtnNm] = useState(["확인"]);
   let navigate = useNavigate(); //다음화면을 위한 navigate
 
    // popup
@@ -75,6 +90,13 @@ function SuitTest(props) {
   const handleClose = ()=> closePop();
   let [msgCont, setMsgCont] = useState("");
   const [successYn, setSuccessYn] = useState(false);
+
+  useEffect(()=> {
+    let copy = userResult;
+    copy[1] = age;
+    copy[11] = email;
+    setUserResult(copy);
+  }, [age, email]);
 
   useEffect(()=> {
     console.log(userResult);
@@ -99,6 +121,7 @@ function SuitTest(props) {
     const msg = validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr);
     
     if(!!msg) {
+      setAlertBtnNm(["확인"]);
       setMsgCont(msg);
       handleShow();
       //스크롤이동
@@ -106,10 +129,11 @@ function SuitTest(props) {
       
       //데이터 전송
       setSuccessYn(true);
+      setAlertBtnNm(["확인", "취소"]);
       setMsgCont("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
       handleShow();
       //alert("신청대출 실행 후 관련 계약서류를 입력하신 고객님의 이메일주소(" + userResult[11] + ")로 제공합니다.\n이메일주소가 맞는지 한번 더 확인바랍니다.");
-      SuitTest();
+      //SuitTest();
       
     }
     
@@ -193,6 +217,7 @@ function SuitTest(props) {
                           radioData={arrRadioData[data.radioId]} 
                           styleFormGroup={(data.radioId != 8)?"form-group":"form-group inline row2"} 
                           checked={userResult[data.id]}
+                          isDisabled={data.id===0 || data.id===2?true:false}
                           onChangeFn={(radioDataId)=> {
                             let copy = [...userResult];
                             copy[data.id] = radioDataId;
@@ -208,6 +233,7 @@ function SuitTest(props) {
                             styleInput=""
                             textData={arrTextData[data.textId]}
                             inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
+                            isDisabled={data.id===1 || data.id===11&&true}
                             onChangeFn={(value)=>{
                               if(data.id === 9) {
                                 setUserCrdScr(value);
@@ -282,20 +308,48 @@ function SuitTest(props) {
       <AlertModal
         show={show}
         msg={msgCont}
-        btnNm={["확인"]}
-        onClickFn={()=> {
+        btnNm={alertBtnNm}
+        onClickFn={(btnIdx)=> {
           handleClose();
-          if(successYn) {
-            //다음화면 이동
+          if(successYn && btnIdx===0) {
+            let param = {
+              oslLoapNo: "0014", //key
+              lfncAcmDcd: userResult[0], //여신금융상담소비자구분코드
+              age: userResult[1], // 연령
+              lfncLnugDcd: userResult[2], // 여신금융대출용도구분코드
+              lfncHlasDcd: userResult[3], //여신금융상담보유자산구분코드
+              lfncEnprPsntIncmDcd: userResult[4], //여신금융상담기업현재소득구분코드
+              lfncFtrAntcAnicDcd: userResult[5], //여신금융상담미래예상연간소득구분코드
+              lfncLbltDcd: userResult[6], //여신금융상담부채구분코드
+              lfncFxngExpdDcd: userResult[7], //여신금융상담고정지출구분코드
+              lfncOvduDcd: userResult[8], //여신금융상담연체구분코드
+              cdbuScr: userCrdScr, //cb점수 (신용점수)
+              lfncRepmWayDcd: userResult[10],//여신금융상담변제방법구분코드
+              cusEad: userResult[11], //고객이메일주소
+              lfncCrdtScrVainDcd: userCrdBru, //여신금융상담신용평가기관구분코드 01,02
+              
+            };
+            //callOpenApi(API.PREJUDGE.PREJUDGE_SUITTEST, param, api2SuccessFn, api2ErrorFn);
+            const api2SuccessFn = (res)=> {
+              if(res.data.rslt_msg === "0000") {}
+              //다음화면 이동
+              // navigate(
+              //   PathConstants.PREJUDGE_SUITRESULT,
+              //   {
+              //     state: {
+              //       result: userResult,
+              //       crdBru: userCrdBru,
+              //       crdScr: userCrdScr
+              //   }
+              // });
+            }
+
+            const api2ErrorFn = ()=> {
+
+            }
             navigate(
-              PathConstants.PREJUDGE_SUITRESULT,
-              {
-                state: {
-                  result: userResult,
-                  crdBru: userCrdBru,
-                  crdScr: userCrdScr
-              }
-            });
+              PathConstants.PREJUDGE_DATACOLLECT,
+            );
           }
         }}
       />
@@ -351,6 +405,7 @@ function RadioComponent(props) {
                   id={`sRadio${objRadioData.id}_${data.id}`} 
                   value="" 
                   checked={(props.checked === data.id) ? true : false}
+                  disabled={props.isDisabled ? true : false}
                   onChange={(e)=>{
                     props.onChangeFn(data.id);
                   }}

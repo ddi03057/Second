@@ -33,6 +33,7 @@ function TextComponent(props) {
               name={`text${objTextData.id}`}  
               id={`text${objTextData.id}`}
               placeholder={objTextData.placeholder}
+              disabled={props.isDisabled?true:false}
               onChange={(e) => {
                 props.onChangeFn(e.target.value);
               }} 
