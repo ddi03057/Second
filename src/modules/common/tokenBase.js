@@ -31,7 +31,7 @@ var _GET_METHOD = "GET";
 
 var _REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
 
-var _REFRESH_TOKEN_EXPIRESIN = 1800;
+var _REFRESH_TOKEN_EXPIRESIN = 3600;
 
 
 /**
@@ -49,7 +49,7 @@ var _STORAGE = sessionStorage;
 */
 
 //callOpenApi
-export default ( uri, data, successCB, errorCB )=> {
+export default async ( uri, data, successCB, errorCB )=> {
 	
 	//console.log( "callOpenApi: uri="+uri );
 	//console.log( "callOpenApi: data="+JSON.stringify(data,null,2) );

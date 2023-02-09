@@ -9,6 +9,8 @@ import TextComponent from "../common/TextComponent";
 import TitleComponent from "../common/TitleComponent";
 import API from "../../modules/constants/API.js";
 import request from "../../modules/utils/Axios";
+import callOpenApi from "../../modules/common/tokenBase";
+import { async } from "q";
 
 
 const applyInfoInput = collectData("ApplyInfoInput");
@@ -44,8 +46,7 @@ function ApplyInfoInput(props) {
       arrSeleectData.push(data);
     }
   });
-
-
+  let applyInfoInputData = {};
   let [showTitleYn, setShowTitleYn] = useState(true);
   let [showDirInputYn, setShowDirInupYn] = useState(false);
   let [styleInput, setStyleInput] = useState("");
@@ -61,18 +62,53 @@ function ApplyInfoInput(props) {
   //todo : 서버에서 가져온값으로 초기화
   let [userResult, setUserResult] = useState(["고객 적용 금리", { id: 0, value: "사업장운영자금" }, { id: 0, value: "1일" }, 99]);
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log(userResult);
+    await callOpenApi(
+      API.LONEXECUTE.LONEXECUTE_APPLYINFOINPUT,
+      {},
+      (res) => {
+        applyInfoInputData = res.data;
+        // 대출신청일
+        // 대출만기일
+        // 대출신청금액
+        // 보증승인금액
+        // 적용보증요율
+        // 납부보증율
+        // 상환방법(?)
+        // 기업명
+        // 특약사항(?)
+        // 인지세
+        // 만기일
+        // 고객적용금리
+        // 계좌번호목록
+      },
+      () => {
+      }
+    );
   }, [userResult]);
-  useLayoutEffect(() => {
-    console.log(applyInfoInput);
-  }, [])
   function cbOslBtn() {
     //todo : 다음페이지
     // navigate(
     //   PathConstants.GUIDE_READY
     //   );
     ApplyInfoInput();
+    // 대출신청일
+    // 대출만기일
+    // 대출신청금액
+    // 보증승인금액
+    // 적용보증요율
+    // 납부보증율
+    // 상환방법(?)
+    // 기업명
+    // 특약사항(?)
+    // 인지세
+    // 만기일
+    // 고객적용금리
+    // 자금용도
+    // 이자납입일코드
+    // 대출계좌번호
+
   }
 
   const ApplyInfoInput = async () => {

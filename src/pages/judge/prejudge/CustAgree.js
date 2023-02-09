@@ -7,7 +7,7 @@ import OslHeader from "../../../modules/components/OslHeader";
 import FullModal from "../../../modules/components/FullModal";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData.js";
-import callOpenApi from "../../../modules/common/tokenBase.js"
+import callOpenApi, { getSessionData } from "../../../modules/common/tokenBase.js"
 import request from "../../../modules/utils/Axios";
 
 import API from "../../../modules/constants/API.js";
@@ -24,7 +24,7 @@ const custAgreeData = collectData("CustAgree");
  */
 function CustAgree(props) {
 
-
+  console.log(getSessionData());
   //하단 동의하기버튼명
   const ALL_BTN_NM = "모두 동의하고 다음";
   const ONE_BTN_NM = "동의하고 다음";
