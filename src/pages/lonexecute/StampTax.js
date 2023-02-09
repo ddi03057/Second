@@ -35,11 +35,24 @@ function StampTax(props) {
 
   useEffect(() => {
     console.log(userResult)
-    if (userResult[0] === 1 && userResult[1] === 1 && userResult[2] === 1 && userResult[3] === 1 && userResult[4] === 1 && userResult[5] === 1) {
-      setVisible(!visible)
-    } else if (userResult[5] === 0 || userResult[0] === 0 || userResult[1] === 0 || userResult[2] === 0 || userResult[3] === 0 || userResult[4] === 0){
-      setVisible1(!visible)
+    if(userResult.find((data,idx)=> data === 99) === 99) {
+      setVisible2(false);
+      setVisible1(false);
     }
+    else if(userResult.find((data,idx)=> data===0) === undefined) {
+      //all 해당하지않음
+      setVisible2(true);
+      setVisible1(false);
+    }else {
+      setVisible2(false);
+      setVisible1(true);
+    }
+    // if (userResult[0] === 1 && userResult[1] === 1 && userResult[2] === 1 && userResult[3] === 1 && userResult[4] === 1 && userResult[5] === 1) {
+    //   setVisible(!visible)
+    // } else if (userResult[5] === 0 || userResult[0] === 0 || userResult[1] === 0 || userResult[2] === 0 || userResult[3] === 0 || userResult[4] === 0){
+    //   setVisible1(!visible)
+    // }
+
     
   },[userResult]);
 
@@ -48,7 +61,7 @@ function StampTax(props) {
       setDisabled(false)
     }
   })
-  const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const [visible1, setVisible1] = useState(false);
 
   let [disabled, setDisabled] = useState(true);
@@ -144,12 +157,12 @@ function StampTax(props) {
                   })}
                 </ol>
               </div>
-              {visible1 && <Check data= {stampTaxData}
+              {visible1 && <Check1 data= {stampTaxData}
                             userResult={userResult}
                             setUserResult={setUserResult} 
                             checkItems={checkItems}
                             handleSingleCheck={handleSingleCheck}/>}
-              {visible && <Check2  data={stampTaxData}
+              {visible2 && <Check2  data={stampTaxData}
                             userResult={userResult}
                             setUserResult={setUserResult} 
                             checkItems={checkItems}
@@ -182,7 +195,7 @@ function StampTax(props) {
     </>
   )
 }
-function Check(props) {
+function Check1(props) {
   return (
     <>
       <div className="terms-wrap">
