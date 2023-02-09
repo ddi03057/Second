@@ -8,8 +8,6 @@
 <script type="text/javascript">
 	var req = location.href.split("?");
 	var msg = req[1].split("=");
-	alert(msg[0]);
-	alert(msg[1]);
 	sessionStorage.clear();
 	sessionStorage.setItem("SI", msg[1]);
 	location.href = "/";
