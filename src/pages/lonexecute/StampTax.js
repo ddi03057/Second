@@ -224,15 +224,16 @@ function StampTax(props) {
                 link: "",
                 callbackId: cbOslBtn
               }} />
-          <AlertModal 
-            show={alertShow}
-            msg={ALERT_MSG}
-            btnNm={["확인"]}
-            onClickFn={()=> {
-              setAlertShow(false);
-            }}
-          />
-
+          {alertShow&&
+            <AlertModal 
+              show={alertShow}
+              msg={ALERT_MSG}
+              btnNm={["확인"]}
+              onClickFn={()=> {
+                setAlertShow(false);
+              }}
+            />
+          }
         </div>
       </div>
     </>

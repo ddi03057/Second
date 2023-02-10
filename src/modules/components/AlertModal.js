@@ -15,7 +15,7 @@ function AlertModal(props) {
     <div id="layer01" className="pop-wrap layer-pop" style={{display: showYn?"block":"none"}}>
       <div className="pop-inner pop-l">
           <div className="pop-content">
-              <p className="desc ta-c">{msg}</p>
+              <p className="desc ta-c" style={{whiteSpace: "pre-wrap"}}>{msg}</p>
           </div>
           <div className="pop-btn-area">
             {

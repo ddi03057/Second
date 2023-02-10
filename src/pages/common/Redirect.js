@@ -5,7 +5,7 @@
 import { useEffect } from "react";
 import { memo } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { loginDomain } from "../../modules/common/boxlogin";
 import { oslLogin } from "../../modules/common/oslLogin";
 import callOpenApi, { authorization } from "../../modules/common/tokenBase";
@@ -13,7 +13,9 @@ import AlertModal from "../../modules/components/AlertModal";
 import PathConstants from "../../modules/constants/PathConstants";
 
 
-export default ()=> {
+export default (props)=> {
+  let {type} = useParams();
+  console.log("type", type);
   let tokenYn = false;
   let navigate = useNavigate();
   let [progState, setProgState] = useState("");
@@ -68,11 +70,13 @@ export default ()=> {
     );
 
   }else { //토큰없음
-
+    let msg = "로그인을 하시겠습니까?"
+    if(type === "expire") msg = "세션이 종료되었습니다.\n" + msg;
+    else msg = "로그인이 필요한 서비스입니다.\n" + msg;
     return (
       <AlertModal 
         show={show}
-        msg="로그인을 하시겠습니까?"
+        msg={msg}
         btnNm={["확인", "취소"]}
         onClickFn={(btnIdx) => {
           if(btnIdx === 0) {

@@ -133,7 +133,8 @@ function refreshAccessToken( callback ){
 	if( isSessionRefreshExpire() ) {
 		console.log("SessionRefreshExpire==>true");
 		if(callback === null) return false;
-		callback(null);
+		// callback(null);
+		window.location.href = "/expire";
 	}
 	else{
 		console.log("SessionRefreshExpire==>false", callback);
@@ -142,7 +143,8 @@ function refreshAccessToken( callback ){
 		var refreshToken = getSessionRefreshToken();
 		
 		if( refreshToken == null ){
-			callback(null);
+			// callback(null);
+			window.location.href = "/exipre";
 		}
 		else
 		{

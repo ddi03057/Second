@@ -40,10 +40,12 @@ function Routing() {
   //   return location.href = `//${window.location.host}/esgLogin.html${path.location.search}&apiurl=${process.env.REACT_APP_API_URL}`;
   // }
 
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<Redirect />} />
+        <Route path="/:type" element={<Redirect />} />
         <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
         <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />
