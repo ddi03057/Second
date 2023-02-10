@@ -12,6 +12,7 @@ import OslBtn from "../../modules/components/OslBtn.js";
 import OslHeader from "../../modules/components/OslHeader.js";
 import callOpenApi from "../../modules/common/tokenBase";
 import API from "../../modules/constants/API.js";
+import PathConstants from "../../modules/constants/PathConstants.js";
 
 /**
  * 화면명 : 대출 내용 최종 확인
@@ -48,8 +49,9 @@ function LonContentCheck(props) {
     // 총원리금및수수료부담예상액
 
   }, []);
+  let navigate = useNavigate();
   function cbOslBtn() {
-    
+    navigate(PathConstants.LONEXECUTE_FINANCECUSLAW);
   }
   return (
     <>
