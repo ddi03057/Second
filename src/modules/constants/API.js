@@ -17,7 +17,8 @@ const API = {
   },
   LONEXECUTE: {
     LONEXECUTE_APPRINFO: `${base}/osl/`,
-    LONEXECUTE_APPLYINFOINPUT: `${base}/osl302/loapIpif`
+    LONEXECUTE_APPLYINFOINPUT: `${base}/osl302/loapIpif`,
+    LONEXECUTE_STAMPTAX: `${base}/osl/`
 
   },
   POSTMANAGEMENT: {

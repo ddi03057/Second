@@ -13,6 +13,9 @@ import OslBtn from "../../modules/components/OslBtn"
 import collectData from "../../modules/constants/collectData"
 import RadioInlineComponent from "../common/RadioInlineComponent";
 import PathConstants from "../../modules/constants/PathConstants";
+import AlertModal from "../../modules/components/AlertModal";
+import callOpenApi from "../../modules/common/tokenBase";
+import API from "../../modules/constants/API";
 
 const stampTaxData = collectData('StampTax')
 /**
@@ -30,6 +33,20 @@ function StampTax(props) {
     }
   });
 
+  let stampTaxResData = {};
+  useEffect(async ()=> {
+    callOpenApi(
+      API.LONEXECUTE.LONEXECUTE_STAMPTAX, 
+      {}, 
+      function(res) {
+        stampTaxResData=res.data;
+        //창업일,업종명
+      },
+      function() {
+
+      });
+  }, []);
+
 
   let [userResult, setUserResult] = useState([99,99,99,99,99,99]);
 
@@ -38,47 +55,64 @@ function StampTax(props) {
     if(userResult.find((data,idx)=> data === 99) === 99) {
       setVisible2(false);
       setVisible1(false);
+      handleSingleCheck(false, 1);
+      handleSingleCheck(false, 2);
     }
     else if(userResult.find((data,idx)=> data===0) === undefined) {
       //all 해당하지않음
       setVisible2(true);
       setVisible1(false);
+      handleSingleCheck(false, 1);
     }else {
       setVisible2(false);
       setVisible1(true);
+      handleSingleCheck(false, 2);
     }
-    // if (userResult[0] === 1 && userResult[1] === 1 && userResult[2] === 1 && userResult[3] === 1 && userResult[4] === 1 && userResult[5] === 1) {
-    //   setVisible(!visible)
-    // } else if (userResult[5] === 0 || userResult[0] === 0 || userResult[1] === 0 || userResult[2] === 0 || userResult[3] === 0 || userResult[4] === 0){
-    //   setVisible1(!visible)
-    // }
 
-    
   },[userResult]);
 
-  useEffect(()=>{
-    if(checkItems.length > 1){
-      setDisabled(false)
-    }
-  })
+  
   const [visible2, setVisible2] = useState(false);
   const [visible1, setVisible1] = useState(false);
 
-  let [disabled, setDisabled] = useState(true);
 
-  const [checkItems, setCheckItems] = useState([]);
+  const [checkItems, setCheckItems] = useState([99, 99, 99]);
+  useEffect(()=>{
+    
+  }, [checkItems]);
 
-  // 체크박스 단일 선택
-  const handleSingleCheck = (checked, id) => {
-    if (checked) {
-      setCheckItems(prev => [...prev, id]);
-    } else {
-      setCheckItems(checkItems.filter((el) => el !== id));
-    }
+  const [alertShow, setAlertShow] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+
+  const handleSingleCheck = (checked, id)=> {
+    let copy = [...checkItems];
+    if(checked) copy[id] = id;
+    else copy[id] = 99;
+    setCheckItems(copy);
   };
+  
+  const ALERT_MSG = "해당항목을 선택 및 체크하시기 바랍니다.";
+  function cbOslBtn() {
+    if(!userResult.includes(99) && checkItems[0] === 0 && (checkItems[1] ===1 || checkItems[2] === 2)) {
+      //담화면
+      //창업일,업종명, 체크리스트1~6
+      callOpenApi(
+        API.LONEXECUTE.LONEXECUTE_STAMPTAX, 
+        {}, 
+        function(res) {
+          stampTaxResData=res.data;
+          //창업일,업종명
+        },
+        function() {
+  
+        });
+    }else {
+      console.log(stampTaxData[userResult.findIndex((data, idx)=> data===99)]);
+      setAlertShow(true);
+      
+      //alert(stampTaxData[userResult.findIndex((data, idx)=> data===99)].id);
 
-  function cbOslBtn(){
-
+    }
   }
   return (
     <>
@@ -185,11 +219,20 @@ function StampTax(props) {
           <OslBtn
               obj={{
                 type: "button",
-                disabled: disabled,
+                disabled: false,
                 text: ["다음"],
                 link: "",
                 callbackId: cbOslBtn
               }} />
+          <AlertModal 
+            show={alertShow}
+            msg={ALERT_MSG}
+            btnNm={["확인"]}
+            onClickFn={()=> {
+              setAlertShow(false);
+            }}
+          />
+
         </div>
       </div>
     </>
