@@ -28,6 +28,8 @@ import ServiceError from './error/ServiceError.js';
 import SystemInspect from './error/SystemInspect.js';
 import Certificate from './pages/common/Certificate.js';
 import Index from './pages/guide/Index.js';
+import API from './modules/constants/API.js';
+import callOpenApi from './modules/common/tokenBase.js';
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
@@ -58,11 +60,15 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck headerNm={PathConstants.PREJUDGE_SELFCHECK_NM} />} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT_NM} />} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<DocStatus headerNm={PathConstants.PREJUDGE_DOCSTATUS_NM} />} />
-        <Route path={PathConstants.PREJUDGE_DATACOLLECT} element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM} />} />
+        <Route path={PathConstants.PREJUDGE_DATACOLLECT} 
+          element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM} /*preData={preAxios(API.PREJUDGE.DATACOLLECT_GETCITY)}*/ />} 
+        />
         <Route path={PathConstants.GRTJUDGE_APPRINFO} element={<ApprInfo headerNm={PathConstants.GRTJUDGE_APPRINFO_NM} />} />
         <Route path={PathConstants.LONEXECUTE_APPLYINFOINPUT} element={<ApplyInfoInput headerNm={PathConstants.LONEXECUTE_APPLYINFOINPUT_NM} />} />
         <Route path={PathConstants.LONEXECUTE_LONCONTENTCHECK} element={<LonContentCheck headerNm={PathConstants.LONEXECUTE_LONCONTENTCHECK_NM} />} />
-        <Route path={PathConstants.LONEXECUTE_ARSCERTIFICATE} element={<ArsCertificate headerNm={PathConstants.LONEXECUTE_ARSCERTIFICATE_NM} />} />
+        <Route path={PathConstants.LONEXECUTE_ARSCERTIFICATE} 
+          element={<ArsCertificate headerNm={PathConstants.LONEXECUTE_ARSCERTIFICATE_NM} /*preData={preAxios(API.LONEXECUTE.LONEXECUTE_ARSCERTIFICATE)}*/ />} 
+        />
         <Route path={PathConstants.LONEXECUTE_AGRMINPUT} element={<AgrmInput headerNm={PathConstants.LONEXECUTE_AGRMINPUT_NM} />} />
         <Route path={PathConstants.LONEXECUTE_SUCCRESULT} element={<Result headerNm={PathConstants.LONEXECUTE_SUCCRESULT_NM} />} />
         <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM_NM} />} />
@@ -70,12 +76,28 @@ function Routing() {
         <Route path={PathConstants.LONEXECUTE_FINANCECUSLAW} element={<FinanceCusLaw headerNm={PathConstants.LONEXECUTE_FINANCECUSLAW_NM} />} />
         <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError headerNm={PathConstants.ERROR_SERVICEERROR_NM} />} />
         <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemInspect headerNm={PathConstants.ERROR_SYSTEMINSPECT_NM} />} />
-        {/* <EsgRouting path={`/common/login`} /> */}
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </Suspense>
   );
 
+}
+
+function preAxios(apiPath) {
+  console.log(apiPath);
+  let result = [];
+  // callOpenApi(
+  //   apiPath,
+  //   {},
+  //   (res)=> {
+  //     console.log(res.data);
+      
+  //   },
+  //   ()=> {
+
+  //   }
+  // )
+  return result;
 }
 
 export default Routing;

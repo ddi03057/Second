@@ -57,8 +57,7 @@ export default async ( uri, data, successCB, errorCB )=> {
 	authorization( async function( oAuth ) {
 		
 		console.log("authorization");
-		console.log(oAuth);
-		console.log(oAuth.accessToken);
+
 		var successCallBack = successCB || AjaxSuccessHandler;
 		var errorCallBack = errorCB || AjaxErrorHandler;
 		var appKey = _APP_KEY;
@@ -170,7 +169,8 @@ function refreshAccessToken( callback ){
 			).then((res)=> {
 				updateSession(res, callback);
 			}).catch((jqXHR, textStatus, exception, errorThrown)=> {
-				callback(null);
+				console.log(exception);
+				//callback(null);
 			});
 			
 			// $.ajax({

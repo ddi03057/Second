@@ -74,21 +74,26 @@ export default (props)=> {
     if(type === "expire") msg = "세션이 종료되었습니다.\n" + msg;
     else msg = "로그인이 필요한 서비스입니다.\n" + msg;
     return (
-      <AlertModal 
-        show={show}
-        msg={msg}
-        btnNm={["확인", "취소"]}
-        onClickFn={(btnIdx) => {
-          if(btnIdx === 0) {
-            oslLogin();
-          }else {
-            handleClose();
-            navigate(
-              PathConstants.GUIDE_DETAIL
-            );
-          }
-      }}
-      />
+      <>
+      {
+        show&&
+          <AlertModal 
+            show={show}
+            msg={msg}
+            btnNm={["확인", "취소"]}
+            onClickFn={(btnIdx) => {
+              if(btnIdx === 0) {
+                oslLogin();
+              }else {
+                handleClose();
+                navigate(
+                  PathConstants.GUIDE_DETAIL
+                );
+              }
+          }}
+          />
+      }
+      </>
     );
   }
 };

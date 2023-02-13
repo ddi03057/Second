@@ -13,6 +13,8 @@ import OslBtn from "../../modules/components/OslBtn"
 import collectData from "../../modules/constants/collectData"
 import RadioInlineComponent from "../common/RadioInlineComponent";
 import PathConstants from "../../modules/constants/PathConstants";
+import API from "../../modules/constants/API";
+import AlertModal from "../../modules/components/AlertModal";
 
 const financeCusLawData = collectData('FinanceCusLaw')
 /**
@@ -59,10 +61,20 @@ function FinanceCusLaw(props) {
 
   let navigate = useNavigate();
 
+  const [alertShow, setAlertShow] = useState(false);
+  const ALERT_MSG = "해당항목을 선택 및 체크하시기 바랍니다.";
   function cbOslBtn() {
-    navigate(
-      PathConstants.LONEXECUTE_ARSCERTIFICATE
-      );
+    
+    if(userResult.findIndex((data)=> data===99 || data===false) < 0 ) {
+      //담화면
+      navigate(PathConstants.LONEXECUTE_ARSCERTIFICATE);
+    }else {
+      
+      setAlertShow(true);
+      
+      console.log(financeCusLawData[userResult.findIndex((data)=> data===99 || data===false)].id);
+
+    }
   }
   return (
     <>
@@ -141,11 +153,21 @@ function FinanceCusLaw(props) {
           <OslBtn
             obj={{
               type: "button",
-              disabled: disabled,
-              text: ["ARS인증"],
+              disabled: false,
+              text: ["ARS 인증하기"],
               link: "",
               callbackId: cbOslBtn
             }} />
+          {alertShow&&
+            <AlertModal 
+              show={alertShow}
+              msg={ALERT_MSG}
+              btnNm={["확인"]}
+              onClickFn={()=> {
+                setAlertShow(false);
+              }}
+            />
+          }
         </div>
       </div>
     </>
