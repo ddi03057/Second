@@ -9,25 +9,27 @@
 
 import { useState, } from "react";
 import { useNavigate } from "react-router";
-import OslHeader from "../../../modules/components/OslHeader";
-import OslBtn from "../../../modules/components/OslBtn";
-import PathConstants from "../../../modules/constants/PathConstants";
-import collectData from "../../../modules/constants/collectData";
-import callOpenApi from "../../../modules/common/tokenBase";
+import OslHeader from "../../modules/components/OslHeader";
+import OslBtn from "../../modules/components/OslBtn";
+import PathConstants from "../../modules/constants/PathConstants";
+import collectData from "../../modules/constants/collectData";
+import callOpenApi from "../../modules/common/tokenBase";
 import { useLayoutEffect } from "react";
-import API from "../../../modules/constants/API";
+import API from "../../modules/constants/API";
 
 /**
  * 화면명 : 보증 승인 내역
  * 설명 : 대출 실행 보증 승인 내역
  * @param {*} props
  * props항목별 설명
+ * process
+ * 
  */
 function ApprInfo(props) {
 
   let apprInfoData = {};
   useLayoutEffect(()=> {
-    callOpenApi(API.LONEXECUTE.LONEXECUTE_APPRINFO, {}, api1SuccessFn, api1ErrorFn);
+    callOpenApi(API.LONEXECUTE.APPRINFO_GRATDTLIQ, {}, api1SuccessFn, api1ErrorFn);
   },[]);
   let navigate = useNavigate();
 

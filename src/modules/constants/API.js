@@ -18,7 +18,8 @@ const API = {
    
   },
   LONEXECUTE: {
-    LONEXECUTE_APPRINFO: `${base}/osl/`,
+    
+    APPRINFO_GRATDTLIQ: `${base}/osl300/gratDtliq`, //보증승인내역조회
     LONEXECUTE_APPLYINFOINPUT: `${base}/osl302/loapIpif`,
     LONEXECUTE_STAMPTAX: `${base}/osl/`,
     LONEXECUTE_ARSCERTIFICATE: `${base}/osl`

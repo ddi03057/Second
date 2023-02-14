@@ -60,9 +60,10 @@ const PathConstants = {
   PREJUDGE_DOCSTATUS: '/prejudge/docstatus',  //서류제출상태
   PREJUDGE_DATACOLLECT: '/prejudge/datacollect', //사업자번호, 행정구역 주소지 입력
   
-  GRTJUDGE_APPRINFO: '/grtjudge/apprinfo',  //보증승인내역 확인
+  
   GRTJUDGE_ACCOPEN: '/grtjudge/accopen',  //개좌개설
 
+  LONEXECUTE_APPRINFO: '/lonexecute/apprinfo',  //보증승인내역 확인
   LONEXECUTE_APPLYINFOINPUT: '/lonexecute/applyinfoinput',  //대출신청서작성 및 실행요청
   LONEXECUTE_STAMPTAX: '/lonexecute/stamptax', // 인지세 확인
   LONEXECUTE_LONCONTENTCHECK: '/lonexecute/loncontentcheck', //대출 내용 최종 확인
@@ -88,9 +89,9 @@ const PathConstants = {
   PREJUDGE_DOCSTATUS_NM: '서류제출상태',  //서류제출상태
   PREJUDGE_DATACOLLECT_NM: '자료수집', //사업자번호, 행정구역 주소지 입력
   
-  GRTJUDGE_APPRINFO_NM: '보증승인내역 확인',  //보증승인내역 확인
   GRTJUDGE_ACCOPEN_NM: '계좌개설',  //개좌개설
 
+  LONEXECUTE_APPRINFO_NM: '보증승인내역 확인',  //보증승인내역 확인
   LONEXECUTE_APPLYINFOINPUT_NM: '대출신청서작성 및 실행요청',  //대출신청서작성 및 실행요청
   LONEXECUTE_STAMPTAX_NM: '대출 실행', //인지세 확인
   LONEXECUTE_LONCONTENTCHECK_NM: '대출 실행', // 대출 내용 최종 확인
