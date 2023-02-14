@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import PathConstants from "../../../modules/constants/PathConstants";
 import { useEffect } from "react";
+import callOpenApi from "../../../modules/common/tokenBase";
 
 
 /**
@@ -28,12 +29,120 @@ import { useEffect } from "react";
 
 
 function DataCollect(props) {
+  console.log(props.preData);
+  //시도 axios 결과
+  const [cityList, setCityList] = useState([]);
+  //시군구 axios 결과
+  const [countyList, setCountyList] = useState([]);
 
+  //시도인지 시군구인지
+  const [flag, setFlag] = useState("");
+  //시도 선택값
+  const [sido, setSido] = useState("선택하세요");
+  //시군구선택값
+  const [sigungu, setSigungu] = useState("선택하세요");
+  //팝업에 보내줄 시도 시군구 리스트
+  const [districtsList, setDistrictsList] = useState([]);
+
+  //select태그 활성/비활성
   const [disabledYn, setDisabledYn] = useState(true);
-  const [showDistricts, setShowDistricts] = useState(false);
-  const handleCloseDistricts = () => setShowDistricts(false); document.body.style.overflow = "";
-  const handleShowDistricts = () => setShowDistricts(true); document.body.style.overflow = "hidden";
+  //팝업창 활성/비활성
   const [active, setActive] = useState("");
+  const handleCloseDistricts = () => setActive(""); document.body.style.overflow = "";
+  const handleShowDistricts = () => setActive(" active"); document.body.style.overflow = "hidden";
+  
+  useEffect(()=> {
+    console.log("flag", flag);
+    if(flag === "sido") {
+      callOpenApi(
+        API.PREJUDGE.DATACOLLECT_GETCITY,
+        {},
+        (res)=> {
+          console.log(res);
+          setCityList(res.data.RSLT_DATA.city);
+        },
+        (err)=> {
+          alert(err);
+        }
+      );
+    }else if(flag === "sigungu") {
+      callOpenApi(
+        API.PREJUDGE.DATACOLLECT_GETCOUNTY,
+        {city: sido},
+        (res)=> {
+          console.log(res);
+          setCountyList(res.data.RSLT_DATA.result);
+        },
+        (err)=> {
+          alert(err);
+        }
+      );
+    }else {
+      console.log("flag값없음", flag);
+    }
+
+  }, [flag]);
+  useEffect(()=> {
+    console.log("cityList", cityList);
+    if(cityList.length != 0) {
+      setDistrictsList(cityList);
+    }
+  },[cityList]);
+
+  useEffect(()=> {
+    console.log("countyList", countyList);
+    let copy = countyList;
+    countyList.map((data, idx)=> {
+      
+      copy[idx] = data;
+      console.log(copy[idx]);
+    });
+    setCountyList(copy);
+    if(countyList.length != 0) {
+      setDistrictsList(countyList);
+    }
+  },[countyList]);
+
+  useEffect(()=> {
+    console.log(districtsList);
+    if(districtsList.length != 0) {
+      handleShowDistricts();
+    }
+  }, [districtsList]);
+
+  useEffect(()=> {
+    console.log("active", active);
+    if(active === " active") {      
+      setDisabledYn(true);
+    }
+    else {
+      setDisabledYn(false);
+      setFlag("");
+    } 
+
+  }, [active]);
+  
+
+
+  // useEffect(()=> {
+    
+  // }, [sido]);
+  // useEffect(()=> {
+    
+  // }, [sigungu]);
+  // useEffect(()=> {
+  //   console.log("flag!!", flag);
+    
+  //   if(flag === "sido") {
+  //     setDistrictsList(cityList);
+  //     setFlag("");
+  //   }
+  //   if(flag === "sigungu") {
+      
+
+  //   }
+  // }, [flag]);
+  
 
   const clicked = (e) => {
     const clicked = e.target.closest('.bottom-inner');
@@ -44,20 +153,9 @@ function DataCollect(props) {
   }
 
 
-  let [fade, setFade] = useState('');
-  useEffect(() => {
-    if (showDistricts) {
-      setDisabledYn(true);
-      setTimeout(() => { setFade('end'); }, 500);
-    } else {
-      setDisabledYn(false);
-    }
-    return () => {
-      setFade("");
-    }
-  }, [showDistricts]);
 
-  let navigate = useNavigate();
+
+  // let navigate = useNavigate();
 
   // const DataCollect = async () => {
   //   const res = await request({
@@ -128,11 +226,13 @@ function DataCollect(props) {
                   <div className="sele-list type01 radius answer-wrap mar-t10">
                     <div className="item">
                       <label className="ui-select">
-                        <select name="sSel" id="sSel1" disabled={disabledYn}
+                        <select name="sSel" id="sSel1" disabled={disabledYn} defaultValue={sido}
                           onClick={() => {
-                            handleShowDistricts();
+                            setFlag("sido");
+                            setDisabledYn(true);
                           }}
                         >
+                          <option>{sido}</option>
                         </select>
                         <span className="radio"></span>
                       </label>
@@ -149,11 +249,13 @@ function DataCollect(props) {
                   <div className="sele-list type01 radius answer-wrap mar-t10">
                     <div className="item">
                       <label className="ui-select">
-                        <select name="sSel" id="sSel1" disabled={disabledYn}
+                        <select name="sSel" id="sSel1" disabled={disabledYn} defaultValue={sido}
                           onClick={() => {
-                            handleShowDistricts();
+                            setFlag("sigungu");
+                            setDisabledYn(true);
                           }}
                         >
+                          <option>{sigungu}</option>
                         </select>
                         <span className="radio"></span>
                       </label>
@@ -173,29 +275,33 @@ function DataCollect(props) {
             }} />
         </div>
       </div>
-      {showDistricts && <ViewDistricts clicked={clicked} active={active} setActive={setActive} show={showDistricts} handleClose={handleCloseDistricts} fade={fade}></ViewDistricts>}
+      {<ViewDistricts flag={flag} districtsList={districtsList} clicked={clicked} active={active} setActive={setActive} setSido={setSido} setSigungu={setSigungu}></ViewDistricts>}
     </>
   )
 }
 
 
 function ViewDistricts(props) {
-  const showYn = props.show;
-  useEffect(()=> {
-    setTimeout(()=> props.setActive(" active"),10);
-  }, [showYn])
+  // const showYn = props.show;
+  // useEffect(()=> {
+  //   setTimeout(()=> props.setActive(" active"),10);
+  //   document.body.style.overflow="hidden";
+  // }, [showYn]);
   
 
-  return (
+  console.log("VIEWDISTRICTS", props.cityList);
 
-    <div id="bottom01" className={"bottom-sheet" + (showYn ? props.active : '')}
+  
+  return (
+    <div id="bottom01" className={"bottom-sheet" + props.active}
     onClick={(e)=> props.clicked(e)}>
       <div className="bottom-inner">
         <div className="bottom-header">
           <p className="title fc-01">시,도 선택</p>
           <button type="button" className="btn btn-close"
             onClick={() => {
-              props.handleClose();
+              props.setActive("");
+              //props.disabledYn(false);
             }}
           >
             <span className="blind">닫기</span>
@@ -204,57 +310,25 @@ function ViewDistricts(props) {
         <div className="bottom-content">
           <div className="select-box">
             <ul className="select-btn-list col2">
-            <li>
-                        <button><span>서울특별시</span></button>
-                    </li>
-                    <li>
-                        <button><span>부산광역시</span></button>
-                    </li>
-                    <li>
-                        <button><span>대구광역시</span></button>
-                    </li>
-                    <li>
-                        <button><span>인천광역시</span></button>
-                    </li>
-                    <li>
-                        <button><span>광주광역시</span></button>
-                    </li>
-                    <li>
-                        <button><span>대전광역시</span></button>
-                    </li>
-                    <li>
-                        <button><span>울산광역시</span></button>
-                    </li>
-                    <li>
-                        <button><span>경기도</span></button>
-                    </li>
-                    <li>
-                        <button><span>강원도</span></button>
-                    </li>
-                    <li>
-                        <button><span>충청북도</span></button>
-                    </li>
-                    <li>
-                        <button><span>충청남도</span></button>
-                    </li>
-                    <li>
-                        <button><span>전라북도</span></button>
-                    </li>
-                    <li>
-                        <button><span>전라남도</span></button>
-                    </li>
-                    <li>
-                        <button><span>경상북도</span></button>
-                    </li>
-                    <li>
-                        <button><span>경상남도</span></button>
-                    </li>
-                    <li>
-                        <button><span>제주특별자치도</span></button>
-                    </li>
-                    <li>
-                        <button><span>세종특별자치시</span></button>
-                    </li>
+            {
+              
+              props.districtsList.map((data, idx)=> {
+                return (
+                  <li key={`sido-${idx}`}>
+                    <button onClick={()=> {
+                        console.log("flag", props.flag)
+                        if(props.flag === "sido") {
+                          props.setSido(data);
+                        }else {
+                          props.setSigungu(data);
+                        }
+                        props.setActive("");
+                      }}><span>{data}</span></button>
+                  </li>
+                )
+              }
+              )
+            }
             </ul>
           </div>
         </div>

@@ -25,6 +25,7 @@ const suitTestData = collectData("SuitTest");
  * props항목별 설명
  */
 function SuitTest(props) {
+  
   useEffect(()=> {
     //적합성적정성고객정보사전조회
     //callOpenApi("", {}, api1SuccessFn, api1ErrorFn);
@@ -75,6 +76,14 @@ function SuitTest(props) {
   let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
   let [alertBtnNm, setAlertBtnNm] = useState(["확인"]);
   let navigate = useNavigate(); //다음화면을 위한 navigate
+
+  const {apiPath, setApiPath} = useContext(Context1);
+  console.log(apiPath);
+  useEffect(()=> {
+    console.log(apiPath);
+    if(apiPath != "/") navigate(PathConstants.PREJUDGE_DATACOLLECT);
+  },[apiPath]);
+  
 
    // popup
    function openPop() {
@@ -347,9 +356,10 @@ function SuitTest(props) {
             const api2ErrorFn = ()=> {
 
             }
-            navigate(
-              PathConstants.PREJUDGE_DATACOLLECT,
-            );
+            setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
+            // navigate(
+            //   PathConstants.PREJUDGE_DATACOLLECT,
+            // );
           }
         }}
       />

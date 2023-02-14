@@ -78,14 +78,14 @@ function CustAgree(props) {
     console.log("useEffect[checkItems]",checkItems);
     if(checkItems.filter((data)=> data === 1).length === 9 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
       //다음화면이동
-      //navigate(PathConstants.PREJUDGE_SUITTEST);
-      callOpenApi("/api/osl000/pgstInq",{}, function(res) {
-        console.log("!!!");
-        console.log(res);
-        //navigate(PathConstants.PREJUDGE_SUITTEST);
-      },function(e) {
-        alert(e);
-      });
+      navigate(PathConstants.PREJUDGE_SUITTEST);
+      // callOpenApi("/api/osl000/pgstInq",{}, function(res) {
+      //   console.log("!!!");
+      //   console.log(res);
+      //   //navigate(PathConstants.PREJUDGE_SUITTEST);
+      // },function(e) {
+      //   alert(e);
+      // });
     }else if(checkItems.find((data)=> data === 1) && (!!checkItems.find((data)=> data === 99) || checkItems.findIndex((data)=> data === 0) >-1 )) { //한개이상 체크 및 한개이상 체크해제상태
       setAgreeBtnNm(ONE_BTN_NM);
       setDisabledYn(true);

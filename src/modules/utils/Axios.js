@@ -49,14 +49,14 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     
-    authorization(getSessionData());
+    //authorization(getSessionData());
 
     config.headers = Object.assign(
       config.headers,
-      { "appKey": ""//true?process.env.REACT_APP_LRB_APP_KEY:process.env.REACT_APP_MNB_APP_KEY 
+      { "appKey": "l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL"//true?process.env.REACT_APP_LRB_APP_KEY:process.env.REACT_APP_MNB_APP_KEY 
       }
     );
-    config.data = JSON.stringify(config.data);
+    //config.data = JSON.stringify(config.data);
 
     return Promise.resolve(config);
   },
@@ -104,8 +104,8 @@ instance.interceptors.response.use(
 const request = async function (opt) {
   const options = {
     // baseURL: config.public.API_URL,
-    baseURL: "/api1/",
-    method: "GET",
+    baseURL: "/api2/",
+    method: "POST",
     ifHandleError: true,
     ...opt,
   };

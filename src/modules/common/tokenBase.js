@@ -1,4 +1,5 @@
 import axios from "axios";
+import request from "../utils/Axios";
 import { getCookie } from "./boxlogin";
 import oslLogin from "./oslLogin";
 
@@ -77,15 +78,34 @@ export default async ( uri, data, successCB, errorCB )=> {
 		}
 		console.log(getCookie("auth"));
 		console.log(configData);
-		await axios.post(
-			"/api2/" + uri,
-			JSON.stringify(sendData),
-			configData
-		).then((res)=> {
-			successCallBack(res);
-		}).catch((jqXHR, textStatus, exception, errorThrown)=> {
-			errorCallBack(jqXHR, textStatus, exception, errorThrown);
-		});
+		// await axios.post(
+		// 	"/api2/" + uri,
+		// 	JSON.stringify(sendData),
+		// 	configData
+		// ).then((res)=> {
+		// 	console.log("tkbase_response", res);
+		// 	successCallBack(res);
+		// }).catch((jqXHR, textStatus, exception, errorThrown)=> {
+		// 	errorCallBack(jqXHR, textStatus, exception, errorThrown);
+		// });
+		
+    const res = await request({
+      method: "post",
+      url: uri,
+      data: JSON.stringify(sendData),
+			headers: configData.headers
+    })
+      .then((response) => {
+				console.log("requestAxios", response);
+				successCallBack(response);
+        return response;
+      })
+
+      .catch((error) => {
+				errorCallBack(error);
+        console.log("error : ", error);
+      });
+		
 		console.log(2222222);
 		// $.ajax({
 		// 	type: _POST_METHOD,
@@ -167,9 +187,10 @@ function refreshAccessToken( callback ){
 				JSON.stringify(sendData),
 				configData
 			).then((res)=> {
+				console.log("refreshToken", res);
 				updateSession(res, callback);
 			}).catch((jqXHR, textStatus, exception, errorThrown)=> {
-				console.log(exception);
+				console.log("refeshError", exception);
 				//callback(null);
 			});
 			

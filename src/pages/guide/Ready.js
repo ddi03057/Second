@@ -16,6 +16,10 @@ import { getClientOs, loginDomain } from "./../../modules/common/boxlogin.js";
 import { oslLogin, oslLogout} from "./../../modules/common/oslLogin.js";
 import { getSessionData } from "../../modules/common/tokenBase";
 import Redirect from "../common/Redirect.js";
+import API from "../../modules/constants/API";
+import { Context1 } from "./../../App.js";
+import { useContext } from "react";
+import { useEffect } from "react";
 
 /**
  * 화면명
@@ -27,18 +31,23 @@ function Ready(props) {
 
 
   let navigate = useNavigate();
+  const {apiPath, setApiPath} = useContext(Context1);
+  console.log(apiPath);
+  useEffect(()=> {
+    console.log(apiPath);
+    if(apiPath != "/") navigate("/preJudge/datacollect");
+  },[apiPath]);
+  
+
 
   function cbOslBtn() {
+    //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
+    navigate(
+      PathConstants. PREJUDGE_CUSTAGREE,
+      {
 
-    //console.log(getSessionData());
-    navigate("/");
-    //console.log(loginDomain());
-    // navigate(
-    //   PathConstants. PREJUDGE_CUSTAGREE,
-    //   {
-
-    //   }
-    //   );
+      }
+      );
   }
 
 

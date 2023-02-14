@@ -21,7 +21,6 @@ import ApprInfo from './pages/judge/grtjudge/ApprInfo.js';
 import LonContentCheck from './pages/lonexecute/LonContentCheck.js';
 import ArsCertificate from './pages/lonexecute/ArsCertificate.js';
 import StampTax from './pages/lonexecute/StampTax.js';
-import DataCollect from './pages/judge/prejudge/DataCollect.js';
 import FinanceCusLaw from './pages/lonexecute/FinanceCusLaw.js';
 import Main from './pages/Main.js';
 import ServiceError from './error/ServiceError.js';
@@ -30,17 +29,55 @@ import Certificate from './pages/common/Certificate.js';
 import Index from './pages/guide/Index.js';
 import API from './modules/constants/API.js';
 import callOpenApi from './modules/common/tokenBase.js';
+import axios from 'axios';
+import request from './modules/utils/Axios.js';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { Context1 } from "./App.js";
+import { useContext } from 'react';
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 const ApplyInfoInput = lazy(() => import('./pages/lonexecute/ApplyInfoInput.js'));
 const Redirect = lazy(()=> import('./pages/common/Redirect.js'));
+const DataCollect = lazy(()=> import('./pages/judge/prejudge/DataCollect.js'));
 
 //라우터 목록 정의
 function Routing() {
   // const EsgRouting = (path) => {
   //   return location.href = `//${window.location.host}/esgLogin.html${path.location.search}&apiurl=${process.env.REACT_APP_API_URL}`;
   // }
+  const {apiPath} = useContext(Context1);
+  const [apiDataStatus, setApiDataStatus] = useState("");
+  const [apiData, setApiData] = useState(null);
+  const [loading, setLoading] = useState(false);;
+  const [error, setError] = useState(null);
+
+  useEffect(()=> {
+    const preAxios = async (apiPath) => {
+      setLoading(true);
+      const res = await request({
+        method: "post",
+        url: apiPath,
+        data: {}
+      })
+        .then((response) => {
+          console.log("route", response);
+          
+          setApiDataStatus(response.STATUS);
+          setApiData(response.data);
+          return response;
+        })
+    
+        .catch((error) => {
+          console.log("error : ", error);
+          setError(error);
+        });
+      setLoading(false);
+    }
+    if(apiPath != "/") preAxios(apiPath);
+  },[apiPath])
+
 
 
   return (
@@ -61,8 +98,21 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT_NM} />} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<DocStatus headerNm={PathConstants.PREJUDGE_DOCSTATUS_NM} />} />
         <Route path={PathConstants.PREJUDGE_DATACOLLECT} 
-          element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM} /*preData={preAxios(API.PREJUDGE.DATACOLLECT_GETCITY)}*/ />} 
+          element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM} />} 
         />
+        {/* <Route path={PathConstants.PREJUDGE_DATACOLLECT} 
+          element={
+            loading ? (
+              <Loading />
+            ) : error ? (
+              <div>Error:{error.message}</div>
+            ) : apiData === null? (
+              <div>server Error</div>
+            ) : (
+              <DataCollect preData={apiData}></DataCollect>
+            )
+          }
+        /> */}
         <Route path={PathConstants.GRTJUDGE_APPRINFO} element={<ApprInfo headerNm={PathConstants.GRTJUDGE_APPRINFO_NM} />} />
         <Route path={PathConstants.LONEXECUTE_APPLYINFOINPUT} element={<ApplyInfoInput headerNm={PathConstants.LONEXECUTE_APPLYINFOINPUT_NM} />} />
         <Route path={PathConstants.LONEXECUTE_LONCONTENTCHECK} element={<LonContentCheck headerNm={PathConstants.LONEXECUTE_LONCONTENTCHECK_NM} />} />
@@ -83,9 +133,7 @@ function Routing() {
 
 }
 
-function preAxios(apiPath) {
-  console.log(apiPath);
-  let result = [];
+  
   // callOpenApi(
   //   apiPath,
   //   {},
@@ -97,7 +145,50 @@ function preAxios(apiPath) {
 
   //   }
   // )
-  return result;
+const preAxios1 = async(apiPath)=> {
+  console.log(apiPath);
+  let configData = {
+    headers: {
+      "Content-Type": "application/json",
+      "appKey": "l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL",
+    }
+  }
+  let result = {};
+  try {
+  const res = await axios.post(
+    "/api2/" + apiPath,
+    JSON.stringify({}),
+    configData
+  );
+  // .then((res)=> {
+  //   result = res.data.RSLT_DATA;
+  //   console.log(result);
+  //   return result;
+    
+  // }
+  console.log(res.data);
+  //return res.data.STATUS === "0000"?res.data:"error"
+  return res.data;
+  }catch(err) {
+    console.log(err);
+  }
+  
 }
+
+// const preAxios = async (apiPath) => {
+//   const res = await request({
+//     method: "post",
+//     url: apiPath,
+//     data: {}
+//   })
+//     .then((response) => {
+//       console.log("route", response.data.RSLT_DATA);
+//       return response;
+//     })
+
+//     .catch((error) => {
+//       console.log("error : ", error);
+//     });
+// }
 
 export default Routing;

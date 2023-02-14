@@ -7,11 +7,12 @@ export let Context1 = React.createContext(); //보관함
 function App() {
   //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   let [objParam, setObjParam] = useState({bizNum: "12345", lonNum: "6789"});
+  let [apiPath, setApiPath] = useState("/");
   console.log(getSessionData());
   //console.log(getSessionData().accessToken);
   return (
     <>
-      <Context1.Provider value={{objParam}}>
+      <Context1.Provider value={{apiPath, setApiPath}}>
       <div className="wrapper">
         <Routing />
       </div>

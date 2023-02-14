@@ -10,6 +10,7 @@ const API = {
     PREJUDGE_SUITTEST: `${base}/osl101/sbntPopyVrfc`,
     PREJUDGE_DATACOLLECT: `${base}/osl102/dtghDataInpt`,
     DATACOLLECT_GETCITY: `${base}/osl001/getCityInq`,
+    DATACOLLECT_GETCOUNTY: `${base}/osl001/getCountyInq`,
     PREJUDGE_CERTIFICATE: `${base}/osl103/scpg`,
     PREJUDGE_GRTINFOINPUT: `${base}/osl104/grnyExntDatWrtn`,
   },
