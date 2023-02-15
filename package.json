@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
     "http-proxy-middleware": "^2.0.6",
-    "jotai": "^1.12.1",
     "jquery": "^3.6.3",
     "qs": "^6.11.0",
     "react": "^18.2.0",
@@ -24,6 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-dev": "cp ./.env.development ./.env && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

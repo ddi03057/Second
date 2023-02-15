@@ -27,9 +27,18 @@ import API from "../../modules/constants/API";
  */
 function ApprInfo(props) {
 
-  let apprInfoData = {};
+  const [apprInfoData, setApprInfoData] = useState({});
   useLayoutEffect(()=> {
-    callOpenApi(API.LONEXECUTE.APPRINFO_GRATDTLIQ, {}, api1SuccessFn, api1ErrorFn);
+    callOpenApi(
+      API.LONEXECUTE.APPRINFO_GRATDTLIQ, 
+      {}, 
+      (res)=> {
+        setApprInfoData(res.data.RSLT_DATA.result);
+      }, 
+      (err)=> {
+        
+      }
+    );
   },[]);
   let navigate = useNavigate();
 
@@ -39,12 +48,6 @@ function ApprInfo(props) {
     //   );
   }
 
-  const api1SuccessFn = (res)=> {
-    apprInfoData = res.data;
-  }
-  const api1ErrorFn = ()=> {
-    
-  }
   if(apprInfoData.rslt_data === "0000") {
     return (
       <>

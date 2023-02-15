@@ -21,6 +21,7 @@ isSeesionExpire체크, 만료시 isSEssionRefreshExpire체크 만료시 요청�
 */
 import axios from 'axios'
 import { authorization, getSessionData } from '../common/tokenBase';
+import PathConstants from '../constants/PathConstants';
 
 let isError = false;
 
@@ -119,6 +120,7 @@ const request = async function (opt) {
     return response;
   } catch (error) {
     console.log("resErr", error);
+    //window.location.href = PathConstants.SERVICE_ERROR;
     return error;
   }
 };

@@ -73,11 +73,11 @@ export default async ( uri, data, successCB, errorCB )=> {
 			headers: {
 				"Content-Type": "application/json",
 				"appKey": "l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL",
-				"Authorization": oAuth.tokenType+" "+oAuth.accessToken
+				"Authorization": oAuth.tokenType+" "+oAuth.accessToken,
+				"lgnMnbrId": "VPK82Psm2d"
 			}
 		}
-		console.log(getCookie("auth"));
-		console.log(configData);
+
 		// await axios.post(
 		// 	"/api2/" + uri,
 		// 	JSON.stringify(sendData),
@@ -244,8 +244,8 @@ function updateSession( newData, callback ){
 		JSON.stringify(data), 
 		configData
 	).then((token) => {
-		console.log(token);
-		saveSession(token.si);
+		console.log("getRefreshToken", token.data.si);
+		saveSession(token.data.si);
 		callback(data);
 	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
 		AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown);
@@ -273,8 +273,8 @@ function updateSession( newData, callback ){
 
 export const getSessionData = ()=> {
 	var token = _STORAGE.getItem(_SESSION_KEY);
-	//console.log("token="+JSON.stringify(token,null,2));
-	if( token == null || token === undefined ){
+	console.log("token="+JSON.stringify(token,null,2));
+	if( token == null || token === undefined || token === "undefined"){
 		return null;
 	}
 	return parseJwt(token);	

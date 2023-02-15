@@ -20,6 +20,8 @@ const API = {
   LONEXECUTE: {
     
     APPRINFO_GRATDTLIQ: `${base}/osl300/gratDtliq`, //보증승인내역조회
+    ARSCERTIFICATE_ARSCRTCCRETRGST: `${base}/osl304/arsCrtcCretRgst`, //ars인증번호생성
+    ARSCERTIFICATE_ARSCRTCCNFA: `${base}/osl304/arsCrtcCnfa`, //ars인증번호확인
     LONEXECUTE_APPLYINFOINPUT: `${base}/osl302/loapIpif`,
     LONEXECUTE_STAMPTAX: `${base}/osl/`,
     LONEXECUTE_ARSCERTIFICATE: `${base}/osl`

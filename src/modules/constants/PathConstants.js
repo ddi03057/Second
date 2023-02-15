@@ -35,7 +35,8 @@ const PathConstants = {
   LOGIN: '/login', //로그인
   LOGOUT: '/logout', //로그아웃
   PROGRESS: '/progress', //진행상태
-  ERROR: '/error',//에러
+  SERVICE_ERROR: '/serviceerror', //일시적 서비스 장애
+  SYSTEM_ERROR: '/systemerror', //시스템 점검
   CERTIFICATE: '/certificate', // 공동인증서
 
     //dummy

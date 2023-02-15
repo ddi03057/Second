@@ -35,6 +35,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Context1 } from "./App.js";
 import { useContext } from 'react';
+import SystemError from './pages/common/SystemError.js';
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
@@ -85,6 +86,8 @@ function Routing() {
       <Routes>
         <Route path="/" element={<Redirect />} />
         <Route path="/:type" element={<Redirect />} />
+        <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError />} />
+        <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemError />} />
         <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
         <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />
@@ -124,7 +127,7 @@ function Routing() {
         <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM_NM} />} />
         <Route path={PathConstants.LONEXECUTE_STAMPTAX} element={<StampTax headerNm={PathConstants.LONEXECUTE_STAMPTAX_NM} />} />
         <Route path={PathConstants.LONEXECUTE_FINANCECUSLAW} element={<FinanceCusLaw headerNm={PathConstants.LONEXECUTE_FINANCECUSLAW_NM} />} />
-        <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError headerNm={PathConstants.ERROR_SERVICEERROR_NM} />} />
+        {/* <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError headerNm={PathConstants.ERROR_SERVICEERROR_NM} />} /> */}
         <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemInspect headerNm={PathConstants.ERROR_SYSTEMINSPECT_NM} />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>

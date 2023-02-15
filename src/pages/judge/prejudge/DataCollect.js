@@ -29,7 +29,7 @@ import callOpenApi from "../../../modules/common/tokenBase";
 
 
 function DataCollect(props) {
-  console.log(props.preData);
+  const DO_SELECT = "선택하세요";
   //시도 axios 결과
   const [cityList, setCityList] = useState([]);
   //시군구 axios 결과
@@ -38,9 +38,9 @@ function DataCollect(props) {
   //시도인지 시군구인지
   const [flag, setFlag] = useState("");
   //시도 선택값
-  const [sido, setSido] = useState("선택하세요");
+  const [sido, setSido] = useState(DO_SELECT);
   //시군구선택값
-  const [sigungu, setSigungu] = useState("선택하세요");
+  const [sigungu, setSigungu] = useState(DO_SELECT);
   //팝업에 보내줄 시도 시군구 리스트
   const [districtsList, setDistrictsList] = useState([]);
 
@@ -122,11 +122,9 @@ function DataCollect(props) {
 
   }, [active]);
   
-
-
-  // useEffect(()=> {
-    
-  // }, [sido]);
+  useEffect(()=> {
+    setSigungu(DO_SELECT);
+  }, [sido]);
   // useEffect(()=> {
     
   // }, [sigungu]);
@@ -180,8 +178,11 @@ function DataCollect(props) {
 
 
   function cbOslBtn() {
-
-
+    console.log("시도", sido);
+    console.log("시군구", sigungu);
+    if(!!sido || sido === DO_SELECT || !!sigungu || sigungu === DO_SELECT) {
+      alert("행정구역을 선택하세요");
+    }
   }
   
 
