@@ -1,6 +1,3 @@
-import { useAtom } from "jotai";
-
-
 function OslHeader(props) {
   const headerNm = props.headerNm;
   return (
