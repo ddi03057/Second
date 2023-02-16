@@ -147,37 +147,37 @@ function SuitTest(props) {
     }
     
   }
-  const SuitTest = async () => {
-    const res = await request({
-      method: "post",
-      url: API.PREJUDGE.PREJUDGE_SUITTEST,
-      data: {
-        oslLoapNo: "0014", //key
-        lfncAcmDcd: userResult[0], //여신금융상담소비자구분코드
-        age: userResult[1], // 연령
-        lfncLnugDcd: userResult[2], // 여신금융대출용도구분코드
-        lfncHlasDcd: userResult[3], //여신금융상담보유자산구분코드
-        lfncEnprPsntIncmDcd: userResult[4], //여신금융상담기업현재소득구분코드
-        lfncFtrAntcAnicDcd: userResult[5], //여신금융상담미래예상연간소득구분코드
-        lfncLbltDcd: userResult[6], //여신금융상담부채구분코드
-        lfncFxngExpdDcd: userResult[7], //여신금융상담고정지출구분코드
-        lfncOvduDcd: userResult[8], //여신금융상담연체구분코드
-        cdbuScr: userCrdScr, //cb점수 (신용점수)
-        lfncRepmWayDcd: userResult[10],//여신금융상담변제방법구분코드
-        cusEad: userResult[11], //고객이메일주소
-        lfncCrdtScrVainDcd: userCrdBru, //여신금융상담신용평가기관구분코드 01,02
+  // const SuitTest = async () => {
+  //   const res = await request({
+  //     method: "post",
+  //     url: API.PREJUDGE.PREJUDGE_SUITTEST,
+  //     data: {
+  //       oslLoapNo: "0014", //key
+  //       lfncAcmDcd: userResult[0], //여신금융상담소비자구분코드
+  //       age: userResult[1], // 연령
+  //       lfncLnugDcd: userResult[2], // 여신금융대출용도구분코드
+  //       lfncHlasDcd: userResult[3], //여신금융상담보유자산구분코드
+  //       lfncEnprPsntIncmDcd: userResult[4], //여신금융상담기업현재소득구분코드
+  //       lfncFtrAntcAnicDcd: userResult[5], //여신금융상담미래예상연간소득구분코드
+  //       lfncLbltDcd: userResult[6], //여신금융상담부채구분코드
+  //       lfncFxngExpdDcd: userResult[7], //여신금융상담고정지출구분코드
+  //       lfncOvduDcd: userResult[8], //여신금융상담연체구분코드
+  //       cdbuScr: userCrdScr, //cb점수 (신용점수)
+  //       lfncRepmWayDcd: userResult[10],//여신금융상담변제방법구분코드
+  //       cusEad: userResult[11], //고객이메일주소
+  //       lfncCrdtScrVainDcd: userCrdBru, //여신금융상담신용평가기관구분코드 01,02
         
-      }
-    })
-      .then((response) => {
-        console.log(response)
-        return response;
-      })
+  //     }
+  //   })
+  //     .then((response) => {
+  //       console.log(response)
+  //       return response;
+  //     })
 
-      .catch((error) => {
-        console.log("error : ", error);
-      });
-  }
+  //     .catch((error) => {
+  //       console.log("error : ", error);
+  //     });
+  // }
 
   //console.log(showTitleYn, arrTitleData);
   return (
@@ -356,7 +356,7 @@ function SuitTest(props) {
             const api2ErrorFn = ()=> {
 
             }
-            setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
+            //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
             // navigate(
             //   PathConstants.PREJUDGE_DATACOLLECT,
             // );

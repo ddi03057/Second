@@ -30,7 +30,7 @@ function ApprInfo(props) {
   const [apprInfoData, setApprInfoData] = useState({});
   useLayoutEffect(()=> {
     callOpenApi(
-      API.LONEXECUTE.APPRINFO_GRATDTLIQ, 
+      "", 
       {}, 
       (res)=> {
         setApprInfoData(res.data.RSLT_DATA.result);

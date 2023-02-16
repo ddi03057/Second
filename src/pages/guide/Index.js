@@ -15,28 +15,28 @@ function Index() {
   let test = useContext(Context1);
   let bizNum = test.objParam.bizNum
 
-  const IndexPage = async () => {
-    const res = await request({
-      method: "post",
-      url: API.GUIDE.GUIDE_INDEX,
-      data: {}
-    }) 
-    .then((response) => {
-      console.log(response);
-      // setJsonData(response);
-      // navigate(
-      //       PathConstants.GUIDE_DETAIL,
-      //       );
-      return response;
-    })
+  // const IndexPage = async () => {
+  //   const res = await request({
+  //     method: "post",
+  //     url: API.GUIDE.GUIDE_INDEX,
+  //     data: {}
+  //   }) 
+  //   .then((response) => {
+  //     console.log(response);
+  //     // setJsonData(response);
+  //     // navigate(
+  //     //       PathConstants.GUIDE_DETAIL,
+  //     //       );
+  //     return response;
+  //   })
   
-    .catch((error) => {
-      console.log("error : ", error);
-    });
-  }
+  //   .catch((error) => {
+  //     console.log("error : ", error);
+  //   });
+  // }
 
   useLayoutEffect(()=> {
-    IndexPage()
+    //IndexPage()
   }, [])
 
   // console.log(jsonData)

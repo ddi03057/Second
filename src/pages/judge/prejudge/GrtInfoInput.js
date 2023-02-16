@@ -141,34 +141,34 @@ function GrtInfoInput(props) {
   const [addr1, setAddr1] = useState("");
   const [addr2, setAddr2] = useState("")
 
-  const GrtInfoInput = async () => {
+  // const GrtInfoInput = async () => {
 
-    const res = await request({
-      method: "post",
-      url: API.PREJUDGE.PREJUDGE_GRTINFOINPUT,
-      data: {
-        oslLoapNo: "0005", //대출 키
-        bsunOwrRlcd: userResult[0], // 주사업장소유자
-        bsunRgifDcd: userResult[1], // 주사업장관리침해
-        rshsOwrRlcd: userResult[5], //거주주택소유자
-        rshsRgifDcd: userResult[7], //거주주택권리침해
-        // lastLoapAmt: "5000000", //대출희망금액
-        // loanTrmCnt: "5", //대출기간
-        rshsRdnd: addr1, //거주주택도로명주소
-        rshsRdnmDtad: addr2, //거주주택상세주소
-        rshsZpcd: postCd// 거주주택우편번호
+  //   const res = await request({
+  //     method: "post",
+  //     url: API.PREJUDGE.PREJUDGE_GRTINFOINPUT,
+  //     data: {
+  //       oslLoapNo: "0005", //대출 키
+  //       bsunOwrRlcd: userResult[0], // 주사업장소유자
+  //       bsunRgifDcd: userResult[1], // 주사업장관리침해
+  //       rshsOwrRlcd: userResult[5], //거주주택소유자
+  //       rshsRgifDcd: userResult[7], //거주주택권리침해
+  //       // lastLoapAmt: "5000000", //대출희망금액
+  //       // loanTrmCnt: "5", //대출기간
+  //       rshsRdnd: addr1, //거주주택도로명주소
+  //       rshsRdnmDtad: addr2, //거주주택상세주소
+  //       rshsZpcd: postCd// 거주주택우편번호
 
-      }
-    })
-      .then((response) => {
-        console.log(response)
-        return response;
-      })
+  //     }
+  //   })
+  //     .then((response) => {
+  //       console.log(response)
+  //       return response;
+  //     })
 
-      .catch((error) => {
-        console.log("error : ", error);
-      });
-  }
+  //     .catch((error) => {
+  //       console.log("error : ", error);
+  //     });
+  // }
   
   
   

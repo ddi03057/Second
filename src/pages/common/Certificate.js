@@ -14,21 +14,21 @@ function Certificate(props) {
       );
   }
 
-  const Certificate = async () => {
-    const res = await request({
-      method: "post",
-      url: API.PREJUDGE_CERTIFICATE,
-      data: {}
-    }) 
-    .then((response) => {
-      console.log(response)
-      return response;
-    })
+  // const Certificate = async () => {
+  //   const res = await request({
+  //     method: "post",
+  //     url: API.PREJUDGE_CERTIFICATE,
+  //     data: {}
+  //   }) 
+  //   .then((response) => {
+  //     console.log(response)
+  //     return response;
+  //   })
   
-    .catch((error) => {
-      console.log("error : ", error);
-    });
-  }
+  //   .catch((error) => {
+  //     console.log("error : ", error);
+  //   });
+  // }
 
   return (
     <>

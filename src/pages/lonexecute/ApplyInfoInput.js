@@ -65,7 +65,7 @@ function ApplyInfoInput(props) {
   useEffect(async () => {
     console.log(userResult);
     await callOpenApi(
-      API.LONEXECUTE.LONEXECUTE_APPLYINFOINPUT,
+      "",
       {},
       (res) => {
         applyInfoInputData = res.data;
