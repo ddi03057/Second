@@ -45,8 +45,8 @@ const API = {
   },
   PREJUDGE: {
     CUSTAGREE:        `${base}/osl001/spag`,
-    SUITTEST:         `${base}/osl101/sbntPopyInq `,
-    SUITTEST:         `${base}/osl001/sbntPopyVrfc `,
+    SUITTEST_SBNTPOPYINQ:         `${base}/osl101/sbntPopyInq`,
+    SUITTEST_SBNTPOPYVRFC:         `${base}/osl101/sbntPopyVrfc`,
     SUITRESULT:       `${base}/osl`, 
     SELFCHECK:        `${base}/osl`, 
     GRTINFOINPUT:     `${base}/osl`,   

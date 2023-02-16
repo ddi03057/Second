@@ -320,19 +320,19 @@ const suitTestData = [
       radioId : 9,
       radioList : [
           {
-              id : 0,
+              id : 1,
               value : "사업 소득" 
           },
           {
-              id : 1,
+              id : 2,
               value : "임대 소득" 
           },
           {
-              id : 2,
+              id : 3,
               value : "금융 소득" 
           },
           {
-              id : 3,
+              id : 5,
               value : "기타 소득" 
           }
       ],
