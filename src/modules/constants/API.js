@@ -63,7 +63,8 @@ const API = {
     AGRMINPUT:        `${base}/osl`, 
     UNTACTAGRM:       `${base}/osl300/achlYnInq`,  
     SUCCRESULT:       `${base}/osl`,  
-    ARSCERTIFICATE:   `${base}/osl`,     
+    ARSCERTIFICATE_ARSCRTCCRETRGST:   `${base}/osl304/arsCrtcCretRgst`,
+    ARSCERTIFICATE_ARSCRTCCNFA:   `${base}/osl304/arsCrtcCnfa`,     
     FINANCECUSLAW:    `${base}/osl`,     
   },
   POSTMANAGEMENT: {

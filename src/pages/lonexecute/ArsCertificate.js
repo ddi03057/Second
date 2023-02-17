@@ -7,9 +7,11 @@
  * css
  */
 
+import { useEffect } from "react";
 import { useState } from "react";
 import { useLayoutEffect } from "react";
 import callOpenApi from "../../modules/common/tokenBase.js";
+import AlertModal from "../../modules/components/AlertModal.js";
 import OslBtn from "../../modules/components/OslBtn";
 import API from "../../modules/constants/API";
 
@@ -20,9 +22,12 @@ import API from "../../modules/constants/API";
  * props항목별 설명
  */
 function ArsCertificate(props) {
+
+  const MSG_SUCCESS = "인증을 성공 하셨습니다.";
+  const MSG_FAIL = "인증을 실패 하셨습니다.";
   
   const [certNum, setCertNum] = useState(0);
-  useLayoutEffect(()=> {
+  const callApiFn = ()=> {
     callOpenApi(
       API.LONEXECUTE.ARSCERTIFICATE_ARSCRTCCRETRGST,
       {}, //userid
@@ -34,7 +39,20 @@ function ArsCertificate(props) {
 
       }
     );
+  }
+  useLayoutEffect(()=> {
+    callApiFn();
   }, []);
+
+  const [msgCont, setMsgCont] = useState("");
+  const [show, setShow] = useState(false);
+  const handleShow = ()=> setShow(true); document.body.style.overflow = "hidden";
+  const handleClose = ()=> setShow(false); document.body.style.overflow = "";
+  const [resPassYn, setResPassYn] = useState("N");
+
+  useEffect(()=> {
+
+  }, [resPassYn]);
 
   function cbOslBtn() {
 
@@ -43,6 +61,14 @@ function ArsCertificate(props) {
       {}, //id값
       (res)=> {
         console.log(res);
+        if(res.data.RSLT_DATA.strPass ==="Y") {
+          setResPassYn("Y");
+          setMsgCont(MSG_SUCCESS);
+          handleShow();
+        }else {
+          setMsgCont(MSG_FAIL);
+          handleShow();
+        }
         //상태값 ok되면 다음페이지(공동인증서 인증 화면)
         //상태값 실패시 이전화면?유지?
       },
@@ -68,17 +94,7 @@ function ArsCertificate(props) {
               <div className="btn-wrap ta-c">
                 <button type="button" className="btn-line02 mar-t50"
                   onClick={()=>{
-                    callOpenApi(
-                      API.LONEXECUTE.ARSCERTIFICATE_ARSCRTCCRETRGST,
-                      {},
-                      (res)=> {
-                        console.log(res);
-                        setCertNum(res.data.RSLT_DATA.twoChnlArsCrtcRrn);
-                      },
-                      (err)=> {
-                
-                      }
-                    );
+                    callApiFn();
                   }}
                 >
                   <span className="txt">인증번호 재요청</span>
@@ -98,6 +114,23 @@ function ArsCertificate(props) {
             }} />
         </div>
       </div>
+      {
+        show&&
+          <AlertModal 
+            show={show}
+            msg={msgCont}
+            btnNm={["확인"]}
+            onClickFn={()=> {
+              if(msgCont === MSG_SUCCESS) {
+                //화면이동
+                console.log("화면이동");
+              }else {
+                //유지
+              }
+              handleClose();
+            }}
+          />
+      }
     </>
   )
 }
