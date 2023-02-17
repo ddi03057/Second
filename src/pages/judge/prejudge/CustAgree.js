@@ -101,7 +101,7 @@ function CustAgree(props) {
   
   useEffect(()=> {
     console.log("useEffect[checkItems]",checkItems);
-    if(checkItems.filter((data)=> data === "1").length === 9 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
+    if(checkItems.filter((data)=> data === "1").length === 7 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
       
       callApiFn();
     
