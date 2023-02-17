@@ -23,14 +23,22 @@ const custAgreeData = collectData("CustAgree");
  * props항목별 설명
  */
 function CustAgree(props) {
+/*
+개인(신용)정보 수집 이용 및 제공 관련 고객 권리 안내문 10012
+(필수) 개인(신용)정보 수집이용 제공 동의 (여신금융거래) dcffStplId="10014"
 
-  console.log(getSessionData());
+
+
+*/
+
+  //console.log(getSessionData());
   //하단 동의하기버튼명
   const ALL_BTN_NM = "모두 동의하고 다음";
   const ONE_BTN_NM = "동의하고 다음";
 
 
   /**
+   * custAgreeData index와 맞아야함(마지막 두개는 제외)
    * 체크항목 state
    * 초기값    99
    * 체크해제  0
@@ -51,7 +59,24 @@ function CustAgree(props) {
 
   let [arrPdfData, setArrPdfData] = useState([]);
 
+  /**
+   * 
+   */
+  const callApiFn = ()=> {
+    callOpenApi(
+      API.PREJUDGE.CUSTAGREE_SPAG,
+      {dcffStplId: [checkItems[0],checkItems[1],checkItems[2],checkItems[3],checkItems[4],checkItems[5],checkItems[6]]},
+      (res)=> {
+        if(res.data.RSLT_DATA.resultYn === "Y") {
+          navigate(PathConstants.PREJUDGE_SUITTEST);
+        }
+        
+      },
+      ()=> {
 
+      }
+    );
+  };
 // const custAgree = async () => {
 //   const res = await request({
 //     method: "post",
@@ -73,20 +98,14 @@ function CustAgree(props) {
   useLayoutEffect(()=> {
     //custAgree()
   }, [])
-  //체크상태로 밸리데이션체크 겸 버튼상태변경 및 다음화면이동 
+  
   useEffect(()=> {
     console.log("useEffect[checkItems]",checkItems);
-    if(checkItems.filter((data)=> data === 1).length === 9 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
-      //다음화면이동
-      navigate(PathConstants.PREJUDGE_SUITTEST);
-      // callOpenApi("/api/osl000/pgstInq",{}, function(res) {
-      //   console.log("!!!");
-      //   console.log(res);
-      //   //navigate(PathConstants.PREJUDGE_SUITTEST);
-      // },function(e) {
-      //   alert(e);
-      // });
-    }else if(checkItems.find((data)=> data === 1) && (!!checkItems.find((data)=> data === 99) || checkItems.findIndex((data)=> data === 0) >-1 )) { //한개이상 체크 및 한개이상 체크해제상태
+    if(checkItems.filter((data)=> data === "1").length === 9 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
+      
+      callApiFn();
+    
+    }else if(checkItems.find((data)=> data === "1") && (!!checkItems.find((data)=> data === 99) || checkItems.findIndex((data)=> data === 0) >-1 )) { //한개이상 체크 및 한개이상 체크해제상태
       setAgreeBtnNm(ONE_BTN_NM);
       setDisabledYn(true);
     }else if(checkItems.filter((data)=> data === 0 || data === 99).length === 9) { // 모두 해제상태 및 초기상태
@@ -104,8 +123,9 @@ function CustAgree(props) {
       setArrPdfData(custAgreeData);
       handleShow(true);
     }else { //동의하고다음
+      callApiFn();
       //다음화면이동
-      navigate(PathConstants.PREJUDGE_SUITTEST);
+      //navigate(PathConstants.PREJUDGE_SUITTEST);
     }
 
   }
@@ -141,7 +161,8 @@ function CustAgree(props) {
                         onChange={(e) => {
                           if (checkItems[idx] != 99) {
                             let copy = [...checkItems];
-                            copy[idx] = copy[idx] === 0 ? 1 : 0;
+                            //asis : copy[idx] = copy[idx] === 0 ? 1 : 0;
+                            copy[idx] = copy[idx] === 0 ? data.dcffStplId : 0;
                             setCheckItems(copy);
                           }
                         }}
@@ -216,11 +237,29 @@ function CustAgree(props) {
             console.log(contId, typeof contId)
             if (typeof contId === "number") {
               let copy = [...checkItems];
-              copy[contId] = 1;
+              //asis : copy[contId] = 1;
+              copy[contId] = custAgreeData[contId].dcffStplId;
               setCheckItems(copy);
 
             }else {
-              setCheckItems([1,1,1,1,1,1,1,1,1]);
+              /*
+              let copy = [];
+              custAgreeData.map((data, idx)=> {
+                copy = checkItems;
+                copy[idx] = data.dcffStplId;
+              });
+              copy.push(1);
+              copy.push(1);
+              setCheckItems(copy);
+              */
+              setCheckItems(
+                [custAgreeData[0].dcffStplId,
+                custAgreeData[1].dcffStplId,
+                custAgreeData[2].dcffStplId,
+                custAgreeData[3].dcffStplId,
+                custAgreeData[4].dcffStplId,
+                custAgreeData[5].dcffStplId,
+                custAgreeData[6].dcffStplId,1,1]);
             }
 
           }}

@@ -44,7 +44,7 @@ const API = {
     
   },
   PREJUDGE: {
-    CUSTAGREE:        `${base}/osl001/spag`,
+    CUSTAGREE_SPAG:        `${base}/osl100/spag`,
     SUITTEST_SBNTPOPYINQ:         `${base}/osl101/sbntPopyInq`,
     SUITTEST_SBNTPOPYVRFC:         `${base}/osl101/sbntPopyVrfc`,
     SUITRESULT:       `${base}/osl`, 
