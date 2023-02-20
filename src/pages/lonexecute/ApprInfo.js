@@ -7,13 +7,13 @@
  * css
  */
 
-import { useState, } from "react";
+import { useEffect, useState, } from "react";
 import { useNavigate } from "react-router";
 import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
-import callOpenApi from "../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase";
 import { useLayoutEffect } from "react";
 import API from "../../modules/constants/API";
 
@@ -29,17 +29,18 @@ function ApprInfo(props) {
 
   const [apprInfoData, setApprInfoData] = useState({});
   useLayoutEffect(()=> {
-    callOpenApi(
-      "", 
+    callLocalApi(
+      API.LONEXECUTE.APPRINFO_GRATDTLIQ, 
       {}, 
       (res)=> {
         setApprInfoData(res.data.RSLT_DATA.result);
-      }, 
-      (err)=> {
-        
       }
     );
   },[]);
+
+  useEffect(()=> {
+    console.log("apprInfoData>>", apprInfoData);
+  }, [apprInfoData])
   let navigate = useNavigate();
 
   function cbOslBtn() {

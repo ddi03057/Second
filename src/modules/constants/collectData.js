@@ -121,10 +121,12 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "운전 자금" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "사설 자금" 
           },
       ],
@@ -141,14 +143,17 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "1억원 미만" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "1억원 이상 10억원 미만" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "10억원 이상" 
           }
       ],
@@ -163,14 +168,17 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "1억원 미만" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "1억원 이상 10억원 미만" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "10억원 이상" 
           }
       ],
@@ -185,14 +193,17 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "현재보다 감소" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "현재수준 유지" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "현재보다 증가" 
           }
       ],
@@ -207,14 +218,17 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "1억원 미만" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "1억원 이상 10억원 미만" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "10억원 이상" 
           }
       ],
@@ -229,14 +243,17 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "현재 소득의 10% 미만" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "현재 소득의 10% 이상 50% 미만" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "현재 소득의 50% 이상" 
           }
       ],
@@ -251,14 +268,17 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "현재 연체 중이며 연체 정리가 어려움" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "현재 연체 중이나 정리 예정" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "현재 연체 정보 없음" 
           }
       ],
@@ -273,10 +293,12 @@ const suitTestData = [
       radioList : [
         {
           id : 0,
+          dbVal : "01",
           value : "알고 있음" 
         },
         {
           id : 1,
+          dbVal : "02",
           value : "잘 모름"
         }
       ]
@@ -321,18 +343,22 @@ const suitTestData = [
       radioList : [
           {
               id : 1,
+              dbVal : "02",
               value : "사업 소득" 
           },
           {
               id : 2,
+              dbVal : "03",
               value : "임대 소득" 
           },
           {
               id : 3,
+              dbVal : "04",
               value : "금융 소득" 
           },
           {
               id : 5,
+              dbVal : "06",
               value : "기타 소득" 
           }
       ],
