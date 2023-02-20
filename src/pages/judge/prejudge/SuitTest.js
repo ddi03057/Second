@@ -14,6 +14,7 @@ import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
 import { Context1 } from "./../../../App.js";
 import { useContext } from "react";
+import { useLayoutEffect } from "react";
 
 
 
@@ -25,20 +26,25 @@ const suitTestData = collectData("SuitTest");
  * props항목별 설명
  */
 function SuitTest(props) {
-  
-  useEffect(()=> {
-    //적합성적정성고객정보사전조회
-    //callOpenApi("", {}, api1SuccessFn, api1ErrorFn);
-  }, []);
-  const [age, setAge] = useState(36);
-  const [email, setEmail] = useState("testIbk@gmail.com");
-  const api1SuccessFn = (res)=> {
-    setAge(res.data.age);
-    setEmail(res.data.email);
-  }
-  const api1ErrorFn = ()=> {
 
-  }
+  const [resEmail, setResEmail] = useState("");
+  const [resAge, setResAge] = useState("");
+  
+  useLayoutEffect(()=> {
+    console.log(API.PREJUDGE.SUITTEST_SBNTPOPYINQ);
+    callOpenApi(
+      API.PREJUDGE.SUITTEST_SBNTPOPYINQ,
+      {},
+      (res)=> {
+        console.log(res);
+        setResEmail(res.data.RSLT_DATA.email);
+        setResAge(getAge(res.data.RSLT_DATA.brthdy));
+      },
+      (err)=> {
+
+      }
+    )
+  }, []);
 
   /**
    * 항목별 데이터 분리
@@ -56,8 +62,9 @@ function SuitTest(props) {
   let arrTextData = [];
   suitTestData.find((data) => {
     if(data.type === "text") {
-      if(data.title==="연령") data["value"] = age;
-      if(data.title==="교부 받을 이메일 주소") data["value"] = email;
+      console.log(resAge);
+      // if(data.title==="연령") data["value"] = resAge;
+      // if(data.title==="교부 받을 이메일 주소") data["value"] = resEmail;
       arrTextData.push(data);
     }
   });
@@ -73,17 +80,29 @@ function SuitTest(props) {
   let [userResult, setUserResult] = useState([0,99,0,99,99,99,99,99,99,99,99,99]); //결과값 저장 state
   let [userCrdBru, setUserCrdBru] = useState("KCB"); //신용기관 선택값
   let [userCrdScr, setUserCrdScr] = useState(""); //신용점수 입력값
+  const [reqResult, setReqResult] = useState({});
   let [agreeYn, setAgreeYn] = useState(false); //하단 동의 체크 여부
   let [alertBtnNm, setAlertBtnNm] = useState(["확인"]);
   let navigate = useNavigate(); //다음화면을 위한 navigate
 
-  const {apiPath, setApiPath} = useContext(Context1);
-  console.log(apiPath);
-  useEffect(()=> {
-    console.log(apiPath);
-    if(apiPath != "/") navigate(PathConstants.PREJUDGE_DATACOLLECT);
-  },[apiPath]);
+  // const {apiPath, setApiPath} = useContext(Context1);
+  // console.log(apiPath);
+  // useEffect(()=> {
+  //   console.log(apiPath);
+  //   if(apiPath != "/") navigate(PathConstants.PREJUDGE_DATACOLLECT);
+  // },[apiPath]);
   
+  useEffect(()=> {
+    let copy = userResult;
+    copy[1] = resAge;
+    setUserResult(copy);
+  }, [resAge]);
+
+  useEffect(()=> {
+    let copy = userResult;
+    copy[11] = resEmail;
+    setUserResult(copy);
+  }, [resEmail]);
 
    // popup
    function openPop() {
@@ -99,13 +118,6 @@ function SuitTest(props) {
   const handleClose = ()=> closePop();
   let [msgCont, setMsgCont] = useState("");
   const [successYn, setSuccessYn] = useState(false);
-
-  useEffect(()=> {
-    let copy = userResult;
-    copy[1] = age;
-    copy[11] = email;
-    setUserResult(copy);
-  }, [age, email]);
 
   useEffect(()=> {
     console.log(userResult);
@@ -240,7 +252,7 @@ function SuitTest(props) {
                             showYn={(data.textId===1)?showCrdElYn:true}
                             styleSeleList="sele-list type01 radius answer-wrap"
                             styleInput=""
-                            textData={arrTextData[data.textId]}
+                            textData={(data.id===1)?{value:resAge}:(data.id===11)?{value:resEmail}:arrTextData[data.textId]}
                             inputType={data.placeholder.indexOf("숫자")>-1?"number":"text"}
                             isDisabled={data.id===1 || data.id===11&&true}
                             onChangeFn={(value)=>{
@@ -321,47 +333,60 @@ function SuitTest(props) {
         onClickFn={(btnIdx)=> {
           handleClose();
           if(successYn && btnIdx===0) {
+
             let param = {
-              oslLoapNo: "0014", //key
-              lfncAcmDcd: userResult[0], //여신금융상담소비자구분코드
-              age: userResult[1], // 연령
-              lfncLnugDcd: userResult[2], // 여신금융대출용도구분코드
-              lfncHlasDcd: userResult[3], //여신금융상담보유자산구분코드
-              lfncEnprPsntIncmDcd: userResult[4], //여신금융상담기업현재소득구분코드
-              lfncFtrAntcAnicDcd: userResult[5], //여신금융상담미래예상연간소득구분코드
-              lfncLbltDcd: userResult[6], //여신금융상담부채구분코드
-              lfncFxngExpdDcd: userResult[7], //여신금융상담고정지출구분코드
-              lfncOvduDcd: userResult[8], //여신금융상담연체구분코드
-              cdbuScr: userCrdScr, //cb점수 (신용점수)
-              lfncRepmWayDcd: userResult[10],//여신금융상담변제방법구분코드
-              cusEad: userResult[11], //고객이메일주소
-              lfncCrdtScrVainDcd: userCrdBru, //여신금융상담신용평가기관구분코드 01,02
-              
+              age: userResult[1],// 연령
+              cdbuScr: userCrdScr,// CB점수
+              cusEad: userResult[11],// 이메일주소
+              lfncAcmDcd: "0"+(userResult[0]+1), // 여신금융상담소비자구분코드
+              lfncHlasDcd: "0"+(userResult[3]+1),// 여신금융상담보유자산구분코드
+              lfncEnprPsntIncmDcd: "0"+(userResult[4]+1),// 여신금융상담기업현재소득구분코드
+              lfncFtrAntcAnicDcd: "0"+(userResult[5]+1),// 여신금융상담미래예상연간소득구분코드
+              lfncLbltDcd: "0"+(userResult[6]+1),// 여신금융상담고정지출구분코드
+              lfncFxngExpdDcd: "0"+(userResult[7]+1),// 여신금융상담고정지출구분코드
+              lfncOvduDcd: "0"+(userResult[8]+1),// 여신상담연체구분코드
+              lfncCrdtScrCnfaYn: (userResult[9]===0?"N":"Y"),// 신용점수확인여부
+              lfncRepmWayDcd: "0"+(userResult[10]+1),   // 여신금융상담변제방법구분코드
+              lfncCrdtScrVainDcd: userCrdScr==="KCB"?"02":"01",// 여신금융상담신용점수평가기관구분코드
+              innfGthrCosnYn: "Y",// 개인정보수집동의여부
             };
-            //callOpenApi(API.PREJUDGE.PREJUDGE_SUITTEST, param, api2SuccessFn, api2ErrorFn);
-            const api2SuccessFn = (res)=> {
-              if(res.data.rslt_msg === "0000") {}
-              //다음화면 이동
-              // navigate(
-              //   PathConstants.PREJUDGE_SUITRESULT,
-              //   {
-              //     state: {
-              //       result: userResult,
-              //       crdBru: userCrdBru,
-              //       crdScr: userCrdScr
-              //   }
-              // });
-            }
+            callOpenApi(API.PREJUDGE.SUITTEST_SBNTPOPYVRFC, 
+              param, 
+              (res)=> {
+                console.log(res);
+                if(res.data.RSLT_DATA.resultYn === "Y") {
+                  navigate(PathConstants.PREJUDGE_DATACOLLECT);
+                }
+              }, 
+              ()=> {
 
-            const api2ErrorFn = ()=> {
+              }
+            );
+          //   const api2SuccessFn = (res)=> {
+          //     if(res.data.rslt_msg === "0000") {}
+          //     //다음화면 이동
+          //     // navigate(
+          //     //   PathConstants.PREJUDGE_SUITRESULT,
+          //     //   {
+          //     //     state: {
+          //     //       result: userResult,
+          //     //       crdBru: userCrdBru,
+          //     //       crdScr: userCrdScr
+          //     //   }
+          //     // });
+          //   }
 
-            }
-            //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
-            // navigate(
-            //   PathConstants.PREJUDGE_DATACOLLECT,
-            // );
+          //   const api2ErrorFn = ()=> {
+
+          //   }
+          //   //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
+          //   // navigate(
+          //   //   PathConstants.PREJUDGE_DATACOLLECT,
+          //   // );
+          // }
           }
         }}
+      
       />
 
     
@@ -559,6 +584,29 @@ function checkBatchimEnding(word) {
   if (uni < 44032 || uni > 55203) return null;
 
   return (uni - 44032) % 28 != 0;
+}
+
+/**
+ * 만나이 계산
+ * @param {*} bStr 
+ * @returns 
+ */
+function getAge(bStr){
+  console.log(bStr)
+  var today = new Date();
+  var birthDate = getDate(bStr);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if( m<0 || (m===0 && today.getDate() < birthDate.getDate())){
+    age--;
+  }
+  return age;
+}
+function getDate(yyyymmdd){
+  var year = yyyymmdd.substring(0,4);
+  var month = yyyymmdd.substring(4,6);
+  var day = yyyymmdd.substring(6,8);
+  return new Date(Number(year), Number(month), Number(day)); 
 }
 
 export default SuitTest;

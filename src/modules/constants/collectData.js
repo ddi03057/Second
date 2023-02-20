@@ -320,19 +320,19 @@ const suitTestData = [
       radioId : 9,
       radioList : [
           {
-              id : 0,
+              id : 1,
               value : "사업 소득" 
           },
           {
-              id : 1,
+              id : 2,
               value : "임대 소득" 
           },
           {
-              id : 2,
+              id : 3,
               value : "금융 소득" 
           },
           {
-              id : 3,
+              id : 5,
               value : "기타 소득" 
           }
       ],
@@ -355,47 +355,54 @@ const custAgreeData = [
       id: 0,
       title: "(필수) 개인(신용)정보 수집 이용 및 제공관련 고객권리 안내문",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2017110617593821483973066352935.pdf"
+      pdfvalue: "/fup/customer/form/2017110617593821483973066352935.pdf",
+      dcffStplId: "1"
 
   },
   {
       id: 1,
       title: "(필수) 개인(신용)정보 수집 이용 동의, 고유식별번호 수집 이용 동의",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2019031909261764480323824044447.pdf"
+      pdfvalue: "/fup/customer/form/2019031909261764480323824044447.pdf",
+      dcffStplId: "1"
   },
   {
       id: 2,
       title: "(필수) 개인(신용)정보 수집이용 제공 동의(여신금융거래)",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2020262473283826319128117808560.pdf"
+      pdfvalue: "/fup/customer/form/2020262473283826319128117808560.pdf",
+      dcffStplId: "1"
   },
   {
       id: 3,
       title: "(필수) 개인(신용)정보 수집이용 제공 동의(비여신금융거래)",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2022053115131329259593606625324.pdf"
+      pdfvalue: "/fup/customer/form/2022053115131329259593606625324.pdf",
+      dcffStplId: "1"
 
   },
   {
       id: 4,
       title: "(필수) 개인정보 및 기업정보의 수집 · 이용 · 제공 활용 동의서(신용보증기금)",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2022053115164629259806850189960.pdf"
+      pdfvalue: "/fup/customer/form/2022053115164629259806850189960.pdf",
+      dcffStplId: "1"
 
   },
   {
       id: 5,
       title: "(필수) 중소기업지원사업 통합관리 시스템 정보 활용을 위한 동의서(신용보증기금)",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2022021612253920263835375609685.pdf"
+      pdfvalue: "/fup/customer/form/2022021612253920263835375609685.pdf",
+      dcffStplId: "1"
 
   },
   {
       id: 6,
       title: "(필수) 여신금융협회 이용약관 동의",
       type: "pdf",
-      pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf"
+      pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf",
+      dcffStplId: "1"
 
   }
 ];
