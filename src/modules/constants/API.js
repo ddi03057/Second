@@ -44,9 +44,9 @@ const API = {
     
   },
   PREJUDGE: {
-    CUSTAGREE:        `${base}/osl001/spag`,
-    SUITTEST:         `${base}/osl101/sbntPopyInq `,
-    SUITTEST:         `${base}/osl001/sbntPopyVrfc `,
+    CUSTAGREE_SPAG:        `${base}/osl100/spag`,
+    SUITTEST_SBNTPOPYINQ:         `${base}/osl101/sbntPopyInq`,
+    SUITTEST_SBNTPOPYVRFC:         `${base}/osl101/sbntPopyVrfc`,
     SUITRESULT:       `${base}/osl`, 
     SELFCHECK:        `${base}/osl`, 
     GRTINFOINPUT:     `${base}/osl`,   
@@ -63,7 +63,8 @@ const API = {
     AGRMINPUT:        `${base}/osl`, 
     UNTACTAGRM:       `${base}/osl300/achlYnInq`,  
     SUCCRESULT:       `${base}/osl`,  
-    ARSCERTIFICATE:   `${base}/osl`,     
+    ARSCERTIFICATE_ARSCRTCCRETRGST:   `${base}/osl304/arsCrtcCretRgst`,
+    ARSCERTIFICATE_ARSCRTCCNFA:   `${base}/osl304/arsCrtcCnfa`,     
     FINANCECUSLAW:    `${base}/osl`,     
   },
   POSTMANAGEMENT: {
