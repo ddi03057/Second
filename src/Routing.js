@@ -3,13 +3,12 @@
 import PathConstants from './modules/constants/PathConstants.js';
 
 import { Route, Routes } from "react-router";
+import { lazy, Suspense } from 'react';
+import Loading from './modules/components/Loading.js';
 import Detail from './pages/guide/Detail.js';
 import Ready from './pages/guide/Ready.js';
-import { lazy, Suspense } from 'react';
-import OslHeader from './modules/components/OslHeader.js';
-//import Progress from './pages/common/Progress.js';
+
 import CustAgree from './pages/judge/prejudge/CustAgree.js';
-import Loading from './modules/components/Loading.js';
 import SelfCheck from './pages/judge/prejudge/SelfCheck.js';
 import GrtInfoInput from './pages/judge/prejudge/GrtInfoInput.js';
 import UntactAgrm from './pages/lonexecute/UntactAgrm.js';
@@ -37,6 +36,7 @@ import { Context1 } from "./App.js";
 import { useContext } from 'react';
 import SystemError from './pages/common/SystemError.js';
 import DefinoCheck from './pages/common/DelfinoCheck.js';
+
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));

@@ -583,3 +583,25 @@ function getProfileBsnnNo() {
 	return (p == null || p == "null" || p == "undefined") ? "" : String(p);
 }
 
+export const callLocalApi = async(uri,param,cbFn)=> {
+
+	let configData = {
+		headers: {
+			"Content-Type": "application/json",
+			"appKey": process.env.REACT_APP_LRB_APP_KEY,
+			"Accept": "application/json"
+		}
+	}
+
+	await axios.post(
+		"/api2" + uri,
+		JSON.stringify(param),
+		configData
+	).then((res)=> {
+		console.log("callLocalApi success res data : ", res);
+		cbFn(res);
+	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
+		console.log("refeshError", exception);
+		//callback(null);
+	});
+}
