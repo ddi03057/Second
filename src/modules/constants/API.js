@@ -47,6 +47,7 @@ const API = {
     CUSTAGREE_SPAG:        `${base}/osl100/spag`,
     SUITTEST_SBNTPOPYINQ:         `${base}/osl101/sbntPopyInq`,
     SUITTEST_SBNTPOPYVRFC:         `${base}/osl101/sbntPopyVrfc`,
+    PRE_SCPG:               `${base}/osl102/getSignStepData`,
     SUITRESULT:       `${base}/osl`, 
     SELFCHECK:        `${base}/osl`, 
     GRTINFOINPUT:     `${base}/osl`,   

@@ -36,6 +36,7 @@ import { useState } from 'react';
 import { Context1 } from "./App.js";
 import { useContext } from 'react';
 import SystemError from './pages/common/SystemError.js';
+import DefinoCheck from './pages/common/DelfinoCheck.js';
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
 const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
@@ -90,7 +91,7 @@ function Routing() {
         <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemError />} />
         <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
-        <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />
+        <Route path={PathConstants.CERTIFICATE} element={<DefinoCheck headerNm={PathConstants.CERTIFICATE_NM} />} />
         <Route path={PathConstants.PROGRESS} element={<Progress headerNm={PathConstants.PROGRESS_NM} />} />
         <Route path={PathConstants.GUIDE_DETAIL} element={<Detail headerNm={PathConstants.GUIDE_DETAIL_NM} />} />
         <Route path={PathConstants.GUIDE_READY} element={<Ready headerNm={PathConstants.GUIDE_READY_NM} />} />
