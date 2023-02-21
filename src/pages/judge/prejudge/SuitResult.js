@@ -12,7 +12,7 @@ import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
 import collectData from "../../../modules/constants/collectData";
 import PathConstants from '../../../modules/constants/PathConstants.js';
-import callOpenApi from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 import API from "../../../modules/constants/API";
 //suitTestData[5].radioList.find((data)=> data.id===parseInt(userResult[5])-1).value
 const suitTestData = collectData("SuitTest");
@@ -24,38 +24,103 @@ const suitTestData = collectData("SuitTest");
  */
 function SuitResult(props) {
 
-  const [rsltDcd, setRsltDcd] = useState("");
+  const obj = {
+    lfncJdgmRsltDcd: "01",
+    age: "35",
+    cdbuScr: "500",
+    cusEad: "ibk@gamil.com",
+    lfncAcmDcd: null,
+    lfncHlasDcd: "01",
+    lfncEnprPsntIncmDcd: "01",
+    lfncFtrAntcAnicDcd: "01",
+    lfncLbltDcd: "01",
+    lfncFxngExpdDcd: "01",
+    lfncOvduDcd: "01",
+    lfncCrdtScrCnfaYn: null,
+    lfncRepmWayDcd: "01",
+    lfncCrdtScrVainDcd: "01",
+    innfGthrCosnYn: null
+  };
+  const [userResult, setUserResult] = useState(obj);
+  const [suitData, setSuitData] = useState({});
   useLayoutEffect(()=> {
-    callOpenApi(
+    callLocalApi(
       API.PREJUDGE.SUITRESULT_CMPBPOPYEXCNVRFCINQ,
       {},
       (res)=> {
         if(res.data.RSLT_DATA.lgncJdgmRsltDcd === "01") {
-          setRsltDcd("Y");
+          setUserResult({lfncJdgmRsltDcd:"Y"});
         }else {
-          setRsltDcd("N");
+          let obj = res.data.RSLT_DATA;
+          obj["flag"] = "Y";
+          setUserResult(obj);
+/* 
+      result.setLfncJdgmRsltDcd(lfncJdgmRsltDcd);
+			result.setAge(String.valueOf(failSelectLfncOsl003L.get("AGE")));//연령
+			result.setLfncHlasDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_HLAS_DCD")));	//보유자산
+			result.setLfncEnprPsntIncmDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_ENPR_PSNT_INCM_DCD")));	//현재소득
+			result.setLfncFtrAntcAnicDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_FTR_ANTC_ANIC_DCD"))); 	//미래예상소득
+			result.setLfncLbltDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_LBLT_DCD"))); 				//부채
+			result.setLfncFxngExpdDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_FXNG_EXPD_DCD"))); 		//고정지출
+			result.setLfncOvduDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_OVDU_DCD"))); 				//연체
+			result.setCdbuScr(String.valueOf(failSelectLfncOsl003L.get("CDBU_SCR"))); 						//cb점수
+			result.setLfncCrdtScrVainDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_CRDT_SCR_VAIN_DCD"))); 	//평가기관
+			result.setLfncRepmWayDcd(String.valueOf(failSelectLfncOsl003L.get("LFNC_REPM_WAY_DCD"))); 			//변제방법
+			result.setCusEad(String.valueOf(failSelectLfncOsl003L.get("CUS_EAD"))); 							//이메일
+*/          
+          //setSuitData(res.data.RSLT_DATA);
+          
+          
+          
+          
+          
+          
         }
       }
     )
   }, []);
 
-  const [suitData, setSuitData] = useState({});
   useEffect(()=> {
-    if(rsltDcd === "N") {
-      callOpenApi(
-        "적합성적정성 입력한데이터 받아오는 API",
-        {},
-        (res)=> {
-          setSuitData(res.data.RSLT_DATA.data);
-        }
-      )
+    if(userResult.flag === "Y") {
+      setSuitData({
+        lfncJdgmRsltDcd: userResult.lfncJdgmRsltDcd==="01"?"Y":"N",
+        age: userResult.age,
+        cdbuScr: userResult.cdbuScr,
+        cusEad: userResult.cusEad,
+        lfncAcmDcd: suitTestData[0].radioList.filter((data)=> data.dbVal===userResult.lfncHlasDcd.trim()).length !== 0?
+          suitTestData[0].radioList.filter((data)=> data.dbVal===userResult.lfncHlasDcd.trim())[0].value:"",
+        lfncHlasDcd: suitTestData[3].radioList.filter((data)=> data.dbVal===userResult.lfncHlasDcd.trim()).length !== 0?
+          suitTestData[3].radioList.filter((data)=> data.dbVal===userResult.lfncHlasDcd.trim())[0].value:"",
+        lfncEnprPsntIncmDcd: suitTestData[4].radioList.filter((data)=> data.dbVal===userResult.lfncEnprPsntIncmDcd.trim()).length !== 0?
+          suitTestData[4].radioList.filter((data)=> data.dbVal===userResult.lfncEnprPsntIncmDcd.trim())[0].value:"",
+        lfncFtrAntcAnicDcd: suitTestData[5].radioList.filter((data)=> data.dbVal===userResult.lfncFtrAntcAnicDcd.trim()).length !== 0?
+          suitTestData[5].radioList.filter((data)=> data.dbVal===userResult.lfncFtrAntcAnicDcd.trim())[0].value:"",
+        lfncLbltDcd: suitTestData[6].radioList.filter((data)=> data.dbVal===userResult.lfncLbltDcd.trim()).length !== 0?
+          suitTestData[6].radioList.filter((data)=> data.dbVal===userResult.lfncLbltDcd.trim())[0].value:"",
+        lfncFxngExpdDcd: suitTestData[7].radioList.filter((data)=> data.dbVal===userResult.lfncFxngExpdDcd.trim()).length !== 0?
+          suitTestData[7].radioList.filter((data)=> data.dbVal===userResult.lfncFxngExpdDcd.trim())[0].value:"",
+        lfncOvduDcd: suitTestData[8].radioList.filter((data)=> data.dbVal===userResult.lfncOvduDcd.trim()).length !== 0?
+          suitTestData[8].radioList.filter((data)=> data.dbVal===userResult.lfncOvduDcd.trim())[0].value:"",
+        lfncCrdtScrCnfaYn: suitTestData[9].radioList.filter((data)=> data.dbVal===userResult.lfncCrdtScrCnfaYn.trim()).length !== 0?
+          suitTestData[9].radioList.filter((data)=> data.dbVal===userResult.lfncCrdtScrCnfaYn.trim())[0].value:"",
+        lfncRepmWayDcd: suitTestData[12].radioList.filter((data)=> data.dbVal===userResult.lfncRepmWayDcd.trim()).length !== 0?
+          suitTestData[12].radioList.filter((data)=> data.dbVal===userResult.lfncRepmWayDcd.trim())[0].value:"",
+        lfncCrdtScrVainDcd: userResult.lfncCrdtScrVainDcd,
+      });
     }
-  }, [rsltDcd]);
+    
+    return ()=> {
+      window.document.querySelector(".loading").remove();
+    }
+    
+  }, [userResult])
+  
+
 
   const navigate = useNavigate();
   let crdBru = "";
   let crdScr = "";
-  let userResult = [];
+  
   /**
    * state = {result: [적합성적정성 결과값 배열], crdBru: "신용기관"}
    
@@ -101,7 +166,7 @@ function SuitResult(props) {
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
-      {rsltDcd === "Y"?
+      {userResult.lfncJdgmRsltDcd === "Y"?
       <div className="container">
         <div className="content">
 
@@ -140,52 +205,52 @@ function SuitResult(props) {
               <div className="info-wrap">
                 <div className="info-box">
                   <span className="tit fc-gray">연령</span>
-                  <span className="txt fc-dark ta-r">{userResult[1]}세</span>
+                  <span className="txt fc-dark ta-r">{suitData.age}세</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보유자산</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[3].radioList.find((data)=> data.dbVal===userResult[3]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncHlasDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">현재소득</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[4].radioList.find((data)=> data.dbVal===userResult[4]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncEnprPsntIncmDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">미래예상소득</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[5].radioList.find((data)=> data.dbVal===userResult[5]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncFtrAntcAnicDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">부채</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[6].radioList.find((data)=> data.dbVal===userResult[6]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncLbltDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">고정지출</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[7].radioList.find((data)=> data.dbVal===userResult[7]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncFxngExpdDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">연채여부</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[8].radioList.find((data)=> data.dbVal===userResult[8]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncOvduDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">신용점수</span>
                   <span className="txt fc-dark ta-r">
-                    {userResult[9] === 1?<>잘모름</>:`${crdScr}점`}
+                    {suitData.lfncCrdtScrCnfaYn === "N"?<>잘모름</>:`${suitData.cdbuScr}점`}
                   </span>
                 </div>
                 {
-                  userResult[9] === 0&&
+                  suitData.lfncCrdtScrCnfaYn === "Y"&&
                     <div className="info-box">
                       <span className="tit fc-gray">평가기관</span>
-                      <span className="txt fc-dark ta-r">{crdBru}</span>
+                      <span className="txt fc-dark ta-r">{suitData.lfncCrdtScrVainDcd}</span>
                     </div>
                 }
                 <div className="info-box">
                   <span className="tit fc-gray">변제방법</span>
-                  <span className="txt fc-dark ta-r">{suitTestData[12].radioList.find((data)=> data.dbVal===userResult[10]).value}</span>
+                  <span className="txt fc-dark ta-r">{suitData.lfncRepmWayDcd}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">이메일주소</span>
-                  <span className="txt fc-dark ta-r">{userResult[11]}</span>
+                  <span className="txt fc-dark ta-r">{suitData.cusEad}</span>
                 </div>
               </div>
             </section>
@@ -220,6 +285,7 @@ function SuitResult(props) {
         </div>
       </div>
       }
+      <div className="loading"></div>
     </>
   );
 

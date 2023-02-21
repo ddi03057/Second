@@ -92,10 +92,12 @@ const suitTestData = [
       radioList : [
           {
               id : 0,
+              dbVal : "01",
               value : "일반금융소비자" 
           },
           {
               id : 1,
+              dbVal : "02",
               value : "전문금융소비자" 
           },
       ],
@@ -293,12 +295,12 @@ const suitTestData = [
       radioList : [
         {
           id : 0,
-          dbVal : "01",
+          dbVal : "Y",
           value : "알고 있음" 
         },
         {
           id : 1,
-          dbVal : "02",
+          dbVal : "N",
           value : "잘 모름"
         }
       ]

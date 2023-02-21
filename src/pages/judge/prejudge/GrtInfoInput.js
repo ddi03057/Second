@@ -30,6 +30,7 @@ import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
 import { Context1 } from "./../../../App.js";
 import { useContext } from "react";
+import callOpenApi from "../../../modules/common/tokenBase";
 
 const grtInfoData = collectData("GrtInfoInput");
 
@@ -65,7 +66,7 @@ function GrtInfoInput(props) {
   });
 
 
-  let [userResult, setUserResult] = useState([99, 99, 99, 999, 99, 99, 99, 99, 99, '5']); //결과값 저장 state
+  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, '5']); //결과값 저장 state
   const [disabledYn, setDisabledYn] = useState(true);
   const [agreeYn, setAgreeYn] = useState(false);
   const [successYn, setSuccessYn] = useState(false);
@@ -75,8 +76,17 @@ function GrtInfoInput(props) {
     console.log(userResult);
     let validCheckIdx = userResult.findIndex((data, idx) => data === 99);
     if (validCheckIdx === -1 && agreeYn) {
+      console.log("밸리통과");
       setDisabledYn(false);
-    } else {
+    }else if(validCheckIdx === 3 && agreeYn) {
+      if(userResult[2] === 0) {
+        console.log("밸리통과");
+        setDisabledYn(false);
+      }else {
+        setDisabledYn(true);
+      }
+    }else {
+      console.log("밸리실패");
       setDisabledYn(true);
     }
   }, [userResult, agreeYn]);
@@ -86,9 +96,18 @@ function GrtInfoInput(props) {
 
   useEffect(() => {
     if (successYn) {
-      navigate(
-        PathConstants.PREJUDGE_DOCSTATUS
+      callOpenApi(
+        API.PREJUDGE.GRTINFOINPUT_GRNYEXTDATWRTN,
+        {},
+        (res)=> {
+          if(res.data.RSLT_DATA.resultYn === "Y") {
+            navigate(
+              PathConstants.PREJUDGE_DOCSTATUS
+            )
+          }
+        }
       )
+      
     }
   }, [successYn]);
 
@@ -139,7 +158,19 @@ function GrtInfoInput(props) {
   }
   const [postCd, setPostCd] = useState("");
   const [addr1, setAddr1] = useState("");
-  const [addr2, setAddr2] = useState("")
+  const [addr2, setAddr2] = useState("");
+  useEffect(()=> {
+    let copy = [...userResult];
+    console.log(postCd);
+    console.log(addr1)
+    console.log(addr2)
+    if(!!postCd && !!addr1 && !!addr2.trim()) {
+      copy[3] = "Y";
+    }else {
+      copy[3] = 99;
+    }
+    setUserResult(copy);
+  }, [postCd, addr1, addr2])
 
   // const GrtInfoInput = async () => {
 
