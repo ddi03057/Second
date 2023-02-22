@@ -105,7 +105,7 @@ instance.interceptors.response.use(
 const request = async function (opt) {
   const options = {
     // baseURL: config.public.API_URL,
-    baseURL: "/api2/",
+    baseURL: process.env.REACT_APP_PROXY_PATH,
     method: "POST",
     ifHandleError: true,
     ...opt,

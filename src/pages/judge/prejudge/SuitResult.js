@@ -25,25 +25,26 @@ const suitTestData = collectData("SuitTest");
 function SuitResult(props) {
 
   const obj = {
-    lfncJdgmRsltDcd: "01",
-    age: "35",
-    cdbuScr: "500",
-    cusEad: "ibk@gamil.com",
-    lfncAcmDcd: null,
-    lfncHlasDcd: "01",
-    lfncEnprPsntIncmDcd: "01",
-    lfncFtrAntcAnicDcd: "01",
-    lfncLbltDcd: "01",
-    lfncFxngExpdDcd: "01",
-    lfncOvduDcd: "01",
-    lfncCrdtScrCnfaYn: null,
-    lfncRepmWayDcd: "01",
-    lfncCrdtScrVainDcd: "01",
-    innfGthrCosnYn: null
+    // lfncJdgmRsltDcd: "01",
+    // age: "35",
+    // cdbuScr: "500",
+    // cusEad: "ibk@gamil.com",
+    // lfncAcmDcd: null,
+    // lfncHlasDcd: "01",
+    // lfncEnprPsntIncmDcd: "01",
+    // lfncFtrAntcAnicDcd: "01",
+    // lfncLbltDcd: "01",
+    // lfncFxngExpdDcd: "01",
+    // lfncOvduDcd: "01",
+    // lfncCrdtScrCnfaYn: null,
+    // lfncRepmWayDcd: "01",
+    // lfncCrdtScrVainDcd: "01",
+    // innfGthrCosnYn: null
   };
-  const [userResult, setUserResult] = useState(obj);
+  const [userResult, setUserResult] = useState({});
   const [suitData, setSuitData] = useState({});
   useLayoutEffect(()=> {
+    //obj.lfncJdgmRsltDcd = null;
     callLocalApi(
       API.PREJUDGE.SUITRESULT_CMPBPOPYEXCNVRFCINQ,
       {},
@@ -81,7 +82,9 @@ function SuitResult(props) {
   }, []);
 
   useEffect(()=> {
+    console.log(userResult);
     if(userResult.flag === "Y") {
+      //적합성결과 코드값과 collect data에 정의한 코드값과 value값 매칭해서 추출
       setSuitData({
         lfncJdgmRsltDcd: userResult.lfncJdgmRsltDcd==="01"?"Y":"N",
         age: userResult.age,
@@ -109,11 +112,11 @@ function SuitResult(props) {
       });
     }
     
-    return ()=> {
-      window.document.querySelector(".loading").remove();
-    }
+    // return ()=> {
+    //   window.document.querySelector(".loading").remove();
+    // }
     
-  }, [userResult])
+  }, [userResult]);
   
 
 
@@ -166,7 +169,7 @@ function SuitResult(props) {
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
-      {!!userResult.lfncJdgmRsltDcd?
+      {JSON.stringify(userResult) === '{}'?
       <div className="container">
         <div className="content">
           <div className="content-body prescreening">

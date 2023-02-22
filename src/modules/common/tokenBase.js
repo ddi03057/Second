@@ -98,10 +98,14 @@ export default async ( uri, data, successCB, errorCB )=> {
     })
       .then((response) => {
 				console.log("requestAxios", response);
-				if(response.data.STATUS !== "200") {
+				if(response.data.STATUS === "0000") {
+					successCallBack(response);	
+				}else if(response.data.STATUS === "9990") {
+					window.location.href = "/state";
+				}else {
 					window.location.href = PathConstants.SERVICE_ERROR;
 				}
-				successCallBack(response);
+				
         return response;
       })
 
@@ -599,7 +603,7 @@ export const callLocalApi = async(uri,param,cbFn)=> {
 	}
 
 	await axios.post(
-		"/api2/" + uri,
+		"/api2" + uri,
 		JSON.stringify(param),
 		configData
 	).then((res)=> {

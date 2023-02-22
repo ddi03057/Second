@@ -27,7 +27,7 @@ export default (props)=> {
   useEffect(()=> {
     
     if(tokenYn) {
-      setProgState("first");
+      setProgState(type);
       //진행상태체크
       let param = {};
       // callOpenApi("", param, successFn, errorFn);
@@ -46,10 +46,14 @@ export default (props)=> {
     }
   }, []);
   useEffect(()=> {
+    console.log("progState", progState);
     if(!!progState) {
       switch(progState) {
         case "first" :
           navigate(PathConstants.PREJUDGE_CUSTAGREE);
+          break;
+        case "state" :
+          navigate(PathConstants.MAIN,{state: {tabIdx: 2}});
           break;
         default : 
           navigate(PathConstants.GUIDE_DETAIL);
