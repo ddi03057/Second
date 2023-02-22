@@ -37,8 +37,9 @@ const PathConstants = {
   PROGRESS: '/progress', //진행상태
   SERVICE_ERROR: '/serviceerror', //일시적 서비스 장애
   SYSTEM_ERROR: '/systemerror', //시스템 점검
-  CERTIFICATE: '/certificate', // 브라우저인증서
-
+  CERTIFICATE_CERT: '/certificate/cert', // 브라우저인증서
+  CERTIFICATE_SIGN: '/certificate/sign',
+  CERTIFICATE_SCRP: '/certificate/scrp',
     //dummy
   GUIDE: '/guide',  //안내
   PREJUDGE: '/prejudge',  //사전심사

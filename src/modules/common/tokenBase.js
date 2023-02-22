@@ -584,7 +584,7 @@ function getProfileBsnnNo() {
 }
 
 export const callLocalApi = async(uri,param,cbFn)=> {
-
+	console.log("callLocalApi호출 start");
 	let configData = {
 		headers: {
 			"Content-Type": "application/json",

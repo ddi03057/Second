@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ReactDelfino from "../react-delfino";
+import ReactDelfino from "../../react-delfino";
 
 import "./delfino-check.css";
 

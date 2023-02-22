@@ -1,8 +1,10 @@
 import { useLayoutEffect } from "react";
 import { useEffect, useState } from "react";
 import API from "../../modules/constants/API.js";
-import callOpenApi from "../../modules/common/tokenBase.js";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase.js";
 import ReactDelfino from "../../react-delfino";
+import { useNavigate } from "react-router";
+import PathConstants from "../../modules/constants/PathConstants.js";
 
 /**
  * 컴포넌트명 : 브라우저 인증
@@ -12,12 +14,19 @@ import ReactDelfino from "../../react-delfino";
  */
 function DelfinoCheck(props) {
 
+  const certType = props.certType;
+  const orgCdArr = [];
+  const svcCdArr = [];
+  const stepDataArr = [];
+
   const [delfinoLoaded, setDelfinoLoaded] = useState(false);
   const resultAction = "/jsp/signResult";
   let Delfino, DelfinoConfig;
 
   let multiSignDelimiter = '';
   let browserName;
+
+  let navigate = useNavigate();
 
   function TEST_checkExpireWarning(certExpireDate) {
     var beforeDay = 180;
@@ -35,12 +44,14 @@ function DelfinoCheck(props) {
     if (betweenDay <= beforeDay) alert("인증서 만료일은 " +  certExpireDate + " 입니다. " + parseInt(betweenDay, 10) + "일 남았습니다.");
 }
 
-  function TEST_scrapingSign(isMulti) {
-    if (document.delfinoForm.SIGN_Delimeter.value == "") isMulti = false;
-    document.delfinoForm.PKCS_TYPE.value = "scrapingSign";
-  
-    var tbsData = "델피노 test 스크래핑용 서명원문1";
-    if (isMulti) tbsData = [document.delfinoForm.nonce1.value, document.delfinoForm.nonce2.value];
+  function TEST_scrapingSign(data) {
+    var tbsData = [];
+    for(var i = 0; i < data.RSLT_DATA.step.length ; i++){
+      tbsData[i] = data.RSLT_DATA.step[i].nonce;
+      orgCdArr[i] = data.RSLT_DATA.step[i].orgCd;
+      svcCdArr[i] = data.RSLT_DATA.step[i].svcCd;
+      stepDataArr[i] = data.RSLT_DATA.step[i].stepData;
+    }
   
     var signOptions = {};
     signOptions.cacheCert = false;
@@ -48,8 +59,41 @@ function DelfinoCheck(props) {
     signOptions.policyOidCertFilter = "";
   
     alert("스크래핑용서명원문\n[" + tbsData + "]");
-    Delfino.scrapingSign(tbsData, signOptions, TEST_complete);
+    Delfino.scrapingSign(tbsData, signOptions, TEST_complete_scrp);
   }
+
+  function TEST_complete_scrp(result){
+    // __result = result;
+    if(result.status==0) return;
+    if(result.status==1){
+        //var param = {scpgSignData:[]};
+        var vidRandom = result.vidRandom;
+        var signData = [];
+        console.log("signData In");
+        if (Array.isArray(result.signData)) {
+            console.log("signData Arr In");
+            for(var i = 0 ; i < result.signData.length ; i++){ 
+                console.log("signData Arr In Index " +  i);
+              if(orgCdArr[i] === "hometax"){
+                signData[i] = result.signData[i].p1;
+              }else{
+                signData[i] = result.signData[i].p7;
+              }
+              //alert(orgCdArr[i] + "|" + svcCdArr[i] + "|" + stepDataArr[i] + "|" + signData[i] + "|" + result.vidRandom);
+              //param.scpgSignData[i]={orgCd:orgCdArr[i],svcCd:svcCdArr[i],stepData:stepDataArr[i],signData:signData[i],vid:vidRandom}
+              document.getElementById("resultTxt").value = document.getElementById("resultTxt").value + "{\"orgCd\":\""+orgCdArr[i]+"\",\"svcCd\":\""+svcCdArr[i]+"\",\"stepData\":\""+stepDataArr[i]+"\",\"signData\":\""+signData[i]+"\",\"vid\":\""+result.vidRandom+"\",\"cert\":\""+result.cert+"\"}";
+            }
+        }
+
+        if(result.certExpireDate!=null) TEST_checkExpireWarning(result.certExpireDate);
+        //document.getElementById("resultTxt").value = JSON.stringify(param);
+        //callApiComplete(param);
+        //navigate(PathConstants.PREJUDGE_DOCSTATUS);
+    }else{
+        //if (Delfino.isPasswordError(result.status)) alert("비밀번호 오류 횟수 초과됨"); //v1.1.6,0 over & DelfinoConfig.passwordError = true
+        alert("error:" + result.message + "[" + result.status + "]");
+    }
+}
 
   function TEST_complete(result){
     // __result = result;
@@ -115,7 +159,7 @@ function DelfinoCheck(props) {
     }
 }
 
-var yessignCaHost_real;
+    var yessignCaHost_real;
     var yessignCaPort_real;
     var crosscertCaPort_real;
     var crosscertCaHost_real;
@@ -365,6 +409,7 @@ var yessignCaHost_real;
                 Delfino.setModule();
                 //if (!DC_platformInfo.Mobile) { Delfino.resetRecentModule(); Delfino.setModule(); }
                 console.log('init done end');
+                callApiFn();
             });
         } else {
             Delfino = ReactDelfino.Delfino;
@@ -379,6 +424,20 @@ var yessignCaHost_real;
    * 서명값 인증을 위한 Step1 Data 호출 
    */
   const callApiFn = ()=> {
+    if(certType === "scrp"){
+      callLocalApi(
+        "/api/osl102/getSignStepData",
+        {},
+        (res)=> {
+          if(res.data.STATUS === "0000") {
+            console.log("status in")
+            TEST_scrapingSign(res.data);
+          }
+        }
+      );
+    }
+  }
+    /*
     callOpenApi(
       API.PREJUDGE.PRE_SCPG,
       (res)=> {
@@ -390,20 +449,25 @@ var yessignCaHost_real;
       ()=> {
 
       }
-    );
+    );*/
+    const callApiComplete = (param)=> {
+      if(certType === "scrp"){
+        callLocalApi(
+          "/api/osl103/scpg",
+          JSON.stringify(param),
+          (res)=> {
+            
+          }
+        );
+      }
+    
   };
-
-  useLayoutEffect(()=> {
-    callOpenApi();
-  }, [])
-  
-  
-
-  
 
   return (
     <>
+    <textarea id="resultTxt"/>
     </>
+    
       
   );
 }
