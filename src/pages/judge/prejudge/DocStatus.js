@@ -11,8 +11,9 @@ import { useNavigate } from "react-router";
 import OslHeader from "../../../modules/components/OslHeader";
 import OslBtn from "../../../modules/components/OslBtn";
 import PathConstants from "../../../modules/constants/PathConstants";
-import callOpenApi from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 import API from "../../../modules/constants/API";
+import { useInterval } from "../../../modules/common/hook/useInterval";
 
 /**
  * 화면명 : 서류제출
@@ -22,23 +23,48 @@ import API from "../../../modules/constants/API";
  */
 function DocStatus(props) {
 
-  const [flrYn, setFlrYn] = useState("Y");
+  //모두 완료 여부 N: 모두완료 Y: 하나이상 미완료
+  const [flrYn, setFlrYn] = useState("");
+  //스크래핑 항목별 수집상태
   const [docStatus, setDocStatus] = useState([]);
+  //다음버튼 활성여부
+  const [disabledYn, setDisabledYn] = useState(true);
+  
+  //10초마다 모두완료가 아닐시 수집상태 여부API 호출
+  useInterval(()=> {
+    if(flrYn !== "N") {
+      callLocalApi(
+        API.PREJUDGE.DOCSTATUS_NOFCGTLNDOCSMYNINQ,
+        {},
+        (res)=> {
+          let resFlrYn = res.data.RSLT_DATA.flrYn;
+          if(resFlrYn === "Y") {
+            //백에서 서류 항목별 수집상태 array로 보내줄시
+            setDocStatus(res.data.RSLT_DATA.nofcDocInfoList);
+          }
+          setFlrYn(resFlrYn);
+        }
+      );
+    }
+  }, 10000);
 
-  useEffect(() => {
-    setTimeout(()=> {
-      // callOpenApi(
-      //   API.PREJUDGE.DOCSTATUS_NOFCGTLNDOCSMYNINQ,
-      //   {},
-      //   (res)=> {
-      //     if(flrYn === "Y") {
-      //       setFlrYn(res.data.RSLT_DATA.flrYn);
-      //       setDocStatus([]);
-      //     }
-      //   }
-      // )
-    }, 10000);
+  useEffect(()=> {
+    console.log("flrYn useEffect", flrYn);
+    if(flrYn === "Y") {
+      setDisabledYn(true);
+      //완료여부 초기화
+      return ()=> setFlrYn("");
+    }else if(flrYn === "N") {
+      //모두 완료, 버튼 활성화
+      setDisabledYn(false);
+    }
   }, [flrYn]);
+
+  useEffect(()=> {
+    if(!!docStatus) {
+      console.log(docStatus);
+    }
+  }, [docStatus]);
 
 
   let navigate = useNavigate();
@@ -194,7 +220,7 @@ function DocStatus(props) {
           <OslBtn
             obj={{
               type: "button",
-              disabled: false,
+              disabled: disabledYn,
               text: ["다음"],
               link: "",
               callbackId: cbOslBtn

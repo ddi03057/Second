@@ -55,7 +55,7 @@ function DataCollect(props) {
     console.log("flag", flag);
     if(flag === "sido") {
       callOpenApi(
-        API.PREJUDGE.DATACOLLECT_GETCITY,
+        API.PREJUDGE.DATACOLLECT_GETCITYINQ,
         {},
         (res)=> {
           console.log(res);
@@ -67,7 +67,7 @@ function DataCollect(props) {
       );
     }else if(flag === "sigungu") {
       callOpenApi(
-        API.PREJUDGE.DATACOLLECT_GETCOUNTY,
+        API.PREJUDGE.DATACOLLECT_GETCOUNTYINQ,
         {city: sido},
         (res)=> {
           console.log(res);
