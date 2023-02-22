@@ -166,18 +166,32 @@ function SuitResult(props) {
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
-      {userResult.lfncJdgmRsltDcd === "Y"?
+      {!!userResult.lfncJdgmRsltDcd?
       <div className="container">
         <div className="content">
-
           <div className="content-body prescreening">
-            <div className="content-top">
-              <div className="result-y">
-                <p className="top-tit">
-                  홍길동 님의<br />
-                  <span className="fw-b">적합성・적정성 판단결과</span><br />
-                  <span className="fw-b fc-p">적합</span>으로 확인됩니다
-                </p>
+            <div className="content-top line-be4">
+              <p className="top-tit">
+                <span className="fw-b">적합성・적정성 확인 중입니다.<br /> 잠시만 기다려 주세요.</span>
+              </p>
+            </div>
+            <div className="loading" style={{backgroundColor: "transparent"}}></div>
+          </div>
+        </div>
+      </div>
+      :userResult.lfncJdgmRsltDcd === "Y"?
+      <div className="container">
+        <div className="content">
+          <div className="content-body">
+            <div className="content-body prescreening">
+              <div className="content-top">
+                <div className="result-y">
+                  <p className="top-tit">
+                    홍길동 님의<br />
+                    <span className="fw-b">적합성・적정성 판단결과</span><br />
+                    <span className="fw-b fc-p">적합</span>으로 확인됩니다
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -285,7 +299,7 @@ function SuitResult(props) {
         </div>
       </div>
       }
-      <div className="loading"></div>
+      
     </>
   );
 

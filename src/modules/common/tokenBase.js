@@ -1,4 +1,5 @@
 import axios from "axios";
+import PathConstants from "../constants/PathConstants";
 import request from "../utils/Axios";
 import { getCookie } from "./boxlogin";
 import oslLogin from "./oslLogin";
@@ -97,6 +98,9 @@ export default async ( uri, data, successCB, errorCB )=> {
     })
       .then((response) => {
 				console.log("requestAxios", response);
+				if(response.data.STATUS !== "200") {
+					window.location.href = PathConstants.SERVICE_ERROR;
+				}
 				successCallBack(response);
         return response;
       })
@@ -533,6 +537,7 @@ function AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown) {
     }
     //cMsgbox("error", "Invalid async client request", '<h5>' + msg + errorThrown, "", "");
     alert(msg);
+		window.location.href = PathConstants.SERVICE_ERROR;
 }
 
 export function checkLogin( callback ){
@@ -594,12 +599,17 @@ export const callLocalApi = async(uri,param,cbFn)=> {
 	}
 
 	await axios.post(
-		"/api2" + uri,
+		"/api2/" + uri,
 		JSON.stringify(param),
 		configData
 	).then((res)=> {
 		console.log("callLocalApi success res data : ", res);
-		cbFn(res);
+		// if(res.data.STATUS !== "200") {
+		// 	window.location.href = PathConstants.SERVICE_ERROR;
+		// }else {
+			cbFn(res);
+		//}
+		
 	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
 		console.log("refeshError", exception);
 		//callback(null);

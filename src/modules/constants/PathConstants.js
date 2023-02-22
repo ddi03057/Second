@@ -60,7 +60,7 @@ const PathConstants = {
   PREJUDGE_GRTINFOINPUT: '/prejudge/grtinfoinput',  //사전심사자료작성
   PREJUDGE_DOCSTATUS: '/prejudge/docstatus',  //서류제출상태
   PREJUDGE_DATACOLLECT: '/prejudge/datacollect', //사업자번호, 행정구역 주소지 입력
-  
+  PREJUDGE_CUSTINFOINPUT: '/prejudge/custinfoinput',
   
   GRTJUDGE_ACCOPEN: '/grtjudge/accopen',  //개좌개설
 
@@ -89,6 +89,7 @@ const PathConstants = {
   PREJUDGE_GRTINFOINPUT_NM: '보증심사자료 작성',  //보증심사자료작성
   PREJUDGE_DOCSTATUS_NM: '서류제출상태',  //서류제출상태
   PREJUDGE_DATACOLLECT_NM: '자료수집', //사업자번호, 행정구역 주소지 입력
+  PREJUDGE_CUSTINFOINPUT_NM: '고객정보 및 관리영업점 확인',
   
   GRTJUDGE_ACCOPEN_NM: '계좌개설',  //개좌개설
 

@@ -22,8 +22,8 @@ import ArsCertificate from './pages/lonexecute/ArsCertificate.js';
 import StampTax from './pages/lonexecute/StampTax.js';
 import FinanceCusLaw from './pages/lonexecute/FinanceCusLaw.js';
 import Main from './pages/Main.js';
-import ServiceError from './error/ServiceError.js';
-import SystemInspect from './error/SystemInspect.js';
+import ServiceError from './pages/common/ServiceError.js';
+import SystemError from './pages/common/SystemError.js';
 import Certificate from './pages/common/Certificate.js';
 import Index from './pages/guide/Index.js';
 import API from './modules/constants/API.js';
@@ -34,7 +34,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Context1 } from "./App.js";
 import { useContext } from 'react';
-import SystemError from './pages/common/SystemError.js';
+
 
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
@@ -42,6 +42,7 @@ const SuitTest = lazy(() => import('./pages/judge/prejudge/SuitTest.js'));
 const ApplyInfoInput = lazy(() => import('./pages/lonexecute/ApplyInfoInput.js'));
 const Redirect = lazy(()=> import('./pages/common/Redirect.js'));
 const DataCollect = lazy(()=> import('./pages/judge/prejudge/DataCollect.js'));
+const CustInfoInput = lazy(()=> import('./pages/judge/prejudge/CustInfoInput.js'));
 
 //라우터 목록 정의
 function Routing() {
@@ -86,8 +87,6 @@ function Routing() {
       <Routes>
         <Route path="/" element={<Redirect />} />
         <Route path="/:type" element={<Redirect />} />
-        <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError />} />
-        <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemError />} />
         <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
         <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />
@@ -100,6 +99,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_SELFCHECK} element={<SelfCheck headerNm={PathConstants.PREJUDGE_SELFCHECK_NM} />} />
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT_NM} />} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<DocStatus headerNm={PathConstants.PREJUDGE_DOCSTATUS_NM} />} />
+        <Route path={PathConstants.PREJUDGE_CUSTINFOINPUT} element={<CustInfoInput headerNm={PathConstants.PREJUDGE_CUSTINFOINPUT_NM} />} />
         <Route path={PathConstants.PREJUDGE_DATACOLLECT} 
           element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM} />} 
         />
@@ -127,8 +127,8 @@ function Routing() {
         <Route path={PathConstants.LONEXECUTE_UNTACTAGRM} element={<UntactAgrm headerNm={PathConstants.LONEXECUTE_UNTACTAGRM_NM} />} />
         <Route path={PathConstants.LONEXECUTE_STAMPTAX} element={<StampTax headerNm={PathConstants.LONEXECUTE_STAMPTAX_NM} />} />
         <Route path={PathConstants.LONEXECUTE_FINANCECUSLAW} element={<FinanceCusLaw headerNm={PathConstants.LONEXECUTE_FINANCECUSLAW_NM} />} />
-        {/* <Route path={PathConstants.ERROR_SERVICEERROR} element={<ServiceError headerNm={PathConstants.ERROR_SERVICEERROR_NM} />} /> */}
-        <Route path={PathConstants.ERROR_SYSTEMINSPECT} element={<SystemInspect headerNm={PathConstants.ERROR_SYSTEMINSPECT_NM} />} />
+        <Route path={PathConstants.SERVICE_ERROR} element={<ServiceError />} />
+        <Route path={PathConstants.SYSTEM_ERROR} element={<SystemError />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </Suspense>

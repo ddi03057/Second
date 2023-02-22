@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+import PathConstants from "../../modules/constants/PathConstants";
+
 function ServiceError() {
+  let navigate = useNavigate();
   return (
     <div className="container">
       
@@ -14,7 +18,7 @@ function ServiceError() {
         </div>
       
         <div className="content-footer">
-          <button type="button" className="btn btn-lg default-bg">
+          <button type="button" className="btn btn-lg default-bg" onClick={()=> {navigate(PathConstants.GUIDE_DETAIL);}}>
             <span className="txt">홈으로</span>
           </button>
         </div>
