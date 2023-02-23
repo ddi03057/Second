@@ -26,7 +26,7 @@ function DocStatus(props) {
   //모두 완료 여부 N: 모두완료 Y: 하나이상 미완료
   const [flrYn, setFlrYn] = useState("");
   //스크래핑 항목별 수집상태
-  const [docStatus, setDocStatus] = useState([]);
+  const [docStatus, setDocStatus] = useState([false,false,false,false,false,false,false,false,false,false,false]);
   //다음버튼 활성여부
   const [disabledYn, setDisabledYn] = useState(true);
   
@@ -43,6 +43,8 @@ function DocStatus(props) {
             setDocStatus(res.data.RSLT_DATA.nofcDocInfoList);
           }
           setFlrYn(resFlrYn);
+        },(e)=> {
+          console.log(e);
         }
       );
     }
@@ -97,13 +99,13 @@ function DocStatus(props) {
                   <div className="box-chk flex">
                     <p className="box-left">사업자등록증명</p>
                     {/* <p className="box-right"><span className="sm-txt">전송완료</span></p> */}
-                    <p className="box-right"><span className="sm-txt">{docStatus===0?<img src="/assets/img/ico/loading.jpg" style={{width: "100px", height: "100px"}} />:`${docStatus}`}</span></p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">소득금액증명</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
+                    <p className="box-right"><span className="resend sm-txt">전송완료</span></p>
                   </div>
                 </li>
                 <li>

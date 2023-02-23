@@ -592,13 +592,14 @@ function getProfileBsnnNo() {
 	return (p == null || p == "null" || p == "undefined") ? "" : String(p);
 }
 
-export const callLocalApi = async(uri,param,cbFn)=> {
+export const callLocalApi = async(uri,param,cbFn,erFn)=> {
 
 	let configData = {
 		headers: {
 			"Content-Type": "application/json",
 			"appKey": process.env.REACT_APP_LRB_APP_KEY,
-			"Accept": "application/json"
+			"Accept": "application/json",
+			"lgnMnbrId": "VPK82Psm2d"
 		}
 	}
 
@@ -616,6 +617,7 @@ export const callLocalApi = async(uri,param,cbFn)=> {
 		
 	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
 		console.log("refeshError", exception);
+		erFn(exception);
 		//callback(null);
 	});
 }

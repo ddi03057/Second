@@ -17,6 +17,7 @@ import { useLayoutEffect } from "react";
 import PathConstants from "../../../modules/constants/PathConstants";
 import { useEffect } from "react";
 import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
+import AlertModal from "../../../modules/components/AlertModal";
 
 
 /**
@@ -50,6 +51,24 @@ function DataCollect(props) {
   const [active, setActive] = useState("");
   const handleCloseDistricts = () => setActive(""); document.body.style.overflow = "";
   const handleShowDistricts = () => setActive(" active"); document.body.style.overflow = "hidden";
+
+  //alert 띄우기위한 함수 및 변수
+  function openPop() {
+    setShow(true);
+    document.body.style.overflow = "hidden";
+  }
+  function closePop() {
+    setShow(false);
+    document.body.style.overflow = "";
+  }
+  const [show, setShow] = useState(false);
+  const handleShow = ()=> openPop();
+  const handleClose = ()=> closePop();
+  const [msgCont, setMsgCont] = useState("");
+
+  useLayoutEffect(()=> {
+    //사업자번호get
+  }, []);
   
   useEffect(()=> {
     console.log("flag", flag);
@@ -181,7 +200,10 @@ function DataCollect(props) {
     console.log("시도", sido);
     console.log("시군구", sigungu);
     if(!!sido || sido === DO_SELECT || !!sigungu || sigungu === DO_SELECT) {
-      alert("행정구역을 선택하세요");
+      setMsgCont("행정구역을 선택해주세요.");
+      handleShow();
+    }else {
+      //시군구저장
     }
   }
   
@@ -250,10 +272,14 @@ function DataCollect(props) {
                   <div className="sele-list type01 radius answer-wrap mar-t10">
                     <div className="item">
                       <label className="ui-select">
-                        <select name="sSel" id="sSel1" disabled={disabledYn} defaultValue={sido}
+                        <select name="sSel" id="sSel1" disabled={disabledYn} defaultValue={sigungu} 
                           onClick={() => {
-                            setFlag("sigungu");
-                            setDisabledYn(true);
+                            if(sido === DO_SELECT) {
+
+                            }else {
+                              setFlag("sigungu");
+                              setDisabledYn(true);
+                            }
                           }}
                         >
                           <option>{sigungu}</option>
@@ -277,6 +303,14 @@ function DataCollect(props) {
         </div>
       </div>
       {<ViewDistricts flag={flag} districtsList={districtsList} clicked={clicked} active={active} setActive={setActive} setSido={setSido} setSigungu={setSigungu}></ViewDistricts>}
+      {show&&<AlertModal 
+        show={show}
+        msg={msgCont}
+        btnNm={["확인"]}
+        onClickFn={(btnIdx)=> {
+          handleClose();
+        }}
+      />}
     </>
   )
 }

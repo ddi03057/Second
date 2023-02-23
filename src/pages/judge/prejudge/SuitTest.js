@@ -8,7 +8,7 @@ import OslHeader from "../../../modules/components/OslHeader";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
 import AlertModal from "../../../modules/components/AlertModal";
-import callOpenApi from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 import { placeholder } from "@babel/types";
 import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
@@ -32,18 +32,15 @@ function SuitTest(props) {
   
   useLayoutEffect(()=> {
     console.log(API.PREJUDGE.SUITTEST_SBNTPOPYINQ);
-    callOpenApi(
+    callLocalApi(
       API.PREJUDGE.SUITTEST_SBNTPOPYINQ,
       {},
       (res)=> {
         console.log(res);
         setResEmail(res.data.RSLT_DATA.email);
         setResAge(getAge(res.data.RSLT_DATA.brthdy));
-      },
-      (err)=> {
-
       }
-    )
+    );
   }, []);
 
   /**
@@ -350,16 +347,13 @@ function SuitTest(props) {
               lfncCrdtScrVainDcd: userCrdScr==="KCB"?"02":"01",// 여신금융상담신용점수평가기관구분코드
               innfGthrCosnYn: "Y",// 개인정보수집동의여부
             };
-            callOpenApi(API.PREJUDGE.SUITTEST_SBNTPOPYVRFC, 
+            callLocalApi(API.PREJUDGE.SUITTEST_SBNTPOPYVRFC, 
               param, 
               (res)=> {
                 console.log(res);
                 if(res.data.RSLT_DATA.resultYn === "Y") {
                   navigate(PathConstants.PREJUDGE_DATACOLLECT);
                 }
-              }, 
-              ()=> {
-
               }
             );
           //   const api2SuccessFn = (res)=> {
@@ -542,7 +536,8 @@ function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
 
   if(!agreeYn) return "동의여부를 확인 바랍니다.";
   for(let i=0; i<userResult.length; i++) {
-    if((userResult[i] != 0 && !userResult[i]) || userResult[i] === 99) {
+    if((userResult[i] !== 0 && !userResult[i]) || userResult[i] === 99) {
+      console.log(i+"밸리데이션 체크", userResult)
       let josa = "";
       if (checkBatchimEnding(suitTestData[suitTestData.findIndex((data) => data.id === i)].title)) {
         josa = "을 ";

@@ -107,6 +107,13 @@
     background: url(../../assets/img/ico/ico_error.png) no-repeat 50% 50%;
     background-size: 20px 20px;
   }
+  .box-right .sending {
+    color: #666;
+  }
+  .box-right .sending::before {
+    background: url(../../assets/img/ico/loading.jpg) no-repeat 50% 50%;
+    background-size: 20px 20px;
+  }
   
   /* error-box */
   .error-box {

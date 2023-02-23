@@ -7,7 +7,7 @@ import OslHeader from "../../../modules/components/OslHeader";
 import FullModal from "../../../modules/components/FullModal";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData.js";
-import callOpenApi, { getSessionData } from "../../../modules/common/tokenBase.js"
+import callOpenApi, { callLocalApi, getSessionData } from "../../../modules/common/tokenBase.js"
 import request from "../../../modules/utils/Axios";
 
 import API from "../../../modules/constants/API.js";
@@ -63,7 +63,7 @@ function CustAgree(props) {
    * 
    */
   const callApiFn = ()=> {
-    callOpenApi(
+    callLocalApi(
       API.PREJUDGE.CUSTAGREE_SPAG,
       {dcffStplId: [checkItems[0],checkItems[1],checkItems[2],checkItems[3],checkItems[4],checkItems[5],checkItems[6]]},
       (res)=> {
@@ -71,9 +71,6 @@ function CustAgree(props) {
           navigate(PathConstants.PREJUDGE_SUITTEST);
         }
         
-      },
-      ()=> {
-
       }
     );
   };
@@ -105,7 +102,7 @@ function CustAgree(props) {
       
       callApiFn();
     
-    }else if(checkItems.find((data)=> data === "1") && (!!checkItems.find((data)=> data === 99) || checkItems.findIndex((data)=> data === 0) >-1 )) { //한개이상 체크 및 한개이상 체크해제상태
+    }else if(checkItems.find((data)=> data === "1") && (!!checkItems.find((data)=> data === 99) || checkItems.findIndex((data)=> data === 0) > -1)) { //한개이상 체크 및 한개이상 체크해제상태
       setAgreeBtnNm(ONE_BTN_NM);
       setDisabledYn(true);
     }else if(checkItems.filter((data)=> data === 0 || data === 99).length === 9) { // 모두 해제상태 및 초기상태
@@ -191,7 +188,7 @@ function CustAgree(props) {
                     onChange={(e)=>{
                       
                       let copy = [...checkItems];
-                      copy[7] = copy[7]===0||copy[7]===99?1:0;
+                      copy[7] = copy[7]===0||copy[7]===99?"1":0;
                       setCheckItems(copy);
                       
                     }}
@@ -204,7 +201,7 @@ function CustAgree(props) {
                     onChange={(e)=>{
                       
                       let copy = [...checkItems];
-                      copy[8] = copy[8]===0||copy[8]===99?1:0;
+                      copy[8] = copy[8]===0||copy[8]===99?"1":0;
                       setCheckItems(copy);
                       
                     }}
