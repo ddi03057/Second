@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import PathConstants from "../../../modules/constants/PathConstants";
 import { useEffect } from "react";
-import callOpenApi from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 
 
 /**
@@ -54,7 +54,7 @@ function DataCollect(props) {
   useEffect(()=> {
     console.log("flag", flag);
     if(flag === "sido") {
-      callOpenApi(
+      callLocalApi(
         API.PREJUDGE.DATACOLLECT_GETCITYINQ,
         {},
         (res)=> {
@@ -66,7 +66,7 @@ function DataCollect(props) {
         }
       );
     }else if(flag === "sigungu") {
-      callOpenApi(
+      callLocalApi(
         API.PREJUDGE.DATACOLLECT_GETCOUNTYINQ,
         {city: sido},
         (res)=> {
