@@ -14,7 +14,7 @@ import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
 import { getClientOs, loginDomain } from "./../../modules/common/boxlogin.js";
 import { oslLogin, oslLogout} from "./../../modules/common/oslLogin.js";
-import { getSessionData } from "../../modules/common/tokenBase";
+import { authorization, getSessionData } from "../../modules/common/tokenBase";
 import Redirect from "../common/Redirect.js";
 import API from "../../modules/constants/API";
 import { Context1 } from "./../../App.js";
@@ -42,18 +42,14 @@ function Ready(props) {
 
   function cbOslBtn() {
     //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
-    navigate(
-      PathConstants. PREJUDGE_CUSTAGREE,
-      {
-
-      }
-      );
+    console.log(authorization(null));
+    navigate(authorization(null)?"/":PathConstants. PREJUDGE_CUSTAGREE);
   }
 
 
   return (
     <>
-      <OslHeader headerNm={props.headerNm} />
+      <OslHeader headerNm={props.headerNm} backYn={true} />
       <div className="container">
         <div className="content">
           <div className="content-body">

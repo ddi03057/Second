@@ -37,8 +37,9 @@ const PathConstants = {
   PROGRESS: '/progress', //진행상태
   SERVICE_ERROR: '/serviceerror', //일시적 서비스 장애
   SYSTEM_ERROR: '/systemerror', //시스템 점검
-  CERTIFICATE: '/certificate', // 공동인증서
-
+  CERTIFICATE_CERT: '/certificate/cert', // 브라우저인증서
+  CERTIFICATE_SIGN: '/certificate/sign',
+  CERTIFICATE_SCRP: '/certificate/scrp',
     //dummy
   GUIDE: '/guide',  //안내
   PREJUDGE: '/prejudge',  //사전심사
@@ -77,7 +78,7 @@ const PathConstants = {
   POSTMANAGEMENT_REPAY: '/postmanagement/repay',  //대출상환
   POSTMANAGEMENT_REVOKREPAY: '/postmanagement/revokrepay', //계약철회 후 상환
 
-  CERTIFICATE_NM: '공동인증서 인증', //공동인증서
+  CERTIFICATE_NM: '브라우저 인증', //공동인증서
   PROGRESS_NM: '진행현황', //진행상태
   GUIDE_DETAIL_NM: '상품안내',  //상품안내
   GUIDE_READY_NM: '대출신청 전 사전준비안내',  //대출신청 전 사전준비안내
