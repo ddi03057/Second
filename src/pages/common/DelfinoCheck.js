@@ -58,7 +58,6 @@ function DelfinoCheck(props) {
     signOptions.resetCertificate = true;
     signOptions.policyOidCertFilter = "";
   
-    alert("스크래핑용서명원문\n[" + tbsData + "]");
     Delfino.scrapingSign(tbsData, signOptions, TEST_complete_scrp);
   }
 
@@ -66,8 +65,8 @@ function DelfinoCheck(props) {
     // __result = result;
     if(result.status==0) return;
     if(result.status==1){
-        //var param = {scpgSignData:[]};
-        var vidRandom = result.vidRandom;
+        var param = {scpgSignData:[]};
+        var cert = result.cert.replaceAll("\r\n","");
         var signData = [];
         console.log("signData In");
         if (Array.isArray(result.signData)) {
@@ -79,16 +78,14 @@ function DelfinoCheck(props) {
               }else{
                 signData[i] = result.signData[i].p7;
               }
-              //alert(orgCdArr[i] + "|" + svcCdArr[i] + "|" + stepDataArr[i] + "|" + signData[i] + "|" + result.vidRandom);
-              //param.scpgSignData[i]={orgCd:orgCdArr[i],svcCd:svcCdArr[i],stepData:stepDataArr[i],signData:signData[i],vid:vidRandom}
-              document.getElementById("resultTxt").value = document.getElementById("resultTxt").value + "{\"orgCd\":\""+orgCdArr[i]+"\",\"svcCd\":\""+svcCdArr[i]+"\",\"stepData\":\""+stepDataArr[i]+"\",\"signData\":\""+signData[i]+"\",\"vid\":\""+result.vidRandom+"\",\"cert\":\""+result.cert+"\"}";
+              param.scpgSignData[i]={orgCd:orgCdArr[i],svcCd:svcCdArr[i],stepData:stepDataArr[i],signData:signData[i],vid:result.vidRandom,cert:cert};
+              //document.getElementById("resultTxt").value = document.getElementById("resultTxt").value + "{\"orgCd\":\""+orgCdArr[i]+"\",\"svcCd\":\""+svcCdArr[i]+"\",\"stepData\":\""+stepDataArr[i]+"\",\"signData\":\""+signData[i]+"\",\"vid\":\""+result.vidRandom+"\",\"cert\":\""+result.cert+"\"}";
             }
         }
 
         if(result.certExpireDate!=null) TEST_checkExpireWarning(result.certExpireDate);
-        //document.getElementById("resultTxt").value = JSON.stringify(param);
-        //callApiComplete(param);
-        //navigate(PathConstants.PREJUDGE_DOCSTATUS);
+        callApiComplete(param);
+        navigate(PathConstants.PREJUDGE_DOCSTATUS);
     }else{
         //if (Delfino.isPasswordError(result.status)) alert("비밀번호 오류 횟수 초과됨"); //v1.1.6,0 over & DelfinoConfig.passwordError = true
         alert("error:" + result.message + "[" + result.status + "]");
@@ -454,7 +451,7 @@ function DelfinoCheck(props) {
       if(certType === "scrp"){
         callLocalApi(
           "/api/osl103/scpg",
-          JSON.stringify(param),
+          param,
           (res)=> {
             
           }
@@ -465,7 +462,6 @@ function DelfinoCheck(props) {
 
   return (
     <>
-    <textarea id="resultTxt"/>
     </>
     
       
