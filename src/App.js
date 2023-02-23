@@ -9,7 +9,7 @@ function App() {
   let [objParam, setObjParam] = useState({bizNum: "12345", lonNum: "6789"});
   let [apiPath, setApiPath] = useState("/");
   console.log(getSessionData());
-  console.log("개발빌드적용확인",process.env.REACT_APP_MNB_API_URL)
+  console.log("개발빌드적용확인",process.env.REACT_APP_LRB_API_URL)
   //console.log(getSessionData().accessToken);
   return (
     <>
