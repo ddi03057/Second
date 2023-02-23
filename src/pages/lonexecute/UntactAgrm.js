@@ -19,7 +19,8 @@ import OslHeader from "../../modules/components/OslHeader";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
 import FullModal from "../../modules/components/FullModal";
-import callOpenApi from "../../modules/common/tokenBase.js"
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase.js"
+import API from "../../modules/constants/API";
 
 const untactAgrmData = collectData("UntactAgrm");
 
@@ -47,19 +48,16 @@ function UntactAgrm(props) {
   const [agreeBtnNm, setAgreeBtnNm] = useState(ALL_BTN_NM); //동의버튼명 state
   const [disabledYn, setDisabledYn] = useState(false); //동의버튼활성화여부 state
 
+  //로딩 show/hide
+  const [showLoading, setShowLoading] = useState(false);
+
   //체크상태로 밸리데이션체크 겸 버튼상태변경 및 다음화면이동 
   useEffect(() => {
     console.log("useEffect[checkItems]", checkItems);
     if (checkItems.filter((data) => data === 1).length === 16 && agreeBtnNm === ALL_BTN_NM) { //모두동의하고 다음 클릭 > 팝업 확인 > 모두체크상태
       //다음화면이동
       //navigate(PathConstants.PREJUDGE_SUITTEST);
-      callOpenApi("/api/osl000/pgstInq",{}, function(res) {
-        console.log("!!!");
-        console.log(res);
-        //navigate(PathConstants.PREJUDGE_SUITTEST);
-      },function(e) {
-        alert(e);
-      });
+      callApiFn();
     } else if (checkItems.find((data) => data === 1) && (!!checkItems.find((data) => data === 99) || checkItems.findIndex((data) => data === 0) > -1)) { //한개이상 체크 및 한개이상 체크해제상태
       setAgreeBtnNm(ONE_BTN_NM);
       setDisabledYn(true);
@@ -72,14 +70,27 @@ function UntactAgrm(props) {
     }
   }, [checkItems]);
 
+  const callApiFn = ()=> {
+    setShowLoading(true);
+    callLocalApi(
+      API.LONEXECUTE.UNTACTAGRM_ACHLYNINQ,
+      {dcffStplId: ["10010","10011","10012","10013","10014","10015","10016"]},
+      (res)=> {
+        setShowLoading(false);
+        if(res.data.RSLT_DATA.resultYn === "Y") {
+          navigate(PathConstants.CERTIFICATE_SIGN);
+        }
+        
+      }
+    );
+  };
 
   function cbOslBtn() {
     if (agreeBtnNm === ALL_BTN_NM) { //모두동의하고다음
       setArrPdfData(untactAgrmData);
       handleShow(true);
     } else { //동의하고다음
-      //다음화면이동
-      //navigate(PathConstants.PREJUDGE_SUITTEST);
+      callApiFn();
     }
   }
 
@@ -181,6 +192,9 @@ function UntactAgrm(props) {
 
           }}
         />
+      }
+      {showLoading&&
+        <div className="loading"></div>
       }
     </>
   )

@@ -11,6 +11,7 @@ function App() {
   console.log(getSessionData());
   console.log("개발빌드적용확인",process.env.REACT_APP_LRB_API_URL)
   //console.log(getSessionData().accessToken);
+  console.log("test");
   return (
     <>
       <Context1.Provider value={{apiPath, setApiPath}}>

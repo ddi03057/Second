@@ -87,15 +87,15 @@ function ApprInfo(props) {
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보증서 발급금액</span>
-                  <span className="txt fc-dark ta-r">{apprInfoData.loanScdlAmt}원</span>
+                  <span className="txt fc-dark ta-r">{comma(apprInfoData.loanScdlAmt)}원</span>
                 </div>
                 <div className="info-box">
-                  <span className="tit fc-gray">보증서 발급</span>
-                  <span className="txt fc-dark ta-r">{apprInfoData.grnyIssuYmd}</span>
+                  <span className="tit fc-gray">보증서 발급일</span>
+                  <span className="txt fc-dark ta-r">{getYmd(apprInfoData.grnyIssuYmd)}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">보증서 만기일</span>
-                  <span className="txt fc-dark ta-r">{apprInfoData.grnyExpiYmd}</span>
+                  <span className="txt fc-dark ta-r">{getYmd(apprInfoData.grnyExpiYmd)}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">담당 영업점</span>
@@ -106,8 +106,8 @@ function ApprInfo(props) {
                   <span className="txt fc-dark ta-r">{apprInfoData.antcGrfrRt}%</span>
                 </div>
                 <div className="info-box">
-                  <span className="tit fc-gray">대출실행기</span>
-                  <span className="txt fc-dark ta-r">{apprInfoData.lodlYmd}</span>
+                  <span className="tit fc-gray">대출실행기한</span>
+                  <span className="txt fc-dark ta-r">{getYmd(apprInfoData.lodlYmd)}</span>
                 </div>
               </div>
             </section>
@@ -169,6 +169,15 @@ function ApprInfo(props) {
   }
 
 
+}
+
+function comma(x) {
+	var resultVal = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return resultVal;
+}
+function getYmd(x) {
+  if(x.length !== 8) return x;
+  else return x.substring(0, 4) + "." + x.substring(4,6) + "." + x.substring(6,8)
 }
 
 export default ApprInfo;

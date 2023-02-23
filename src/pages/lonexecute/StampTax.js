@@ -14,7 +14,7 @@ import collectData from "../../modules/constants/collectData"
 import RadioInlineComponent from "../common/RadioInlineComponent";
 import PathConstants from "../../modules/constants/PathConstants";
 import AlertModal from "../../modules/components/AlertModal";
-import callOpenApi from "../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase";
 import API from "../../modules/constants/API";
 
 const stampTaxData = collectData('StampTax')
@@ -35,16 +35,14 @@ function StampTax(props) {
 
   let stampTaxResData = {};
   useEffect(async ()=> {
-    callOpenApi(
-      API.LONEXECUTE.LONEXECUTE_STAMPTAX, 
+    callLocalApi(
+      "",//API.LONEXECUTE.STAMPTAX_, 
       {}, 
-      function(res) {
+      (res)=> {
         stampTaxResData=res.data;
         //창업일,업종명
-      },
-      function() {
-
-      });
+      }
+    );
   }, []);
 
 
@@ -96,8 +94,8 @@ function StampTax(props) {
     if(!userResult.includes(99) && checkItems[0] === 0 && (checkItems[1] ===1 || checkItems[2] === 2)) {
       //담화면
       //창업일,업종명, 체크리스트1~6
-      callOpenApi(
-        API.LONEXECUTE.LONEXECUTE_STAMPTAX, 
+      callLocalApi(
+        "",//API.LONEXECUTE.STAMPTAX_, 
         {}, 
         function(res) {
           stampTaxResData=res.data;

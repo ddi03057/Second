@@ -35,6 +35,9 @@ import { useState } from 'react';
 import { Context1 } from "./App.js";
 import { useContext } from 'react';
 
+import DefinoCheck from './pages/common/DelfinoCheck.js';
+import CheckView from './pages/common/delfino-check.js';
+
 
 
 const Progress = lazy(() => import('./pages/common/Progress.js'));
@@ -89,7 +92,9 @@ function Routing() {
         <Route path="/:type" element={<Redirect />} />
         <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
-        <Route path={PathConstants.CERTIFICATE} element={<Certificate headerNm={PathConstants.CERTIFICATE_NM} />} />
+        <Route path={PathConstants.CERTIFICATE_SCRP} element={<DefinoCheck headerNm={PathConstants.CERTIFICATE_NM} certType="scrp" />} />
+        <Route path={PathConstants.CERTIFICATE_CERT} element={<DefinoCheck headerNm={PathConstants.CERTIFICATE_NM} certType="cert" />} />
+        <Route path={PathConstants.CERTIFICATE_SIGN} element={<DefinoCheck headerNm={PathConstants.CERTIFICATE_NM} certType="sign" />} />
         <Route path={PathConstants.PROGRESS} element={<Progress headerNm={PathConstants.PROGRESS_NM} />} />
         <Route path={PathConstants.GUIDE_DETAIL} element={<Detail headerNm={PathConstants.GUIDE_DETAIL_NM} />} />
         <Route path={PathConstants.GUIDE_READY} element={<Ready headerNm={PathConstants.GUIDE_READY_NM} />} />
@@ -100,6 +105,7 @@ function Routing() {
         <Route path={PathConstants.PREJUDGE_GRTINFOINPUT} element={<GrtInfoInput headerNm={PathConstants.PREJUDGE_GRTINFOINPUT_NM} />} />
         <Route path={PathConstants.PREJUDGE_DOCSTATUS} element={<DocStatus headerNm={PathConstants.PREJUDGE_DOCSTATUS_NM} />} />
         <Route path={PathConstants.PREJUDGE_CUSTINFOINPUT} element={<CustInfoInput headerNm={PathConstants.PREJUDGE_CUSTINFOINPUT_NM} />} />
+        <Route path="/checkView" element={<CheckView />} />
         <Route path={PathConstants.PREJUDGE_DATACOLLECT} 
           element={<DataCollect headerNm={PathConstants.PREJUDGE_DATACOLLECT_NM} />} 
         />

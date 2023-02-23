@@ -9,8 +9,10 @@ import TextComponent from "../common/TextComponent";
 import TitleComponent from "../common/TitleComponent";
 import API from "../../modules/constants/API.js";
 import request from "../../modules/utils/Axios";
-import callOpenApi from "../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase";
 import { async } from "q";
+import { getCommaAmt, getDotYmd } from "../../modules/utils/util";
+import PathConstants from "../../modules/constants/PathConstants";
 
 
 const applyInfoInput = collectData("ApplyInfoInput");
@@ -46,53 +48,95 @@ function ApplyInfoInput(props) {
       arrSeleectData.push(data);
     }
   });
-  let applyInfoInputData = {};
+  let [applyInfoInputData, setApplyInfoInputData] = useState({});
   let [showTitleYn, setShowTitleYn] = useState(true);
   let [showDirInputYn, setShowDirInupYn] = useState(false);
   let [styleInput, setStyleInput] = useState("");
+  //todo : 서버에서 가져온값으로 초기화
+  const [userResult, setUserResult] = useState(["고객 적용 금리", { id: 0, value: "사업장운영자금" }, { id: 0, value: "1일" }, 99]);
 
   let navigate = useNavigate();
 
-  useEffect(() => {
-    //todo : 대출신청정보
-    //todo : 금리종류
-    //todo : 기업은행 수신계좌리스트(마통 제외)
-
-  }, []);
-  //todo : 서버에서 가져온값으로 초기화
-  let [userResult, setUserResult] = useState(["고객 적용 금리", { id: 0, value: "사업장운영자금" }, { id: 0, value: "1일" }, 99]);
-
-  useEffect(async () => {
-    console.log(userResult);
-    await callOpenApi(
-      "",
+  //로딩 show/hide
+  const [showLoading, setShowLoading] = useState(false);
+  useLayoutEffect(()=> {
+    setShowLoading(true);
+    callLocalApi(
+      API.LONEXECUTE.APPLYINFOINPUT_GRNYINFODTL,
       {},
-      (res) => {
-        applyInfoInputData = res.data;
-        // 대출신청일
-        // 대출만기일
-        // 대출신청금액
-        // 보증승인금액
-        // 적용보증요율
-        // 납부보증율
-        // 상환방법(?)
-        // 기업명
-        // 특약사항(?)
-        // 인지세
-        // 만기일
-        // 고객적용금리
-        // 계좌번호목록
-      },
-      () => {
+      (res)=> {
+        let resData = res.data.RSLT_DATA;
+        if(JSON.stringify(resData) !== "{}") {
+          setApplyInfoInputData(res.data.RSLT_DATA);
+          let copy = [...userResult];
+          copy[0] = resData.apinKcd;
+          if(resData.cusDepAcntList.length ===1) copy[3] = resData.cusDepAcntList[0].account;
+          setUserResult(copy);
+          setShowLoading(false);
+        }else {
+          console.log("response no data");
+        }
+        
       }
     );
+  }, []);
+
+  
+  useEffect(() => {
+    //todo : 대출신청정보
+    //todo : 금리종류 0122
+    //todo : 기업은행 수신계좌리스트(마통 제외)
+  
+  }, [applyInfoInputData]);
+
+
+  useEffect(() => {
+    console.log(userResult);
+    // callLocalApi(
+    //   "",
+    //   {},
+    //   (res) => {
+    //     applyInfoInputData = res.data;
+    //     // 대출신청일
+    //     // 대출만기일
+    //     // 대출신청금액
+    //     // 보증승인금액
+    //     // 적용보증요율
+    //     // 납부보증율
+    //     // 상환방법(?)
+    //     // 기업명
+    //     // 특약사항(?)
+    //     // 인지세
+    //     // 만기일
+    //     // 고객적용금리
+    //     // 계좌번호목록
+    //   },
+    //   () => {
+    //   }
+    // );
   }, [userResult]);
   function cbOslBtn() {
+    let param = {
+      apinKcd: userResult[0],
+      fnusCd: userResult[1].value,
+      itpmScdlDd: userResult[2].value,
+      attrIcntEnn: userResult[3]
+    }
+    callLocalApi(
+      API.LONEXECUTE.APPLYINFOINPUT_LOAPIPIF,
+      param,
+      (res)=> {
+        let resData = res.data.RSLT_DATA.resultYn;
+        if(resData === "Y") navigate(PathConstants.LONEXECUTE_STAMPTAX);
+      }
+    )
+    //APPLYINFOINPUT_LOAPIPIF
+
     //todo : 다음페이지
     // navigate(
     //   PathConstants.GUIDE_READY
     //   );
-    ApplyInfoInput();
+    //ApplyInfoInput();
     // 대출신청일
     // 대출만기일
     // 대출신청금액
@@ -110,30 +154,20 @@ function ApplyInfoInput(props) {
     // 대출계좌번호
 
   }
-
-  const ApplyInfoInput = async () => {
-    const res = await request({
-      method: "post",
-      url: API.LONEXECUTE.LONEXECUTE_APPLYINFOINPUT,
-      data: {
-        oslLoapNo: "0005",
-        apinKcd: "02",
-        fnusCd: "02",
-        itpmStacCylDcd: "04",
-        itpmScdlDd: "35",
-        attrAcntEnn: "0000-1111-2222-3333"
-      }
-    })
-      .then((response) => {
-        console.log(response);
-        //setResponse(response);
-        return response;
-      })
-
-      .catch((error) => {
-        console.log("error : ", error);
-      });
-  }
+/*
+account: "1234-45678-234"
+antcGrfrRt: "3.1"
+argrExpiYmd: "20260223"
+argrGrfrAmt: "100000"
+baseYmd: "20230223"
+cusDepAcntList: null
+entpNm: "디씨온"
+gnapAmt: "100000000"
+grnyExpiYmd: "20260223"
+guasAthzAmt: "90000000"
+inJi: "대상"
+sangHwan: "만기일시상환"
+*/        
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
@@ -152,35 +186,35 @@ function ApplyInfoInput(props) {
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">대출 신청일</span>
-                  <span className="check-label ta-r fc-6">2021년 6월 22일</span>
+                  <span className="check-label ta-r fc-6">{getDotYmd(applyInfoInputData.baseYmd)}</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">대출 만기일</span>
-                  <span className="check-label ta-r fc-default">2026년 6월 21일</span>
+                  <span className="check-label ta-r fc-default">{getDotYmd(applyInfoInputData.argrExpiYmd)}</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">대출 신청금액</span>
-                  <span className="check-label ta-r fc-6">100,000,000원</span>
+                  <span className="check-label ta-r fc-6">{getCommaAmt(applyInfoInputData.gnapAmt)}원</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">보증 승인금액</span>
-                  <span className="check-label ta-r fc-6">90,000,000원</span>
+                  <span className="check-label ta-r fc-6">{getCommaAmt(applyInfoInputData.argrGrfrAmt)}원</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">적용 보증료율</span>
-                  <span className="check-label ta-r fc-6">00.00%</span>
+                  <span className="check-label ta-r fc-6">{applyInfoInputData.antcGrfrRt}%</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">납부 보증료</span>
-                  <span className="check-label ta-r fc-6">100,000원</span>
+                  <span className="check-label ta-r fc-6">{getCommaAmt(applyInfoInputData.argrGrfrAmt)}원</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">상환방법</span>
-                  <span className="check-label ta-r fc-6">만기일시상환</span>
+                  <span className="check-label ta-r fc-6">{applyInfoInputData.sangHwan}</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">기업명</span>
-                  <span className="check-label ta-r fc-6">기은상사</span>
+                  <span className="check-label ta-r fc-6">{applyInfoInputData.entpNm}</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">특약 사항</span>
@@ -188,11 +222,11 @@ function ApplyInfoInput(props) {
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">인지세</span>
-                  <span className="check-label ta-r fc-6">대상외</span>
+                  <span className="check-label ta-r fc-6">{applyInfoInputData.inJi}</span>
                 </p>
                 <p className="box-chk flex">
                   <span className="check-label fc-3">만기일</span>
-                  <span className="check-label ta-r fc-6">2023년 01월 01일</span>
+                  <span className="check-label ta-r fc-6">{getDotYmd(applyInfoInputData.grnyExpiYmd)}</span>
                 </p>
               </div>
             </div>
@@ -234,29 +268,45 @@ function ApplyInfoInput(props) {
                             showYn={(data.textId === 0) ? true : showDirInputYn}
                             styleSeleList="sele-list type01 radius answer-wrap mar-t10"
                             styleInput={(data.textId === 0) ? "ta-c" : ""}
-                            textData={arrTextData[data.textId]}
+                            textData={{value :applyInfoInputData.apinKcd}}
                             inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
                             onChangeFn={(value) => {
-                              let copy = [...userResult];
-                              let copy2 = { ...userResult[2] }
-                              copy2.value = value;
-                              copy[data.id] = (idx != 3) ? value : copy2;
-                              setUserResult(copy);
+                              // let copy = [...userResult];
+                              // let copy2 = { ...userResult[2] }
+                              // copy2.value = value;
+                              // copy[data.id] = (idx != 3) ? value : copy2;
+                              // setUserResult(copy);
                             }}
                           />
                         }
                         {
                           (data.type === "select") &&
-                          <SelectComponent
-                            showYn={true}
-                            selectData={arrSeleectData[data.selectId]}
-                            styleSeleList="sele-list type01 radius answer-wrap mar-t10"
-                            onChangeFn={(value) => {
-                              let copy = [...userResult];
-                              copy[data.id] = value;
-                              setUserResult(copy);
-                            }}
-                          />
+                          <div className="sele-list type01 radius answer-wrap mar-t10">
+                            <div className="item">
+                              <label className="ui-select">
+                                <select 
+                                  name="sSel" 
+                                  id="sSel1" 
+                                  defaultValue={"선택하세요"}
+                                  onChange={(e) => {
+                                    let copy = [...userResult];
+                                    copy[data.id] = e.target.value;
+                                    setUserResult(copy);
+                                    //e.target.value;
+                                  }}>
+                                {
+                                  !!applyInfoInputData.cusDepAcntList&&
+                                  applyInfoInputData.cusDepAcntList.map((data, idx)=>{
+                                    return (
+                                      <option key={idx} value={data.account}>{data.account}</option>
+                                    )
+                                  })
+                                }    
+                                </select>
+                                <span></span>
+                              </label>
+                            </div>
+                          </div>
                         }
                       </li>
                     )
@@ -277,6 +327,9 @@ function ApplyInfoInput(props) {
             }} />
         </div>
       </div>
+      {showLoading&&
+        <div className="loading"></div>
+      }
     </>
   );
 }

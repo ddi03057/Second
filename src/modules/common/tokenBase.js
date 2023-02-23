@@ -541,7 +541,7 @@ function AjaxErrorHandler(jqXHR, textStatus, exception, errorThrown) {
     }
     //cMsgbox("error", "Invalid async client request", '<h5>' + msg + errorThrown, "", "");
     alert(msg);
-		window.location.href = PathConstants.SERVICE_ERROR;
+		//window.location.href = PathConstants.SERVICE_ERROR;
 }
 
 export function checkLogin( callback ){
@@ -592,6 +592,7 @@ function getProfileBsnnNo() {
 	return (p == null || p == "null" || p == "undefined") ? "" : String(p);
 }
 
+
 export const callLocalApi = async(uri,param,successCB,errorCB)=> {
 
 	var successCallBack = successCB || AjaxSuccessHandler;
@@ -621,6 +622,7 @@ export const callLocalApi = async(uri,param,successCB,errorCB)=> {
 	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
 		console.log("refeshError", exception);
 		errorCallBack(jqXHR, textStatus, exception, errorThrown);
+		//window.location.href = PathConstants.SERVICE_ERROR;
 		//callback(null);
 	});
 }
