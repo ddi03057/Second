@@ -592,7 +592,10 @@ function getProfileBsnnNo() {
 	return (p == null || p == "null" || p == "undefined") ? "" : String(p);
 }
 
-export const callLocalApi = async(uri,param,cbFn,erFn)=> {
+export const callLocalApi = async(uri,param,successCB,errorCB)=> {
+
+	var successCallBack = successCB || AjaxSuccessHandler;
+	var errorCallBack = errorCB || AjaxErrorHandler;
 
 	let configData = {
 		headers: {
@@ -612,12 +615,12 @@ export const callLocalApi = async(uri,param,cbFn,erFn)=> {
 		// if(res.data.STATUS !== "200") {
 		// 	window.location.href = PathConstants.SERVICE_ERROR;
 		// }else {
-			cbFn(res);
+			successCallBack(res);
 		//}
 		
 	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
 		console.log("refeshError", exception);
-		erFn(exception);
+		errorCallBack(jqXHR, textStatus, exception, errorThrown);
 		//callback(null);
 	});
 }

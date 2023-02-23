@@ -55,6 +55,8 @@ function CustAgree(props) {
   //모달 show여부 state
   const [show, setShow] = useState(false);
 
+  const [showLoading, setShowLoading] = useState(false);
+
   let navigate = useNavigate();
 
   let [arrPdfData, setArrPdfData] = useState([]);
@@ -63,10 +65,12 @@ function CustAgree(props) {
    * 
    */
   const callApiFn = ()=> {
+    setShowLoading(true);
     callLocalApi(
       API.PREJUDGE.CUSTAGREE_SPAG,
-      {dcffStplId: [checkItems[0],checkItems[1],checkItems[2],checkItems[3],checkItems[4],checkItems[5],checkItems[6]]},
+      {dcffStplId: ["10010","10011","10012","10013","10014","10015","10016"]},
       (res)=> {
+        setShowLoading(false);
         if(res.data.RSLT_DATA.resultYn === "Y") {
           navigate(PathConstants.PREJUDGE_SUITTEST);
         }
@@ -262,6 +266,9 @@ function CustAgree(props) {
           }}
 
         />
+      }
+      {showLoading&&
+        <div className="loading"></div>
       }
     </>
   );

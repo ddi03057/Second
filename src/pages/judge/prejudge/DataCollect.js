@@ -81,7 +81,7 @@ function DataCollect(props) {
           setCityList(res.data.RSLT_DATA.city);
         },
         (err)=> {
-          alert(err);
+          //alert(err);
         }
       );
     }else if(flag === "sigungu") {
