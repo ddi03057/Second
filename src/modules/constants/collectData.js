@@ -691,14 +691,17 @@ const applyInfoInputData = [
     radioList : [
       {
           id : 0,
+          code : "BF",
           value : "사업장운영자금" 
       },
       {
           id : 1,
+          code : "G1",
           value : "원부자재구입" 
       },
       {
           id : 2,
+          code : "ET",
           value : "기타" 
       }
     ],
@@ -711,18 +714,22 @@ const applyInfoInputData = [
     radioList: [
       {
           id : 0,
+          code : "1",
           value : "1일" 
       },
       {
           id : 1,
+          code : "10",
           value : "10일" 
       },
       {
           id : 2,
+          code : "20",
           value : "20일" 
       },
       {
           id : 3,
+          code : "",
           value : "직접입력" 
       }
   

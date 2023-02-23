@@ -53,7 +53,7 @@ function ApplyInfoInput(props) {
   let [showDirInputYn, setShowDirInupYn] = useState(false);
   let [styleInput, setStyleInput] = useState("");
   //todo : 서버에서 가져온값으로 초기화
-  const [userResult, setUserResult] = useState(["고객 적용 금리", { id: 0, value: "사업장운영자금" }, { id: 0, value: "1일" }, 99]);
+  const [userResult, setUserResult] = useState(["고객 적용 금리", { id: 0, value: "사업장운영자금", code: "BF" }, { id: 0, value: "1일", code:"1" }, 99]);
 
   let navigate = useNavigate();
 
@@ -117,11 +117,12 @@ function ApplyInfoInput(props) {
   }, [userResult]);
   function cbOslBtn() {
     let param = {
-      apinKcd: userResult[0],
-      fnusCd: userResult[1].value,
-      itpmScdlDd: userResult[2].value,
-      attrIcntEnn: userResult[3]
+      //apinKcd: userResult[0],
+      fnusCd: userResult[1].code,
+      itpmScdlDd: userResult[2].id === 3?userResult[2].value:userResult[2].code,
+      attrAcntEnn: userResult[3]
     }
+    console.log("param", param);
     callLocalApi(
       API.LONEXECUTE.APPLYINFOINPUT_LOAPIPIF,
       param,
@@ -252,7 +253,7 @@ sangHwan: "만기일시상환"
                               console.log(radioIdx);
                               console.log(data.radioList[radioIdx].value);
                               let copy = [...userResult];
-                              copy[idx] = { id: radioIdx, value: data.radioList[radioIdx].value }
+                              copy[idx] = { id: radioIdx, value: data.radioList[radioIdx].value, code: data.radioList[radioIdx].code }
                               setUserResult(copy);
                               if (radioIdx === 3) {
                                 setShowDirInupYn(true);
@@ -268,14 +269,14 @@ sangHwan: "만기일시상환"
                             showYn={(data.textId === 0) ? true : showDirInputYn}
                             styleSeleList="sele-list type01 radius answer-wrap mar-t10"
                             styleInput={(data.textId === 0) ? "ta-c" : ""}
-                            textData={{value :applyInfoInputData.apinKcd}}
+                            textData={data.id===0?{value :applyInfoInputData.apinKcd}:arrTextData[data.textId]}
                             inputType={data.placeholder.indexOf("숫자") > -1 ? "number" : "text"}
                             onChangeFn={(value) => {
-                              // let copy = [...userResult];
-                              // let copy2 = { ...userResult[2] }
-                              // copy2.value = value;
-                              // copy[data.id] = (idx != 3) ? value : copy2;
-                              // setUserResult(copy);
+                              let copy = [...userResult];
+                              let copy2 = { ...userResult[2] }
+                              copy2.value = value;
+                              copy[data.id] = (idx != 3) ? value : copy2;
+                              setUserResult(copy);
                             }}
                           />
                         }

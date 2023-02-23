@@ -10,7 +10,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router";
 import OslBtn from "../../modules/components/OslBtn.js";
 import OslHeader from "../../modules/components/OslHeader.js";
-import callOpenApi from "../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase";
 import API from "../../modules/constants/API.js";
 import PathConstants from "../../modules/constants/PathConstants.js";
 
@@ -23,15 +23,13 @@ import PathConstants from "../../modules/constants/PathConstants.js";
 function LonContentCheck(props) {
 
   useEffect(() => {
-    callOpenApi(
-      API.LONEXECUTE.LONEXECUTE_LONCONTENTCHECK, 
+    callLocalApi(
+      API.LONEXECUTE.LONCONTENTCHECK_LONCONCNFA, 
       {},
       (res)=> {
 
       },
-      ()=> {
-
-      }
+      
     )
     // 대출금액
     // 변동금리
