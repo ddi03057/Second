@@ -101,6 +101,32 @@ function Ready(props) {
                         </li>
                       </ul>
                     </li>
+                    <li className="mar-t40">
+                      <span className="fs18">건강보험공단</span>
+                      <ul className="step-list">
+                        <li className="step-item">
+                          <span className="step-tit fw-b fc-dark">Step 1.</span>
+                          <span className="step-txt fc-gray">PC에서 건강보험공단 (www.nhis.or.kr) 접속</span>
+                        </li>
+                        <li className="step-item">
+                          <span className="step-tit fw-b fc-dark">Step 2.</span>
+                          <span className="step-txt fc-gray">로그인 화면 &gt; 공동/금융인증서등록 &gt; 비밀번호 입력</span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li className="mar-t40">
+                      <span className="fs18">위택스</span>
+                      <ul className="step-list">
+                        <li className="step-item">
+                          <span className="step-tit fw-b fc-dark">Step 1.</span>
+                          <span className="step-txt fc-gray">PC에서 위택스 (www.wetax.go.kr) 접속</span>
+                        </li>
+                        <li className="step-item">
+                          <span className="step-tit fw-b fc-dark">Step 2.</span>
+                          <span className="step-txt fc-gray">로그인 화면 &gt; 공동/금융인증서 &gt; 비밀번호 입력</span>
+                        </li>
+                      </ul>
+                    </li>
                   </ul>
                 </div>
               </div>

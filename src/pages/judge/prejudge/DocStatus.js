@@ -104,75 +104,61 @@ function DocStatus(props) {
                 </li>
                 <li>
                   <div className="box-chk flex">
-                    <p className="box-left">소득금액증명</p>
-                    <p className="box-right"><span className="resend sm-txt">전송완료</span></p>
-                  </div>
-                </li>
-                <li>
-                  <div className="box-chk flex">
                     <p className="box-left">
                       부가가치세 과세표준증명
                       <span className="sm-txt">(면세사업자 수입금액증명)</span>
                     </p>
-                    <p className="box-right"><span className="resend sm-txt">재전송 요청</span></p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                  {/*
+                    <p className="box-right"><span className="resend sm-txt">재전송 요청</span></p>*/}
                   </div>
+                  {/*
                   <div className="error-box mar-t15">
                     <p className="error-box-txt">오류메시지 노출 다시 한번 더 확인해 주세요. 다시 시도해주세요.</p>
-                  </div>
-                </li>
-                <li>
-                  <div className="box-chk flex">
-                    <p className="box-left">표준재무제표증명</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
-                  </div>
-                </li>
-                <li>
-                  <div className="box-chk flex">
-                    <p className="box-left">납세증명서(국세)</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
-                  </div>
-                </li>
-                <li>
-                  <div className="box-chk flex">
-                    <p className="box-left">납세증명서(지방세)</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
-                  </div>
-                </li>
-                <li>
-                  <div className="box-chk flex">
-                    <p className="box-left">4대사회보험료완납증명서</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
-                  </div>
+                  </div>*/}
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">부가세신고서</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">매입매출처별세금계산서 합계표</p>
-                    <p className="box-right"><span className="sm-txt">전송완료</span></p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
-                    <p className="box-left">매출정보</p>
-                    <p className="box-right"><span className="nosend sm-txt">미전송</span></p>
+                    <p className="box-left">표준재무제표증명</p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
-                    <p className="box-left">주민등록초본</p>
-                    <p className="box-right"><span className="resend sm-txt">전송완료</span></p>
+                    <p className="box-left">납세증명서(국세)</p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="box-chk flex">
+                    <p className="box-left">납세증명서(지방세)</p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="box-chk flex">
+                    <p className="box-left">4대사회보험료완납증명서</p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">주민등록등본</p>
-                    <p className="box-right"><span className="resend sm-txt">전송완료</span></p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
+                  {/*
                   <div className="error-box mar-t15">
                     <p className="error-box-txt">주소지 선택이 잘못되었습니다.</p>
                   </div>
@@ -214,6 +200,12 @@ function DocStatus(props) {
                         <span></span>
                       </label>
                     </div>
+                </div>*/}
+                </li>
+                <li>
+                  <div className="box-chk flex">
+                    <p className="box-left">주민등록초본</p>
+                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
                   </div>
                 </li>
               </ul>

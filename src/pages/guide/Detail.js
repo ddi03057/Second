@@ -55,7 +55,6 @@ function Detail(props) {
             <div className ="content-body">
               <div className ="content-top">
                 <p className ="top-tit">
-                  {data.userNm}님께서 받을 수 있는<br />
                   <b>온라인 플랫폼 입점<br />소상공인 보증부대출</b>
                 </p>
                 <p className ="top-desc">
