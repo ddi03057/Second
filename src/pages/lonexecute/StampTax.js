@@ -6,7 +6,7 @@
  * data, 
  * css
  */
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { useState, useEffect } from "react"
 import OslHeader from "../../modules/components/OslHeader"
 import OslBtn from "../../modules/components/OslBtn"
@@ -16,6 +16,8 @@ import PathConstants from "../../modules/constants/PathConstants";
 import AlertModal from "../../modules/components/AlertModal";
 import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase";
 import API from "../../modules/constants/API";
+import { useLayoutEffect } from "react";
+import { getDotYmd } from "../../modules/utils/util";
 
 const stampTaxData = collectData('StampTax')
 /**
@@ -33,13 +35,18 @@ function StampTax(props) {
     }
   });
 
-  let stampTaxResData = {};
-  useEffect(async ()=> {
+  const [stampTaxResData, setStampTaxResData] = useState({});
+  //로딩 show/hide
+  const [showLoading, setShowLoading] = useState(false);
+  useLayoutEffect(()=> {
+    setShowLoading(true);
     callLocalApi(
-      "",//API.LONEXECUTE.STAMPTAX_, 
+      API.LONEXECUTE.STAMPTAX_STTXCNFA, 
       {}, 
       (res)=> {
-        stampTaxResData=res.data;
+        setStampTaxResData(res.data.RSLT_DATA);
+        setShowLoading(false);
+        //stampTaxResData=res.data;
         //창업일,업종명
       }
     );
@@ -47,6 +54,7 @@ function StampTax(props) {
 
 
   let [userResult, setUserResult] = useState([99,99,99,99,99,99]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     console.log(userResult)
@@ -94,8 +102,10 @@ function StampTax(props) {
     if(!userResult.includes(99) && checkItems[0] === 0 && (checkItems[1] ===1 || checkItems[2] === 2)) {
       //담화면
       //창업일,업종명, 체크리스트1~6
+      //[tobe]
+      /*
       callLocalApi(
-        "",//API.LONEXECUTE.STAMPTAX_, 
+        API.LONEXECUTE.STAMPTAX_STTXCNFARGSN, 
         {}, 
         function(res) {
           stampTaxResData=res.data;
@@ -104,6 +114,8 @@ function StampTax(props) {
         function() {
   
         });
+        */
+       navigate(PathConstants.LONEXECUTE_LONCONTENTCHECK);
     }else {
       console.log(stampTaxData[userResult.findIndex((data, idx)=> data===99)]);
       setAlertShow(true);
@@ -133,7 +145,7 @@ function StampTax(props) {
                     <label htmlFor="inp01" className="txt fc-gray">창업일</label>
                   </div>
                   <div className="inp-wrap">
-                    <input type="text" id="inp01" value="2020.10.10" className="inp type01" disabled />
+                    <input type="text" id="inp01" value={getDotYmd(stampTaxResData.lglIncrYmd)} className="inp type01" disabled />
                   </div>
                   <p className="box-chk fc-gray">
                     <input type="checkbox" id="inp01_chk" className="check-input blind" defaultChecked />
@@ -145,7 +157,7 @@ function StampTax(props) {
                     <label htmlFor="inp02" className="txt fc-gray">업종</label>
                   </div>
                   <div className="inp-wrap">
-                    <input type="text" id="inp02" value="도소매업" className="inp type01" disabled />
+                    <input type="text" id="inp02" value={stampTaxResData.sicCdAbbrNm} className="inp type01" disabled />
                   </div>
                   <p className="box-chk fc-gray">
                     <input type="checkbox" id="inp02_chk" className="check-input blind" defaultChecked />
@@ -234,6 +246,9 @@ function StampTax(props) {
           }
         </div>
       </div>
+      {showLoading&&
+        <div className="loading"></div>
+      }
     </>
   )
 }
