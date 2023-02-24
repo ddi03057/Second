@@ -14,6 +14,7 @@ import PathConstants from "../../../modules/constants/PathConstants";
 import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 import API from "../../../modules/constants/API";
 import { useInterval } from "../../../modules/common/hook/useInterval";
+import { useRef } from "react";
 
 /**
  * 화면명 : 서류제출
@@ -33,43 +34,45 @@ function DocStatus(props) {
   const [scpgList, setScpgList] = useState([]);
 
   
+  const delay = useRef(1000);
   //10초마다 모두완료가 아닐시 수집상태 여부API 호출
   useInterval(()=> {
-    if(flrYn !== "N") {
+    console.log("interval>>", flrYn);
+    if(flrYn !== "Y") {
+      //서류수집 상태 조회
       callLocalApi(
-        API.PREJUDGE.DOCSTATUS_NOFCGTLNDOCSMYNINQ,
+        API.PREJUDGE.DOCSTATUS_SCPGPGRSHSTINQ,
         {},
         (res)=> {
-          let resFlrYn = res.data.RSLT_DATA.flrYn;
-          if(resFlrYn === "Y") {
-            //백에서 서류 항목별 수집상태 array로 보내줄시
-            setDocStatus(res.data.RSLT_DATA.nofcDocInfoList);
-          }
-          setFlrYn(resFlrYn);
-        },(e)=> {
-          console.log(e);
+          console.log(res.data.RSLT_DATA.scpgFnsgYn);
+          let arrScpg = res.data.RSLT_DATA.scpgList;
+          setFlrYn(res.data.RSLT_DATA.scpgFnsgYn);
+          //if(arrScpg.findIndex((data, idx)=> data.scpgScsYn === "N") === -1) setFlrYn("Y");
+          setScpgList(arrScpg);
+          delay.current = 10000;
         }
-      );
+      )
     }
-  }, 10000);
+  }, delay.current);
 
   useEffect(()=> {
     console.log("flrYn useEffect", flrYn);
-    if(flrYn === "Y") {
+    if(flrYn === "N") {
       setDisabledYn(true);
       //완료여부 초기화
       return ()=> setFlrYn("");
-    }else if(flrYn === "N") {
+    }else if(flrYn === "Y") {
       //모두 완료, 버튼 활성화
       setDisabledYn(false);
     }
+
   }, [flrYn]);
 
   useEffect(()=> {
-    if(!!docStatus) {
-      console.log(docStatus);
-    }
-  }, [docStatus]);
+    
+      console.log(scpgList);
+    
+  }, [scpgList]);
 
 
   let navigate = useNavigate();
@@ -79,23 +82,13 @@ function DocStatus(props) {
   }
 
   useEffect(() => {
-    //서류수집 상태 조회
-    callLocalApi(
-      API.PREJUDGE.DOCSTATUS_SCPGPGRSHSTINQ,
-      {},
-      (res)=> {
-        console.log(res);
-        setScpgList(res.RSLT_DATA.scpgList);
-      },
-      (err)=> {
-        //alert(err);
-      }
-    )
+    
   }, []);
 
   return (
     <>
       <OslHeader headerNm={props.headerNm} />
+      {scpgList.length === 12?
       <div className="container">
         <div className="content">
           <div className="content-body diagnosis">
@@ -117,7 +110,7 @@ function DocStatus(props) {
                   <div className="box-chk flex">
                     <p className="box-left">사업자등록증명</p>
                     {/* <p className="box-right"><span className="sm-txt">전송완료</span></p> */}
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[1].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
@@ -126,7 +119,7 @@ function DocStatus(props) {
                       부가가치세 과세표준증명
                       <span className="sm-txt">(면세사업자 수입금액증명)</span>
                     </p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{(scpgList[2].scpgScsYn === "N" &&  scpgList[3].scpgScsYn === "N") ?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   {/*
                     <p className="box-right"><span className="resend sm-txt">재전송 요청</span></p>*/}
                   </div>
@@ -138,43 +131,43 @@ function DocStatus(props) {
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">부가세신고서</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[4].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">매입매출처별세금계산서 합계표</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[5].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">표준재무제표증명</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[6].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">납세증명서(국세)</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[7].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">납세증명서(지방세)</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[8].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">4대사회보험료완납증명서</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[9].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">주민등록등본</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[10].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                   {/*
                   <div className="error-box mar-t15">
@@ -223,7 +216,7 @@ function DocStatus(props) {
                 <li>
                   <div className="box-chk flex">
                     <p className="box-left">주민등록초본</p>
-                    <p className="box-right">{!docStatus[0]?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">{docStatus[0]}</span>}</p>
+                    <p className="box-right">{scpgList[11].scpgScsYn === "N"?<span className="sending sm-txt">전송중</span>:<span className="sm-txt">전송완료</span>}</p>
                   </div>
                 </li>
               </ul>
@@ -239,6 +232,8 @@ function DocStatus(props) {
             }} />
         </div>
       </div>
+      :<div className="loading"></div>
+      }
     </>
   )
 }

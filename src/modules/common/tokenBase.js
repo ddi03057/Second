@@ -620,8 +620,9 @@ export const callLocalApi = async(uri,param,successCB,errorCB)=> {
 		//}
 		
 	}).catch((jqXHR, textStatus, exception, errorThrown)=> {
-		console.log("refeshError", exception);
-		errorCallBack(jqXHR, textStatus, exception, errorThrown);
+		console.log(jqXHR, textStatus)
+		console.log(exception, errorThrown);
+		//errorCallBack(jqXHR, textStatus, exception, errorThrown);
 		//window.location.href = PathConstants.SERVICE_ERROR;
 		//callback(null);
 	});
