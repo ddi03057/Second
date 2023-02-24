@@ -29,6 +29,9 @@ function DocStatus(props) {
   const [docStatus, setDocStatus] = useState([false,false,false,false,false,false,false,false,false,false,false]);
   //다음버튼 활성여부
   const [disabledYn, setDisabledYn] = useState(true);
+  //서류 상태 
+  const [scpgList, setScpgList] = useState([]);
+
   
   //10초마다 모두완료가 아닐시 수집상태 여부API 호출
   useInterval(()=> {
@@ -72,8 +75,23 @@ function DocStatus(props) {
   let navigate = useNavigate();
 
   function cbOslBtn() {
-    navigate(/*새로운화면 */);
+    navigate(PathConstants.PREJUDGE_CUSTINFOINPUT);
   }
+
+  useEffect(() => {
+    //서류수집 상태 조회
+    callLocalApi(
+      API.PREJUDGE.DOCSTATUS_SCPGPGRSHSTINQ,
+      {},
+      (res)=> {
+        console.log(res);
+        setScpgList(res.RSLT_DATA.scpgList);
+      },
+      (err)=> {
+        //alert(err);
+      }
+    )
+  }, []);
 
   return (
     <>

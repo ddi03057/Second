@@ -46,11 +46,16 @@ const API = {
   PREJUDGE: {
     CUSTAGREE_SPAG:        `${base}/osl100/spag`,
     SUITTEST_SBNTPOPYINQ:         `${base}/osl101/sbntPopyInq`,
-    SUITTEST_SBNTPOPYVRFC:         `${base}/osl101/sbntPopyVrfc`,
+    SUITTEST_SBNTPOPYVRFC:        `${base}/osl101/sbntPopyVrfc`,
+    DATACOLLECT_BSNFNOINQ: `${base}/osl101/bsnfNoInq`,
+    DATACOLLECT_RSPLRGSN: `${base}/osl102/rsplRgsn`,
 
+    CUSTINFOINPUT_CSINBSININQ: `${base}/osl103/csinBsinInq`,
+    CUSTINFOINPUT_CSINQRG: `${base}/osl103/csinIqrg`,
     SUITRESULT_CMPBPOPYEXCNVRFCINQ:       `${base}/osl103/cmpbPopyExcnVrfcInq`, 
     GRTINFOINPUT_GRNYEXTDATWRTN:     `${base}/osl104/grnyExntDatWrtn`,   
     DOCSTATUS_NOFCGTLNDOCSMYNINQ:        `${base}/osl104/nofcGtlnDocSmynInq`,
+    DOCSTATUS_SCPGPGRSHSTINQ: `${base}/osl103/scpgPgrsHstInq`,
 
     PRE_SCPG:               `${base}/osl102/getSignStepData`,
     SUITRESULT:       `${base}/osl`, 

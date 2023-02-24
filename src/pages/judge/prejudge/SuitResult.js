@@ -49,7 +49,7 @@ function SuitResult(props) {
       API.PREJUDGE.SUITRESULT_CMPBPOPYEXCNVRFCINQ,
       {},
       (res)=> {
-        if(res.data.RSLT_DATA.lgncJdgmRsltDcd === "01") {
+        if(res.data.RSLT_DATA.lfncJdgmRsltDcd === "01") {
           setUserResult({lfncJdgmRsltDcd:"Y"});
         }else {
           let obj = res.data.RSLT_DATA;
@@ -156,14 +156,16 @@ function SuitResult(props) {
   // });
 
   function cbOslBtn() {
-    //진행상태 이동
-    navigate(PathConstants.MAIN,
-      {
-        state: {
-          tabIdx: 2 //진행상태
-        }
-      }
-    );
+    //보증심사자료 작성 이동
+    navigate(PathConstants.PREJUDGE_GRTINFOINPUT);
+    // //진행상태 이동
+    // navigate(PathConstants.MAIN,
+    //   {
+    //     state: {
+    //       tabIdx: 2 //진행상태
+    //     }
+    //   }
+    // );
   }
 
   return (

@@ -30,57 +30,70 @@ import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
 import { Context1 } from "./../../../App.js";
 import { useContext } from "react";
-import callOpenApi from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 
 const grtInfoData = collectData("GrtInfoInput");
 
 function GrtInfoInput(props) {
+  const [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, '5']); //결과값 저장 state
+  const [disabledYn, setDisabledYn] = useState(true);
+  const [agreeYn, setAgreeYn] = useState(false);
+  const [successYn, setSuccessYn] = useState(false);
+  const navigate = useNavigate(); //다음화면을 위한 navigate
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [comshow, setComShow] = useState(false);
+  const comHandleShow = () => setComShow(true);
+  const comHandleClose = () => setComShow(false);
+  const [showPost, setShowPost] = useState(false);
+  const postHandleShow = () => setShowPost(true);
+  const postHandleClose = () => setShowPost(false);
+  const [postCd, setPostCd] = useState("");
+  const [addr1, setAddr1] = useState("");
+  const [addr2, setAddr2] = useState("");
+  let [msgCont, setMsgCont] = useState("");
+  const [visible, setVisible] = useState(false);
+
   //**항목별 데이터 분리 */
-  let arrTitleData = [];
+  const arrTitleData = [];
   grtInfoData.find((data) => {
     arrTitleData.push(data.title);
   });
-  let arrRadioData = [];
+  const arrRadioData = [];
   grtInfoData.find((data) => {
     if (data.type === "radio") {
       arrRadioData.push(data);
     }
   });
-  let arrTextData = [];
+  const arrTextData = [];
   grtInfoData.find((data) => {
     if (data.type === "text") {
       arrTextData.push(data);
     }
   });
-  let arrSeleectData = [];
+  
+  const arrSeleectData = [];
   grtInfoData.find((data) => {
     if (data.type === "select") {
       arrSeleectData.push(data);
     }
   });
-  let arrSearchData = [];
+  const arrSearchData = [];
   grtInfoData.find((data) => {
     if (data.type === "search") {
       arrSearchData.push(data);
     }
   });
 
-
-  let [userResult, setUserResult] = useState([99, 99, 99, 99, 99, 99, 99, 99, 99, '5']); //결과값 저장 state
-  const [disabledYn, setDisabledYn] = useState(true);
-  const [agreeYn, setAgreeYn] = useState(false);
-  const [successYn, setSuccessYn] = useState(false);
-  let navigate = useNavigate(); //다음화면을 위한 navigate
   useEffect(() => {
     //빈값체크하고 버튼 활성화/비활성화
     console.log(userResult);
     let validCheckIdx = userResult.findIndex((data, idx) => data === 99);
     if (validCheckIdx === -1 && agreeYn) {
-      console.log("밸리통과");
       setDisabledYn(false);
     }else if(validCheckIdx === 3 && agreeYn) {
       if(userResult[2] === 0) {
-        console.log("밸리통과");
         setDisabledYn(false);
       }else {
         setDisabledYn(true);
@@ -95,32 +108,10 @@ function GrtInfoInput(props) {
   }, [agreeYn]);
 
   useEffect(() => {
-    if (successYn) {
-      callOpenApi(
-        API.PREJUDGE.GRTINFOINPUT_GRNYEXTDATWRTN,
-        {},
-        (res)=> {
-          if(res.data.RSLT_DATA.resultYn === "Y") {
-            navigate(
-              PathConstants.PREJUDGE_DOCSTATUS
-            )
-          }
-        }
-      )
-      
+    if(successYn) {
+      saveGrtInfoInput();
     }
   }, [successYn]);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [comshow, setComShow] = useState(false);
-  const comHandleShow = () => setComShow(true);
-  const comHandleClose = () => setComShow(false);
-  const [showPost, setShowPost] = useState(false);
-  const postHandleShow = () => setShowPost(true);
-  const postHandleClose = () => setShowPost(false);
-
 
   // popup
   function openPop() {
@@ -133,9 +124,50 @@ function GrtInfoInput(props) {
   }
 
   let test = useContext(Context1);
+
+  const saveGrtInfoInput = () => {
+    const params = {
+      bsunOwrRlcd: userResult[0], //사업장소유자관계코드
+      bsunRgifDcd: userResult[1], //사업장권리침해구분코드
+      bsunZpcd: postCd, //사업장 우편번호
+      bsunRdnd: addr1, //사업장 도로명 주소
+      bsunRdnmDtad: addr2, //사업장 도로명 상세 주소
+      iruTrthRsplAdrYn: userResult[2], //주민등록상실제거주지주소여부
+      iruAdpaSelfOwnCd: userResult[3], //주민등록상주소지소유코드
+      rshsOwrRlcd:  userResult[4], //거주주택소유자관계코드
+      bsunOwnYn: userResult[5], //사업장 소유주 본인(배우자) -  사업장 -> 주택으로 변경
+      rshsRgifDcd: userResult[6], //거주주택권리침해구분코드
+      frstLoapAmt: userResult[7], //고객 대출신청금액
+      loanTrmCnt: userResult[8], //대출단위코드
+      loteUncd: "Y", //대출기간 단위 분류코드
+      rshsRdnd: addr1, //거주주택도로명주소
+      rshsRdnmDtad: addr1, //거주주택도로명 상세주소
+      rshsZpcd: postCd, //거주주택우편번호
+    }
+
+    console.log("params > ", params);
+
+    //보증심사자료 저장
+    //[TODO]전자서명해시값 받은후 -> 전자서명 필요(인증서) -> 보증신청 연동 필요
+    callLocalApi(
+      API.PREJUDGE.GRTINFOINPUT_GRNYEXTDATWRTN,
+      {params},
+      (res)=> {
+        console.log(res);
+          //진행상태 이동
+          navigate(PathConstants.MAIN,  {
+            state: {
+              tabIdx: 2 //진행상태
+            }
+        })
+      },
+      (err)=> {
+        //alert(err);
+      }
+    )
+  }
   
   function cbOslBtn() {
-
     let lonAmt = userResult[8];
     let lonAmtTmp = Math.floor(lonAmt % 1000000)
     lonAmt = Math.floor(lonAmt / 1000000) * 1000000;
@@ -154,11 +186,10 @@ function GrtInfoInput(props) {
       setSuccessYn(true);
     }
 
-    GrtInfoInput();
+    //GrtInfoInput();
   }
-  const [postCd, setPostCd] = useState("");
-  const [addr1, setAddr1] = useState("");
-  const [addr2, setAddr2] = useState("");
+
+
   useEffect(()=> {
     let copy = [...userResult];
     console.log(postCd);
@@ -172,13 +203,12 @@ function GrtInfoInput(props) {
     setUserResult(copy);
   }, [postCd, addr1, addr2])
 
-  // const GrtInfoInput = async () => {
+  // const saveGrtInfoInput = async () => {
 
   //   const res = await request({
   //     method: "post",
   //     url: API.PREJUDGE.PREJUDGE_GRTINFOINPUT,
   //     data: {
-  //       oslLoapNo: "0005", //대출 키
   //       bsunOwrRlcd: userResult[0], // 주사업장소유자
   //       bsunRgifDcd: userResult[1], // 주사업장관리침해
   //       rshsOwrRlcd: userResult[5], //거주주택소유자
@@ -187,7 +217,11 @@ function GrtInfoInput(props) {
   //       // loanTrmCnt: "5", //대출기간
   //       rshsRdnd: addr1, //거주주택도로명주소
   //       rshsRdnmDtad: addr2, //거주주택상세주소
-  //       rshsZpcd: postCd// 거주주택우편번호
+  //       rshsZpcd: postCd, // 거주주택우편번호
+
+  //       bsunZpcd: "",
+  //       bsunRdnd: "",
+  //       bsunRdnmDtad: "",
 
   //     }
   //   })
@@ -200,11 +234,7 @@ function GrtInfoInput(props) {
   //       console.log("error : ", error);
   //     });
   // }
-  
-  
-  
-  let [msgCont, setMsgCont] = useState("");
-  const [visible, setVisible] = useState(false);
+
 
   return (
     <>
@@ -223,7 +253,7 @@ function GrtInfoInput(props) {
                   return (
                     <li key={`li_${idx}`} className="item">
                       <TitleComponent
-                        showYn={(idx === 3 && userResult[2] === 1) ? true : (idx != 3) ? true : false}
+                        showYn={(idx === 3 && userResult[2] === 1) ? true : (idx !== 3) ? true : false}
                         title={grtInfoData[idx].title}
                         styleTxt="txt"
                       />

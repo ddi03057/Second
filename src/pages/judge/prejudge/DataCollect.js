@@ -18,7 +18,7 @@ import PathConstants from "../../../modules/constants/PathConstants";
 import { useEffect } from "react";
 import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 import AlertModal from "../../../modules/components/AlertModal";
-
+import { getBsnn } from "../../../modules/utils/util";
 
 /**
  * 컴포넌트명 : 자료 수집
@@ -35,6 +35,9 @@ function DataCollect(props) {
   const [cityList, setCityList] = useState([]);
   //시군구 axios 결과
   const [countyList, setCountyList] = useState([]);
+  //사업자번호 axios 결괴
+  const [bsnfNo, setBsnfNo] = useState("");
+
 
   //시도인지 시군구인지
   const [flag, setFlag] = useState("");
@@ -65,9 +68,17 @@ function DataCollect(props) {
   const handleShow = ()=> openPop();
   const handleClose = ()=> closePop();
   const [msgCont, setMsgCont] = useState("");
+  let navigate = useNavigate();
 
   useLayoutEffect(()=> {
     //사업자번호get
+    callLocalApi(
+      API.PREJUDGE.DATACOLLECT_BSNFNOINQ,
+      {},
+      (res) => {
+        setBsnfNo(res.data.RSLT_DATA.bsnfNo);
+      }
+    )
   }, []);
   
   useEffect(()=> {
@@ -199,11 +210,24 @@ function DataCollect(props) {
   function cbOslBtn() {
     console.log("시도", sido);
     console.log("시군구", sigungu);
-    if(!!sido || sido === DO_SELECT || !!sigungu || sigungu === DO_SELECT) {
+    if(!sido || sido === DO_SELECT || !sigungu || sigungu === DO_SELECT) {
+      
       setMsgCont("행정구역을 선택해주세요.");
       handleShow();
     }else {
       //시군구저장
+      callLocalApi(
+        API.PREJUDGE.DATACOLLECT_RSPLRGSN,
+        {sidoCd: sido, ccwcd: sigungu},
+        (res)=> {
+          console.log(res);
+          //setCityList(res.data.RSLT_DATA.city);
+          navigate(PathConstants.PREJUDGE_DOCSTATUS);
+        },
+        (err)=> {
+          //alert(err);
+        }
+      )
     }
   }
   
@@ -230,7 +254,7 @@ function DataCollect(props) {
                   <div className="form-group">
                     <div className="sele-list type01 radius answer-wrap">
                       <div className="item">
-                        <input type="number" name="text01" id="text01_01" placeholder="사업자 번호" />
+                        <input type="text" name="text01" id="text01_01" placeholder="사업자 번호" disabled={true} value={getBsnn(bsnfNo)} />
                       </div>
                       <div className="btn-wrap">
                         <button type="reset" className="btn btn-sm btn-reset"><span className="blind">재작성</span></button>
