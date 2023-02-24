@@ -52,8 +52,8 @@ function DataCollect(props) {
   const [disabledYn, setDisabledYn] = useState(true);
   //팝업창 활성/비활성
   const [active, setActive] = useState("");
-  const handleCloseDistricts = () => setActive(""); document.body.style.overflow = "";
-  const handleShowDistricts = () => setActive(" active"); document.body.style.overflow = "hidden";
+  const handleCloseDistricts = () => {setActive(""); document.body.style.overflow = "";}
+  const handleShowDistricts = () => {setActive(" active"); document.body.style.overflow = "hidden";}
 
   //alert 띄우기위한 함수 및 변수
   function openPop() {
@@ -326,7 +326,7 @@ function DataCollect(props) {
             }} />
         </div>
       </div>
-      {<ViewDistricts flag={flag} districtsList={districtsList} clicked={clicked} active={active} setActive={setActive} setSido={setSido} setSigungu={setSigungu}></ViewDistricts>}
+      {<ViewDistricts flag={flag} districtsList={districtsList} clicked={clicked} active={active} setActive={setActive} setSido={setSido} setSigungu={setSigungu} handleCloseDistricts={handleCloseDistricts}></ViewDistricts>}
       {show&&<AlertModal 
         show={show}
         msg={msgCont}
@@ -381,7 +381,7 @@ function ViewDistricts(props) {
                         }else {
                           props.setSigungu(data);
                         }
-                        props.setActive("");
+                        props.handleCloseDistricts();
                       }}><span>{data}</span></button>
                   </li>
                 )
