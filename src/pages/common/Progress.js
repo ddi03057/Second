@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useLayoutEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import Stepper from 'react-stepper-enhanced/lib/Stepper';
 import OslBtn from '../../modules/components/OslBtn';
 //import { Card } from 'react-bootstrap';
 
 import OslHeader from '../../modules/components/OslHeader';
 import collectData from '../../modules/constants/collectData';
+import PathConstants from '../../modules/constants/PathConstants';
 import request from '../../modules/utils/Axios';
 
 const progressFootMsgData = collectData("progressFootMsg");
@@ -74,9 +76,14 @@ function Progress(props) {
   let [styleInfoWrap, setStyleInfoWrap] = useState("");
 
   useLayoutEffect(()=> {
-    
+    console.log(props.progState);
+    if(props.progState === "1") {
+      setStateCd("보증심사완료");
+    }else if(props.progState === "2") {
+      setStateCd("대출실행완료");
+    }
     //진행상태조회 axois
-    setStateCd("보증심사진행중");
+    
     //rejectReason
     //axios end
     
@@ -85,6 +92,7 @@ function Progress(props) {
     console.log(arrFootMsg);
   }, []);
   useLayoutEffect(()=> {
+    console.log("stateCd", stateCd);
     if(stateCd === "사전심사거절") {
       setProcing(["ing", "", ""]);
       setArrFootMsg([...progressFootMsgData.find((data, idx)=> data.name === "PREJUDGE_REJECT_FOOT_MSG").msg]);
@@ -137,6 +145,10 @@ function Progress(props) {
                 {
                   (stateCd==="보증심사진행중" || stateCd==="보증심사거절")&&
                     <StateInfo stateInfoList={null}/>
+                }
+                {
+                  stateCd === "보증심사완료"&&
+                    <MidBtn />
                 }
                 {
                   stateCd === "사전심사거절"&&
@@ -281,7 +293,7 @@ function RejReason(props) {
 function FooterMsg(props) {
   
   return (
-    <ul className="txt-msg list-type05">
+    <ul className="txt-msg list-type05 pad-t20">
       {
         props.arrFootMsg.map((data,idx)=> {
           return (
@@ -291,6 +303,23 @@ function FooterMsg(props) {
         
       }
     </ul>
+  )
+}
+
+function MidBtn () {
+  let navigate = useNavigate();
+  return (
+  <>
+    <div class="info-wrap pad-t0 pad-b20 tit-nowrap">
+      <div class="info-box">
+          <span class="tit fc-gray">승인일</span>
+          <span class="txt fc-dark ta-r">2021.07.23</span>
+      </div>
+    </div>
+    <button type="button" class="btn btn-lg default-bg" onClick={()=> {navigate(PathConstants.LONEXECUTE_APPRINFO)}}>
+        <span class="txt">보증 확인 및 대출 실행</span>
+    </button>
+  </>
   )
 }
 

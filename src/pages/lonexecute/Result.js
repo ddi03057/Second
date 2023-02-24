@@ -63,7 +63,7 @@ function Result(props) {
 */
   let navigate = useNavigate();
   function cbOslBtn() {
-    navigate(PathConstants.MAIN,{state: {tabIdx: 2}});
+    navigate(PathConstants.MAIN,{state: {tabIdx: 22}});
   }
   return (
     <>

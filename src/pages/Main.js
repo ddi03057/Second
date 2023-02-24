@@ -66,8 +66,8 @@ function Main(props) {
           <MyLon />
       }
       {
-        (tabIdx === 2)&&
-          <Progress />
+        (tabIdx.toString().substring(0,1) === "2")&&
+          <Progress progState={tabIdx.toString().substring(1,2)} />
       }
     </>
   )

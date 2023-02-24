@@ -157,7 +157,7 @@ function GrtInfoInput(props) {
           //진행상태 이동
           navigate(PathConstants.MAIN,  {
             state: {
-              tabIdx: 2 //진행상태
+              tabIdx: 21 //진행상태
             }
         })
       },
