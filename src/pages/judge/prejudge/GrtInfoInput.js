@@ -127,18 +127,18 @@ function GrtInfoInput(props) {
 
   const saveGrtInfoInput = () => {
     const params = {
-      bsunOwrRlcd: userResult[0], //사업장소유자관계코드
-      bsunRgifDcd: userResult[1], //사업장권리침해구분코드
+      bsunOwrRlcd: userResult[0].toString(), //사업장소유자관계코드
+      bsunRgifDcd: userResult[1].toString(), //사업장권리침해구분코드
       bsunZpcd: postCd, //사업장 우편번호
       bsunRdnd: addr1, //사업장 도로명 주소
       bsunRdnmDtad: addr2, //사업장 도로명 상세 주소
-      iruTrthRsplAdrYn: userResult[2], //주민등록상실제거주지주소여부
-      iruAdpaSelfOwnCd: userResult[3], //주민등록상주소지소유코드
-      rshsOwrRlcd:  userResult[4], //거주주택소유자관계코드
-      bsunOwnYn: userResult[5], //사업장 소유주 본인(배우자) -  사업장 -> 주택으로 변경
-      rshsRgifDcd: userResult[6], //거주주택권리침해구분코드
-      frstLoapAmt: userResult[7], //고객 대출신청금액
-      loanTrmCnt: userResult[8], //대출단위코드
+      iruTrthRsplAdrYn: userResult[2].toString(), //주민등록상실제거주지주소여부
+      iruAdpaSelfOwnCd: userResult[3].toString(), //주민등록상주소지소유코드
+      rshsOwrRlcd:  userResult[4].toString(), //거주주택소유자관계코드
+      bsunOwnYn: userResult[5].toString(), //사업장 소유주 본인(배우자) -  사업장 -> 주택으로 변경
+      rshsRgifDcd: userResult[6].toString(), //거주주택권리침해구분코드
+      frstLoapAmt: userResult[7].toString(), //고객 대출신청금액
+      loanTrmCnt: userResult[8].toString(), //대출단위코드
       loteUncd: "Y", //대출기간 단위 분류코드
       rshsRdnd: addr1, //거주주택도로명주소
       rshsRdnmDtad: addr1, //거주주택도로명 상세주소
@@ -151,7 +151,24 @@ function GrtInfoInput(props) {
     //[TODO]전자서명해시값 받은후 -> 전자서명 필요(인증서) -> 보증신청 연동 필요
     callLocalApi(
       API.PREJUDGE.GRTINFOINPUT_GRNYEXTDATWRTN,
-      {params},
+      {
+        bsunOwrRlcd: userResult[0].toString(), //사업장소유자관계코드
+        bsunRgifDcd: userResult[1].toString(), //사업장권리침해구분코드
+        bsunZpcd: postCd, //사업장 우편번호
+        bsunRdnd: addr1, //사업장 도로명 주소
+        bsunRdnmDtad: addr2, //사업장 도로명 상세 주소
+        iruTrthRsplAdrYn: userResult[2].toString(), //주민등록상실제거주지주소여부
+        iruAdpaSelfOwnCd: userResult[3].toString(), //주민등록상주소지소유코드
+        rshsOwrRlcd:  userResult[4].toString(), //거주주택소유자관계코드
+        bsunOwnYn: userResult[5].toString(), //사업장 소유주 본인(배우자) -  사업장 -> 주택으로 변경
+        rshsRgifDcd: userResult[6].toString(), //거주주택권리침해구분코드
+        frstLoapAmt: userResult[7].toString(), //고객 대출신청금액
+        loanTrmCnt: userResult[8].toString(), //대출단위코드
+        loteUncd: "Y", //대출기간 단위 분류코드
+        rshsRdnd: addr1, //거주주택도로명주소
+        rshsRdnmDtad: addr1, //거주주택도로명 상세주소
+        rshsZpcd: postCd, //거주주택우편번호
+      },
       (res)=> {
         console.log(res);
           //진행상태 이동

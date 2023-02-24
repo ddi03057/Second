@@ -310,14 +310,14 @@ function MidBtn () {
   let navigate = useNavigate();
   return (
   <>
-    <div class="info-wrap pad-t0 pad-b20 tit-nowrap">
-      <div class="info-box">
-          <span class="tit fc-gray">승인일</span>
-          <span class="txt fc-dark ta-r">2021.07.23</span>
+    <div className="info-wrap pad-t0 pad-b20 tit-nowrap">
+      <div className="info-box">
+          <span className="tit fc-gray">승인일</span>
+          <span className="txt fc-dark ta-r">2021.07.23</span>
       </div>
     </div>
-    <button type="button" class="btn btn-lg default-bg" onClick={()=> {navigate(PathConstants.LONEXECUTE_APPRINFO)}}>
-        <span class="txt">보증 확인 및 대출 실행</span>
+    <button type="button" className="btn btn-lg default-bg" onClick={()=> {navigate(PathConstants.LONEXECUTE_APPRINFO)}}>
+        <span className="txt">보증 확인 및 대출 실행</span>
     </button>
   </>
   )
