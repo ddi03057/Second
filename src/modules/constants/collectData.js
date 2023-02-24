@@ -384,6 +384,7 @@ const custAgreeData = [
       title: "(필수) 개인(신용)정보 수집 이용 및 제공관련 고객권리 안내문",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2017110617593821483973066352935.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
 
   },
@@ -392,6 +393,7 @@ const custAgreeData = [
       title: "(필수) 개인(신용)정보 수집 이용 동의, 고유식별번호 수집 이용 동의",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2019031909261764480323824044447.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
   },
   {
@@ -399,6 +401,7 @@ const custAgreeData = [
       title: "(필수) 개인(신용)정보 수집이용 제공 동의(여신금융거래)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2020262473283826319128117808560.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
   },
   {
@@ -406,6 +409,7 @@ const custAgreeData = [
       title: "(필수) 개인(신용)정보 수집이용 제공 동의(비여신금융거래)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022053115131329259593606625324.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
 
   },
@@ -414,6 +418,7 @@ const custAgreeData = [
       title: "(필수) 개인정보 및 기업정보의 수집 · 이용 · 제공 활용 동의서(신용보증기금)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022053115164629259806850189960.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
 
   },
@@ -422,6 +427,7 @@ const custAgreeData = [
       title: "(필수) 중소기업지원사업 통합관리 시스템 정보 활용을 위한 동의서(신용보증기금)",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022021612253920263835375609685.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
 
   },
@@ -430,6 +436,7 @@ const custAgreeData = [
       title: "(필수) 여신금융협회 이용약관 동의",
       type: "pdf",
       pdfvalue: "/fup/customer/form/2022060710060229845969269035242.pdf",
+      imgPath: "/gImg/pdf1_1.png",
       dcffStplId: "1"
 
   }

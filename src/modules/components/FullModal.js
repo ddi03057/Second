@@ -79,12 +79,13 @@ console.log(content,typeof content);
             (type==="pdf")&&
               content.map((data, idx)=> {
                 return (
-                  <PdfViewer 
-                    pdfData={data}
-                    setPopHeight={setPopHeight}
-                    content={content}
-                    idx={idx}
-                  ></PdfViewer>
+                  // <PdfViewer 
+                  //   pdfData={data}
+                  //   setPopHeight={setPopHeight}
+                  //   content={content}
+                  //   idx={idx}
+                  // ></PdfViewer>
+                  <img src={data.imgPath} />
                 )
               })   
           }
