@@ -15,6 +15,7 @@ import RadioInlineComponent from "../common/RadioInlineComponent";
 import PathConstants from "../../modules/constants/PathConstants";
 import API from "../../modules/constants/API";
 import AlertModal from "../../modules/components/AlertModal";
+import { callLocalApi } from "../../modules/common/tokenBase";
 
 const financeCusLawData = collectData('FinanceCusLaw')
 /**
@@ -64,9 +65,19 @@ function FinanceCusLaw(props) {
   const [alertShow, setAlertShow] = useState(false);
   const ALERT_MSG = "해당항목을 선택 및 체크하시기 바랍니다.";
   function cbOslBtn() {
+    let param = {
+
+    };
     
     if(userResult.findIndex((data)=> data===99 || data===false) < 0 ) {
-      //담화면
+      // callLocalApi(
+      //   API.LONEXECUTE.FINANCECUSLAW_FNLCLAWCNFR,
+      //   param,
+      //   (res)=> {
+      //     //담화면
+      //     navigate(PathConstants.LONEXECUTE_ARSCERTIFICATE);    
+      //   }
+      // )
       navigate(PathConstants.LONEXECUTE_ARSCERTIFICATE);
     }else {
       

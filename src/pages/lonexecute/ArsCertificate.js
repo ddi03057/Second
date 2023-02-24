@@ -10,10 +10,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useLayoutEffect } from "react";
-import callOpenApi from "../../modules/common/tokenBase.js";
+import { Navigate, useNavigate } from "react-router";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase.js";
 import AlertModal from "../../modules/components/AlertModal.js";
 import OslBtn from "../../modules/components/OslBtn";
 import API from "../../modules/constants/API";
+import PathConstants from "../../modules/constants/PathConstants.js";
 
 /**
  * 화면명 : ARS 인증 화면
@@ -26,17 +28,17 @@ function ArsCertificate(props) {
   const MSG_SUCCESS = "인증을 성공 하셨습니다.";
   const MSG_FAIL = "인증을 실패 하셨습니다.";
   
-  const [certNum, setCertNum] = useState(0);
+  const [certNum, setCertNum] = useState(-1);
+  const [acitId, setAcitId] = useState("");
   const callApiFn = ()=> {
-    callOpenApi(
+    setCertNum(-1);
+    callLocalApi(
       API.LONEXECUTE.ARSCERTIFICATE_ARSCRTCCRETRGST,
       {}, //userid
       (res)=> {
         console.log(res);
         setCertNum(res.data.RSLT_DATA.twoChnlArsCrtcRrn);
-      },
-      (err)=> {
-
+        setAcitId(res.data.RSLT_DATA.twoChnlArsAcitId);
       }
     );
   }
@@ -54,11 +56,12 @@ function ArsCertificate(props) {
 
   }, [resPassYn]);
 
+  let navigate = useNavigate();
   function cbOslBtn() {
-
-    callOpenApi(
+    
+    callLocalApi(
       API.LONEXECUTE.ARSCERTIFICATE_ARSCRTCCNFA,
-      {}, //id값
+      {"twoChnlArsAcitId": acitId},
       (res)=> {
         console.log(res);
         if(res.data.RSLT_DATA.strPass ==="Y") {
@@ -85,7 +88,7 @@ function ArsCertificate(props) {
           <div className="content-body">
             <div className="content-top mar-t40">
               <p className="top-tit ta-c">인증번호</p>
-              <span className="auth-num fc-default">{certNum===0?<img src="/assets/img/ico/loading.jpg" style={{width: "100px", height: "100px"}} />:`${certNum}`}</span>
+              <span className="auth-num fc-default">{certNum===-1?<img src="/assets/img/ico/loading.jpg" style={{width: "100px", height: "100px"}} />:`${certNum}`}</span>
               {/* <span className="auth-num fc-default"><strong>{certNum}</strong></span> */}
             </div>
 
@@ -123,7 +126,7 @@ function ArsCertificate(props) {
             onClickFn={()=> {
               if(msgCont === MSG_SUCCESS) {
                 //화면이동
-                console.log("화면이동");
+                navigate(PathConstants.CERTIFICATE_CERT);
               }else {
                 //유지
               }

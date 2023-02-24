@@ -74,7 +74,8 @@ const API = {
     SUCCRESULT:       `${base}/osl`,  
     ARSCERTIFICATE_ARSCRTCCRETRGST:   `${base}/osl304/arsCrtcCretRgst`,
     ARSCERTIFICATE_ARSCRTCCNFA:   `${base}/osl304/arsCrtcCnfa`,     
-    FINANCECUSLAW:    `${base}/osl`,     
+    FINANCECUSLAW_FNLCLAWCNFR:    `${base}/osl304/fnlcLawCnfr`,     
+    RESULT_LOEXFNSGINQ: `${base}/osl305/loexFnsgInq`,   
   },
   POSTMANAGEMENT: {
     REPAY:            `${base}/osl`,     
