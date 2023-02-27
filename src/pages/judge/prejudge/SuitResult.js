@@ -45,7 +45,7 @@ function SuitResult(props) {
   const [suitData, setSuitData] = useState({});
   useLayoutEffect(()=> {
     //obj.lfncJdgmRsltDcd = null;
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.SUITRESULT_CMPBPOPYEXCNVRFCINQ,
       {},
       (res)=> {

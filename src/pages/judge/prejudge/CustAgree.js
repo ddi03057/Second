@@ -66,7 +66,7 @@ function CustAgree(props) {
    */
   const callApiFn = ()=> {
     setShowLoading(true);
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.CUSTAGREE_SPAG,
       {dcffStplId: ["10010","10011","10012","10013","10014","10015","10016"]},
       (res)=> {

@@ -40,7 +40,7 @@ function DocStatus(props) {
     console.log("interval>>", flrYn);
     if(flrYn !== "Y") {
       //서류수집 상태 조회
-      callLocalApi(
+      callOpenApi(
         API.PREJUDGE.DOCSTATUS_SCPGPGRSHSTINQ,
         {},
         (res)=> {

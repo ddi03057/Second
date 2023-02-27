@@ -217,7 +217,7 @@ function DataCollect(props) {
       handleShow();
     }else {
       //시군구저장
-      callLocalApi(
+      callOpenApi(
         API.PREJUDGE.DATACOLLECT_RSPLRGSN,
         {sidoCd: sido, ccwcd: sigungu},
         (res)=> {
