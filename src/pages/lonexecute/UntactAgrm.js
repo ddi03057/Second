@@ -72,7 +72,7 @@ function UntactAgrm(props) {
 
   const callApiFn = ()=> {
     setShowLoading(true);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.UNTACTAGRM_ACHLYNINQ,
       {dcffStplId: ["10010","10011","10012","10013","10014","10015","10016"]},
       (res)=> {

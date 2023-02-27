@@ -29,19 +29,7 @@ function Detail(props) {
   let navigate = useNavigate();
   
   function cbOslBtn(){
-    callLocalApi(
-      "/api/osl001/getCountyInq",
-      {"city": "서울시"},
-      (res)=> {
-        console.log(res);
-      }
-    );
-    navigate(
-      PathConstants.GUIDE_READY,
-      {
-        
-      }
-      );
+    navigate(PathConstants.GUIDE_READY);
   }
   const data = detailData;
 

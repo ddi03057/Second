@@ -43,7 +43,7 @@ function LonContentCheck(props) {
   const ALERT_MSG = "해당항목을 선택 및 체크하시기 바랍니다.";
   useLayoutEffect(() => {
     setShowLoading(true);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.LONCONTENTCHECK_LONCONCNFA, 
       {},
       (res)=> {

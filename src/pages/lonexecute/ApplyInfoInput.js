@@ -61,7 +61,7 @@ function ApplyInfoInput(props) {
   const [showLoading, setShowLoading] = useState(false);
   useLayoutEffect(()=> {
     setShowLoading(true);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.APPLYINFOINPUT_GRNYINFODTL,
       {},
       (res)=> {
@@ -123,7 +123,7 @@ function ApplyInfoInput(props) {
       attrAcntEnn: userResult[3]
     }
     console.log("param", param);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.APPLYINFOINPUT_LOAPIPIF,
       param,
       (res)=> {

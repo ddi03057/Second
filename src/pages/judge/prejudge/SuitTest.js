@@ -32,7 +32,7 @@ function SuitTest(props) {
   
   useLayoutEffect(()=> {
     console.log(API.PREJUDGE.SUITTEST_SBNTPOPYINQ);
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.SUITTEST_SBNTPOPYINQ,
       {},
       (res)=> {
@@ -347,7 +347,7 @@ function SuitTest(props) {
               lfncCrdtScrVainDcd: userCrdScr==="KCB"?"02":"01",// 여신금융상담신용점수평가기관구분코드
               innfGthrCosnYn: "Y",// 개인정보수집동의여부
             };
-            callLocalApi(API.PREJUDGE.SUITTEST_SBNTPOPYVRFC, 
+            callOpenApi(API.PREJUDGE.SUITTEST_SBNTPOPYVRFC, 
               param, 
               (res)=> {
                 console.log(res);

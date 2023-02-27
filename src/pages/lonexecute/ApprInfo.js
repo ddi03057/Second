@@ -32,7 +32,7 @@ function ApprInfo(props) {
   const [apprInfoData, setApprInfoData] = useState({});
   
   useLayoutEffect(()=> {
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.APPRINFO_GRATDTLIQ, 
       {}, 
       (res)=> {
@@ -54,9 +54,7 @@ function ApprInfo(props) {
   let navigate = useNavigate();
 
   function cbOslBtn() {
-    navigate(
-      PathConstants.LONEXECUTE_UNTACTAGRM
-      );
+    navigate(PathConstants.LONEXECUTE_UNTACTAGRM);
 
   }
 

@@ -149,7 +149,7 @@ function GrtInfoInput(props) {
 
     //보증심사자료 저장
     //[TODO]전자서명해시값 받은후 -> 전자서명 필요(인증서) -> 보증신청 연동 필요
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.GRTINFOINPUT_GRNYEXTDATWRTN,
       {
         bsunOwrRlcd: userResult[0].toString(), //사업장소유자관계코드

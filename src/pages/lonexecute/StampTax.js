@@ -40,7 +40,7 @@ function StampTax(props) {
   const [showLoading, setShowLoading] = useState(false);
   useLayoutEffect(()=> {
     setShowLoading(true);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.STAMPTAX_STTXCNFA, 
       {}, 
       (res)=> {

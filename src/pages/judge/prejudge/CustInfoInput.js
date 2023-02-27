@@ -3,7 +3,7 @@ import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
 import { useNavigate } from 'react-router';
 import PathConstants from './../../../modules/constants/PathConstants';
-import { callLocalApi } from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 import API from './../../../modules/constants/API';
 import { getBsnn } from './../../../modules/utils/util';
 
@@ -39,7 +39,7 @@ function CustInfoInput(props) {
 
     console.log("고객정보 등록 PARAMS > ", JSON.stringify(params));
 
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.CUSTINFOINPUT_CSINQRG,
       params,
       (res)=> {
@@ -56,7 +56,7 @@ function CustInfoInput(props) {
   }
 
   const init =() => {
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.CUSTINFOINPUT_CSINBSININQ,
       {},
       (res)=> {

@@ -9,7 +9,7 @@
 import { useState } from "react";
 import { useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { callLocalApi } from "../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi } from "../../modules/common/tokenBase";
 import OslBtn from "../../modules/components/OslBtn";
 import OslHeader from "../../modules/components/OslHeader";
 import API from "../../modules/constants/API";
@@ -29,7 +29,7 @@ function Result(props) {
   const [resultData, setResultData] = useState({});
   useLayoutEffect(()=> {
     setShowLoading(true);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.RESULT_LOEXFNSGINQ,
       {},
       (res)=> {
