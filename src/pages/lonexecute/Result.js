@@ -110,7 +110,7 @@ function Result(props) {
                 </div>
                 <div className="info-box ai-c">
                   <span className="tit fc-gray">대출금 입금 및 계좌번호</span>
-                  <span className="txt fc-dark ta-r">{resultData.attrAcntEnn}</span>
+                  <span className="txt fc-dark ta-r"><br/><br/>{resultData.attrAcntEnn}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">기업명</span>
@@ -130,7 +130,7 @@ function Result(props) {
                 </div>
                 <div className="info-box ai-c">
                   <span className="tit fc-gray ">총 원리금 및 수수료 부담 예상액</span>
-                  <span className="txt fc-dark ta-r">0,000,000원</span>
+                  <span className="txt fc-dark ta-r">{getCommaAmt(resultData.antcAmt)}원</span>
                 </div>
               </div>
             </section>
