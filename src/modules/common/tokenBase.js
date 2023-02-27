@@ -2,7 +2,7 @@ import axios from "axios";
 import PathConstants from "../constants/PathConstants";
 import request from "../utils/Axios";
 import { getCookie } from "./boxlogin";
-import oslLogin from "./oslLogin";
+import oslLogin, { oslLogout } from "./oslLogin";
 
 /**
  * 주의사항 : 반드시 env.js 가 import 되어야 한다.
@@ -160,8 +160,9 @@ function refreshAccessToken( callback ){
 	if( isSessionRefreshExpire() ) {
 		console.log("SessionRefreshExpire==>true");
 		if(callback === null) return false;
-		// callback(null);
-		window.location.href = "/expire";
+		
+		// window.location.href = "/expire";
+		oslLogout();
 	}
 	else{
 		console.log("SessionRefreshExpire==>false", callback);

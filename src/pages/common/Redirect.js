@@ -7,7 +7,7 @@ import { memo } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { loginDomain } from "../../modules/common/boxlogin";
-import { oslLogin } from "../../modules/common/oslLogin";
+import { oslLogin, oslLogout } from "../../modules/common/oslLogin";
 import callOpenApi, { authorization } from "../../modules/common/tokenBase";
 import AlertModal from "../../modules/components/AlertModal";
 import PathConstants from "../../modules/constants/PathConstants";
