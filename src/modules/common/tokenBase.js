@@ -74,8 +74,7 @@ export default async ( uri, data, successCB, errorCB )=> {
 			headers: {
 				"Content-Type": "application/json",
 				"appKey": "l7xxQr5uo10vlnRn1rlPNUmCRsDbOPSxJZOL",
-				"Authorization": oAuth.tokenType+" "+oAuth.accessToken,
-				"lgnMnbrId": "VPK82Psm2d"
+				"Authorization": oAuth.tokenType+" "+oAuth.accessToken
 			}
 		}
 
