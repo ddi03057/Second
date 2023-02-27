@@ -234,7 +234,7 @@ function updateSession( newData, callback ){
 			 * Token 갱신시에 2개의 필드는 널이 리턴되므로 업데이트 하지 않음
 			 */
 			if( key !== "grantType" && key !== "refreshTokenExpiresIn" ){
-				data[key] = newData[key];
+				data[key] = encodeURIComponent(newData[key]);
 			}
 		}
 	}
