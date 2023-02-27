@@ -2,7 +2,7 @@ import axios from "axios";
 import PathConstants from "../constants/PathConstants";
 import request from "../utils/Axios";
 import { getCookie } from "./boxlogin";
-import oslLogin from "./oslLogin";
+import oslLogin, { oslLogout } from "./oslLogin";
 
 /**
  * 주의사항 : 반드시 env.js 가 import 되어야 한다.
@@ -160,8 +160,9 @@ function refreshAccessToken( callback ){
 	if( isSessionRefreshExpire() ) {
 		console.log("SessionRefreshExpire==>true");
 		if(callback === null) return false;
-		// callback(null);
-		window.location.href = "/expire";
+		
+		// window.location.href = "/expire";
+		oslLogout();
 	}
 	else{
 		console.log("SessionRefreshExpire==>false", callback);
@@ -170,8 +171,9 @@ function refreshAccessToken( callback ){
 		var refreshToken = getSessionRefreshToken();
 		
 		if( refreshToken == null ){
-			// callback(null);
-			window.location.href = "/exipre";
+			
+			// window.location.href = "/exipre";
+			oslLogout();
 		}
 		else
 		{
@@ -234,7 +236,7 @@ function updateSession( newData, callback ){
 			 * Token 갱신시에 2개의 필드는 널이 리턴되므로 업데이트 하지 않음
 			 */
 			if( key !== "grantType" && key !== "refreshTokenExpiresIn" ){
-				data[key] = newData[key];
+				data[key] = encodeURIComponent(newData[key]);
 			}
 		}
 	}

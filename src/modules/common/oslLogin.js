@@ -28,7 +28,9 @@ export const oslLogout = ()=> {
   deleteCookie("cookieExpires");
   sessionStorage.clear();
 
-  window.location.href = loginDomain() + "/magicsso/SPLogout.jsp?nextPage=" + window.location.origin+"/";
+  // window.location.href = loginDomain() + "/magicsso/SPLogout.jsp?nextPage=" + window.location.origin+"/";
+  window.location.href = "/expire";
+
 }
 	
 // 	if(getCookie("auth") != undefined){

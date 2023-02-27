@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import PathConstants from "../../../modules/constants/PathConstants";
 import { useEffect } from "react";
-import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi, getSessionData } from "../../../modules/common/tokenBase";
 import AlertModal from "../../../modules/components/AlertModal";
 import { getBsnn } from "../../../modules/utils/util";
 
@@ -52,8 +52,8 @@ function DataCollect(props) {
   const [disabledYn, setDisabledYn] = useState(true);
   //팝업창 활성/비활성
   const [active, setActive] = useState("");
-  const handleCloseDistricts = () => setActive(""); document.body.style.overflow = "";
-  const handleShowDistricts = () => setActive(" active"); document.body.style.overflow = "hidden";
+  const handleCloseDistricts = () => {setActive(""); document.body.style.overflow = "";}
+  const handleShowDistricts = () => {setActive(" active"); document.body.style.overflow = "hidden";}
 
   //alert 띄우기위한 함수 및 변수
   function openPop() {
@@ -71,8 +71,9 @@ function DataCollect(props) {
   let navigate = useNavigate();
 
   useLayoutEffect(()=> {
+    console.log(getSessionData());
     //사업자번호get
-    callLocalApi(
+    callOpenApi(
       API.PREJUDGE.DATACOLLECT_BSNFNOINQ,
       {},
       (res) => {
@@ -84,7 +85,7 @@ function DataCollect(props) {
   useEffect(()=> {
     console.log("flag", flag);
     if(flag === "sido") {
-      callLocalApi(
+      callOpenApi(
         API.PREJUDGE.DATACOLLECT_GETCITYINQ,
         {},
         (res)=> {
@@ -96,7 +97,7 @@ function DataCollect(props) {
         }
       );
     }else if(flag === "sigungu") {
-      callLocalApi(
+      callOpenApi(
         API.PREJUDGE.DATACOLLECT_GETCOUNTYINQ,
         {city: sido},
         (res)=> {
@@ -326,7 +327,7 @@ function DataCollect(props) {
             }} />
         </div>
       </div>
-      {<ViewDistricts flag={flag} districtsList={districtsList} clicked={clicked} active={active} setActive={setActive} setSido={setSido} setSigungu={setSigungu}></ViewDistricts>}
+      {<ViewDistricts flag={flag} districtsList={districtsList} clicked={clicked} active={active} setActive={setActive} setSido={setSido} setSigungu={setSigungu} handleCloseDistricts={handleCloseDistricts}></ViewDistricts>}
       {show&&<AlertModal 
         show={show}
         msg={msgCont}
@@ -381,7 +382,7 @@ function ViewDistricts(props) {
                         }else {
                           props.setSigungu(data);
                         }
-                        props.setActive("");
+                        props.handleCloseDistricts();
                       }}><span>{data}</span></button>
                   </li>
                 )
