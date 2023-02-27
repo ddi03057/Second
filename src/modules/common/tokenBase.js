@@ -171,8 +171,9 @@ function refreshAccessToken( callback ){
 		var refreshToken = getSessionRefreshToken();
 		
 		if( refreshToken == null ){
-			// callback(null);
-			window.location.href = "/exipre";
+			
+			// window.location.href = "/exipre";
+			oslLogout();
 		}
 		else
 		{
