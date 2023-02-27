@@ -100,9 +100,9 @@ function LonContentCheck(props) {
                   <p className="num"><strong>{getCommaAmt(lonContentCheckData.gnapAmt/10000)}</strong> 만원</p>
                 </div>
                 <div className="txt-rate">
-                  <i className="ico-rate"></i>변동금리 : {lonContentCheckData.aplyInr}%
+                  <i className="ico-rate"></i>변동금리 : {lonContentCheckData.baseInr}%
                 </div>
-                <div className="pad-t10 fs14 ta-r fc-lightGray">(기준금리 {lonContentCheckData.baseInr}% + 가산금리0.00%)</div>
+                <div className="pad-t10 fs14 ta-r fc-lightGray">(기준금리 {lonContentCheckData.aplyInr}% + {lonContentCheckData.rdexInr}%)</div>
               </div>
             </div>
             <div className="section line-tf4 pad-t30 pad-b30">

@@ -90,7 +90,7 @@ function Result(props) {
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">대출이자</span>
-                  <p className="txt fc-dark ta-r">0.00%<span className="dp-b fs14 fc-lightGray ta-r">(기준금리 {resultData.baseInr}% <br />+ 가산금리 {resultData.spread}%)</span></p>
+                  <p className="txt fc-dark ta-r">{resultData.aplyInr}%<span className="dp-b fs14 fc-lightGray ta-r">(기준금리 {resultData.baseInr}% <br />+ 가산금리 {resultData.spread}%)</span></p>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">대출 실행일</span>
@@ -122,7 +122,7 @@ function Result(props) {
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">자금용도</span>
-                  <span className="txt fc-dark ta-r">{resultData.enprFunsNm}</span>
+                  <span className="txt fc-dark ta-r">{resultData.enprFnusNm}</span>
                 </div>
                 <div className="info-box">
                   <span className="tit fc-gray">상환방법</span>
