@@ -73,7 +73,7 @@ function DataCollect(props) {
   useLayoutEffect(()=> {
     console.log(getSessionData());
     //사업자번호get
-    callOpenApi(
+    callLocalApi(
       API.PREJUDGE.DATACOLLECT_BSNFNOINQ,
       {},
       (res) => {
@@ -85,7 +85,7 @@ function DataCollect(props) {
   useEffect(()=> {
     console.log("flag", flag);
     if(flag === "sido") {
-      callOpenApi(
+      callLocalApi(
         API.PREJUDGE.DATACOLLECT_GETCITYINQ,
         {},
         (res)=> {
@@ -97,7 +97,7 @@ function DataCollect(props) {
         }
       );
     }else if(flag === "sigungu") {
-      callOpenApi(
+      callLocalApi(
         API.PREJUDGE.DATACOLLECT_GETCOUNTYINQ,
         {city: sido},
         (res)=> {

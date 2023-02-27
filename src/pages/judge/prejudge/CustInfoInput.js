@@ -41,7 +41,7 @@ function CustInfoInput(props) {
 
     callLocalApi(
       API.PREJUDGE.CUSTINFOINPUT_CSINQRG,
-      {params},
+      params,
       (res)=> {
         if(res.data.RSLT_DATA.resultYn === "Y") {
           navigate(PathConstants.PREJUDGE_SUITRESULT);
