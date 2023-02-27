@@ -31,17 +31,17 @@ function CustInfoInput(props) {
   
   function cbOslBtn() { 
     //고객정보 등록
-    const mngmBrm = mngmLst.filter((x) => x.mngmBrcd === params.mngmBrcd).mngmBrm;
-    const sicNm = sicLst.filter((x) => x.sicCd === params.sicCd).sicCd;
+    const mngmBrm = mngmLst.filter((x) => x.mngmBrcd === params.mngmBrcd)[0]?.mngmBrm;
+    const sicNm = sicLst.filter((x) => x.sicCd === params.sicCd)[0]?.sicCd;
 
-    params.mngmBrm = mngmBrm;
-    params.sicNm = sicNm;
+    params.mngmBrm = mngmBrm ?? "";
+    params.sicNm = sicNm ?? "";
 
     console.log("고객정보 등록 PARAMS > ", JSON.stringify(params));
 
     callLocalApi(
       API.PREJUDGE.CUSTINFOINPUT_CSINQRG,
-      {params},
+      params,
       (res)=> {
         if(res.data.RSLT_DATA.resultYn === "Y") {
           navigate(PathConstants.PREJUDGE_SUITRESULT);

@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import PathConstants from "../../../modules/constants/PathConstants";
 import { useEffect } from "react";
-import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
+import callOpenApi, { callLocalApi, getSessionData } from "../../../modules/common/tokenBase";
 import AlertModal from "../../../modules/components/AlertModal";
 import { getBsnn } from "../../../modules/utils/util";
 
@@ -71,6 +71,7 @@ function DataCollect(props) {
   let navigate = useNavigate();
 
   useLayoutEffect(()=> {
+    console.log(getSessionData());
     //사업자번호get
     callLocalApi(
       API.PREJUDGE.DATACOLLECT_BSNFNOINQ,
