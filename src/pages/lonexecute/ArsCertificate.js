@@ -32,7 +32,7 @@ function ArsCertificate(props) {
   const [acitId, setAcitId] = useState("");
   const callApiFn = ()=> {
     setCertNum(-1);
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.ARSCERTIFICATE_ARSCRTCCRETRGST,
       {}, //userid
       (res)=> {
@@ -59,7 +59,7 @@ function ArsCertificate(props) {
   let navigate = useNavigate();
   function cbOslBtn() {
     
-    callLocalApi(
+    callOpenApi(
       API.LONEXECUTE.ARSCERTIFICATE_ARSCRTCCNFA,
       {"twoChnlArsAcitId": acitId},
       (res)=> {
