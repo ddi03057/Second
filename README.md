@@ -1,28 +1,35 @@
-esgLogin
-1. COM001/login.do  //로그인화면(MB1202-1M)
-2. COM001/selectLoginConfirmInfo.do //로그인 전 회원여부확인
-3. COM001/passwordInput.do //비밀번호 입력화면(MB1202-4M)
-4. COM001/selectLogin.do  //로그인실행
-  성공시 sessionData받아옴: selectLogin > restapicall(/api/mb/v1/ibkbox/ + userid)
-5. MB1202-4M에서 sso호출하고 성공시 콜백에서 location.href="/"
+실행
+
+npm install : package.json 설치
+npm run build-dev : 개발버전 빌드
+
+폴더 설명
+
+modules
+ -constants/PathConstants : 화면 url path 정의
+ -constants/API : api 목록
+ -constants/collectData : 화면 문구및 코드
+ -common : 메인박스 로그인 관련 소스
+ -common/hook : 커스텀 훅
+pages 
+ -common/components : 공통 컴포넌트
+ -각 화면 컴포넌트
+assets : 이미지, css 등
 
 
-osl로그인 설계요청
-(**표시는 결정이 필요항목)
-BOX로그인: 메인박스의 로그인페이지로 이동해서 진행 후 osl도메인(loan2.ibkbox.net)으로 옴
+주요 npm
+react-router-dom : router 사용
+http-proxy-middleware : cors와 같이 사용
+react-daum-postcode : 다음 주소찾기
+axios : api통신 처리
 
-최초로그인
--사전준비안내화면 다음버튼 클릭시 BOX로그인 진행 후 즉시 정보조회약관동의화면 라우팅
-**통합한도조회에서 진입시에 로그인 유지 어떻게 할지(박스사업팀 문의?)
+.env 설명
+REACT_APP_PROXY_PATH : api cors값 구분자 
+  api1:메인박스 backend (로그인시 사용), 
+  api2:osl대출박스 backend (로컬 테스트시 사용), 
+  api3:openApi (osl대출박스 호출시 사용)
+REACT_APP_IBK_OAP_URL : https://devapi.ibkplatform.net:8443(오픈API)
 
-로그인만료
-  **timeout 몇초로 할지
-  **timeout되기 몇초전에 로그인만료된다는 안내페이지?팝업 호출할지(해당퍼블필요), timeout(로그인 만료)되면 즉시 로그인페이지로 이동할지
-
-중간로그인(로그인 만료시)
-  **BOX로그인 진행 후 메인화면(탭3개)으로 라우팅할지 어떤화면으로 라우팅해줄지
-  사전심사전 > 상품안내
-  사전심사 이후 > 
-
-로그인이슈
- BOX로그인진행후 token값 못가져오는문제 >> IBKS에서 고민중  
+setupProxy 설명
+api cors 설정
+브라우저인증서 delfino 관련세팅
