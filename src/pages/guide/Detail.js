@@ -3,6 +3,7 @@ import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
+import { getCommaAmt } from "../../modules/utils/util";
 
 const detailData = collectData("detail");
 
@@ -38,7 +39,7 @@ function Detail(props) {
                 <div className ="loan-amount">
                   <div className ="txt-won">
                     <i className ="ico-won"></i> 금액
-                    <p className ="num"><strong>{data.loanMn}</strong> 원</p>
+                    <p className ="num"><strong>{getCommaAmt(data.loanMn)}</strong> 원</p>
                   </div>
                   <div className ="txt-rate">
                     <i className ="ico-rate"></i>금리 : {data.lendrate} %
