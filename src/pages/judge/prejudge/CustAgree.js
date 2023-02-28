@@ -1,24 +1,22 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router";
-
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
 import FullModal from "../../../modules/components/FullModal";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData.js";
 import callOpenApi, { callLocalApi, getSessionData } from "../../../modules/common/tokenBase.js"
-import request from "../../../modules/utils/Axios";
-
 import API from "../../../modules/constants/API.js";
-import { useLayoutEffect } from "react";
-
 
 const custAgreeData = collectData("CustAgree");
 
 /**
- * 컴포넌트명 : 약관동의
- * 설명 : 사전심사 - 정보조회 약관동의
+ * 컴포넌트명 : 고객정보동의
+ * 설명 : 
+ *  -고객정보동의 내용 확인
+ *  -고객정보동의 저장
+ *  -저장 후 적합성 적정성 화면 이동
  * @param {*} props
  * props항목별 설명
  */
@@ -26,12 +24,7 @@ function CustAgree(props) {
 /*
 개인(신용)정보 수집 이용 및 제공 관련 고객 권리 안내문 10012
 (필수) 개인(신용)정보 수집이용 제공 동의 (여신금융거래) dcffStplId="10014"
-
-
-
 */
-
-  //console.log(getSessionData());
   //하단 동의하기버튼명
   const ALL_BTN_NM = "모두 동의하고 다음";
   const ONE_BTN_NM = "동의하고 다음";
@@ -54,12 +47,13 @@ function CustAgree(props) {
   const handleShow = () => setShow(true);
   //모달 show여부 state
   const [show, setShow] = useState(false);
-
+  //api통신 중 로딩띄우기
   const [showLoading, setShowLoading] = useState(false);
 
   let navigate = useNavigate();
 
-  let [arrPdfData, setArrPdfData] = useState([]);
+  //고객동의항목
+  let [arrAgrData, setArrAgrData] = useState([]);
 
   /**
    * 
@@ -69,7 +63,7 @@ function CustAgree(props) {
     setShowLoading(true);
     callOpenApi(
       API.PREJUDGE.CUSTAGREE_SPAG,
-      {dcffStplId: ["10010","10011","10012","10013","10014","10015","10016"]},
+      {dcffStplId: ["10010","10011","10012","10013","10014","10015","10016"]}, //[todo]동의항목 전달 받고 수정필요
       (res)=> {
         setShowLoading(false);
         if(res.data.RSLT_DATA.resultYn === "Y") {
@@ -79,27 +73,6 @@ function CustAgree(props) {
       }
     );
   };
-// const custAgree = async () => {
-//   const res = await request({
-//     method: "post",
-//     url: API.PREJUDGE.PREJUDGE_CUSTAGREE,
-//     data: {
-      
-//     }
-//   })
-//     .then((response) => {
-//       console.log(response);
-//       //setResponse(response);
-//       return response;
-//     })
-
-//     .catch((error) => {
-//       console.log("error : ", error);
-//     });
-//   }
-  useLayoutEffect(()=> {
-    //custAgree()
-  }, [])
   
   useEffect(()=> {
     console.log("useEffect[checkItems]",checkItems);
@@ -122,12 +95,10 @@ function CustAgree(props) {
   //동의하기버튼 콜백
   function cbOslBtn() {
     if(agreeBtnNm === ALL_BTN_NM) { //모두동의하고다음
-      setArrPdfData(custAgreeData);
+      setArrAgrData(custAgreeData);
       handleShow(true);
     }else { //동의하고다음
       callApiFn();
-      //다음화면이동
-      //navigate(PathConstants.PREJUDGE_SUITTEST);
     }
 
   }
@@ -173,7 +144,7 @@ function CustAgree(props) {
                       <a data-id=""
                         className="btn-pop-arrow"
                         onClick={() => {
-                          setArrPdfData([custAgreeData[data.id]]);
+                          setArrAgrData([custAgreeData[data.id]]);
                           handleShow(true);
                         }}
                       />
@@ -231,8 +202,8 @@ function CustAgree(props) {
           showYn={show}
           handleClose={handleClose}
           headerNm="약관 동의"
-          content={arrPdfData}
-          type="pdf"
+          content={arrAgrData}
+          type="pdf" //[todo] 모달타입 변경 필요(동의항목나오면 수정예정)
           disabledYn={true}
           footerNm="확인"
           onClickFn={(contId) => {

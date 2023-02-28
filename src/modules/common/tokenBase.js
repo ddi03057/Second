@@ -33,7 +33,7 @@ var _GET_METHOD = "GET";
 
 var _REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
 
-var _REFRESH_TOKEN_EXPIRESIN = 3600;
+var _REFRESH_TOKEN_EXPIRESIN = 1000;
 
 
 /**
@@ -287,16 +287,21 @@ function updateSession( newData, callback ){
 export const isToken = ()=> {
 	if( isSessionExpire() ){
 		console.log("accessToken false");
+		//세션이 없는경우
+		if(!getSessionData()) {
+			return "X";
+		}
+		//세션은 있는데 만료인경우
 		if( isSessionRefreshExpire() ) {
 			console.log("refreshToken 만료");
-			return false;
+			return "N";
 		}else {
-			return true;
+			return "Y";
 		}
 	}
 	else{
 		console.log("accessToken true");
-		return true;
+		return "Y";
 
 	}
 }

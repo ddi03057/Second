@@ -1,27 +1,14 @@
-/** 
- * import 순서
- * react hook, custom hook, 
- * external component(module), 
- * internal component(module), 
- * data, 
- * css
- */
-import { useState, } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
 import collectData from "../../modules/constants/collectData";
-import request from "../../modules/utils/Axios";
-import { useLayoutEffect } from "react";
-import { callLocalApi } from "../../modules/common/tokenBase";
-
 
 const detailData = collectData("detail");
 
 /**
- * 화면명 : 상품안내(첫페이지)
- * 설명
+ * 컴포넌트명 : 상품안내(첫페이지)
+ * 설명 : 내용확인후 사전준비안내 화면 이동
  * @param {*} props
  * props항목별 설명
  */
@@ -32,8 +19,6 @@ function Detail(props) {
     navigate(PathConstants.GUIDE_READY);
   }
   const data = detailData;
-
-
 
   return (
     <>

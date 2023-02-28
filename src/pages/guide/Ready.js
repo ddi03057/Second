@@ -1,48 +1,26 @@
-/** 
- * import 순서
- * react hook, custom hook, 
- * external component(module), 
- * internal component(module), 
- * data, 
- * css
- */
-import { useState, } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import OslHeader from "../../modules/components/OslHeader";
 import OslBtn from "../../modules/components/OslBtn";
 import PathConstants from "../../modules/constants/PathConstants";
-import collectData from "../../modules/constants/collectData";
-import { getClientOs, loginDomain } from "./../../modules/common/boxlogin.js";
-import { oslLogin, oslLogout} from "./../../modules/common/oslLogin.js";
-import { authorization, getSessionData } from "../../modules/common/tokenBase";
-import Redirect from "../common/Redirect.js";
-import API from "../../modules/constants/API";
-import { Context1 } from "./../../App.js";
-import { useContext } from "react";
-import { useEffect } from "react";
 
 /**
- * 화면명
- * 설명
+ * 컴포넌트명 : 사전준비안내
+ * 설명 : 내용 확인 후 동의화면 이동(로그인체크)
  * @param {*} props
  * props항목별 설명
  */
 function Ready(props) {
 
-
   let navigate = useNavigate();
-  const {apiPath, setApiPath} = useContext(Context1);
-  console.log(apiPath);
-  useEffect(()=> {
-    console.log(apiPath);
-    if(apiPath != "/") navigate("/preJudge/datacollect");
-  },[apiPath]);
-  
-
+  // const {apiPath, setApiPath} = useContext(Context1);
+  // console.log(apiPath);
+  // useEffect(()=> {
+  //   console.log(apiPath);
+  //   if(apiPath != "/") navigate("/preJudge/datacollect");
+  // },[apiPath]);
 
   function cbOslBtn() {
-    //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
-    navigate(PathConstants.REDIRECT_FIRST);
+    navigate(PathConstants.REDIRECT);
   }
 
 

@@ -377,7 +377,7 @@ const suitTestData = [
 
   }
 ];
-
+//[todo] 동의항목 재정의 필요
 const custAgreeData = [
   {
       id: 0,

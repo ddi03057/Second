@@ -28,8 +28,6 @@ import AlertModal from "../../../modules/components/AlertModal";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import API from "../../../modules/constants/API.js";
 import request from "../../../modules/utils/Axios";
-import { Context1 } from "./../../../App.js";
-import { useContext } from "react";
 import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
 
 const grtInfoData = collectData("GrtInfoInput");
@@ -122,8 +120,6 @@ function GrtInfoInput(props) {
     setShow(false);
     document.body.style.overflow = "";
   }
-
-  let test = useContext(Context1);
 
   const saveGrtInfoInput = () => {
     const params = {

@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router";
 import SelectComponent from "../../common/SelectComponent";
 import TextComponent from "../../common/TextComponent";
 import TitleComponent from "../../common/TitleComponent";
 import OslBtn from "../../../modules/components/OslBtn";
 import OslHeader from "../../../modules/components/OslHeader";
+import { checkBatchimEnding, getAge } from "../../../modules/utils/util";
 import PathConstants from "../../../modules/constants/PathConstants";
 import collectData from "../../../modules/constants/collectData";
 import AlertModal from "../../../modules/components/AlertModal";
 import callOpenApi, { callLocalApi } from "../../../modules/common/tokenBase";
-import { placeholder } from "@babel/types";
 import API from "../../../modules/constants/API.js";
-import request from "../../../modules/utils/Axios";
-import { Context1 } from "./../../../App.js";
-import { useContext } from "react";
-import { useLayoutEffect } from "react";
-
 
 
 const suitTestData = collectData("SuitTest");
 /**
- * 화면명 : 적합성 적정성 검사
+ * 컴포넌트명 : 적합성 적정성 검사
  * 설명   : 
+ * 
  * @param {*} props
  * props항목별 설명
  */
@@ -29,13 +25,16 @@ function SuitTest(props) {
 
   const [resEmail, setResEmail] = useState("");
   const [resAge, setResAge] = useState("");
+  //api통신 중 로딩띄우기
+  const [showLoading, setShowLoading] = useState(false);
   
   useLayoutEffect(()=> {
-    console.log(API.PREJUDGE.SUITTEST_SBNTPOPYINQ);
+    setShowLoading(true);
     callOpenApi(
       API.PREJUDGE.SUITTEST_SBNTPOPYINQ,
       {},
       (res)=> {
+        setShowLoading(false);
         console.log(res);
         setResEmail(res.data.RSLT_DATA.email);
         setResAge(getAge(res.data.RSLT_DATA.brthdy));
@@ -347,70 +346,29 @@ function SuitTest(props) {
               lfncCrdtScrVainDcd: userCrdScr==="KCB"?"02":"01",// 여신금융상담신용점수평가기관구분코드
               innfGthrCosnYn: "Y",// 개인정보수집동의여부
             };
+            setShowLoading(true);
             callOpenApi(API.PREJUDGE.SUITTEST_SBNTPOPYVRFC, 
               param, 
               (res)=> {
+                setShowLoading(false);
                 console.log(res);
                 if(res.data.RSLT_DATA.resultYn === "Y") {
                   navigate(PathConstants.PREJUDGE_DATACOLLECT);
                 }
               }
             );
-          //   const api2SuccessFn = (res)=> {
-          //     if(res.data.rslt_msg === "0000") {}
-          //     //다음화면 이동
-          //     // navigate(
-          //     //   PathConstants.PREJUDGE_SUITRESULT,
-          //     //   {
-          //     //     state: {
-          //     //       result: userResult,
-          //     //       crdBru: userCrdBru,
-          //     //       crdScr: userCrdScr
-          //     //   }
-          //     // });
-          //   }
-
-          //   const api2ErrorFn = ()=> {
-
-          //   }
-          //   //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
-          //   // navigate(
-          //   //   PathConstants.PREJUDGE_DATACOLLECT,
-          //   // );
-          // }
           }
         }}
       
       />
-
-    
+    }
+    {showLoading&&
+      <div className="loading"></div>
     }
     </>
   );
 
 }
-
-/**
- * 타이틀영역 컴포넌트
- * @param {} props 
- * @returns 
-
-function TitleComponent(props) {
-  const titleData = props.titleData;
-  if(props.showCrdElYn) {
-    return (
-      <div className="question-wrap txt-wrap">
-        <p className="txt fc-6">
-          {titleData}
-        </p>
-      </div>
-    );
-  }else {
-    return null;
-  }
-  
-}
- */
 
 /**
  * 라디오박스 컴포넌트(적정성 적합성용)
@@ -449,78 +407,6 @@ function RadioComponent(props) {
   );
 }
 
-/**
- * 텍스트박스 컴포넌트
- * @param {*} props 
- * @returns 
-
-function TextComponent(props) {
-  const objTextData = props.textData;
-  if(props.showCrdElYn) {
-    return (
-      <div className="form-group">
-        <div className="sele-list type01 radius answer-wrap">
-          <div className="item">
-            <input 
-              type="text"
-              name={`sRadio${objTextData.id}`}  
-              id={`text${objTextData.id}`}
-              placeholder={objTextData.placeholder}
-              onChange={(e)=> {
-                if(props.dataId != 9) {
-                  let copy = [...props.userResult];
-                  copy[props.dataId] = e.target.value===""?99:e.target.value;
-                  props.setUserResult(copy);
-                }else {
-                  props.setUserCrdScr(e.target.value);
-                }
-              }}
-            />
-          </div>
-          <div className="btn-wrap">
-            <button type="reset" className="btn btn-sm btn-reset"><span className="blind">재작성</span></button>
-          </div>
-        </div>
-      </div>
-    );
-  }else {
-    return null;
-  }
-}
- */
-/**
- * 셀렉트박스 컴포넌트
- * @param {} props 
- * @returns 
-
-function SelectComponent(props) {
-  const objSelectData = props.selectData;
-  if(props.showCrdElYn) {
-    return (
-      <div className="sele-list type01 radius answer-wrap mar-t10">
-        <div className="item">
-          <label className="ui-select">
-            <select name="sSel" id="sSel1" disabled="" onChange={(e)=> {
-              props.setUserCrdBru(e.target.value);
-            }}>
-              {
-                objSelectData.selectList.map((data, idx)=>{
-                  return (
-                    <option key={idx} value={data.value}>{data.name}</option>
-                  )
-                })
-              }
-            </select>
-            <span className="radio"></span>
-          </label>
-        </div>
-      </div>
-    );
-  }else {
-    return null;
-  }
-}
- */
 /**
  * 빈값 밸리데이션 체크
  * 빈값일시 항목별 title, 조사, 동사로 메세지값 완성
@@ -563,45 +449,6 @@ function validCheckEmpty(agreeYn, userResult, userCrdBru, userCrdScr) {
     }
   }
   return null;
-}
-
-/**
- * 단어별 맞춤 조사 선택을 위한 함수
- * @param {*} word 
- * @returns 
- */
-function checkBatchimEnding(word) {
-  if (typeof word !== 'string') return null;
-
-  var lastLetter = word[word.length - 1];
-  var uni = lastLetter.charCodeAt(0);
-
-  if (uni < 44032 || uni > 55203) return null;
-
-  return (uni - 44032) % 28 != 0;
-}
-
-/**
- * 만나이 계산
- * @param {*} bStr 
- * @returns 
- */
-function getAge(bStr){
-  console.log(bStr)
-  var today = new Date();
-  var birthDate = getDate(bStr);
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-  if( m<0 || (m===0 && today.getDate() < birthDate.getDate())){
-    age--;
-  }
-  return age;
-}
-function getDate(yyyymmdd){
-  var year = yyyymmdd.substring(0,4);
-  var month = yyyymmdd.substring(4,6);
-  var day = yyyymmdd.substring(6,8);
-  return new Date(Number(year), Number(month), Number(day)); 
 }
 
 export default SuitTest;

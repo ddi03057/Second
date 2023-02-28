@@ -27,6 +27,8 @@ function CustInfoInput(props) {
     mngmBrcd: "", //관리부점 코드
     mngmBrm: "", //관리부점명
   });
+  //api통신 중 로딩띄우기
+  const [showLoading, setShowLoading] = useState(false);
 
   
   function cbOslBtn() { 
@@ -38,11 +40,12 @@ function CustInfoInput(props) {
     params.sicNm = sicNm ?? "";
 
     console.log("고객정보 등록 PARAMS > ", JSON.stringify(params));
-
+    setShowLoading(true);
     callOpenApi(
       API.PREJUDGE.CUSTINFOINPUT_CSINQRG,
       params,
       (res)=> {
+        setShowLoading(false);
         if(res.data.RSLT_DATA.resultYn === "Y") {
           navigate(PathConstants.PREJUDGE_SUITRESULT);
         } else {
@@ -56,10 +59,12 @@ function CustInfoInput(props) {
   }
 
   const init =() => {
+    setShowLoading(true);
     callOpenApi(
       API.PREJUDGE.CUSTINFOINPUT_CSINBSININQ,
       {},
       (res)=> {
+        setShowLoading(false);
         console.log(res);
         setMngmLst(res.data.RSLT_DATA.mngmBr);
         setSicLst(res.data.RSLT_DATA.sic);
@@ -187,6 +192,8 @@ function CustInfoInput(props) {
             }} />
         </div>
       </div>
+      {showLoading&&
+        <div className="loading"></div>}
     </>
   );
 }

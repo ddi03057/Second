@@ -8,9 +8,13 @@
 <script type="text/javascript">
 	var req = location.href.split("?");
 	var msg = req[1].split("=");
+	var path = "/";
+	if(!!sessionStorage.getItem("SI")) {
+		path = "/refresh"	
+	}
 	sessionStorage.clear();
 	sessionStorage.setItem("SI", msg[1]);
-	location.href = "/";
+	location.href = path;
 </script>
 <body>
 </body>

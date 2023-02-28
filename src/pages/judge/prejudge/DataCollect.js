@@ -54,6 +54,8 @@ function DataCollect(props) {
   const [active, setActive] = useState("");
   const handleCloseDistricts = () => {setActive(""); document.body.style.overflow = "";}
   const handleShowDistricts = () => {setActive(" active"); document.body.style.overflow = "hidden";}
+  //api통신 중 로딩띄우기
+  const [showLoading, setShowLoading] = useState(false);
 
   //alert 띄우기위한 함수 및 변수
   function openPop() {
@@ -71,12 +73,13 @@ function DataCollect(props) {
   let navigate = useNavigate();
 
   useLayoutEffect(()=> {
-    console.log(getSessionData());
+    setShowLoading(true);
     //사업자번호get
     callOpenApi(
       API.PREJUDGE.DATACOLLECT_BSNFNOINQ,
       {},
       (res) => {
+        setShowLoading(false);
         setBsnfNo(res.data.RSLT_DATA.bsnfNo);
       }
     )
@@ -91,9 +94,6 @@ function DataCollect(props) {
         (res)=> {
           console.log(res);
           setCityList(res.data.RSLT_DATA.city);
-        },
-        (err)=> {
-          //alert(err);
         }
       );
     }else if(flag === "sigungu") {
@@ -103,9 +103,6 @@ function DataCollect(props) {
         (res)=> {
           console.log(res);
           setCountyList(res.data.RSLT_DATA.result);
-        },
-        (err)=> {
-          alert(err);
         }
       );
     }else {
@@ -216,6 +213,7 @@ function DataCollect(props) {
       setMsgCont("행정구역을 선택해주세요.");
       handleShow();
     }else {
+      setShowLoading(true);
       //시군구저장
       callOpenApi(
         API.PREJUDGE.DATACOLLECT_RSPLRGSN,
@@ -223,6 +221,7 @@ function DataCollect(props) {
         (res)=> {
           console.log(res);
           //setCityList(res.data.RSLT_DATA.city);
+          setShowLoading(false);
           navigate(PathConstants.PREJUDGE_DOCSTATUS);
         },
         (err)=> {
@@ -336,6 +335,8 @@ function DataCollect(props) {
           handleClose();
         }}
       />}
+      {showLoading&&
+        <div className="loading"></div>}
     </>
   )
 }

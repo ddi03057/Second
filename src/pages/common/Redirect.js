@@ -1,46 +1,61 @@
-//토큰체크
-//진행상태체크
-//체크되면 navigate
-
-import { useState, useEffect, useLayoutEffect} from "react";
+import { useState, useEffect, useLayoutEffect, useContext} from "react";
 import { useNavigate, useParams } from "react-router";
-import { loginDomain } from "../../modules/common/boxlogin";
+import { TokenContext } from "../../App";
 import { oslLogin, oslLogout } from "../../modules/common/oslLogin";
 import { isToken } from "../../modules/common/tokenBase";
 import AlertModal from "../../modules/components/AlertModal";
 import PathConstants from "../../modules/constants/PathConstants";
 
-
+/**
+ * 진입통로
+ *  -라우팅 / or /:type("expire")
+ *  -세션만료 > oslLogout 에서 href = "/expire"
+ *  -box로그인 성공 > redirect.html에서 href = "/"
+ */
 export default (props)=> {
   let {type} = useParams();
-  const [tokenYn, setTokenYn] = useState(false);
+  //const [tokenYn, setTokenYn] = useState(false);
   let navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const {tokenYn} = useContext(TokenContext);
+  const [redirectPath, setRedirectPath] = useState("");
   console.log("type", type);
   console.log("tokenYn", tokenYn);
 
   useLayoutEffect(()=> {
-    if(!isToken()) {
+    console.log("tokenYn>>", tokenYn)
+    if(tokenYn !== "Y") {
       handleShow();
-    }else {
-      setTokenYn(true);
+    }
+    else {
+      /**
+       * [todo]진행상태 조회해서 진입 페이지세팅
+       */
+      
     }
   }, []);
-
   useEffect(()=> {
-    if(tokenYn) {
-      if(type === "first") {
-        navigate(PathConstants.PREJUDGE_CUSTAGREE);
-      }else if(type === "expire") {
-        navigate(PathConstants.MAIN,{state: {tabIdx: 21}});
-      }else {
-        navigate(PathConstants.GUIDE_DETAIL);
-      }
+    if(tokenYn === "Y") {
+      navigate(PathConstants.PREJUDGE_CUSTAGREE);
     }
   }, [tokenYn]);
+
+  // useEffect(()=> {
+  //   console.log("redirectType>>", redirectType);
+  // }, [redirectType]);
+
+  // useEffect(()=> {
+    
+  //     if(redirectType === "refresh" && type === "refresh") {
+  //       navigate(redirectPath,{state: {tabIdx: 21}});
+  //     }else {
+  //       navigate(redirectPath);
+  //     }
+    
+  // }, [redirectPath]);
   
     
     
@@ -61,7 +76,7 @@ export default (props)=> {
   // } //토큰없음
 
   let msg = "로그인을 하시겠습니까?"
-  if(type === "expire") msg = "세션이 종료되었습니다.\n" + msg;
+  if(type === "refresh") msg = "세션이 종료되었습니다.\n" + msg;
   else msg = "로그인이 필요한 서비스입니다.\n" + msg;
   return (
     <>
@@ -77,9 +92,7 @@ export default (props)=> {
               oslLogin();
             }else {
               handleClose();
-              navigate(
-                PathConstants.GUIDE_DETAIL
-              );
+              navigate(PathConstants.GUIDE_DETAIL);
             }
         }}
         />

@@ -25,15 +25,12 @@ import Main from './pages/Main.js';
 import ServiceError from './pages/common/ServiceError.js';
 import SystemError from './pages/common/SystemError.js';
 import Certificate from './pages/common/Certificate.js';
-import Index from './pages/guide/Index.js';
 import API from './modules/constants/API.js';
 import callOpenApi from './modules/common/tokenBase.js';
 import axios from 'axios';
 import request from './modules/utils/Axios.js';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Context1 } from "./App.js";
-import { useContext } from 'react';
 
 import DefinoCheck from './pages/common/DelfinoCheck.js';
 import CheckView from './pages/common/delfino-check.js';
@@ -52,7 +49,7 @@ function Routing() {
   // const EsgRouting = (path) => {
   //   return location.href = `//${window.location.host}/esgLogin.html${path.location.search}&apiurl=${process.env.REACT_APP_API_URL}`;
   // }
-  const {apiPath} = useContext(Context1);
+  
   const [apiDataStatus, setApiDataStatus] = useState("");
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(false);;
@@ -90,7 +87,6 @@ function Routing() {
       <Routes>
         <Route path="/" element={<Redirect />} />
         <Route path="/:type" element={<Redirect />} />
-        <Route path={PathConstants.INDEX} element={<Index />} />
         <Route path={PathConstants.MAIN} element={<Main />} />
         <Route path={PathConstants.CERTIFICATE_SCRP} element={<DefinoCheck headerNm={PathConstants.CERTIFICATE_NM} certType="scrp" />} />
         <Route path={PathConstants.CERTIFICATE_CERT} element={<DefinoCheck headerNm={PathConstants.CERTIFICATE_NM} certType="cert" />} />

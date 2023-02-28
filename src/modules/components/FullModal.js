@@ -75,7 +75,7 @@ console.log(content,typeof content);
             }
           }}>
 
-          {
+          {//[todo] 동의항목 추가되면 삭제예정
             (type==="pdf")&&
               content.map((data, idx)=> {
                 return (
