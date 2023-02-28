@@ -145,12 +145,14 @@ export const authorization = ( callback )=> {
 	
 	if( isSessionExpire() ){
 		console.log("SessionExpire=true");
-		if(refreshAccessToken( callback )) return true;	
+		refreshAccessToken(callback);
+		// if(refreshAccessToken( callback )) return true;	
+		// else oslLogout();
 	}
 	else{
 		console.log("SessionExpire=false");
-		if(callback === null) return true;
-		callback( getSessionData() );	
+		// if(callback === null) return true;
+		callback(getSessionData());	
 	}
 }
 
@@ -158,10 +160,9 @@ function refreshAccessToken( callback ){
 	
 	if( isSessionRefreshExpire() ) {
 		console.log("SessionRefreshExpire==>true");
-		if(callback === null) return false;
-		
-		// window.location.href = "/expire";
+		// if(callback === null) return false;
 		oslLogout();
+		// window.location.href = "/expire";
 	}
 	else{
 		console.log("SessionRefreshExpire==>false", callback);
@@ -170,7 +171,6 @@ function refreshAccessToken( callback ){
 		var refreshToken = getSessionRefreshToken();
 		
 		if( refreshToken == null ){
-			
 			// window.location.href = "/exipre";
 			oslLogout();
 		}
@@ -278,6 +278,27 @@ function updateSession( newData, callback ){
 		}
 	});
 */
+}
+
+/**
+ * 토큰체크 함수 (osl추가)
+ * @returns token만료시 false 아닐시 true
+ */
+export const isToken = ()=> {
+	if( isSessionExpire() ){
+		console.log("accessToken false");
+		if( isSessionRefreshExpire() ) {
+			console.log("refreshToken 만료");
+			return false;
+		}else {
+			return true;
+		}
+	}
+	else{
+		console.log("accessToken true");
+		return true;
+
+	}
 }
 
 export const getSessionData = ()=> {

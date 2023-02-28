@@ -65,6 +65,7 @@ function CustAgree(props) {
    * 
    */
   const callApiFn = ()=> {
+    
     setShowLoading(true);
     callOpenApi(
       API.PREJUDGE.CUSTAGREE_SPAG,

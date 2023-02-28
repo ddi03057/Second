@@ -42,8 +42,7 @@ function Ready(props) {
 
   function cbOslBtn() {
     //setApiPath(API.PREJUDGE.DATACOLLECT_GETCITY);
-    console.log(authorization(null));
-    navigate(authorization(null)?"/":PathConstants. PREJUDGE_CUSTAGREE);
+    navigate(PathConstants.REDIRECT_FIRST);
   }
 
 
