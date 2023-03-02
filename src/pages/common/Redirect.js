@@ -4,13 +4,15 @@ import { TokenContext } from "../../App";
 import { oslLogin, oslLogout } from "../../modules/common/oslLogin";
 import { isToken } from "../../modules/common/tokenBase";
 import AlertModal from "../../modules/components/AlertModal";
+import collectData from "../../modules/constants/collectData";
 import PathConstants from "../../modules/constants/PathConstants";
 
+const progressCdList = collectData("progressCd");
 /**
  * 진입통로
- *  -라우팅 / or /:type("expire")
- *  -세션만료 > oslLogout 에서 href = "/expire"
- *  -box로그인 성공 > redirect.html에서 href = "/"
+ *  -라우팅 / or /:type("refresh")
+ *  -세션만료 > oslLogout 에서 href = "/refresh"
+ *  -box로그인 성공 > redirect.html에서 href = "/" or "/refresh"
  */
 export default (props)=> {
   let {type} = useParams();
@@ -33,6 +35,16 @@ export default (props)=> {
     else {
       /**
        * [todo]진행상태 조회해서 진입 페이지세팅
+callOpenApi(
+  "ingYn",
+  {},
+  (res)=> {
+    //진행중
+    진행상태 코드에 따른 main progress
+    //처음
+    detail
+  }
+)
        */
       
     }

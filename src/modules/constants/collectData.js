@@ -1839,11 +1839,54 @@ const progressFootMsgData = [
   }
 ];
 
-
+const progressCdData = [
+  // 00해당없음 01적합성검증 02사전심사 03보증신청 04보증심사 05보증심사완료 06실행신청 07대출실행 99취소
+  {
+    id: 0,
+    cd: "00",
+    value: "해당없음"
+  },
+  {
+    id: 1,
+    cd: "01",
+    value: ""
+  },
+  {
+    id: 2,
+    cd: "02",
+    value: ""
+  },
+  {
+    id: 3,
+    cd: "03",
+    value: ""
+  },
+  {
+    id: 4,
+    cd: "04",
+    value: ""
+  },
+  {
+    id: 5,
+    cd: "05",
+    value: ""
+  },
+  {
+    id: 6,
+    cd: "06",
+    value: ""
+  },
+  {
+    id: 7,
+    cd: "07",
+    value: ""
+  },
+];
 
 
 export default (props)=> {
   switch (props) {
+    case 'progressCd' :     return progressCdData;  //진행상태코드
     case 'detail' :         return detailData; // 상품안내 고객데이터
     case 'email':           return emailList;
     case 'judgeStepNm':     return arrJudgeStepNm;

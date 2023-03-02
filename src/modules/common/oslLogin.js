@@ -1,10 +1,12 @@
+import PathConstants from "../constants/PathConstants.js";
 import { getClientOs, deleteCookie, loginDomain } from "./boxlogin.js";
 export default "";
 // SPA로그인 시작
 export const oslLogin = ()=> {
   
   if(getClientOs() == "PC"){
-    // alert("pc는 지원하지 않습니다.");
+    alert("pc는 지원하지 않습니다.");
+    window.location.href = PathConstants.GUIDE_DETAIL;
     //document.querySelector("#ifrmPage").setAttribute("src", loginDomain()+"/COM001/login.do?callType=spa");
     let element = 
     `<div class="pcLoginWrap on" id="pcLoginWrap">

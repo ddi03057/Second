@@ -25,8 +25,8 @@
 
 # 주요 npm
 >##### react-router-dom : router 사용
->##### http-proxy-middleware : cors와 같이 사용
->##### react-daum-postcode : 다음 주소찾기
+>##### http-proxy-middleware :  브라우저cors를 위한 proxy 설정사용
+>##### react-daum-postcode : 다음 주소찾기 사용
 >##### axios : api통신 처리
 
 ------------
